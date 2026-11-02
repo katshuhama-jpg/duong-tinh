@@ -256,6 +256,8 @@ const YEU: Drama[] = [
   },
   {
     id: 'ghenbanthan',
+    // bỏ phần bạn thân
+    if: () => false,
     pool: 'yeu',
     title: 'Ghen với bạn thân',
     bg: () => ({ place: 'quan', time: 'night' }),
@@ -824,6 +826,8 @@ const DON: Drama[] = [
   {
     id: 'damcuoi',
     pool: 'don',
+    // bỏ phần bạn thân
+    if: () => false,
     minAge: 22,
     maxAge: 40,
     title: (x) => `Đám cưới ${x.s.bestie}`,
@@ -900,7 +904,7 @@ const DON: Drama[] = [
     bg: () => ({ place: 'phong', time: 'night' }),
     text: (x) => [`Sinh nhật ${x.age} tuổi. ${x.year < 2010 ? 'Không ai gọi.' : 'Mạng xã hội gửi lời chúc tự động.'} ${x.me} tự mua một cái bánh nhỏ, cắm một cây nến.`],
     choices: [
-      { t: (x) => `Gọi cho ${x.s.bestie}`, do: (fx, x) => (fx.rel('banthan', 8), fx.stat('tam', 4)), note: (x) => `Nửa tiếng sau, ${x.s.bestie} đứng ngoài cửa với hai lon bia.` },
+      { t: (x) => 'Gọi cho một người bạn cũ', do: (fx, x) => (fx.rel('banthan', 8), fx.stat('tam', 4)), note: (x) => 'Nửa tiếng sau, bạn ấy đứng ngoài cửa với hai lon bia.' },
       { t: 'Thổi nến, ước một điều thật to', do: (fx) => (fx.stat('dao', 6), fx.stat('tam', 4)) },
       { t: (x) => `Về nhà ăn cơm với ${x.bm}`, do: (fx) => (fx.rel('bome', 10), fx.stat('tam', 4)) },
     ],
@@ -1445,9 +1449,9 @@ const MONEY: Drama[] = [
     title: 'Ký bảo lãnh',
     bg: () => ({ place: 'nha', time: 'night' }),
     who: (x) => near(x),
-    text: (x) => [`${x.s.bestie} đến nhà lúc nửa đêm, mắt đỏ hoe: cần vay ngân hàng ${tien(U(x) * 25)} để cứu cửa hàng, chỉ cần ${x.me} ký bảo lãnh. "Tháng nào tớ cũng trả đều, cậu không phải lo."`],
+    text: (x) => [`Một người bạn cũ đến nhà lúc nửa đêm, mắt đỏ hoe: cần vay ngân hàng ${tien(U(x) * 25)} để cứu cửa hàng, chỉ cần ${x.me} ký bảo lãnh. "Tháng nào tớ cũng trả đều, cậu không phải lo."`],
     choices: [
-      { t: 'Ký, bạn thân thì phải giúp', do: (fx, x) => (fx.rel('banthan', 10), roll(x, 7) < 0.5 ? (fx.cash(-U(x) * 25), fx.rel('banthan', -40), fx.say(`Nửa năm sau ${x.s.bestie} cắt liên lạc. Ngân hàng gửi giấy đòi nợ về nhà ${x.me}.`)) : fx.say(`${x.s.bestie} trả đủ từng tháng. Tết năm sau mang sang một giỏ quà to.`)) },
+      { t: 'Ký, bạn bè thì phải giúp', do: (fx, x) => (fx.rel('banthan', 10), roll(x, 7) < 0.5 ? (fx.cash(-U(x) * 25), fx.rel('banthan', -40), fx.say(`Nửa năm sau người bạn ấy cắt liên lạc. Ngân hàng gửi giấy đòi nợ về nhà ${x.me}.`)) : fx.say(`${x.s.bestie} trả đủ từng tháng. Tết năm sau mang sang một giỏ quà to.`)) },
       { t: 'Cho vay một ít tiền mặt thay vì ký', do: (fx, x) => (fx.cash(-U(x) * 4), fx.rel('banthan', 4)) },
       { t: 'Từ chối, dù mất lòng', do: (fx) => (fx.rel('banthan', -12), fx.stat('noi', 3)) },
     ],

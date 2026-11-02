@@ -114,7 +114,6 @@ export function funeralOf(c: Character, f: Family, s: Story) {
     list.push(`${sp.charAt(0).toUpperCase() + sp.slice(1)}, người nắm tay đến phút cuối`);
   }
   if (s.kids) list.push(s.kids > 1 ? 'Hai đứa con và các cháu' : 'Đứa con và các cháu');
-  if (s.rel.banthan >= 40) list.push(`${s.bestie}, bạn thân từ thuở nhỏ`);
   for (const id of LOVE_IDS) if (id !== s.partner && s.love[id] >= 45) list.push(`${x.L(id)}, đứng lặng ở cuối hàng`);
   if (f.siblings.length) list.push('Anh chị em trong nhà');
   list.push('Hàng xóm trong ngõ cũ');

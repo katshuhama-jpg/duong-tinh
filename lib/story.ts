@@ -4,7 +4,7 @@
  * Nội dung cảnh nằm ở lib/scenes.ts.
  */
 
-import { fmtGold, fmtVND as fmtMoney, goldPrice, savingOf, unitOf } from './money';
+import { fmtGold, fmtVND as fmtMoney, goldPrice, invValue, savingOf, unitOf, type Inv, type InvKind } from './money';
 import type { Character, Family, Gender, Look } from './character';
 import type { Bg } from '@/components/Backdrop';
 
@@ -32,7 +32,7 @@ export const STAT_KEYS = Object.keys(STAT_LABEL) as StatKey[];
 
 /** Gắn kết: trung bình độ thân với bố mẹ, bạn thân, người yêu và con cái (nếu có) */
 export function bondsOf(s: StoryCore) {
-  const xs = [s.rel.bome, s.rel.banthan];
+  const xs = [s.rel.bome];
   if (s.partner && s.partner !== 'xemmat') xs.push(s.love[s.partner]);
   if (s.kids) xs.push(s.rel.con);
   return Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
@@ -129,6 +129,8 @@ export interface StoryCore {
   kidBorn?: number[];
   /** vàng cưới còn giữ (chỉ) */
   gold?: number;
+  /** những khoản đầu tư đang giữ: đất, cổ phiếu, tiền ảo, sổ tiết kiệm */
+  inv?: Inv[];
 }
 
 export interface LogLine {
@@ -301,6 +303,10 @@ export interface Fx {
   gold: (chi: number) => void;
   /** bán vàng (cả, hoặc `chi` chỉ): tiền vào tài khoản, trả về số tiền bán được */
   sellGold: (chi?: number) => number;
+  /** bỏ tiền vào một khoản đầu tư */
+  invest: (k: InvKind, vnd: number) => void;
+  /** bán hết một loại đầu tư: tiền vào tài khoản, trả về số tiền bán được */
+  sellInv: (k: InvKind) => number;
   /** chụp một tấm ảnh vào album kỷ niệm */
   photo: (p: Omit<Photo, 'age' | 'year'>) => void;
   loveEnd: (id: string) => void;
@@ -455,6 +461,18 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
       s.kids = n;
     },
     gold: (d) => (s.gold = Math.max(0, (s.gold ?? 0) + d)),
+    invest: (k, vnd) => {
+      if (vnd <= 0) return;
+      fx.cash(-vnd);
+      s.inv = [...(s.inv ?? []), { k, y: c.birthYear + scene.age, vnd }];
+    },
+    sellInv: (k) => {
+      const y = c.birthYear + scene.age;
+      const v = Math.round((s.inv ?? []).filter((i) => i.k === k).reduce((a, i) => a + invValue(i, y), 0));
+      s.inv = (s.inv ?? []).filter((i) => i.k !== k);
+      fx.cash(v);
+      return v;
+    },
     sellGold: (chi) => {
       const n = Math.min(s.gold ?? 0, chi ?? s.gold ?? 0);
       const v = Math.round(n * goldPrice(c.birthYear + scene.age));
@@ -512,10 +530,10 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
       const d = Math.round(s.stats[k] - before.stats[k]);
       if (Math.abs(d) >= 3) parts.push(`${STAT_LABEL[k]} ${d > 0 ? '+' : ''}${d}`);
     }
-    const RL: Record<string, string> = { bome: x.bm === 'ông bà' ? 'Ông bà' : 'Bố mẹ', banthan: 'Bạn thân', con: 'Con cái' };
+    const RL: Record<string, string> = { bome: x.bm === 'ông bà' ? 'Ông bà' : 'Bố mẹ', banthan: '', con: 'Con cái' };
     for (const k of Object.keys(s.rel) as (keyof typeof s.rel)[]) {
       const d = Math.round(s.rel[k] - before.rel[k]);
-      if (Math.abs(d) >= 3) parts.push(`${RL[k]} ${d > 0 ? '+' : ''}${d}`);
+      if (Math.abs(d) >= 3 && RL[k]) parts.push(`${RL[k]} ${d > 0 ? '+' : ''}${d}`);
     }
     const dc = (s.cash ?? 0) - before.cash;
     if (Math.abs(dc) >= 1000) parts.push(`Tiền ${dc > 0 ? '+' : '-'}${fmtMoney(Math.abs(dc))}`);

@@ -47,9 +47,9 @@ export default function Home() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 10 }}>
-        <div className="eyebrow">LOVE&apos;S ALTERED LINES</div>
+        <div className="eyebrow">LIFE&apos;S ALTERED LINES</div>
         <h1 className="logo">
-          ĐƯỜNG TÌNH
+          ĐƯỜNG ĐỜI
           <br />
           RẼ LỐI
         </h1>

@@ -6,7 +6,7 @@
  * quyết định "cả đời dành cho điều gì" ở cuối đời, và kéo theo người mình dễ gặp.
  */
 
-import { choose, ctxOf, type Choice, type Ctx, type Feedback, type LoveId, type Resolve, type Scene, type Story } from './story';
+import { choose, ctxOf, type Choice, type Ctx, type Feedback, type Fx, type LoveId, type Resolve, type Scene, type Story } from './story';
 import type { Character, Family } from './character';
 import { cashOf, fmtVND, pointsOf, priceAt } from './money';
 import type { Place } from '@/components/Backdrop';
@@ -92,7 +92,7 @@ const OPTS: Record<AreaKey, Opt[]> = {
     { t: 'Trông cháu cho con đi làm', min: 55, when: (x) => x.s.kids > 0, do: (fx) => (fx.rel('con', 10), fx.stat('khoe', -2)) },
   ],
   ban: [
-    { t: (x) => `Rủ ${x.s.bestie} đi chơi cả ngày`, do: (fx) => (fx.rel('banthan', 8), fx.stat('tam', 3)) },
+    { t: (x) => 'Rủ hội bạn đi chơi cả ngày', do: (fx) => (fx.rel('banthan', 8), fx.stat('tam', 3)) },
     { t: 'Tham gia đội văn nghệ của trường', min: 8, max: 22, do: (fx) => (fx.stat('duyen', 4), fx.rel('banthan', 3)) },
     { t: 'Đi tình nguyện Mùa hè xanh', min: 18, max: 24, y0: 1993, do: (fx) => (fx.stat('tinh', 5), fx.stat('dao', 3), fx.flag('ac_tinhnguyen')) },
     { t: 'Đi đá bóng, cầu lông với hội bạn', min: 10, max: 55, do: (fx) => (fx.rel('banthan', 5), fx.stat('khoe', 3)) },
@@ -200,6 +200,16 @@ export interface Milestone {
 const land = (y: number) => (y >= 2001 && y <= 2007) || (y >= 2015 && y <= 2021);
 const landDown = (y: number) => (y >= 2008 && y <= 2012) || y >= 2022;
 
+const MAJOR_KEYS = ['y', 'it', 'kt', 'sp', 'nn', 'nt'];
+const JOB_BY_MAJOR: Record<string, { t: string; do: (fx: Fx) => void }> = {
+  y: { t: 'Vào bệnh viện, trực đêm cách ngày', do: (fx) => (fx.stat('tien', 8), fx.stat('khoe', -3), fx.flag('nghe_bacsi')) },
+  it: { t: 'Vào công ty phần mềm, lương khởi điểm cao', do: (fx) => (fx.stat('tien', 11), fx.stat('khoe', -2), fx.flag('nghe_it')) },
+  kt: { t: 'Vào ngân hàng, mặc sơ mi trắng mỗi ngày', do: (fx) => (fx.stat('tien', 9), fx.stat('tam', -2), fx.flag('nghe_nganhang')) },
+  sp: { t: 'Về dạy ở trường cấp ba', do: (fx) => (fx.stat('tien', 3), fx.stat('tam', 6), fx.flag('ms_congchuc'), fx.flag('nghe_giaovien')) },
+  nn: { t: 'Làm phiên dịch cho công ty nước ngoài', do: (fx) => (fx.stat('tien', 8), fx.stat('duyen', 3), fx.flag('nghe_phiendich')) },
+  nt: { t: 'Làm truyền thông, quay dựng tự do', do: (fx) => (fx.stat('tien', 4), fx.stat('duyen', 6), fx.flag('nghe_truyenthong')) },
+};
+
 export const MILESTONES: Milestone[] = [
   {
     id: 'lop1',
@@ -245,8 +255,16 @@ export const MILESTONES: Milestone[] = [
     age: 22,
     place: 'vanphong',
     title: (x) => (x.has('daihoc') ? 'Ra trường, đi làm' : 'Chọn một nghề'),
-    sub: (x) => (x.has('daihoc') ? `Cầm tấm bằng trên tay, ${x.me} bắt đầu đi làm.` : `${x.me} hai mươi hai tuổi, cần một công việc lâu dài.`),
+    sub: (x) => (x.has('daihoc') ? `Cầm tấm bằng ${x.s.flags.includes('nganh_y') ? 'bác sĩ' : x.s.flags.includes('nganh_sp') ? 'sư phạm' : x.s.flags.includes('nganh_it') ? 'kỹ sư' : 'cử nhân'} trên tay, ${x.me} bắt đầu đi làm.` : `${x.me} hai mươi hai tuổi, cần một công việc lâu dài.`),
     opts: [
+      // việc đúng ngành đã học
+      {
+        k: 'tien',
+        t: (x) => JOB_BY_MAJOR[MAJOR_KEYS.find((m) => x.has(`nganh_${m}`)) ?? 'kt'].t,
+        when: (x) => MAJOR_KEYS.some((m) => x.has(`nganh_${m}`)),
+        do: (fx, x) => JOB_BY_MAJOR[MAJOR_KEYS.find((m) => x.has(`nganh_${m}`)) ?? 'kt'].do(fx),
+        note: '🦋 Làm đúng ngành đã học.',
+      },
       { k: 'tien', t: 'Thi công chức, vào cơ quan nhà nước', do: (fx) => (fx.stat('tien', 5), fx.stat('tam', 3), fx.flag('ms_congchuc')) },
       { k: 'tien', t: (x) => (x.year < 2000 ? 'Xin vào công ty liên doanh' : 'Vào công ty tư nhân, công ty nước ngoài'), do: (fx) => (fx.stat('tien', 9), fx.stat('khoe', -2)) },
       {

@@ -18,13 +18,13 @@ import { placeOf, siblingText, type Character, type Family } from '@/lib/charact
 import { fateResultOf, funeralOf, lifespanOf, loveEndOf, loveTypeOf, MIDS, oldEndOf, titlesOf } from '@/lib/endings';
 import { lpcLayers, type Stage } from '@/lib/look';
 import { loadMe, saveGame, saveMeta, type SaveState } from '@/lib/save';
-import { ageOfScene, resolverOf, statusOf } from '@/lib/scenes';
+import { ageOfScene, majorOf, resolverOf, statusOf } from '@/lib/scenes';
 import { STARS } from '@/lib/stars';
 import { historyOf } from '@/lib/drama';
 import { moneyLabelOf } from '@/lib/lovemoney';
 import { commit } from '@/lib/board';
 import { AREAS, doAction, doMilestone, lifePathOf, mByParents, milestoneDue, mOptions, mPrice, mWealth, optionsOf, tallyOf, type AreaKey, type Milestone } from '@/lib/actions';
-import { cashOf, fmtCash, fmtGold, fmtVND, goldPrice, pointsOf, priceAt } from '@/lib/money';
+import { cashOf, fmtCash, fmtGold, fmtVND, goldPrice, INV_NAME, invValue, pointsOf, priceAt } from '@/lib/money';
 import { bornOf } from '@/lib/family';
 import { type FeedLine, activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
 import { useAuth } from '@/lib/useAuth';
@@ -524,7 +524,6 @@ function BirthCard({ char, family, story, onBegin }: { char: Character; family: 
               {row('Gia cảnh', `${'●'.repeat(dots)}${'○'.repeat(5 - dots)}`)}
               {row(orphan ? 'Người nuôi' : 'Bố mẹ', orphan ? 'Ông bà' : `Mẹ ${mom} tuổi · Bố ${dad} tuổi`)}
               {row('Không khí gia đình', family.parents)}
-              {row('Bạn thân sau này', story.bestie)}
             </div>
           </div>
         </div>
@@ -563,10 +562,14 @@ function FamilyPanel({ char, family, story, age, x }: { char: Character; family:
             <dd>{age + dad >= 82 ? 'Đã đi xa' : `${age + dad} tuổi`}</dd>
           </>
         )}
+        {(story.flags.includes('daihoc') || story.flags.includes('dilam')) && (
+          <>
+            <dt>Học vấn</dt>
+            <dd>{majorOf(story) ? `Đại học, ngành ${majorOf(story)!.name}` : story.flags.includes('daihoc') ? 'Đại học' : 'Đi làm sớm'}</dd>
+          </>
+        )}
         <dt>Anh chị em</dt>
         <dd>{sib.length ? sib.join(' · ') : 'Con một'}</dd>
-        <dt>Bạn thân</dt>
-        <dd>{story.bestie}</dd>
         <dt>{story.married ? (x.lg === 'm' ? 'Chồng' : 'Vợ') : 'Người yêu'}</dt>
         <dd>{p ? `${x.L(p)} · ${statusOf(story, p)}` : story.partner === 'xemmat' ? 'Người xem mắt' : 'Chưa có'}</dd>
         {story.kids > 0 && (
@@ -1220,6 +1223,12 @@ function Assets({ x, story }: { x: Ctx; story: Story }) {
   if (has('ms_nha') || has('nha_chung') || has('nha_rieng')) rows.push(['Nhà', has('nha_rieng') ? 'đứng tên mình' : has('nha_chung') || story.married ? 'đứng tên hai vợ chồng' : 'đứng tên mình']);
   if (!has('ms_nha') && story.married) rows.push(['Chỗ ở', has('o_chung') ? 'ở chung với bố mẹ' : story.flags.some((f) => f.startsWith('thue_')) ? 'đi thuê' : 'chưa tính']);
   if ((story.gold ?? 0) > 0) rows.push(['Vàng cưới', `${fmtGold(story.gold ?? 0)} (≈ ${fmtVND((story.gold ?? 0) * goldPrice(x.year))})`]);
+  for (const k of Array.from(new Set((story.inv ?? []).map((i) => i.k)))) {
+    const its = (story.inv ?? []).filter((i) => i.k === k);
+    const now = its.reduce((a, i) => a + invValue(i, x.year), 0);
+    const put = its.reduce((a, i) => a + i.vnd, 0);
+    rows.push([INV_NAME[k].charAt(0).toUpperCase() + INV_NAME[k].slice(1), `≈ ${fmtVND(now)} (${now >= put ? 'lãi' : 'lỗ'} ${Math.abs(Math.round((now / put - 1) * 100))}%)`]);
+  }
   if (story.kids) rows.push(['Con', bornOf(story).map((b, i) => `${i === 0 ? 'đứa lớn' : i === 1 ? 'đứa thứ hai' : 'đứa thứ ba'} ${Math.max(0, x.age - b)} tuổi`).join(', ')]);
   if (has('ms_xe')) rows.push(['Xe', 'đã có xe riêng']);
   if (has('h_dat_mua')) rows.push(['Đất', 'một lô đất nền mua lúc sốt']);

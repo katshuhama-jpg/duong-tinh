@@ -5,7 +5,7 @@
  */
 
 import { LOVE_IDS, type Ctx, type FeedLine, type Fx, type LoveId, type Scene } from './story';
-import { fmtGold, fmtVND, priceAt, unitOf } from './money';
+import { fmtGold, fmtVND, goldPrice, INV_NAME, invValue, priceAt, unitOf, type InvKind } from './money';
 import { bornOf, eldest, goldOf, goldText, goldVND, homeOf, kidsWord, youngest } from './family';
 import { xemmatName } from './names';
 import { newsOfLoves } from './lives';
@@ -62,7 +62,7 @@ function lines(x: Ctx): string[] {
             : pick(x, 'vc', [`Có những tuần hai người chỉ nói với nhau về tiền điện, ${x.s.kids && kidAge(x) < 22 ? 'tiền học' : 'tiền chợ'}.`, `${sp(x)} ${x.age < 58 ? 'về muộn' : 'ngồi quán chè đầu ngõ đến tối mới về'}. ${x.me} cũng không hỏi nữa.`, `Hai người ăn cơm mỗi người một góc, mỗi người một cái điện thoại.`, `Ngày giỗ bên nội, ${sp(x)} viện cớ bận không về.`]),
       );
   } else
-    out.push(pick(x, 'don', [`Vẫn một mình. Cuối tuần đi cà phê với ${x.s.bestie}.`, `Một mình mà không buồn: tự nấu ăn, tự đi du lịch, tự sửa bóng đèn.`, `${x.s.bestie} hỏi: "Định một mình đến bao giờ?" ${x.me} cười cho qua.`, `Nuôi một con mèo. Tối về có đứa đợi cửa.`, `Đăng ký học vẽ buổi tối. Lớp toàn người lạ, vui hơn tưởng.`, x.age < 45 ? `Đám cưới bạn bè nhiều đến mức có hẳn một ngăn tủ để phong bì.` : `Đám cưới con của bạn bè, năm nào cũng vài đám. ${x.me} đi một mình.`]));
+    out.push(pick(x, 'don', [`Vẫn một mình. Cuối tuần ngồi cà phê một mình, đọc sách.`, `Một mình mà không buồn: tự nấu ăn, tự đi du lịch, tự sửa bóng đèn.`, `Đồng nghiệp hỏi: "Định một mình đến bao giờ?" ${x.me} cười cho qua.`, `Nuôi một con mèo. Tối về có đứa đợi cửa.`, `Đăng ký học vẽ buổi tối. Lớp toàn người lạ, vui hơn tưởng.`, x.age < 45 ? `Đám cưới bạn bè nhiều đến mức có hẳn một ngăn tủ để phong bì.` : `Đám cưới con của bạn bè, năm nào cũng vài đám. ${x.me} đi một mình.`]));
   // con: theo tuổi thật của từng đứa
   const k = kidAge(x);
   const born = bornOf(x.s);
@@ -239,10 +239,10 @@ export function midlifeAt(age: number, x: Ctx, next: string, feedOnly = false): 
     return {
       ...base,
       title: 'Mai mối',
-      who: (cx) => old ?? (cx.c.gender === 'f' ? 'bestie' : 'bestie'),
+      who: () => old ?? null,
       bg: () => ({ place: 'quan', time: 'day' }),
       text: (cx) => [
-        `${cx.s.bestie} hẹn đi cà phê, rồi "tình cờ" có một người ngồi sẵn ở bàn.`,
+        `Một đồng nghiệp hẹn đi cà phê, rồi "tình cờ" có một người ngồi sẵn ở bàn.`,
         ...(old
           ? [cx.has(`vccu_${old}`) ? `Người ấy là ${cx.L(old)}, người từng là ${cx.lg === 'm' ? 'chồng' : 'vợ'} của ${cx.me}.${cx.s.kids ? ` ${bornOf(cx.s).length > 1 ? 'Các con' : 'Con'} ngồi bàn bên, giả vờ không nhìn.` : ''}` : `Người ấy hóa ra là ${cx.L(old)}. ${cx.age} tuổi rồi, cả hai đều vẫn một mình.`]
           : ['Người lạ, nói chuyện được, cũng hay cười.']),
@@ -521,6 +521,38 @@ const BRANCHES: Branch[] = [
     }),
   },
   {
+    // tiền để dành: làm gì với số tiền đang có (đất, vàng, chứng khoán, tiền ảo, tiết kiệm, tiêu)
+    id: 'br_tien',
+    due: (x) => {
+      const working = x.age >= 22 || x.has('dilam');
+      const last = Math.max(-99, ...x.s.flags.filter((g) => /^tien_\d+$/.test(g)).map((g) => Number(g.slice(5))));
+      return working && x.age >= 23 && x.age <= 70 && x.age - last >= 5 && (cash(x) >= U(x) * 6 || (x.s.inv ?? []).length > 0);
+    },
+    scene: (x, base) => ({
+      ...base,
+      title: 'Tiền để dành',
+      who,
+      bg: () => ({ place: 'nha', time: 'night' }),
+      text: (cx) => [
+        `Trong tài khoản có ${fmtVND(Math.max(0, cash(cx)))}.${holdText(cx)}`,
+        `${cx.s.married ? `${sp(cx)} hỏi` : 'Tự hỏi'}: "Tiền này để làm gì?"`,
+      ],
+      choices: [0, 1, 2].map(
+        (i): import('./story').Choice => ({
+          t: (cx) => moneyOpts(cx)[i]?.t ?? '',
+          if: (cx) => !!moneyOpts(cx)[i],
+          do: (fx, cx) => {
+            // chốt lựa chọn trước khi tiền đổi (lựa chọn phụ thuộc số tiền đang có)
+            const o = moneyOpts(cx)[i];
+            fx.flag(`tien_${cx.age}`);
+            o.do(fx, cx);
+            if (o.note) fx.say(o.note);
+          },
+        }),
+      ),
+    }),
+  },
+  {
     // trả góp nhà: lãi suất tăng
     id: 'br_laisuat',
     due: (x) => since(x, 'nha_gop_') >= 4 && !x.has('br_laisuat'),
@@ -721,6 +753,65 @@ const BRANCHES: Branch[] = [
 ];
 
 /** ngã rẽ sau cưới đến hạn ở tuổi này */
+/** những khoản đang giữ, giá hôm nay */
+function holdText(x: Ctx) {
+  const parts: string[] = [];
+  const kinds = Array.from(new Set((x.s.inv ?? []).map((i) => i.k)));
+  for (const k of kinds) {
+    const its = (x.s.inv ?? []).filter((i) => i.k === k);
+    const put = its.reduce((a, i) => a + i.vnd, 0);
+    const now = its.reduce((a, i) => a + invValue(i, x.year), 0);
+    const pct = Math.round((now / put - 1) * 100);
+    parts.push(`${INV_NAME[k]} ${k === 'tk' ? 'gửi' : 'mua'} năm ${its[0].y} (giờ khoảng ${fmtVND(now)}, ${pct >= 0 ? 'lãi' : 'lỗ'} ${Math.abs(pct)}%)`);
+  }
+  if ((x.s.gold ?? 0) > 0) parts.push(`${fmtGold(x.s.gold ?? 0)} vàng (khoảng ${fmtVND((x.s.gold ?? 0) * goldPrice(x.year))})`);
+  return parts.length ? ` Đang giữ: ${parts.join('; ')}.` : '';
+}
+/** kênh đầu tư thời thượng của năm ấy (ai cũng bàn) */
+function hotOf(x: Ctx): { k: InvKind | 'vang'; t: string; note: string } {
+  const y = x.year;
+  if (y >= 2006 && y <= 2007) return { k: 'ck', t: 'Đổ vào chứng khoán, cả cơ quan đang lãi gấp đôi', note: '🦋 Chứng khoán năm ấy, ai cũng thấy mình là thiên tài.' };
+  if (y >= 2008 && y <= 2012) return { k: 'vang', t: 'Mua vàng tích trữ, giá vàng đang lên từng ngày', note: '🦋 Vàng cất đáy tủ, ngủ ngon hơn.' };
+  if (y === 2017 || y === 2021) return { k: 'coin', t: 'Mua tiền ảo, đồng nghiệp khoe lãi mấy chục lần', note: '🦋 Biểu đồ xanh đỏ nhảy cả đêm.' };
+  if ((y >= 2020 && y <= 2021) || (y >= 2024 && y <= 2026)) return { k: 'ck', t: 'Mở tài khoản chứng khoán, thị trường đang nóng', note: '🦋 Mở app xem giá mỗi giờ nghỉ trưa.' };
+  if (y >= 2022 && y <= 2023) return { k: 'vang', t: 'Mua vàng, thời buổi bất ổn giữ vàng cho chắc', note: '🦋 Vàng cất đáy tủ, ngủ ngon hơn.' };
+  if (y > 2026) return [{ k: 'dat' as const, t: 'Mua đất vùng ven, đường sắp mở', note: '🦋 Năm năm nữa xem đất có lên như lời đồn.' }, { k: 'ck' as const, t: 'Mua cổ phiếu công ty công nghệ', note: '🦋 Mở app xem giá mỗi giờ nghỉ trưa.' }, { k: 'coin' as const, t: 'Mua tiền ảo thế hệ mới', note: '🦋 Biểu đồ xanh đỏ nhảy cả đêm.' }][x.age % 3];
+  return { k: 'dat', t: y < 2000 ? 'Mua một mảnh đất ven đô, cỏ mọc cao quá đầu' : 'Mua đất nền vùng ven, môi giới bảo "chỉ có lên"', note: '🦋 Năm năm nữa xem đất có lên như lời đồn.' };
+}
+type MOpt = { t: string; note?: string; do: (fx: Fx, x: Ctx) => void };
+/** ba lựa chọn với tiền: bán khoản đang giữ (nếu có), bỏ vào kênh đang nóng (hoặc gửi tiết kiệm), tiêu cho người thân */
+function moneyOpts(x: Ctx): MOpt[] {
+  const half = Math.max(U(x) * 3, Math.round(cash(x) / 2));
+  const out: MOpt[] = [];
+  const kinds = Array.from(new Set((x.s.inv ?? []).map((i) => i.k)));
+  if (kinds.length) {
+    const best = kinds.sort((a, b) => {
+      const v = (k: InvKind) => (x.s.inv ?? []).filter((i) => i.k === k).reduce((s, i) => s + invValue(i, x.year), 0);
+      return v(b) - v(a);
+    })[0];
+    out.push({
+      t: `Bán ${INV_NAME[best]} (được khoảng ${fmtVND((x.s.inv ?? []).filter((i) => i.k === best).reduce((s, i) => s + invValue(i, x.year), 0))})`,
+      do: (fx) => void fx.sellInv(best),
+      note: '🦋 Chốt lại một khoản. Tiền về tài khoản.',
+    });
+  }
+  if (cash(x) >= U(x) * 4) {
+    const h = hotOf(x);
+    out.push({
+      t: `${h.t} (${fmtVND(half)})`,
+      do: (fx, cx) => (h.k === 'vang' ? (fx.cash(-half), fx.gold(Math.max(1, Math.floor(half / goldPrice(cx.year))))) : fx.invest(h.k, half), fx.stat('noi', 2)),
+      note: h.note,
+    });
+    if (!kinds.length) out.push({ t: `Gửi tiết kiệm ngân hàng (${fmtVND(half)}), lãi đều mà chắc`, do: (fx) => fx.invest('tk', half), note: `🦋 Chuyển ${fmtVND(half)} vào sổ tiết kiệm. Không giàu nhanh, nhưng không mất ngủ.` });
+  }
+  out.push(
+    x.s.married
+      ? { t: x.s.kids ? 'Đưa cả nhà đi chơi xa một chuyến' : `Đưa ${sp(x)} đi chơi xa một chuyến`, do: (fx, cx) => (fx.cash(-U(cx) * 3), lv(fx, cx, 8), cx.s.kids ? fx.rel('con', 6) : fx.stat('tam', 4), pid(cx) && fx.photo({ who: pid(cx)!, place: 'Chuyến đi xa', bg: { place: 'congvien', time: 'dusk' }, line: 'Tiêu tiền vào kỷ niệm, không tiếc.' })), note: '▣ Một tấm ảnh vừa vào album kỷ niệm.' }
+      : { t: 'Đi du lịch, sắm sửa cho mình', do: (fx, cx) => (fx.cash(-U(cx) * 3), fx.stat('tam', 8), fx.stat('duyen', 3)) },
+  );
+  return out.slice(0, 3);
+}
+
 /** ngã rẽ là mốc chính: luôn hỏi */
 const CORE_BR = ['br_o', 'br_con', 'br_con2', 'br_mua'];
 export function branchAt(age: number, x: Ctx, next: string, coreOnly = false): Scene | null {

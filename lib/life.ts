@@ -329,7 +329,7 @@ const KID: Life[] = [
     choices: [
       { t: (x) => `Chơi cùng ${x.L('long')} và đám con trai`, do: (fx) => (fx.love('long', 6), fx.stat('noi', 4)) },
       { t: (x) => `Ngồi đọc truyện với ${x.L('minh')}`, do: (fx) => (fx.love('minh', 6), fx.stat('hoc', 3)) },
-      { t: (x) => `Chơi với ${x.s.bestie}`, do: (fx) => (fx.rel('banthan', 8), fx.stat('tam', 3)) },
+      { t: (x) => 'Chơi với lũ bạn trong xóm', do: (fx) => (fx.rel('banthan', 8), fx.stat('tam', 3)) },
     ],
   },
   {
@@ -412,7 +412,7 @@ const KID: Life[] = [
     choices: [
       { t: 'Lấy gối bịt tai, cố ngủ', do: (fx) => fx.stat('tam', -4) },
       { t: (x) => `Chạy ra ôm ${x.mom}`, do: (fx) => (fx.rel('bome', 8), fx.stat('tinh', 4)) },
-      { t: (x) => `Sang nhà ${x.s.bestie} ngủ nhờ`, do: (fx) => (fx.rel('banthan', 8), fx.stat('tam', 2)) },
+      { t: (x) => 'Sang nhà bạn ngủ nhờ', do: (fx) => (fx.rel('banthan', 8), fx.stat('tam', 2)) },
     ],
   },
   {
@@ -539,7 +539,7 @@ const TEEN: Life[] = [
     choices: [
       { t: 'Ngồi bàn đầu cho cô nhớ mặt', do: (fx) => fx.stat('hoc', 5) },
       { t: 'Ngồi bàn cuối gần cửa sổ', do: (fx) => (fx.stat('noi', 4), fx.stat('dao', 2)) },
-      { t: (x) => `Ngồi cạnh ${x.s.bestie} cho chắc`, do: (fx) => fx.rel('banthan', 8) },
+      { t: (x) => 'Ngồi cạnh đứa bạn cùng bàn cho chắc', do: (fx) => fx.rel('banthan', 8) },
     ],
   },
   {
@@ -597,7 +597,7 @@ const TEEN: Life[] = [
     who: cw(),
     text: (x) => [`${x.me} viết thư cho ${C(x)} trên giấy pơ-luya thơm, chép thêm hai câu thơ, ép một cánh phượng. Viết đi viết lại ba đêm.`],
     choices: [
-      { t: (x) => `Nhờ ${x.s.bestie} chuyển hộ`, do: (fx, x) => (fx.love(crush(x), 7), fx.rel('banthan', 4)), note: (x) => `${x.s.bestie} hứa giữ bí mật, rồi kể cho nửa lớp.` },
+      { t: (x) => 'Nhờ bạn cùng bàn chuyển hộ', do: (fx, x) => (fx.love(crush(x), 7), fx.rel('banthan', 4)), note: (x) => 'Đứa bạn hứa giữ bí mật, rồi kể cho nửa lớp.' },
       { t: 'Tự kẹp vào sách của người ấy', do: (fx, x) => (fx.love(crush(x), 10), fx.stat('noi', 3)) },
       { t: 'Cất vào ngăn kéo, không bao giờ gửi', do: (fx) => (fx.stat('tinh', 5), fx.flag('thukhonggui')), note: () => '🦋 Lá thư không gửi ấy vẫn nằm đó.' },
     ],
@@ -666,17 +666,17 @@ const TEEN: Life[] = [
     bg: bg('phong', 'night'),
     who: cw(),
     post: (x) => ({
-      author: x.s.bestie,
+      author: 'Lớp trưởng',
       time: '5 phút',
       text: `Hội lớp đi chơi 🤭 nhìn hai bạn kia kìa`,
       likes: 87,
       comments: [
         { who: 'Lớp trưởng', t: 'Ơ, có gì đó sai sai' },
-        { who: x.s.bestie, t: 'Mình chỉ chụp thôi nhé 😆' },
+        { who: 'Lớp trưởng', t: 'Mình chỉ chụp thôi nhé 😆' },
       ],
       photo: [crush(x)],
     }),
-    text: (x) => [`${x.s.bestie} đăng ảnh cả lớp, chụp đúng lúc ${x.me} đang nhìn ${C(x)}.`],
+    text: (x) => [`Lớp trưởng đăng ảnh cả lớp, chụp đúng lúc ${x.me} đang nhìn ${C(x)}.`],
     choices: [
       { t: 'Thả tim, coi như không có gì', do: (fx, x) => (fx.love(crush(x), 6), fx.stat('duyen', 2)) },
       { t: 'Nhắn bạn xóa ảnh ngay', do: (fx) => (fx.rel('banthan', -4), fx.stat('tam', 2)) },
@@ -761,7 +761,7 @@ const TEEN: Life[] = [
     to: 2018,
     title: 'Truyện ngôn tình',
     bg: bg('phong', 'night'),
-    text: (x) => [`${x.s.bestie} cho mượn một cuốn ngôn tình dày cộp: tổng tài lạnh lùng, cô gái nghèo. ${x.me} đọc trong chăn bằng đèn pin.`],
+    text: (x) => [`Đứa bạn cùng bàn cho mượn một cuốn ngôn tình dày cộp: tổng tài lạnh lùng, cô gái nghèo. ${x.me} đọc trong chăn bằng đèn pin.`],
     choices: [
       { t: 'Đọc hết trong một đêm', do: (fx) => (fx.stat('dao', 5), fx.stat('hoc', -3)) },
       { t: 'Thấy vô lý, viết truyện của riêng mình', do: (fx) => (fx.stat('hoc', 4), fx.stat('duyen', 3)) },
@@ -825,6 +825,8 @@ const TEEN: Life[] = [
   },
   {
     id: 'banthancung',
+    // bỏ phần bạn thân
+    if: () => false,
     min: 13,
     max: 17,
     title: 'Bạn thân cũng thích người ấy',
@@ -871,7 +873,7 @@ const TEEN: Life[] = [
     title: 'Clip trend',
     bg: bg('phong', 'day'),
     who: cw(),
-    text: (x) => [`${x.s.bestie} rủ quay clip theo trend đang hot. Quay xong mới thấy ${C(x)} lọt vào khung hình phía sau.`],
+    text: (x) => [`Cả nhóm rủ quay clip theo trend đang hot. Quay xong mới thấy ${C(x)} lọt vào khung hình phía sau.`],
     choices: [
       { t: 'Đăng luôn, ai xem thì xem', do: (fx, x) => (fx.stat('duyen', 5), fx.love(crush(x), 5)), note: () => 'Clip có mười nghìn lượt xem. Bình luận đầu tiên: "Người phía sau là ai vậy?"' },
       { t: 'Cắt đoạn đó đi', do: (fx) => fx.stat('tam', 2) },
@@ -1023,7 +1025,7 @@ const YOUNG: Life[] = [
     title: 'Sinh nhật mười tám',
     bg: bg('quan', 'night'),
     who: cw(),
-    text: (x) => [`Sinh nhật mười tám tuổi. ${x.s.bestie} tổ chức bất ngờ ở quán quen. ${C(x)} cũng đến, mang theo một món quà nhỏ.`],
+    text: (x) => [`Sinh nhật mười tám tuổi. Cả lớp tổ chức bất ngờ ở quán quen. ${C(x)} cũng đến, mang theo một món quà nhỏ.`],
     choices: [
       { t: 'Mở quà ngay trước mọi người', do: (fx, x) => (fx.love(crush(x), 6), fx.stat('duyen', 3)) },
       { t: 'Để về nhà mới mở', do: (fx, x) => (fx.love(crush(x), 8), fx.stat('tinh', 3)), note: () => 'Bên trong có một mảnh giấy, viết đúng một câu.' },

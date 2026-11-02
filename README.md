@@ -1,4 +1,4 @@
-# Đường Tình Rẽ Lối (Love's Altered Lines)
+# Đường Đời Rẽ Lối (Life's Altered Lines)
 
 Game pixel hẹn hò: tự tạo nhân vật, sống trọn một đời ở Việt Nam, mỗi lựa chọn rẽ ra một lối tình và một kết cục khác.
 

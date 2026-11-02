@@ -90,7 +90,7 @@ const WORLD: Ev[] = [
     tap: { goal: 24 },
     who: (x) => crushOf(x),
     post: (x) => ({
-      author: x.s.bestie,
+      author: 'Hội bạn cũ',
       time: 'Vừa xong',
       text: x.year >= 2023 ? `T1 VÔ ĐỊCH CHUNG KẾT THẾ GIỚI ${x.year}!!! Faker không bao giờ già 😭🏆` : `SKT T1 VÔ ĐỊCH CKTG ${x.year}!!! Cả quán net hét ầm lên`,
       likes: 1240,
@@ -144,7 +144,7 @@ const WORLD: Ev[] = [
     choices: [
       { t: 'Hát theo khản cổ, quay sang thì chạm mắt nhau', do: (fx, x) => (fx.love(crushOf(x), 12), fx.stat('duyen', 4), fx.stat('tam', 6)), note: (x) => `Lúc về, ${x.L(crushOf(x))} vẫn ngân nga "${HITS[x.year].song}".` },
       { t: 'Mải quay điện thoại, lỡ mất đoạn hay nhất', do: (fx, x) => (fx.love(crushOf(x), 3), fx.stat('tam', 2)) },
-      { t: 'Mua thêm vé cho hội bạn thân', do: (fx) => (fx.stat('tien', -5), fx.rel('banthan', 8)) },
+      { t: 'Mua thêm vé cho hội bạn', do: (fx) => (fx.stat('tien', -5), fx.rel('banthan', 8)) },
       { t: 'Đứng xa xa, nhường chỗ cho fan cứng', do: (fx) => fx.stat('tinh', 4) },
     ],
   },
@@ -170,9 +170,9 @@ const WORLD: Ev[] = [
     title: 'Chiếc điện thoại cảm ứng',
     bg: () => ({ place: 'quan', time: 'day' }),
     kind: 'unlock',
-    who: () => 'bestie',
+    who: () => null,
     text: (x) => [
-      `${x.s.bestie} khoe chiếc iPhone xách tay vừa mua, giá bằng mấy tháng lương. Cả bàn chuyền tay nhau, vuốt màn hình mà không cần bút.`,
+      `Một người bạn khoe chiếc iPhone xách tay vừa mua, giá bằng mấy tháng lương. Cả bàn chuyền tay nhau, vuốt màn hình mà không cần bút.`,
       `Trong túi ${x.me} là chiếc điện thoại bàn phím đã tróc sơn.`,
     ],
     choices: [
@@ -311,7 +311,7 @@ const SLOTS: Record<number, Ev[]> = {
           },
           note: (x) => `Bố gọi to: "Có bạn hỏi bài này!" - và ${x.me} nghe tiếng cười khúc khích ở đầu dây.`,
         },
-        { t: 'Đưa máy cho bạn thân nói hộ', do: (fx) => (fx.rel('banthan', 6), fx.stat('noi', 3)) },
+        { t: 'Đưa máy cho bạn nói hộ', do: (fx) => (fx.rel('banthan', 6), fx.stat('noi', 3)) },
         { t: 'Hoảng quá, cúp máy', do: (fx) => fx.stat('tam', -4) },
       ],
     },
@@ -354,7 +354,7 @@ const SLOTS: Record<number, Ev[]> = {
       to: 2100,
       title: 'Trang confession của trường',
       bg: () => ({ place: 'phong', time: 'night' }),
-      who: () => 'bestie',
+      who: () => null,
       post: (x) => ({
         author: 'Confession THCS',
         time: '2 giờ',
@@ -373,7 +373,7 @@ const SLOTS: Record<number, Ev[]> = {
       choices: [
         { t: 'Bình luận vui: "Ai đấy, ra mặt đi!"', do: (fx) => (fx.stat('duyen', 8), fx.stat('noi', 4)) },
         { t: 'Nhờ admin gỡ bài', do: (fx) => (fx.stat('tam', 4), fx.stat('hoc', 2)) },
-        { t: 'Lặng lẽ đọc hết bình luận rồi khóc', do: (fx) => (fx.stat('tam', -8), fx.rel('banthan', 6)), note: (x) => `${x.s.bestie} sang nhà, ngồi với ${x.me} đến khuya.` },
+        { t: 'Lặng lẽ đọc hết bình luận rồi khóc', do: (fx) => (fx.stat('tam', -8), fx.rel('banthan', 6)), note: (x) => `Một người bạn cũ sang nhà, ngồi với ${x.me} đến khuya.` },
       ],
     },
   ],

@@ -211,7 +211,7 @@ export function routeScene(age: number, x: Ctx, next: string): Scene {
       [
         { t: 'Giữ kín, chỉ hai người biết', do: (fx) => (go(fx, id, 2), fx.flag(`r_${id}_tin`), fx.love(id, 12)) },
         { t: 'Khuyên thật lòng, dù khó nghe', do: (fx) => (go(fx, id, 2), fx.love(id, 6), fx.stat('hoc', 3)) },
-        { t: 'Kể cho bạn thân để xin lời khuyên', do: (fx) => (go(fx, id, 2), fx.flag(`r_${id}_lo`), fx.rel('banthan', 4)), note: () => 'Bạn thân hứa giữ kín...' },
+        { t: 'Kể cho một người bạn để xin lời khuyên', do: (fx) => (go(fx, id, 2), fx.flag(`r_${id}_lo`), fx.rel('banthan', 4)), note: () => 'Bạn thân hứa giữ kín...' },
       ],
     );
 
@@ -232,7 +232,7 @@ export function routeScene(age: number, x: Ctx, next: string): Scene {
       'Biến cố',
       (cx) =>
         leaked
-          ? [butterfly(`Bí mật bạn kể cho ${cx.s.bestie} đã lan ra. Giờ ai cũng biết ${L(cx)} ${p.secret}.`), `${L(cx)} nhìn ${cx.me}: "Chỉ có ${cx.goi} biết chuyện này thôi mà."`]
+          ? [butterfly(`Bí mật bạn đem đi kể đã lan ra. Giờ ai cũng biết ${L(cx)} ${p.secret}.`), `${L(cx)} nhìn ${cx.me}: "Chỉ có ${cx.goi} biết chuyện này thôi mà."`]
           : [`Biến cố: ${p.crisis}.`, ...(cx.has(`r_${id}_ghen`) ? [butterfly(`Vì lần ghen trước, ${L(cx)} ngại tìm đến ${cx.me} lúc này.`)] : [])],
       [
         { t: 'Đứng ra bảo vệ, mặc kệ thiên hạ', if: (cx) => cx.has(`r_${id}_tin`) || cx.has(`r_${id}_hop`), do: (fx) => (go(fx, id, 4), fx.love(id, 16), fx.stat('noi', 4)), note: () => butterfly('Lựa chọn này chỉ mở vì những gì hai người đã có từ trước.') },

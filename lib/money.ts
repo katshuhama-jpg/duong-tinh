@@ -132,3 +132,42 @@ export function fmtGold(chi: number) {
   const r = chi % 10;
   return c ? `${c} cây${r ? ` ${r} chỉ` : ''}` : `${r} chỉ`;
 }
+
+/* ---------- đầu tư: đất, chứng khoán, tiền ảo, tiết kiệm (chỉ số gần đúng theo năm, sau 2026 là giả định) ---------- */
+export type InvKind = 'dat' | 'ck' | 'coin' | 'tk';
+export interface Inv {
+  k: InvKind;
+  /** năm mua */
+  y: number;
+  /** số tiền bỏ vào (VNĐ năm mua) */
+  vnd: number;
+}
+const IDX: Record<'dat' | 'ck' | 'coin', [number, number][]> = {
+  // đất ven đô
+  dat: [[1975, 0.3], [1990, 1], [1995, 3], [2000, 5], [2003, 12], [2007, 30], [2008, 26], [2011, 28], [2013, 25], [2016, 32], [2018, 50], [2021, 80], [2023, 70], [2024, 72], [2025, 78], [2026, 80]],
+  // VN-Index
+  ck: [[2000, 100], [2001, 250], [2003, 160], [2006, 750], [2007, 1000], [2008, 315], [2009, 500], [2011, 350], [2014, 550], [2017, 980], [2018, 900], [2020, 1100], [2021, 1500], [2022, 1000], [2023, 1130], [2024, 1270], [2025, 1600], [2026, 1650]],
+  // tiền ảo (giá một đồng lớn nhất, USD)
+  coin: [[2013, 800], [2014, 320], [2016, 950], [2017, 14000], [2018, 3700], [2019, 7200], [2020, 29000], [2021, 46000], [2022, 16500], [2023, 42000], [2024, 94000], [2025, 95000], [2026, 90000]],
+};
+function idxAt(k: 'dat' | 'ck' | 'coin', y: number) {
+  const t = IDX[k];
+  const last = t[t.length - 1];
+  if (y >= last[0]) {
+    const n = y - last[0];
+    // sau 2026: đất, chứng khoán lên đều; tiền ảo lên xuống theo chu kỳ bốn năm
+    if (k === 'coin') return last[1] * Math.pow(1.15, n) * [1, 1.6, 0.6, 0.9][n % 4];
+    return last[1] * Math.pow(k === 'dat' ? 1.06 : 1.07, n);
+  }
+  if (y <= t[0][0]) return t[0][1];
+  const i = t.findIndex(([a]) => a > y);
+  const [a0, v0] = t[i - 1];
+  const [a1, v1] = t[i];
+  return v0 + ((v1 - v0) * (y - a0)) / (a1 - a0);
+}
+/** giá trị khoản đầu tư ở năm y */
+export function invValue(v: Inv, y: number) {
+  if (v.k === 'tk') return v.vnd * Math.pow(1.07, Math.max(0, y - v.y));
+  return (v.vnd * idxAt(v.k, y)) / idxAt(v.k, v.y);
+}
+export const INV_NAME: Record<InvKind, string> = { dat: 'lô đất', ck: 'cổ phiếu', coin: 'tiền ảo', tk: 'sổ tiết kiệm' };
