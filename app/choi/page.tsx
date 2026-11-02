@@ -18,7 +18,7 @@ import { placeOf, siblingText, type Character, type Family } from '@/lib/charact
 import { fateResultOf, funeralOf, lifespanOf, loveEndOf, loveTypeOf, MIDS, oldEndOf, titlesOf } from '@/lib/endings';
 import { lpcLayers, type Stage } from '@/lib/look';
 import { loadMe, saveGame, saveMeta, type SaveState } from '@/lib/save';
-import { activeMission, ageOfScene, resolverOf, statusOf } from '@/lib/scenes';
+import { ageOfScene, resolverOf, statusOf } from '@/lib/scenes';
 import { STARS } from '@/lib/stars';
 import { historyOf } from '@/lib/drama';
 import { moneyLabelOf } from '@/lib/lovemoney';
@@ -343,17 +343,6 @@ function Board({
           )}
         </section>
 
-        {(() => {
-          const m = activeMission(xa);
-          return m ? (
-            <section className="card-d px-dim">
-              <p className={`mt-hint lb-mission ${m.done ? 'ok' : ''}`}>
-                ✦ Nhiệm vụ Hệ Thống: <b>{m.t}</b>
-                {m.done ? ' - đã xong!' : ''}
-              </p>
-            </section>
-          ) : null;
-        })()}
 
         <FamilyPanel char={char} family={family} story={story} age={curAge} x={x} />
 
@@ -1018,50 +1007,36 @@ function Slot({ id, x, open, onOpen }: { id: LoveId; x: Ctx; open: boolean; onOp
 /** Nút Sổ tay ở góc trên: bấm mở bảng tình cảm với những người đã gặp và chỉ số của bạn */
 /** Chọn tối đa 3 người muốn tìm hiểu */
 function PickPeople({ x, ids, onDone }: { x: Ctx; ids: LoveId[]; onDone: (ids: LoveId[]) => void }) {
-  const [sel, setSel] = useState<LoveId[]>([]);
   const done = useRef(false);
   const [view, setView] = useState<LoveId | null>(null);
-  const toggle = (id: LoveId) => setSel((v) => (v.includes(id) ? v.filter((k) => k !== id) : v.length >= 3 ? v : [...v, id]));
+  const choose = (id: LoveId) => {
+    if (done.current) return;
+    done.current = true;
+    setView(null);
+    onDone([id]);
+  };
   return (
     <div className="choices pick">
-      <p className="pk-h">
-        Đã chọn <b>{sel.length}</b>/3 · chạm vào từng người để xem hồ sơ
-      </p>
+      <p className="pk-h">Chạm vào một người để xem hồ sơ, rồi chọn</p>
       <div className="pk-grid">
         {ids.map((id) => (
-          <PickCard key={id} id={id} x={x} on={sel.includes(id)} onTap={() => setView(id)} />
+          <PickCard key={id} id={id} x={x} on={view === id} onTap={() => setView(id)} />
         ))}
       </div>
       {view &&
         createPortal(
-        <LoveDetail
-          solid
-          id={view}
-          x={x}
-          story={x.s}
-          st={`${STARS.includes(view) ? '★ Ngôi sao · ' : ''}${x.s.met.includes(view) ? statusOf(x.s, view) : 'Người mới'}`}
-          back="‹ Danh sách"
-          onClose={() => setView(null)}
-          action={
-            sel.includes(view)
-              ? { label: '✕ BỎ CHỌN', on: () => (toggle(view), setView(null)) }
-              : { label: sel.length >= 3 ? 'ĐÃ ĐỦ 3 NGƯỜI' : `♥ CHỌN TÌM HIỂU ${x.L(view).toUpperCase()}`, disabled: sel.length >= 3, on: () => (toggle(view), setView(null)) }
-          }
-        />,
-        document.body,
-      )}
-      <button
-        type="button"
-        className="btn-main"
-        disabled={!sel.length}
-        onClick={() => {
-          if (done.current) return;
-          done.current = true;
-          onDone(sel);
-        }}
-      >
-        ♥ CHỌN XONG ({sel.length}/3)
-      </button>
+          <LoveDetail
+            solid
+            id={view}
+            x={x}
+            story={x.s}
+            st={`${STARS.includes(view) ? '★ Ngôi sao · ' : ''}${x.s.met.includes(view) ? statusOf(x.s, view) : 'Người mới'}`}
+            back="‹ Quay lại"
+            onClose={() => setView(null)}
+            action={{ label: `♥ CHỌN ${x.L(view).toUpperCase()}`, on: () => choose(view) }}
+          />,
+          document.body,
+        )}
     </div>
   );
 }
@@ -1221,7 +1196,8 @@ function Notebook({ x, story }: { x: Ctx; story: Story }) {
 function Assets({ x, story }: { x: Ctx; story: Story }) {
   const cash = cashOf(story, x.year, x.age);
   const has = (f: string) => story.flags.includes(f);
-  const rows: [string, string][] = [[cash < 0 ? 'Đang nợ' : x.age < 15 ? 'Heo đất' : 'Tiền để dành', fmtCash(cash).replace('Nợ ', '')]];
+  const working = x.age >= 22 || story.flags.includes('dilam') || story.married;
+  const rows: [string, string][] = [working ? [cash < 0 ? 'Đang nợ' : 'Tiền để dành', fmtCash(cash).replace('Nợ ', '')] : ['Tiền riêng', 'chưa đi làm, chưa có']];
   if (has('ms_nha') || has('nha_chung') || has('nha_rieng')) rows.push(['Nhà', has('nha_rieng') ? 'đứng tên mình' : has('nha_chung') || story.married ? 'đứng tên hai vợ chồng' : 'đứng tên mình']);
   if (!has('ms_nha') && story.married) rows.push(['Chỗ ở', has('o_chung') ? 'ở chung với bố mẹ' : story.flags.some((f) => f.startsWith('thue_')) ? 'đi thuê' : 'chưa tính']);
   if ((story.gold ?? 0) > 0) rows.push(['Vàng cưới', `${fmtGold(story.gold ?? 0)} (≈ ${fmtVND((story.gold ?? 0) * goldPrice(x.year))})`]);

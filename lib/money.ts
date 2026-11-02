@@ -80,10 +80,10 @@ export function savingOf(s: { stats: { tien: number }; kids?: number; kidBorn?: 
   const t = s.stats.tien;
   const work = s.flags.includes('dilam');
   let k: number;
-  if (age < 6) k = 8;
-  else if (age < 15) k = 10;
-  else if (age < 18) k = 10 + (work ? 6 : 0);
-  else if (age < 22) k = work ? 8 + t / 12 : 3;
+  // chưa đi làm thì chưa có tiền riêng (góp ý chơi thử): tiền chỉ bắt đầu từ lúc đi làm
+  if (age < 22 && !work) k = 0;
+  else if (age < 18) k = 6;
+  else if (age < 22) k = 8 + t / 12;
   else if (age < 60) k = t / 7 - 1;
   else k = 1 + t / 30;
   // nuôi con: mỗi đứa tốn chừng hai phần ba khoản để dành của một năm, đến khi con lớn

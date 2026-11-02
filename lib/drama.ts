@@ -1430,7 +1430,7 @@ const MONEY: Drama[] = [
         : `Nhóm Chat "Cộng đồng tự do tài chính" khoe ảnh lãi mỗi ngày. Người quen nhắn: "Bỏ ${tien(cashNow(x) * 0.6)} vào, tháng sau lãi đủ đi du lịch."`,
     ],
     choices: [
-      { t: 'Bỏ tiền vào, một lần cho đổi đời', do: (fx, x) => { const v = cashNow(x) * 0.6; fx.lose(0.6); fx.flag('m_luadao'); loveNear(fx, x, -6); fx.say(`Ba tháng đầu lãi đều. Tháng thứ tư, ${x.year < 2017 ? 'công ty đóng cửa, diễn giả biến mất' : 'sàn đóng, nhóm Chat giải tán'}. Mất ${tien(v)}.`); }, sys: () => 'Đinh! Bản Hệ Thống đã cố nháy mắt cảnh báo. Ký chủ không nhìn.' },
+      { t: 'Bỏ tiền vào, một lần cho đổi đời', do: (fx, x) => { const v = cashNow(x) * 0.6; fx.lose(0.6); fx.flag('m_luadao'); loveNear(fx, x, -6); fx.say(`Ba tháng đầu lãi đều. Tháng thứ tư, ${x.year < 2017 ? 'công ty đóng cửa, diễn giả biến mất' : 'sàn đóng, nhóm Chat giải tán'}. Mất ${tien(v)}.`); }, sys: () => 'Đinh! Bản' },
       { t: 'Hỏi thêm người hiểu biết rồi từ chối', do: (fx) => (fx.stat('hoc', 4), fx.stat('tam', 2)), note: () => 'Một năm sau, báo đưa tin cả đường dây bị bắt.' },
       { t: 'Bỏ một ít cho biết', do: (fx) => (fx.lose(0.15), fx.stat('hoc', 2)) },
     ],

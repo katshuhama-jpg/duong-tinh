@@ -24,7 +24,8 @@ const pick = <T,>(x: Ctx, k: string, list: T[]) => {
 };
 /** tuổi đứa lớn (theo năm con thật sự chào đời) */
 const kidAge = eldest;
-const ANNIV = [1, 5, 10, 15, 20, 30, 40];
+// kỷ niệm ngày cưới phải chọn: ít thôi cho đời trôi nhanh
+const ANNIV = [1, 10, 20, 30, 40];
 const lv = (fx: Fx, x: Ctx, d: number) => (pid(x) ? fx.love(pid(x)!, d) : fx.stat('tam', Math.round(d / 2)));
 
 function lines(x: Ctx): string[] {
@@ -61,7 +62,7 @@ function lines(x: Ctx): string[] {
             : pick(x, 'vc', [`Có những tuần hai người chỉ nói với nhau về tiền điện, ${x.s.kids && kidAge(x) < 22 ? 'tiền học' : 'tiền chợ'}.`, `${sp(x)} ${x.age < 58 ? 'về muộn' : 'ngồi quán chè đầu ngõ đến tối mới về'}. ${x.me} cũng không hỏi nữa.`, `Hai người ăn cơm mỗi người một góc, mỗi người một cái điện thoại.`, `Ngày giỗ bên nội, ${sp(x)} viện cớ bận không về.`]),
       );
   } else
-    out.push(pick(x, 'don', [`Vẫn một mình. Cuối tuần đi cà phê với ${x.s.bestie}.`, `Một mình mà không buồn: tự nấu ăn, tự đi du lịch, tự sửa bóng đèn.`, `${x.s.bestie} hỏi: "Định một mình đến bao giờ?" ${x.me} cười cho qua.`, `Nuôi một con mèo. Tối về có đứa đợi cửa.`, `Đăng ký học vẽ buổi tối. Lớp toàn người lạ, vui hơn tưởng.`, `Đám cưới bạn bè nhiều đến mức có hẳn một ngăn tủ để phong bì.`]));
+    out.push(pick(x, 'don', [`Vẫn một mình. Cuối tuần đi cà phê với ${x.s.bestie}.`, `Một mình mà không buồn: tự nấu ăn, tự đi du lịch, tự sửa bóng đèn.`, `${x.s.bestie} hỏi: "Định một mình đến bao giờ?" ${x.me} cười cho qua.`, `Nuôi một con mèo. Tối về có đứa đợi cửa.`, `Đăng ký học vẽ buổi tối. Lớp toàn người lạ, vui hơn tưởng.`, x.age < 45 ? `Đám cưới bạn bè nhiều đến mức có hẳn một ngăn tủ để phong bì.` : `Đám cưới con của bạn bè, năm nào cũng vài đám. ${x.me} đi một mình.`]));
   // con: theo tuổi thật của từng đứa
   const k = kidAge(x);
   const born = bornOf(x.s);
@@ -114,14 +115,14 @@ export function annivAgeIn(x: { s: { married: boolean; marriedAge?: number | nul
 }
 
 /** Năm giữa đời ở tuổi `age`; `next` là cảnh thật ở phía sau */
-export function midlifeAt(age: number, x: Ctx, next: string): Scene | null {
+export function midlifeAt(age: number, x: Ctx, next: string, feedOnly = false): Scene | null {
   const annivNow = x.s.married && ANNIV.includes(ym(x)) && !x.has(`kn_${ym(x)}`);
   if ((age < 27 && !annivNow) || age > 74) return null;
   const chapter = age < 30 ? 'Tuổi trẻ' : age < 60 ? 'Lập gia đình' : 'Tuổi già';
   const base = { id: `ml@${age}`, age, chapter, next };
 
   // kỷ niệm ngày cưới: một buổi hẹn hò lại
-  if (x.s.married && ANNIV.includes(ym(x)) && !x.has(`kn_${ym(x)}`)) {
+  if (!feedOnly && x.s.married && ANNIV.includes(ym(x)) && !x.has(`kn_${ym(x)}`)) {
     const n = ym(x);
     const prevN = ANNIV[ANNIV.indexOf(n) - 1];
     const room = cash(x) >= U(x) * 10;
@@ -173,7 +174,7 @@ export function midlifeAt(age: number, x: Ctx, next: string): Scene | null {
 
   // con vào lớp một, con thi đại học: tiền và lựa chọn
   const k = kidAge(x);
-  if ((k === 6 || k === 18) && !x.has(`kc_${k}`)) {
+  if (!feedOnly && (k === 6 || k === 18) && !x.has(`kc_${k}`)) {
     const school = k === 6;
     return {
       ...base,
@@ -193,7 +194,7 @@ export function midlifeAt(age: number, x: Ctx, next: string): Scene | null {
   }
 
   // còn một mình: năm năm một lần, bạn bè giới thiệu hoặc người cũ quay lại
-  if (!x.s.married && !x.s.partner && age % 5 === 2 && age <= 57) {
+  if (!feedOnly && !x.s.married && !x.s.partner && age % 5 === 2 && age <= 57) {
     const old = LOVE_IDS.filter((id) => x.s.met.includes(id) && x.s.love[id] >= 35).sort((a, b) => x.s.love[b] - x.s.love[a])[0];
     return {
       ...base,
@@ -215,7 +216,7 @@ export function midlifeAt(age: number, x: Ctx, next: string): Scene | null {
   }
 
   // nợ kéo dài: vài năm một lần phải tính chuyện trả nợ
-  if (cash(x) < -U(x) * 5 && age % 6 === 3 && age < 58 && !x.has(`tn_${age}`)) {
+  if (!feedOnly && cash(x) < -U(x) * 5 && age % 6 === 3 && age < 58 && !x.has(`tn_${age}`)) {
     return {
       ...base,
       title: 'Món nợ dai dẳng',
@@ -238,7 +239,7 @@ export function midlifeAt(age: number, x: Ctx, next: string): Scene | null {
   }
 
   // sắp về hưu mà còn nợ: phải khép món nợ lại, không để sang tuổi già
-  if (cash(x) < -U(x) * 2 && age >= 58 && age <= 64 && !x.has('no_xong')) {
+  if (!feedOnly && cash(x) < -U(x) * 2 && age >= 58 && age <= 64 && !x.has('no_xong')) {
     const debt = -cash(x);
     return {
       ...base,

@@ -383,11 +383,13 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
   const fb: Feedback = { notes: [], sys: [], mids: [], met: [] };
   const lg: Gender = c.gender === 'f' ? 'm' : 'f';
   const name = (id: LoveId) => LOVES[id][lg];
+  // chưa đi làm (dưới 22 tuổi, chưa có việc) thì không có tiền riêng
+  const earning = () => scene.age >= 22 || s.flags.includes('dilam') || s.married;
   const fx: Fx = {
     stat: (k, d) => {
       s.stats[k] = clamp(s.stats[k] + d);
       // tiền thật đi theo điểm Tài chính: được thì cộng, tiêu thì trừ đúng số tiền (hết tiền thì thành nợ)
-      if (k === 'tien') s.cash = (s.cash ?? 0) + d * unitOf(c.birthYear + scene.age, scene.age);
+      if (k === 'tien' && earning()) s.cash = (s.cash ?? 0) + d * unitOf(c.birthYear + scene.age, scene.age);
     },
     love: (id, d) => {
       // thêm độ thân với người chưa quen là gặp người đó
@@ -405,6 +407,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
       s.marriedAge = scene.age;
     },
     cash: (vnd) => {
+      if (!earning()) return;
       const u = unitOf(c.birthYear + scene.age, scene.age);
       s.cash = (s.cash ?? 0) + vnd;
       s.stats.tien = clamp(s.stats.tien + vnd / u);
@@ -521,8 +524,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
   }
   const note = txt(ch.note, x);
   if (note) fb.notes.unshift(note);
-  const sys = txt(ch.sys, x);
-  if (sys) fb.sys.push(sys);
+  // không còn giọng "Hệ Thống" bình luận sau mỗi lựa chọn (góp ý chơi thử: bỏ hẳn Hệ Thống)
   s.path.push({ scene: scene.id, age: scene.age, title: txt(scene.title, x0), choice: txt(ch.t, x0) });
   s.peak = Math.max(s.peak ?? 0, activeOf(s).filter((id) => s.love[id] >= 50).length);
 
@@ -557,7 +559,10 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
 }
 
 export function visibleChoices(scene: Scene, x: Ctx) {
-  return scene.choices.filter((ch) => !ch.if || ch.if(x));
+  const v = scene.choices.filter((ch) => !ch.if || ch.if(x));
+  // gọn kiểu "đọc và bấm": cảnh thường nhiều nhất 3 lựa chọn (cảnh chat có hẹn giờ, quẹt, chạm giữ nguyên)
+  const plain = !scene.kind || scene.kind === 'talk' || scene.kind === 'call' || scene.kind === 'cheer';
+  return plain && !scene.timer && v.length > 3 ? v.slice(0, 3) : v;
 }
 
 /** Những cảnh quan trọng không tự chọn hộ khi tua nhanh (cầu hôn, cưới, người cũ) */

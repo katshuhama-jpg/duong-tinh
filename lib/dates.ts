@@ -297,7 +297,7 @@ export function dateStep(step: 2 | 3 | 4, age: number, n: number, id: LoveId, af
 }
 
 /** chụp ảnh buổi hẹn; thân đủ thì nhận kỷ vật (chỉ một lần mỗi người) */
-function snap(fx: Fx, x: Ctx, id: LoveId, key: string, line: string) {
+export function snap(fx: Fx, x: Ctx, id: LoveId, key: string, line: string) {
   const F = FLAVOR[id];
   const place = x.has(`dspot_${key}`) ? F.spot(x.year) : 'Buổi hẹn cuối tuần';
   fx.photo({ who: id, place, bg: x.has(`dspot_${key}`) ? F.spotBg : { place: 'quan', time: 'dusk' }, line });
@@ -316,9 +316,10 @@ export const spotChoice = (age: number, n: number, id: LoveId): Choice => ({
   do: (fx, x) => {
     fx.flag(`dspot_${age}#${n}:${id}`);
     // chỗ riêng chỉ thật sự có nghĩa khi đã đủ thân
-    if (x.s.love[id] >= 40) (fx.love(id, 12), fx.say(`Chỗ ${x.L(id)} thích nhất. ${Up(x.ay)} cười suốt buổi.`));
-    else (fx.love(id, 5), fx.say(`${x.L(id)} hơi bất ngờ: "Sao biết chỗ này?" Vui, nhưng còn ngại.`));
+    if (x.s.love[id] >= 40) (fx.love(id, 14), fx.say(`Chỗ ${x.L(id)} thích nhất. ${Up(x.ay)} cười suốt buổi.`));
+    else (fx.love(id, 6), fx.say(`${x.L(id)} hơi bất ngờ: "Sao biết chỗ này?" Vui, nhưng còn ngại.`));
     if (x.s.partner && x.s.partner !== id) fx.flag(`len_${age}_${n}`);
+    snap(fx, x, id, `${age}#${n}:${id}`, 'Chỗ riêng của hai người.');
   },
 });
 

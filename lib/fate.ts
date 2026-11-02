@@ -100,6 +100,7 @@ export function newStory(f: Fate, first: string): Story {
     love: Object.fromEntries(LOVE_IDS.map((id) => [id, 0])) as StoryCore['love'],
     rel: { bome, banthan: 40, con: 0 },
     flags: [],
+    cash: 0,
     partner: null,
     married: false,
     marriedAge: null,

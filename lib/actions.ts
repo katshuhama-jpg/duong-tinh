@@ -329,7 +329,8 @@ export const mWealth = (m: Milestone, x: Ctx) => (mByParents(m) ? priceAt(FAMILY
 export const mPriceText = (v: number) => fmtVND(v);
 
 export function mOptions(m: Milestone, x: Ctx) {
-  return m.opts.filter((o) => x.year >= (o.y0 ?? 0) && x.year <= (o.y1 ?? 9999) && (!o.when || o.when(x)));
+  // nhiều nhất 3 lựa chọn mỗi mốc
+  return m.opts.filter((o) => x.year >= (o.y0 ?? 0) && x.year <= (o.y1 ?? 9999) && (!o.when || o.when(x))).slice(0, 3);
 }
 const mDone = (s: Story, m: Milestone) => s.flags.includes(`ms_done_${m.id}`);
 /** mốc đang chờ chọn ở tuổi này (mốc gần nhất đã tới mà chưa chọn, chưa sang mốc sau) */
