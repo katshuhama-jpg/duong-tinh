@@ -334,8 +334,8 @@ export function mOptions(m: Milestone, x: Ctx) {
 }
 const mDone = (s: Story, m: Milestone) => s.flags.includes(`ms_done_${m.id}`);
 /** mốc đang chờ chọn ở tuổi này (mốc gần nhất đã tới mà chưa chọn, chưa sang mốc sau) */
-/** mốc tuổi thơ và mốc trùng với ngã rẽ sau cưới: không hỏi nữa (kiểu 1in8b: chỉ hỏi mốc chính) */
-const QUIET = ['lop1', 'cap2', 'cap3', 'oxe'];
+/** tuổi thơ chỉ hỏi 3 mốc (lớp Một, lên cấp Hai, thi cấp Ba); mốc trùng với ngã rẽ sau cưới thì không hỏi */
+const QUIET = ['oxe'];
 export function milestoneDue(s: Story, age: number): Milestone | null {
   let due: Milestone | null = null;
   MILESTONES.forEach((m, i) => {
