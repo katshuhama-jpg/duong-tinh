@@ -1371,6 +1371,8 @@ export function histAt(age: number, x: Ctx, next: string): Scene | null {
     text: d.text,
     choices: d.choices.map((c) => ({ ...c, do: (fx, cx) => (fx.flag(`dr_${d.id}`), c.do?.(fx, cx)) })),
     next,
+    // thời cuộc chạm vào đời: có người thương bên cạnh thì đó là một mốc
+    core: !!x.s.partner && x.s.partner !== 'xemmat' && HIST.includes(d),
   };
 }
 
@@ -1724,5 +1726,8 @@ export function dramaAt(age: number, x: Ctx, next: string): Scene {
     call: d.call,
     choices: d.choices.map((c) => ({ ...c, do: (fx, cx) => (fx.flag(`dr_${d.id}`), c.do?.(fx, cx)) })),
     next,
+    core: CORE_DR.includes(d.id) || !!d.callback,
   };
 }
+/** chuyện là mốc của đời: người cũ, kỷ vật, bố mẹ ốm, con dẫn người yêu về */
+const CORE_DR = ['kyvat', 'kyvatcu', 'domam', 'concuoi', 'venha'];

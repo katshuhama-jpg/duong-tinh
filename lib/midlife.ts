@@ -4,7 +4,7 @@
  * con vào lớp một, con thi đại học, bạn bè giới thiệu người mới cho người còn một mình.
  */
 
-import { LOVE_IDS, type Ctx, type Fx, type LoveId, type Scene } from './story';
+import { LOVE_IDS, type Ctx, type FeedLine, type Fx, type LoveId, type Scene } from './story';
 import { fmtGold, fmtVND, priceAt, unitOf } from './money';
 import { bornOf, eldest, goldOf, goldText, goldVND, homeOf, kidsWord, youngest } from './family';
 import { xemmatName } from './names';
@@ -104,6 +104,21 @@ function lines(x: Ctx): string[] {
   return out;
 }
 
+/** khoảnh khắc ba năm một lần trong những năm tự trôi: Tết cả nhà, chuyến đi xa, chiều ở quê */
+function momentOf(x: Ctx): { bg: import('@/components/Backdrop').Bg; who: LoveId | null; cap: string; place: string } | null {
+  if (x.age % 3 !== 0 || x.age < 26) return null;
+  const p = pid(x);
+  const k = (x.age / 3 + (x.s.seed ?? 0)) % 3;
+  if (x.s.married) {
+    const kids = x.s.kids && x.age < 55 ? ` cùng ${kidsWord(x) === 'con' ? 'con' : kidsWord(x)}` : '';
+    if (k === 0) return { bg: { place: 'nha', time: 'day', tet: true }, who: p, place: 'Ảnh Tết', cap: `Ảnh cả nhà ngày Tết năm ${x.year}: ${sp(x)}${kids}, ai cũng cười hở lợi.` };
+    if (k === 1) return { bg: { place: 'congvien', time: 'dusk' }, who: p, place: 'Chuyến đi xa', cap: `Chuyến đi xa với ${sp(x)}${kids}. ${x.age >= 60 ? 'Đi chậm, nghỉ nhiều, mà vui.' : 'Hành lý đầy, ví thì nhẹ.'}` };
+    return { bg: { place: 'vuon', time: 'dusk' }, who: p, place: 'Chiều ở quê', cap: `Chiều cuối tuần về quê, ${sp(x)} ngồi nhặt rau, ${x.me} quét sân.` };
+  }
+  if (k === 0) return { bg: { place: 'pho', time: 'dusk' }, who: null, place: 'Một mình', cap: `Một mình đi ${x.year < 2005 ? 'Đà Lạt' : 'Hà Giang'} một chuyến. Ảnh nào cũng một người, mà không buồn.` };
+  return null;
+}
+
 /** kỷ niệm ngày cưới rơi vào khoảng tuổi (last, to]: trả về tuổi ấy */
 export function annivAgeIn(x: { s: { married: boolean; marriedAge?: number | null; flags: string[] } }, last: number, to: number) {
   if (!x.s.married || x.s.marriedAge == null) return null;
@@ -173,22 +188,47 @@ export function midlifeAt(age: number, x: Ctx, next: string, feedOnly = false): 
   }
 
   // con vào lớp một, con thi đại học: tiền và lựa chọn
-  const k = kidAge(x);
-  if (!feedOnly && (k === 6 || k === 18) && !x.has(`kc_${k}`)) {
+  const k0 = kidAge(x);
+  // năm con vào lớp Một / thi đại học (cho phép trễ một hai năm nếu năm ấy đã có chuyện khác)
+  const k = k0 >= 6 && k0 <= 8 && !x.has('kc_6') ? 6 : k0 >= 18 && k0 <= 20 && !x.has('kc_18') ? 18 : -1;
+  if (!feedOnly && k > 0) {
     const school = k === 6;
     return {
       ...base,
       title: school ? 'Con vào lớp Một' : 'Con thi đại học',
+      core: true,
       who: () => 'mom',
       bg: () => ({ place: 'cong', time: 'day' }),
       text: (cx) => [
-        school ? `Con tròn sáu tuổi, chuẩn bị vào lớp Một. ${cx.year >= 2010 ? 'Trường quốc tế gần nhà học phí một năm bằng một chiếc xe máy.' : 'Trường điểm trên phố phải xin mới được vào.'}` : `Con thi đại học. ${cx.year >= 2015 ? 'Con muốn đi du học, cần một khoản lớn.' : 'Con đỗ trường ở thành phố, phải thuê trọ.'}`,
+        school ? `Con chuẩn bị vào lớp Một. ${cx.year >= 2010 ? 'Trường quốc tế gần nhà học phí một năm bằng một chiếc xe máy.' : 'Trường điểm trên phố phải xin mới được vào.'}` : `Con thi đại học. ${cx.year >= 2015 ? 'Con muốn đi du học, cần một khoản lớn.' : 'Con đỗ trường ở thành phố, phải thuê trọ.'}`,
         `${sp(cx)} hỏi: "Mình tính thế nào?"`,
       ],
       choices: [
         { t: school ? 'Cho con học trường tốt nhất có thể' : 'Dốc hết tiền cho con đi học', if: (cx) => cash(cx) >= U(cx) * (school ? 6 : 20), do: (fx, cx) => (fx.flag(`kc_${k}`), fx.cash(-U(cx) * (school ? 6 : 20)), fx.rel('con', 10), lv(fx, cx, 4)) },
         { t: school ? 'Học trường gần nhà, tiền để dành' : 'Vay thêm cho con đi', do: (fx, cx) => (fx.flag(`kc_${k}`), school ? fx.rel('con', 2) : (fx.cash(-U(cx) * 20), fx.rel('con', 12), fx.stat('tam', -4))) },
         { t: 'Để con tự chọn', do: (fx) => (fx.flag(`kc_${k}`), fx.rel('con', 6)) },
+      ],
+    };
+  }
+
+  // tiễn bố mẹ: một lần trong đời, khoảng năm mươi đến sáu mươi tuổi
+  const lastAge = 50 + ((x.s.seed ?? 0) % 9);
+  if (!feedOnly && x.f.parents !== 'Không còn bố mẹ' && !x.has('bm_mat') && age >= lastAge && age <= 64) {
+    const one = x.bm === 'ông bà' ? 'bà' : (x.s.seed ?? 0) % 2 ? 'mẹ' : 'bố';
+    return {
+      ...base,
+      core: true,
+      title: `Tiễn ${one}`,
+      who: (cx) => (cx.s.partner ?? null) as ReturnType<NonNullable<Scene['who']>>,
+      bg: () => ({ place: 'ngo', time: 'dusk' }),
+      text: (cx) => [
+        `${one.charAt(0).toUpperCase() + one.slice(1)} yếu dần từ đầu năm. Bác sĩ bảo cả nhà chuẩn bị tinh thần.`,
+        cx.s.rel.bome >= 60 ? `🦋 Những năm qua ${cx.me} về thăm đều, ${one} vẫn hay khoe với hàng xóm.` : `🦋 Có những cái Tết ${cx.me} không về. Giờ nghĩ lại thấy tiếc.`,
+      ],
+      choices: [
+        { t: 'Xin nghỉ việc một tháng, về túc trực', do: (fx, cx) => (fx.flag('bm_mat'), fx.rel('bome', 20), fx.stat('tam', -4), cx.s.married ? lv(fx, cx, 6) : fx.stat('tinh', 4)), note: (cx) => `${one.charAt(0).toUpperCase() + one.slice(1)} đi thanh thản, tay vẫn nắm tay ${cx.me}.${cx.s.married ? ` ${sp(cx)} lo hết mọi việc trong đám.` : ''}` },
+        { t: 'Gửi tiền về, cuối tuần mới về được', do: (fx, cx) => (fx.flag('bm_mat'), fx.cash(-U(cx) * 3), fx.rel('bome', 4), fx.stat('tam', -8)), note: () => 'Về đến nơi thì đã muộn một chuyến xe.' },
+        { t: (cx) => `Đón ${one} lên ở cùng những ngày cuối`, if: (cx) => cx.f.urban || cx.has('ms_nha'), do: (fx, cx) => (fx.flag('bm_mat'), fx.rel('bome', 16), fx.rel('con', 6), cx.s.married ? lv(fx, cx, cx.s.stats.tinh >= 50 ? 6 : -4) : fx.stat('tam', 2)) },
       ],
     };
   }
@@ -285,8 +325,21 @@ export function midlifeAt(age: number, x: Ctx, next: string, feedOnly = false): 
     title: `Năm ${x.year}`,
     bg: () => ({ place: 'nha', time: 'day' }),
     text: () => [],
-    feed: (cx) => lines(cx).map((t) => ({ age, year: cx.year, t })),
-    choices: [{ t: '▶ Sống tiếp' }],
+    feed: (cx) => {
+      const out: FeedLine[] = lines(cx).map((t) => ({ age, year: cx.year, t }));
+      const m = momentOf(cx);
+      if (m) out.push({ age, year: cx.year, t: `▣ ${m.cap}`, m });
+      return out;
+    },
+    choices: [
+      {
+        t: '▶ Sống tiếp',
+        do: (fx, cx) => {
+          const m = momentOf(cx);
+          if (m && m.who) fx.photo({ who: m.who, place: m.place, bg: m.bg, line: m.cap });
+        },
+      },
+    ],
   };
 }
 

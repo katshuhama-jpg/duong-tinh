@@ -4555,3 +4555,19 @@ p {
 .ld-act { width: 100%; margin-top: 14px; }
 .ld-veil.ld-solid { background: rgba(14, 10, 26, 0.72); }
 .nb-h .nb-x { white-space: nowrap; }
+
+/* khoảnh khắc trên sân khấu đời: chú thích ảnh, không phải bấm */
+.lb-stage { position: relative; }
+.lb-moment {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 20px;
+  margin: 0;
+  padding: 6px 10px;
+  background: rgba(14, 10, 26, 0.82);
+  color: #fbeff2;
+  font-size: 15px;
+  line-height: 1.35;
+  animation: nb-fade 0.3s steps(3) both;
+}

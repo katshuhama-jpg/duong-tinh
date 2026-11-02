@@ -26,7 +26,7 @@ import { commit } from '@/lib/board';
 import { AREAS, doAction, doMilestone, lifePathOf, mByParents, milestoneDue, mOptions, mPrice, mWealth, optionsOf, tallyOf, type AreaKey, type Milestone } from '@/lib/actions';
 import { cashOf, fmtCash, fmtGold, fmtVND, goldPrice, pointsOf, priceAt } from '@/lib/money';
 import { bornOf } from '@/lib/family';
-import { activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
+import { type FeedLine, activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
 import { useAuth } from '@/lib/useAuth';
 import { stageOf as bgStage } from '@/lib/scenebg';
 import { newsOf } from '@/lib/world';
@@ -321,7 +321,7 @@ function Board({
         </div>
       </div>
 
-      <LifeStage x={xa} char={char} story={story} age={curAge} />
+      <LifeStage x={xa} char={char} story={story} age={curAge} moment={isFeed ? lines[shown - 1]?.m : undefined} />
 
       <div className="body lb-body">
         <section className="card-d px-dim">
@@ -1474,12 +1474,13 @@ function useWalk(on: boolean, from = 60, to = 140) {
   return st;
 }
 
-function LifeStage({ x, char, story, age }: { x: Ctx; char: Character; story: Story; age: number }) {
-  const bg: Bg = { place: lifePlace(age, x), time: age % 5 === 4 ? 'dusk' : 'day' };
-  const id = `life-${age}`;
+function LifeStage({ x, char, story, age, moment }: { x: Ctx; char: Character; story: Story; age: number; moment?: FeedLine['m'] }) {
+  // khoảnh khắc: sân khấu đổi sang cảnh ấy, người ấy đứng cạnh, kèm chú thích (không phải bấm)
+  const bg: Bg = moment?.bg ?? { place: lifePlace(age, x), time: age % 5 === 4 ? 'dusk' : 'day' };
+  const id = moment ? `mo-${age}-${moment.bg.place}` : `life-${age}`;
   const feet = stg(bg, id).feet;
   const me = useMemo(() => lpcLayers(char.look, char.gender, stageOf(age)), [char, age]);
-  const pid = story.partner && story.partner !== 'xemmat' ? story.partner : null;
+  const pid = moment ? (moment.who ?? null) : story.partner && story.partner !== 'xemmat' ? story.partner : null;
   const mate = useMemo(() => (pid ? lpcLayers(CAST[pid][x.lg], x.lg, stageOf(age)) : null), [pid, x.lg, age]);
   // dựng sẵn dải hình đi và đứng hai hướng, để lúc quay đầu không bị nháy
   useEffect(() => {
@@ -1505,6 +1506,11 @@ function LifeStage({ x, char, story, age }: { x: Ctx; char: Character; story: St
           </Actor>
         )}
       </Stage>
+      {moment && (
+        <p className="lb-moment px" role="status">
+          ▣ {moment.cap}
+        </p>
+      )}
     </div>
   );
 }

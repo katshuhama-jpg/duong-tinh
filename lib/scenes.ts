@@ -6,10 +6,10 @@
 import { defaultCharacter, type Gender, type Look } from './character';
 import { CAST } from './cast';
 import type { Bg } from '@/components/Backdrop';
-import { activeOf, ctxOf, isOut, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, type Choice, type Ctx, type Fx, type LoveId, type Post, type Resolve, type Scene, type Story, type SwipeCard } from './story';
+import { activeOf, ctxOf, isOut, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, type Choice, type Ctx, type Fx, type LoveId, type Post, type Resolve, type Scene, type Story, type SwipeCard, type FeedLine } from './story';
 import { jobOf } from './profiles';
 import { dramaAt } from './drama';
-import { dateStep, snap, spotChoice } from './dates';
+import { dateStep, FLAVOR, snap, spotChoice } from './dates';
 import { newsOfLoves } from './lives';
 import { lyScene } from './life';
 import { xemmatName } from './names';
@@ -1214,7 +1214,7 @@ const DR_NEXT: Record<number, string> = {
   38: 'm40_nguoicu',
   41: 'ev@42',
   43: 'm45_viec',
-  47: 'dr@50',
+  47: 'rf@50',
   50: 'dr@53',
   53: 'dr@56',
   56: 'o60',
@@ -1243,6 +1243,7 @@ function afterTurn(age: number, n: number) {
 /** Câu hỏi ở các mốc tuổi: dừng lại, tự viết vài dòng; cuối đời đọc lại */
 const ASK: Record<number, { q: string; next: string }> = {
   15: { q: 'Người đầu tiên khiến mình đỏ mặt là ai? Vì sao?', next: 'ly@15' },
+  30: { q: 'Ba mươi tuổi. Điều gì mình chưa kịp nói với người mình thương?', next: 'dr@31' },
   25: { q: 'Nếu được nói một câu với người cũ, mình sẽ nói gì?', next: 'y25_traxanh' },
   50: { q: 'Có ai mình vẫn còn tiếc không?', next: 'dr@50' },
   70: { q: 'Nếu gặp lại chính mình năm hai mươi tuổi, mình sẽ dặn điều gì?', next: 'o75' },
@@ -1491,15 +1492,43 @@ function yearFeed(age: number): Scene {
     text: () => [],
     skip: (x) => !inPool(x).length,
     feed: (x) => {
-      const lines = inPool(x).map((id, k) => ({ age, year: x.year, t: smallOf(x, id, k) }));
+      const lines: FeedLine[] = inPool(x).map((id, k) => ({ age, year: x.year, t: smallOf(x, id, k) }));
       const news = newsOfLoves(x);
       if (news) lines.push({ age, year: x.year, t: news });
+      // khoảnh khắc trong năm: một buổi hẹn tự diễn ra, có ảnh
+      const d = dateMoment(x);
+      if (d) lines.push({ age, year: x.year, t: `▣ ${d.cap}`, m: d });
       return lines;
     },
     // không còn hỏi hẹn hò mỗi năm: năm tháng bên nhau tự làm tình cảm lớn dần
-    choices: [{ t: '▶ Sống tiếp', do: (fx, x) => inPool(x).forEach((id) => fx.love(id, x.s.married ? 2 : 8)) }],
+    choices: [
+      {
+        t: '▶ Sống tiếp',
+        do: (fx, x) => {
+          inPool(x).forEach((id) => fx.love(id, x.s.married ? 2 : 8));
+          const d = dateMoment(x);
+          if (d && d.who) fx.photo({ who: d.who, place: d.place, bg: d.bg, line: d.cap });
+        },
+      },
+    ],
     next: `tm@${age}`,
   };
+}
+
+/** buổi hẹn tự diễn ra trong năm với người mình đã chọn (không phải bấm) */
+function dateMoment(x: Ctx): { bg: Bg; who: LoveId; cap: string; place: string } | null {
+  const id = hasPartner(x) ? P(x) : inPool(x).sort((a, b) => x.s.love[b] - x.s.love[a])[0];
+  if (!id || x.s.married || away(x)) return null;
+  const F = FLAVOR[id];
+  const k = (x.age + (x.s.seed ?? 0)) % 3;
+  if (k === 0 && x.s.love[id] >= 40) return { bg: F.spotBg, who: id, place: F.spot(x.year), cap: `Cùng ${x.L(id)} ở ${F.spot(x.year).charAt(0).toLowerCase() + F.spot(x.year).slice(1)}, chỗ ${x.ay} thích nhất.` };
+  const spots: [string, Bg][] = [
+    [spotOf(x.year), { place: 'quan', time: 'dusk' }],
+    ['công viên lúc hoàng hôn', { place: 'congvien', time: 'dusk' }],
+    [x.year < 2000 ? 'phố đêm, ăn chè vỉa hè' : 'phố đêm, ăn vặt vỉa hè', { place: 'pho', time: 'night' }],
+  ];
+  const [pl, bg] = spots[(x.age + LOVE_IDS.indexOf(id)) % 3];
+  return { bg, who: id, place: pl.charAt(0).toUpperCase() + pl.slice(1), cap: `Hẹn hò với ${x.L(id)}: ${pl}.` };
 }
 
 /** cuối tuần đi chơi với ai */
@@ -2236,7 +2265,9 @@ export function resolverOf(c: Character, f: Family): Resolve {
   // nhịp kiểu 1in8b: đời tự trôi, chỉ hỏi ở những mốc chính; chuyện phụ nhiều nhất một lần mỗi ba năm
   const gated = (s: Story, age: number) => s.path.some((p) => p.age >= age - 2 && p.choice && !p.choice.startsWith('▶'));
   const gate = (sc: Scene | undefined, s: Story): Scene | undefined => {
-    if (!sc || sc.kind === 'feed' || isCore(sc.id)) return sc;
+    if (!sc || sc.kind === 'feed' || sc.core || isCore(sc.id)) return sc;
+    // đang yêu mà chưa cưới: chuyện riêng của người ấy hai năm một khúc
+    if (/^route@/.test(sc.id) && sc.age >= 18 && !s.path.some((p) => p.scene === `route@${sc.age - 1}`)) return sc;
     // tuổi thơ không hỏi gì, chỉ tự trôi
     if (sc.age < 18 || gated(s, sc.age)) return { ...sc, skip: () => true };
     return sc;
@@ -2276,7 +2307,7 @@ export function resolverOf(c: Character, f: Family): Resolve {
     if (sc.age > last + 1) {
       const ml = midlifeAt(last + 1, ctxOf(c, f, s, last + 1), id);
       // chuyện phải chọn ở giữa đời cũng theo nhịp hai năm một lần; dòng tự trôi thì luôn có
-      if (ml && (ml.kind === 'feed' || !gated(s, last + 1))) return ml;
+      if (ml && (ml.kind === 'feed' || ml.core || !gated(s, last + 1))) return ml;
       if (ml && ml.kind !== 'feed') {
         const feed = midlifeAt(last + 1, ctxOf(c, f, s, last + 1), id, true);
         if (feed) return feed;
@@ -2292,7 +2323,7 @@ export function resolverOf(c: Character, f: Family): Resolve {
 
 /** mốc chính của đời: luôn dừng hỏi (thi đại học, chọn người, tỏ tình, cầu hôn, cưới, phá sản, tuổi già) */
 function isCore(id: string) {
-  return /^(fo|ms|ch|wd|ps|bat|end)@/.test(id) || ['t17_thi', 'y27_cauhon', 'y28_hethong', 'y28_xemmat', 'y29_quaylai', 'o60', 'o75', 'rf@70'].includes(id);
+  return /^(fo|ms|ch|wd|ps|bat|end)@/.test(id) || ['t17_thi', 'y27_cauhon', 'y28_hethong', 'y28_xemmat', 'y29_quaylai', 'm40_nguoicu', 'm45_viec', 'o60', 'o75', 'rf@30', 'rf@50', 'rf@70'].includes(id);
 }
 
 /** gọn kiểu "đọc và bấm": nhiều nhất hai câu, giữ câu đầu và câu cánh bướm (nhắc lựa chọn cũ) nếu có */
@@ -2305,7 +2336,7 @@ function short(lines: string[]): string[] {
 }
 
 /** cảnh cố định nhưng không phải đời nào cũng có: tỉ lệ phần trăm được giữ lại, xáo theo từng đời để cốt truyện đỡ lặp */
-const OPTIONAL: Record<string, number> = { c8_lop: 50, c10_he: 50, t15: 60, t16_chat: 55, y23_noidoi: 55, y24_ramat: 70, m32_tet: 50, m40_nguoicu: 55, m45_viec: 50 };
+const OPTIONAL: Record<string, number> = { c8_lop: 50, c10_he: 50, t15: 60, t16_chat: 55, y23_noidoi: 55, y24_ramat: 70, m32_tet: 50 };
 const lifeRoll = (s: Story, k: string) => {
   let h = 2166136261 ^ (s.seed ?? 0);
   for (let i = 0; i < k.length; i++) h = Math.imul(h ^ k.charCodeAt(i), 16777619);
@@ -2387,7 +2418,7 @@ function innerResolver0(c: Character, f: Family): Resolve {
         return rivalScene(age);
       case 'rf':
         // câu hỏi tự viết: chỉ giữ một lần ở tuổi 70 (đỡ dài)
-        return ASK[age] ? (age === 70 ? reflectScene(age) : { ...reflectScene(age), skip: () => true }) : undefined;
+        return ASK[age] ? ([30, 50, 70].includes(age) ? reflectScene(age) : { ...reflectScene(age), skip: () => true }) : undefined;
       case 'chat':
         return chatScene(age, n, who as LoveId);
       case 'date':

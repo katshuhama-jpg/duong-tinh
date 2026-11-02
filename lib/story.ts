@@ -208,7 +208,7 @@ export interface Scene {
   /** cảnh chọn người: danh sách người có thể chọn để tìm hiểu (chọn tối đa 3) */
   cands?: (x: Ctx) => LoveId[];
   /** dòng thời gian: những năm trôi qua không cần chọn */
-  feed?: (x: Ctx) => { age: number; year: number; t: string }[];
+  feed?: (x: Ctx) => FeedLine[];
   /** cảnh ngẫm (kiểu 1 in 8 Billion): câu hỏi để người chơi tự viết */
   ask?: (x: Ctx) => string;
   /** cảnh chat: máy dùng (mặc định theo năm); 'pc' là phần mềm chat ở quán net */
@@ -234,6 +234,16 @@ export interface Scene {
   next: string | ((x: Ctx) => string);
   /** bỏ qua cảnh này nếu điều kiện đúng */
   skip?: (x: Ctx) => boolean;
+  /** mốc chính của đời: luôn dừng hỏi, không theo nhịp ba năm */
+  core?: boolean;
+}
+
+/** một dòng tự trôi; có `m` thì là một khoảnh khắc: sân khấu đổi cảnh, người ấy đứng cạnh, kèm chú thích */
+export interface FeedLine {
+  age: number;
+  year: number;
+  t: string;
+  m?: { bg: Bg; who?: LoveId | null; cap: string };
 }
 
 export interface SwipeCard {
