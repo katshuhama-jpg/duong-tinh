@@ -6,6 +6,7 @@
  * (và cả chuyện từ hồi bé) đổi tình huống, đổi lựa chọn ở chặng sau; khi vậy game ghi "🦋".
  */
 
+import { dateBeat, dateBeats } from './arcs';
 import type { Bg } from '@/components/Backdrop';
 import { activeOf, LOVES, type Choice, type Ctx, type Fx, type LoveId, type Scene } from './story';
 import { jobOf } from './profiles';
@@ -174,11 +175,17 @@ export function routeScene(age: number, x: Ctx, next: string): Scene {
     };
   }
   const { id } = r;
+  // tuyến riêng của từng người: bốn khúc khác hẳn nhau theo người (giàu, nghèo, ngôi sao, tính nết), rồi đến ngã rẽ cuối
+  const nb = dateBeats(id);
+  if (nb && r.step < nb) {
+    const sc = dateBeat(id, r.step, { id: base.id, age, chapter: base.chapter, next }, (fx) => go(fx, id, r.step + 1));
+    if (sc) return { ...sc, skip: base.skip };
+  }
   // vào tuyến muộn thì bỏ bớt chặng giữa (ra mắt, chuyến đi) để kịp ngã rẽ cuối trước 27 tuổi
-  const step = (r.step === 4 || r.step === 5) && 26 - age < 6 - r.step ? 6 : r.step;
+  const step = nb ? 6 : (r.step === 4 || r.step === 5) && 26 - age < 6 - r.step ? 6 : r.step;
   const p = P[id];
   const L = (cx: Ctx) => cx.L(id);
-  const scene = (title: string, text: (cx: Ctx) => string[], choices: Choice[]): Scene => ({ ...base, title, who: () => id, bg: () => bgs[step % bgs.length], text, choices });
+  const scene = (title: string, text: (cx: Ctx) => string[], choices: Choice[]): Scene => ({ ...base, core: true, title, who: () => id, bg: () => bgs[step % bgs.length], text, choices });
 
   if (step === 0)
     return scene(

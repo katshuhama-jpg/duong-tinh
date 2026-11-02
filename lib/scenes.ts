@@ -17,7 +17,8 @@ import { regionOf } from './names';
 import { AREA_PEOPLE, away, tallyOf, type AreaKey } from './actions';
 import { STARS, starNight, starScene } from './stars';
 import { memoLine } from './story';
-import { bankruptAt, histAt } from './drama';
+import { bankruptAt, histAt, stormy } from './drama';
+import { marriedBeat, situationAt } from './arcs';
 import { annivAgeIn, branchAt, midlifeAt } from './midlife';
 import { moneyFit, moneyLabelOf, moneyLoveScene, windfallAt } from './lovemoney';
 import type { Character, Family } from './character';
@@ -2361,9 +2362,20 @@ export function resolverOf(c: Character, f: Family): Resolve {
         const ma = midlifeAt(a, ax, id);
         if (ma) return ma;
       }
+      // chuyện riêng của người mình lấy (mỗi người một kiểu) và tình huống theo hoàn cảnh giàu, nghèo, tính nết: hai năm một lần
+      const g2 = s.path.some((p) => p.age >= a - 1 && p.choice && !p.choice.startsWith('▶'));
+      if (!g2 && a >= 20) {
+        const pb = marriedBeat(ax, a, id);
+        if (pb) return pb;
+      }
       // mốc chính sau cưới (ở đâu, con cái, nhà) luôn hỏi; ngã rẽ phụ theo nhịp ba năm
       const br = g ? null : branchAt(a, ax, id);
       if (br) return br;
+      // những lúc bình yên (đời êm) hoặc tình huống theo hoàn cảnh (đời sóng gió)
+      if (!g && a >= 20) {
+        const st = situationAt(ax, a, id, !stormy(ax));
+        if (st) return st;
+      }
     }
     // những năm giữa đời không có chuyện lớn: vẫn sống từng năm, có dòng tự trôi và thỉnh thoảng dừng hỏi
     if (sc.age > last + 1) {

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "a_ra_mat_biet_thu",
+    "group": "A",
+    "cond": "người yêu giàu, chưa cưới, ra mắt nhà",
+    "title": "Ra mắt biệt thự",
+    "text": "Mẹ {n} hỏi bố mẹ {me} làm nghề gì, nhà ở quận mấy. Cả bàn im lặng chờ.",
+    "choices": [
+      { "t": "Nói thật, ngẩng cao đầu", "result": "Bà gật nhẹ, khó đoán. {n} nắm tay {me} dưới gầm bàn.", "effect": "♥ +2, nhà họ -1" },
+      { "t": "Nói giảm đi cho đỡ ngại", "result": "Lời nói dối nhỏ, vài năm sau thành chuyện lớn.", "effect": "♥ 0, cờ: nói_dối_nhà_họ" },
+      { "t": "Hỏi lại: bác hỏi để làm gì ạ?", "result": "Bà tái mặt. {n} cười thầm, nhưng nhà họ ghi thù.", "effect": "♥ +1, nhà họ -3" }
+    ]
+  },
+  {
+    "id": "a_qua_can_ho",
+    "group": "A",
+    "cond": "người yêu giàu, đang hẹn hò, tính gia trưởng",
+    "title": "Chìa khóa căn hộ",
+    "text": "{n} tặng {me} căn hộ view sông, bảo nghỉ việc đi cho đỡ mệt.",
+    "choices": [
+      { "t": "Nhận nhà, nghỉ việc", "result": "Sống sung sướng, nhưng tiêu đồng nào cũng phải xin.", "effect": "tiền +2, tự chủ -2, cờ: bị_kiểm_soát" },
+      { "t": "Nhận nhà, vẫn đi làm", "result": "{n} phật ý: \"Em cần gì phải khổ thế?\"", "effect": "♥ -1, tự chủ +1, tiền +2" },
+      { "t": "Trả lại chìa khóa", "result": "{n} sững sờ, rồi càng nể {me} hơn.", "effect": "♥ +2, tự chủ +2" }
+    ]
+  },
+  {
+    "id": "a_hop_dong_tien_hon_nhan",
+    "group": "A",
+    "cond": "người yêu giàu, sắp cưới",
+    "title": "Hợp đồng tiền hôn nhân",
+    "text": "Luật sư nhà {n} đưa {me} bản hợp đồng 12 trang. Nếu ly hôn, {me} ra đi tay trắng.",
+    "choices": [
+      { "t": "Ký, mình cưới vì người", "result": "Nhà họ bớt nghi. {me} thấy nhẹ lòng nhưng hơi lạnh.", "effect": "nhà họ +2, tiền khi ly hôn = 0" },
+      { "t": "Đòi sửa điều khoản con cái", "result": "Đàm phán ba tuần. {me} giữ được quyền nuôi con.", "effect": "♥ -1, tự chủ +1" },
+      { "t": "Không ký, hoãn cưới", "result": "{n} buộc phải chọn giữa {me} và gia đình.", "effect": "♥ ?, cờ: thử_thách_lớn (♥ cao thì cưới, thấp thì chia tay)" }
+    ]
+  },
+  {
+    "id": "a_bi_goi_dao_mo",
+    "group": "A",
+    "cond": "người yêu nổi tiếng hoặc giàu, công khai",
+    "title": "Bị gọi đào mỏ",
+    "text": "Clip {me} đi cùng {n} lên top mạng Vèo. Bình luận: \"Đào mỏ chuyên nghiệp\".",
+    "choices": [
+      { "t": "Im lặng, sống tiếp", "result": "Bão qua sau hai tuần. Đồng nghiệp vẫn nhìn {me} hơi lạ.", "effect": "danh tiếng -1" },
+      { "t": "Đăng bài đáp trả", "result": "Viral gấp đôi. {n} bị quản lý mắng một trận.", "effect": "♥ -1, danh tiếng ±2" },
+      { "t": "Đề nghị yêu kín", "result": "{n} đồng ý. Hẹn hò thành lén lút, toàn gặp trong xe.", "effect": "♥ -1, cờ: yêu_bí_mật" }
+    ]
+  },
+  {
+    "id": "a_nguoi_tro_ly_moi",
+    "group": "A",
+    "cond": "đã cưới người giàu, 5+ năm",
+    "title": "Người trợ lý mới",
+    "text": "{n} về muộn, điện thoại luôn úp mặt bàn. Ảnh tiệc công ty có người trợ lý đứng rất sát.",
+    "choices": [
+      { "t": "Lén xem điện thoại", "result": "Thấy tin nhắn mập mờ. Hai người cãi nhau to.", "effect": "♥ -2, cờ: nghi_ngờ" },
+      { "t": "Hỏi thẳng, bình tĩnh", "result": "{n} chuyển trợ lý đi. Nhưng niềm tin đã sứt mẻ.", "effect": "♥ -1" },
+      { "t": "Thuê thám tử", "result": "Có bằng chứng. Ra tòa, {me} được chia nhiều hơn hợp đồng.", "effect": "ly hôn, tiền +3" }
+    ]
+  },
+  {
+    "id": "b_ai_tra_tien",
+    "group": "B",
+    "cond": "người yêu nghèo, đang hẹn hò",
+    "title": "Ai trả tiền",
+    "text": "Bữa lẩu 600 nghìn, {n} lục ví mãi không đủ. Nhân viên đứng chờ.",
+    "choices": [
+      { "t": "Trả hết, cười xòa", "result": "{n} cảm ơn mà mặt đỏ. Tối đó nhắn tin rất ít.", "effect": "tiền -1, sĩ diện người ấy -1" },
+      { "t": "Lén ra quầy trả trước", "result": "{n} phát hiện, vừa ngượng vừa thương.", "effect": "♥ +1, tiền -1" },
+      { "t": "Đề nghị từ nay chia đôi", "result": "Sòng phẳng. Hai người chuyển sang ăn quán vỉa hè.", "effect": "♥ +1" }
+    ]
+  },
+  {
+    "id": "b_bo_me_lac_dau",
+    "group": "B",
+    "cond": "người yêu nghèo, ra mắt nhà mình",
+    "title": "Bố mẹ lắc đầu",
+    "text": "Mẹ {me} bảo: \"Nó ở trọ, đi xe cũ, con định ăn tình yêu à?\"",
+    "choices": [
+      { "t": "Cãi mẹ, bảo vệ {n}", "result": "Mẹ giận cả tháng. {n} biết chuyện, quyết tâm làm lụng.", "effect": "♥ +2, gia đình -2" },
+      { "t": "Hẹn hai năm để chứng minh", "result": "{n} gật đầu, nhận thêm việc chạy xe ban đêm.", "effect": "cờ: hẹn_hai_năm" },
+      { "t": "Nghe mẹ, chia tay", "result": "Nhiều năm sau, {me} vẫn hay mở ảnh cũ.", "effect": "chia tay, nuối tiếc +2" }
+    ]
+  },
+  {
+    "id": "b_khoan_no_cua_bo",
+    "group": "B",
+    "cond": "người yêu nghèo, sắp cưới",
+    "title": "Khoản nợ 300 triệu",
+    "text": "Trước cưới, {me} mới biết bố {n} nợ 300 triệu vì cá độ. Chủ nợ đã tìm tới nhà.",
+    "choices": [
+      { "t": "Lấy tiền cưới trả nợ", "result": "Cưới đơn giản. Bố {n} mang ơn {me} cả đời.", "effect": "tiền -3, nhà họ +3" },
+      { "t": "Bắt {n} đứng ngoài chuyện này", "result": "{n} kẹt ở giữa. Cưới xong vẫn lén gửi tiền về.", "effect": "♥ -1, cờ: gửi_tiền_lén" },
+      { "t": "Hoãn cưới, xem đã", "result": "{n} hiểu nhưng buồn. Hai năm sau mới cưới.", "effect": "♥ -1, tuổi cưới +2" }
+    ]
+  },
+  {
+    "id": "b_ganh_ca_nha",
+    "group": "B",
+    "cond": "đã cưới người nghèo",
+    "title": "Lương ai gánh",
+    "text": "Em {n} đỗ đại học, mẹ {n} ốm nằm viện. Cả nhà trông vào lương của {me}.",
+    "choices": [
+      { "t": "Gánh hết, coi như nhà mình", "result": "Nhà {n} quý {me} như con đẻ. Tiết kiệm về 0.", "effect": "tiền -3, nhà họ +3" },
+      { "t": "Góp một phần rõ ràng", "result": "Đủ sống, nhưng chị {n} nói ra nói vào.", "effect": "tiền -1, nhà họ -1" },
+      { "t": "Để {n} tự lo nhà mình", "result": "{n} làm hai việc, gầy rộc. Hai người ít nói hẳn.", "effect": "♥ -2" }
+    ]
+  },
+  {
+    "id": "b_giau_len_doi_khac",
+    "group": "B",
+    "cond": "đã cưới người nghèo, người ấy vừa giàu lên",
+    "title": "Người ấy đổi khác",
+    "text": "Công ty của {n} gọi vốn thành công. {n} đổi xe, đổi bạn, bắt đầu chê {me} quê.",
+    "choices": [
+      { "t": "Nhắc lại những ngày ở trọ", "result": "{n} chột dạ, xin lỗi. Được vài tháng lại quên.", "effect": "♥ +1, cờ: tái_phạm" },
+      { "t": "Tự học, tự đổi mình", "result": "{me} lên đời theo kiểu của riêng mình. {n} nể lại.", "effect": "tự chủ +2, ♥ +1" },
+      { "t": "Đòi chia tài sản, ra đi", "result": "Nửa công ty đứng tên {me}. Ly hôn trong im lặng.", "effect": "ly hôn, tiền +3" }
+    ]
+  },
+  {
+    "id": "c_dinh_vi_24_7",
+    "group": "C",
+    "cond": "đang hẹn hò hoặc đã cưới, tật ghen",
+    "title": "Định vị 24/7",
+    "text": "{n} đòi bật chia sẻ vị trí, đòi xem cả tin nhắn với đồng nghiệp.",
+    "choices": [
+      { "t": "Chiều theo cho yên", "result": "Yên thật. Nhưng {me} dần mất hết bạn bè.", "effect": "bạn bè -2, cờ: kiểm_soát +1" },
+      { "t": "Đặt ranh giới rõ ràng", "result": "{n} giận một tuần, rồi đồng ý thử tin nhau.", "effect": "♥ -1, ghen -1" },
+      { "t": "Rủ đi gặp chuyên gia tâm lý", "result": "{n} lần đầu kể chuyện bố ngoại tình hồi nhỏ.", "effect": "♥ +1, ghen -2" }
+    ]
+  },
+  {
+    "id": "c_sinh_nhat_vang",
+    "group": "C",
+    "cond": "đã cưới, tật nghiện việc hoặc vô tâm",
+    "title": "Sinh nhật vắng",
+    "text": "Sinh nhật {me}, bàn đã đặt. {n} nhắn: \"Họp với sếp, ăn trước đi\".",
+    "choices": [
+      { "t": "Ăn một mình, đăng ảnh", "result": "{n} xem ảnh lúc 1 giờ sáng, không nói gì.", "effect": "♥ -1" },
+      { "t": "Mang bánh tới văn phòng", "result": "Cả phòng hát mừng. {n} ngượng, hứa bớt tăng ca.", "effect": "♥ +2, nghiện việc -1" },
+      { "t": "Hủy bàn, gọi bạn thân", "result": "Vui thật. Từ đó {me} quen sống không có {n}.", "effect": "♥ -2, độc lập +2" }
+    ]
+  },
+  {
+    "id": "c_me_giu_chia_khoa",
+    "group": "C",
+    "cond": "đã cưới, tật bám mẹ",
+    "title": "Mẹ giữ chìa khóa",
+    "text": "Mẹ {n} có chìa khóa nhà, sáng nào cũng sang dọn tủ lạnh. {n} bảo: \"Mẹ thương mà\".",
+    "choices": [
+      { "t": "Chịu đựng cho êm cửa", "result": "Mẹ {n} hài lòng. {me} thấy nhà không phải nhà mình.", "effect": "nhà họ +2, ♥ -1" },
+      { "t": "Đòi lại chìa khóa", "result": "{n} phải chọn. Lần đầu tiên {n} đứng về phía {me}.", "effect": "♥ +2, nhà họ -2" },
+      { "t": "Dọn đi thuê nhà xa", "result": "Tốn tiền, nhưng bữa tối có tiếng cười.", "effect": "tiền -1, ♥ +1" }
+    ]
+  },
+  {
+    "id": "c_cai_coc_vo",
+    "group": "C",
+    "cond": "đã cưới, tật nóng nảy",
+    "title": "Cái cốc vỡ",
+    "text": "Cãi nhau chuyện tiền, {n} ném vỡ cốc. Mảnh vỡ văng sát chân {me}.",
+    "choices": [
+      { "t": "Im lặng dọn dẹp", "result": "Lần sau, {n} ném mạnh hơn.", "effect": "cờ: nóng_nảy +1" },
+      { "t": "Nói rõ: lần nữa là đi", "result": "{n} hoảng, xin lỗi, đi học cách kiềm chế.", "effect": "♥ -1, nóng nảy -2" },
+      { "t": "Xách túi về nhà mẹ", "result": "{n} gọi 40 cuộc. {me} cần nghĩ có quay lại không.", "effect": "♥ -2, cờ: ly_thân" }
+    ]
+  },
+  {
+    "id": "c_tin_nhan_nua_dem",
+    "group": "C",
+    "cond": "đang hẹn hò hoặc đã cưới, tật lăng nhăng",
+    "title": "Tin nhắn nửa đêm",
+    "text": "Điện thoại {n} sáng lên: \"Ngủ chưa? Nhớ ghê\". Người gửi lưu tên \"Thợ sửa điều hòa\".",
+    "choices": [
+      { "t": "Hỏi thẳng tại trận", "result": "{n} chối, rồi nhận. Xin thêm một cơ hội.", "effect": "♥ -2, cờ: cơ_hội_cuối" },
+      { "t": "Chụp lại, giả vờ không biết", "result": "{me} giữ bằng chứng, chờ thời.", "effect": "cờ: giữ_bằng_chứng" },
+      { "t": "Chia tay ngay đêm đó", "result": "Đau ba tháng. Rồi thấy nhẹ cả người.", "effect": "chia tay (hoặc ly hôn nếu đã cưới)" }
+    ]
+  },
+  {
+    "id": "d_mi_tom_hai_trung",
+    "group": "D",
+    "cond": "người yêu nghèo, ở trọ",
+    "title": "Mì tôm hai trứng",
+    "text": "Mất điện giữa hè, {n} nấu mì bằng bếp cồn, nhường {me} quả trứng to hơn.",
+    "choices": [
+      { "t": "Ăn chung một bát", "result": "Mồ hôi nhễ nhại mà cười mãi.", "effect": "♥ +2" },
+      { "t": "Rủ ra ghế đá hóng gió", "result": "Hai người đếm sao, bàn chuyện sau này mua nhà.", "effect": "♥ +1, cờ: mơ_nhà" },
+      { "t": "Gắp trả quả trứng", "result": "Đẩy qua đẩy lại, trứng rơi. Cả hai phá lên cười.", "effect": "♥ +2" }
+    ]
+  },
+  {
+    "id": "d_tong_tai_vao_bep",
+    "group": "D",
+    "cond": "người yêu giàu",
+    "title": "Tổng tài vào bếp",
+    "text": "{n} cho giúp việc nghỉ, tự nấu canh chua cho {me}. Mặn chát, bếp như bãi chiến trường.",
+    "choices": [
+      { "t": "Ăn hết, khen ngon", "result": "{n} nấu thêm mười lần, lần nào cũng mặn.", "effect": "♥ +2" },
+      { "t": "Cùng nấu lại từ đầu", "result": "Ăn lúc 10 giờ tối. Bữa ngon nhất năm.", "effect": "♥ +2" },
+      { "t": "Gọi đồ ăn, giữ nồi canh", "result": "{n} lấy ảnh nồi canh hỏng làm hình nền.", "effect": "♥ +1" }
+    ]
+  },
+  {
+    "id": "d_ao_mua_doi",
+    "group": "D",
+    "cond": "người yêu nghèo hoặc trung bình, đi xe máy",
+    "title": "Áo mưa đôi",
+    "text": "Mưa trắng trời Sài Gòn, {n} dừng xe, trùm chung áo mưa cho {me}.",
+    "choices": [
+      { "t": "Ôm chặt, kệ ướt", "result": "Về tới nhà ướt sũng, mà ấm.", "effect": "♥ +2" },
+      { "t": "Trú dưới mái hiên", "result": "Hai người uống trà đá, kể chuyện hồi bé.", "effect": "♥ +1" },
+      { "t": "Hát thật to trên đường", "result": "Người đi đường ngoái nhìn. {n} hát theo, lạc tông.", "effect": "♥ +2, vui +1" }
+    ]
+  },
+  {
+    "id": "d_tet_que_nguoi_ay",
+    "group": "D",
+    "cond": "đã cưới, dịp Tết, giàu hay nghèo đều được",
+    "title": "Tết quê người ấy",
+    "text": "Tết ở quê {n}, bà nội dúi vào tay {me} phong bao đỏ: \"Người nhà bà đây rồi\".",
+    "choices": [
+      { "t": "Ngồi gói bánh chưng cùng bà", "result": "Bánh méo, bà vẫn khen. Tết sau bà hỏi {me} đầu tiên.", "effect": "nhà họ +2, ♥ +1" },
+      { "t": "Theo {n} đi chúc Tết họ hàng", "result": "Bị hỏi bao giờ có con 17 lần. Vẫn vui.", "effect": "nhà họ +1" },
+      { "t": "Trốn ra đồng ngắm khói rơm", "result": "{n} chạy theo. Hai người ngồi tới tối.", "effect": "♥ +2" }
+    ]
+  },
+  {
+    "id": "d_soi_toc_bac",
+    "group": "D",
+    "cond": "đã cưới 20+ năm, giàu hay nghèo đều được",
+    "title": "Sợi tóc bạc đầu",
+    "text": "{n} nhổ sợi tóc bạc trên đầu {me}, rồi chỉ vào đầu mình: \"Của mình còn nhiều hơn\".",
+    "choices": [
+      { "t": "Đi chụp lại ảnh cưới", "result": "Đồ cưới cũ không vừa. Ảnh vẫn đẹp nhất.", "effect": "♥ +2, tiền -1" },
+      { "t": "Pha trà ngồi ban công", "result": "Không nói gì nhiều. Thế là đủ.", "effect": "♥ +2" },
+      { "t": "Viết thư tay cho {n}", "result": "{n} cất trong ví, đọc tới mòn chữ.", "effect": "♥ +3" }
+    ]
+  }
+]
