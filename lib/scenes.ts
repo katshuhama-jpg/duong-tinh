@@ -16,7 +16,7 @@ import { xemmatName } from './names';
 import { regionOf } from './names';
 import { AREA_PEOPLE, away, tallyOf, type AreaKey } from './actions';
 import { STARS, starNight, starScene } from './stars';
-import { memoLine } from './story';
+import { cap, memoLine } from './story';
 import { bankruptAt, histAt, stormy } from './drama';
 import { marriedBeat, situationAt } from './arcs';
 import { annivAgeIn, branchAt, midlifeAt } from './midlife';
@@ -27,7 +27,7 @@ import { routeScene } from './routes';
 import { GIFT_CAT, GIFT_PREF, GIFT_VND, shelfOf } from './gifts';
 import { cashOf, fmtGold, fmtVND, pointsOf, priceAt } from './money';
 import { eldest, weddingGold } from './family';
-import { chanceLabel, chanceOf, luck, majorOf, wishesOf } from './majors';
+import { chanceLabel, chanceOf, loveLabel, luck, majorOf, wishesOf } from './majors';
 
 const CH = { tho: 'Tuổi thơ', teen: 'Tuổi teen', tre: 'Tuổi trẻ', nha: 'Lập gia đình', gia: 'Tuổi già' };
 
@@ -1661,7 +1661,7 @@ function msScene(age: number): Scene {
         ? [`Hồi cấp ba hai đứa từng "yêu" nhau bằng những mảnh giấy gấp. Rồi thi cử, mỗi người một ngả.`, `Giờ ${x.L(top(x)!)} đứng trước mặt ${x.me}, lớn hẳn, hỏi nhỏ: "Mình bắt đầu lại, nghiêm túc lần này nhé?"`]
         : [`Đi bộ về cùng ${x.L(top(x)!)}. Gió hơi lạnh. ${x.ay[0].toUpperCase() + x.ay.slice(1)} dừng lại, như chờ ${x.me} nói gì đó.`],
     choices: [
-      { t: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Gật đầu, lần này là thật' : `Tỏ tình với ${x.L(top(x)!)} · khả năng nhận lời: ${chanceLabel(confessChance(x, top(x)!))}`), do: (fx, x) => confess(fx, x, top(x)!) },
+      { t: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Gật đầu, lần này là thật' : `Tỏ tình với ${x.L(top(x)!)} · khả năng nhận lời: ${loveLabel(confessChance(x, top(x)!))}`), do: (fx, x) => confess(fx, x, top(x)!) },
       { t: 'Chờ thêm một chút', do: (fx, x) => (fx.flag(`chothem_${age}`), fx.love(top(x)!, 2)) },
     ],
     next: `ch@${age}`,
@@ -1684,7 +1684,7 @@ function proposeScene(age: number): Scene {
       `Tối nay hai người ngồi ở ${spotOf(x.year)}. Trong túi áo ${x.me} có ${x.year < 2000 ? 'một chiếc nhẫn vàng ta mua ở tiệm đầu chợ' : 'một chiếc nhẫn đã chọn ba tuần'}.`,
     ],
     choices: [
-      { t: (x) => `Cầu hôn ${x.L(P(x))} ngay tối nay · khả năng nhận lời: ${chanceLabel(proposeChance(x))}`, do: (fx, x) => (fx.flag(`ch_${age}`), myPropose(fx, x)) },
+      { t: (x) => `Cầu hôn ${x.L(P(x))} ngay tối nay · khả năng nhận lời: ${loveLabel(proposeChance(x))}`, do: (fx, x) => (fx.flag(`ch_${age}`), myPropose(fx, x)) },
       { t: 'Chưa vội, cứ yêu thêm đã', do: (fx, x) => (fx.flag(`ch_${age}`), fx.love(P(x), 2)) },
     ],
     next: (x) => (x.s.married && !x.has('cuoi_done') ? `tq@${age}` : `end@${age}`),
@@ -2391,7 +2391,15 @@ export function resolverOf(c: Character, f: Family): Resolve {
   };
   return (id, s) => {
     const sc = pick(id, s);
-    return sc && sc.kind !== 'feed' ? { ...sc, text: (x) => short(sc.text(x)) } : sc;
+    if (!sc) return sc;
+    const feed = sc.feed;
+    const msgs = sc.msgs;
+    return {
+      ...sc,
+      text: (x) => (sc.kind === 'feed' ? sc.text(x) : short(sc.text(x))).map(cap),
+      ...(feed ? { feed: (x: Ctx) => feed(x).map((l) => ({ ...l, t: cap(l.t), ...(l.m ? { m: { ...l.m, cap: cap(l.m.cap) } } : {}) })) } : {}),
+      ...(msgs ? { msgs: (x: Ctx) => msgs(x).map((m) => ({ ...m, t: cap(m.t) })) } : {}),
+    };
   };
 }
 

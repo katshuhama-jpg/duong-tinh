@@ -217,12 +217,11 @@ export const MILESTONES: Milestone[] = [
     age: 6,
     place: 'cong',
     title: () => 'Vào lớp Một',
-    sub: (x) => `Năm ${x.year}, ${x.me} sáu tuổi. Bố mẹ bàn nhau cho con học ở đâu.`,
+    sub: (x) => `Năm ${x.year}, ${x.me} sáu tuổi. Bố mẹ bàn nhau cho con học trường nào.`,
     opts: [
-      { k: 'hoc', t: 'Học trường làng gần nhà', do: (fx) => (fx.stat('hoc', 3), fx.rel('bome', 4)) },
-      { k: 'hoc', t: 'Xin vào trường điểm trên phố', vnd: 3_000_000, do: (fx) => (fx.stat('hoc', 7), fx.stat('tam', -2), fx.flag('ms_truongdiem')), note: '🦋 Học trường điểm, bạn bè sẽ khác.' },
-      { k: 'minh', t: 'Học thêm lớp vẽ, lớp đàn', vnd: 2_000_000, do: (fx) => (fx.stat('duyen', 4), fx.stat('tam', 4)) },
-      { k: 'ban', t: 'Đi học cùng đứa bạn hàng xóm', do: (fx) => (fx.rel('banthan', 7), fx.stat('tam', 2)) },
+      { k: 'nha', t: (x) => (x.f.urban ? 'Trường phường gần nhà, đi bộ năm phút' : 'Trường làng, đi bộ qua bờ ruộng'), do: (fx) => (fx.stat('hoc', 2), fx.rel('bome', 4), fx.stat('tam', 3)) },
+      { k: 'hoc', t: (x) => (x.f.urban ? 'Xin vào trường điểm của quận' : 'Lên trường điểm trên huyện, bố chở đi mỗi sáng'), vnd: 3_000_000, do: (fx) => (fx.stat('hoc', 6), fx.stat('tam', -2), fx.flag('ms_truongdiem')), note: '🦋 Học trường điểm, bạn bè sẽ khác.' },
+      { k: 'hoc', t: 'Trường tư, lớp ít học sinh', y0: 2005, vnd: 25_000_000, do: (fx) => (fx.stat('hoc', 5), fx.stat('duyen', 3), fx.flag('ms_truongtu')) },
     ],
   },
   {
@@ -230,7 +229,7 @@ export const MILESTONES: Milestone[] = [
     age: 11,
     place: 'lop',
     title: () => 'Lên cấp Hai',
-    sub: (x) => `Hết tiểu học. ${x.me} mười một tuổi, bước vào cấp Hai.`,
+    sub: (x) => `Hết tiểu học. ${x.me} mười một tuổi, vào lớp nào đây?`,
     opts: [
       {
         k: 'hoc',
@@ -240,9 +239,8 @@ export const MILESTONES: Milestone[] = [
             ? (fx.stat('hoc', 7), fx.stat('khoe', -2), fx.flag('ac_lopchon'), fx.say('Đỗ lớp chọn! Bố mẹ khoe với cả xóm.'))
             : (fx.stat('hoc', 2), fx.stat('tam', -3), fx.say('Trượt lớp chọn, học lớp thường. Không sao, bạn mới cũng vui.')),
       },
-      { k: 'hoc', t: (x) => (x.year < 2000 ? 'Học tiếng Anh ở nhà thầy giáo' : 'Học tiếng Anh ở trung tâm'), vnd: 6_000_000, do: (fx) => (fx.stat('hoc', 5), fx.flag('ac_tienganh')), note: '🦋 Tiếng Anh sẽ mở ra một cánh cửa.' },
-      { k: 'ban', t: 'Vào đội bóng, đội văn nghệ của trường', do: (fx) => (fx.stat('duyen', 4), fx.stat('khoe', 3), fx.rel('banthan', 4)) },
-      { k: 'nha', t: 'Phụ bố mẹ việc nhà, bán hàng', do: (fx) => (fx.stat('tien', 4), fx.rel('bome', 6)) },
+      { k: 'ban', t: 'Học lớp thường, cùng lũ bạn cũ', do: (fx) => (fx.stat('tam', 4), fx.rel('banthan', 5)) },
+      { k: 'hoc', t: (x) => (x.year < 2005 ? 'Lên học trường cấp hai trên thị xã' : 'Thi vào trường song ngữ'), vnd: 15_000_000, do: (fx) => (fx.stat('hoc', 4), fx.flag('ac_tienganh')), note: '🦋 Tiếng Anh sẽ mở ra một cánh cửa.' },
     ],
   },
   {
@@ -262,7 +260,6 @@ export const MILESTONES: Milestone[] = [
       },
       { k: 'minh', t: 'Thi trường công gần nhà, học nhẹ nhàng', do: (fx) => (fx.stat('hoc', 3), fx.stat('tam', 4)) },
       { k: 'hoc', t: 'Học trường tư thục', vnd: 30_000_000, do: (fx) => (fx.stat('hoc', 4), fx.stat('duyen', 3)) },
-      { k: 'tien', t: 'Vừa học vừa phụ việc kiếm tiền', do: (fx) => (fx.stat('tien', 6), fx.stat('hoc', -2)) },
     ],
   },
   {

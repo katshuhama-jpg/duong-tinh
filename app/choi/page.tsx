@@ -195,7 +195,7 @@ function Board({
   useEffect(() => {
     if (age > prevAge.current && !isFeed) {
       const n = age - prevAge.current;
-      const line = `⏩ ${n > 1 ? `${n} năm trôi qua` : 'Một năm trôi qua'}. Năm ${char.birthYear + age}, ${x.me} ${age} tuổi.`;
+      const line = `⏩ ${n > 1 ? `${n} năm trôi qua` : 'Một năm trôi qua'}. Năm ${char.birthYear + age}, bạn ${age} tuổi.`;
       setToast((t) => (t ? `${t}\n${line}`.split('\n').slice(-3).join('\n') : line));
     }
     prevAge.current = age;
@@ -267,7 +267,7 @@ function Board({
           <span>Tuổi</span>
           <b>{curAge}</b>
           <small>
-            {year} · {x.me}
+            {year} · {x.name}
              · 1 năm ≈ {Math.round(YEAR_SEC / speed)} giây
           </small>
           <Notebook x={x} story={story} onView={setPeek} />
@@ -685,7 +685,7 @@ function Play({ R, char, family, story, fb, onChoose, onNext, onFast, embedded }
           <h1 className="chc-title">{sc.chapter}</h1>
           <p className="chc-line">{openerOf(sc.chapter, x) || CH_LINE[sc.chapter]}</p>
           <p className="chc-year">
-            {x.me} · {age} tuổi · năm {x.year}
+            {x.name} · {age} tuổi · năm {x.year}
           </p>
           <button type="button" className="btn-main" onClick={() => setCard(false)}>
             ▶ VÀO CHƯƠNG
@@ -715,8 +715,8 @@ function Play({ R, char, family, story, fb, onChoose, onNext, onFast, embedded }
         {!swipe && !(embedded && (chat || call)) && (
           <Stage x={x} bg={sc.bg ? sc.bg(x) : { place: 'nha', time: 'day' }} sceneId={shownId}>
             <Actor x={whoLayers || who === 'he_thong' ? 72 : 100} feet={stg(sc.bg ? sc.bg(x) : null, shownId).feet}>
-              <Sprite layers={meLayers} scale={2} anim="idle" dir={who ? 3 : 2} dy={age < 13 ? -9 : 0} label={`${x.me}, ${age} tuổi`} />
-              <figcaption>{x.me}</figcaption>
+              <Sprite layers={meLayers} scale={2} anim="idle" dir={who ? 3 : 2} dy={age < 13 ? -9 : 0} label={`${x.name}, ${age} tuổi`} />
+              <figcaption>{x.name}</figcaption>
             </Actor>
             {who && (
               <span className="spark ts-spark" style={{ left: 196, top: stg(sc.bg ? sc.bg(x) : null, shownId).feet * 2 - 100 }} aria-hidden="true">
@@ -758,7 +758,7 @@ function Play({ R, char, family, story, fb, onChoose, onNext, onFast, embedded }
           <Phone
             key={'ph' + shownId + String(!!fb)}
             skin={sc.device?.(x) ?? skinOf(x.year)}
-            me={x.me}
+            me={x.name}
             name={whoName}
             year={x.year}
             avatar={whoLayers ? <Sprite layers={whoLayers} scale={1} anim="idle" dir={2} label="" /> : undefined}
@@ -822,7 +822,7 @@ function Play({ R, char, family, story, fb, onChoose, onNext, onFast, embedded }
         ) : sc.kind === 'hub' ? (
           <HubBoard x={x} opts={opts} onChoose={onChoose} />
         ) : (
-          !chat && !swipe && !call && !tap && <Choices key={sc.id} opts={opts.map((o) => txt(o.t, x))} onChoose={onChoose} timer={sc.timer} timeout={sc.timeout} />
+          !chat && !swipe && !call && !tap && <Choices key={sc.id} ask={askOf(sc.id, x)} opts={opts.map((o) => txt(o.t, x))} onChoose={onChoose} timer={sc.timer} timeout={sc.timeout} />
         )}
 
         {!fb && !embedded && (
@@ -890,7 +890,14 @@ function GiftShelf({ opts, onChoose }: { opts: string[]; onChoose: (i: number) =
   );
 }
 
-function Choices({ opts, onChoose, timer, timeout }: { opts: string[]; onChoose: (i: number) => void; timer?: number; timeout?: number }) {
+/** câu hỏi ngôi thứ hai trước mỗi ngã rẽ: "Hôm nay là một tối cuối thu năm 2017, bạn 22 tuổi. Bạn sẽ làm gì?" */
+const WHEN = ['một sáng đầu xuân', 'một trưa hè oi ả', 'một chiều mưa', 'một tối cuối thu', 'một sáng mùa đông', 'một ngày bình thường'];
+function askOf(id: string, x: Ctx) {
+  let h = 0;
+  for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return `Hôm nay là ${WHEN[h % WHEN.length]} năm ${x.year}, bạn ${x.age} tuổi. Bạn sẽ làm gì?`;
+}
+function Choices({ opts, onChoose, timer, timeout, ask }: { opts: string[]; onChoose: (i: number) => void; timer?: number; timeout?: number; ask?: string }) {
   const done = useRef(false);
   const pick = (i: number) => {
     if (done.current) return;
@@ -910,6 +917,7 @@ function Choices({ opts, onChoose, timer, timeout }: { opts: string[]; onChoose:
   }, [left]);
   return (
     <div className="choices">
+      {ask && <p className="ch-ask">{ask}</p>}
       {!!timer && (
         <div className="timer px" aria-label={`Còn ${Math.max(0, left)} giây`}>
           <i style={{ width: `${(100 * Math.max(0, left)) / timer}%` }} />
@@ -1551,8 +1559,8 @@ function LifeStage({ x, char, story, age, moment }: { x: Ctx; char: Character; s
     <div className={`lb-stage ${eraClass(x.year)}`}>
       <Stage x={x} bg={bg} sceneId={id}>
         <Actor x={w.x} feet={feet} style={move}>
-          <Sprite layers={me} scale={2} anim={anim} dir={w.walking ? w.dir : mate ? (mateX > w.x ? 3 : 1) : w.dir} dy={age < 13 ? -9 : 0} label={`${x.me}, ${age} tuổi`} />
-          <figcaption>{x.me}</figcaption>
+          <Sprite layers={me} scale={2} anim={anim} dir={w.walking ? w.dir : mate ? (mateX > w.x ? 3 : 1) : w.dir} dy={age < 13 ? -9 : 0} label={`${x.name}, ${age} tuổi`} />
+          <figcaption>{x.name}</figcaption>
         </Actor>
         {mate && pid && (
           <Actor x={mateX} feet={feet} style={move}>
@@ -1586,8 +1594,8 @@ function MilestoneSheet({ m, x, onPick }: { m: Milestone; x: Ctx; onPick: (i: nu
         <div className="ms-art">
           <Stage x={x} bg={bg} sceneId={`ms-${m.id}`}>
             <Actor x={100} feet={stg(bg, `ms-${m.id}`).feet}>
-              <Sprite layers={lpcLayers(x.c.look, x.c.gender, stageOf(x.age))} scale={2} anim="idle" dir={2} dy={x.age < 13 ? -9 : 0} label={`${x.me}, ${x.age} tuổi`} />
-              <figcaption>{x.me}</figcaption>
+              <Sprite layers={lpcLayers(x.c.look, x.c.gender, stageOf(x.age))} scale={2} anim="idle" dir={2} dy={x.age < 13 ? -9 : 0} label={`${x.name}, ${x.age} tuổi`} />
+              <figcaption>{x.name}</figcaption>
             </Actor>
           </Stage>
         </div>

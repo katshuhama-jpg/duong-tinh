@@ -201,7 +201,7 @@ export function midlifeAt(age: number, x: Ctx, next: string, feedOnly = false): 
       bg: () => ({ place: 'cong', time: 'day' }),
       text: (cx) => [
         school ? `Con chuẩn bị vào lớp Một. ${cx.year >= 2010 ? 'Trường quốc tế gần nhà học phí một năm bằng một chiếc xe máy.' : 'Trường điểm trên phố phải xin mới được vào.'}` : `Con thi đại học. ${cx.year >= 2015 ? 'Con muốn đi du học, cần một khoản lớn.' : 'Con đỗ trường ở thành phố, phải thuê trọ.'}`,
-        `${sp(cx)} hỏi: "Mình tính thế nào?"`,
+        cx.s.married ? `${sp(cx)} hỏi: "Mình tính thế nào?"` : `Một mình nuôi con, chuyện này ${cx.me} phải tự quyết.`,
       ],
       choices: [
         { t: school ? 'Cho con học trường tốt nhất có thể' : 'Dốc hết tiền cho con đi học', if: (cx) => cash(cx) >= U(cx) * (school ? 6 : 20), do: (fx, cx) => (fx.flag(`kc_${k}`), fx.cash(-U(cx) * (school ? 6 : 20)), fx.rel('con', 10), lv(fx, cx, 4)) },
@@ -488,7 +488,7 @@ const BRANCHES: Branch[] = [
   {
     // đứa thứ hai / thứ ba theo kế hoạch: ai trông con
     id: 'br_dua2',
-    due: (x) => x.s.kids === 1 && (x.has('con_ke2') || x.has('con_ke3')) && youngest(x) >= 2 && !x.has('br_dua2') && x.age <= 45,
+    due: (x) => x.s.married && x.s.kids === 1 && (x.has('con_ke2') || x.has('con_ke3')) && youngest(x) >= 2 && !x.has('br_dua2') && x.age <= 45,
     scene: (x, base) => ({
       ...base,
       title: 'Đứa thứ hai chào đời',
@@ -507,7 +507,7 @@ const BRANCHES: Branch[] = [
   },
   {
     id: 'br_dua3',
-    due: (x) => x.s.kids === 2 && x.has('con_ke3') && youngest(x) >= 2 && !x.has('br_dua3') && x.age <= 46,
+    due: (x) => x.s.married && x.s.kids === 2 && x.has('con_ke3') && youngest(x) >= 2 && !x.has('br_dua3') && x.age <= 46,
     scene: (x, base) => ({
       ...base,
       title: 'Đứa thứ ba',
@@ -562,7 +562,7 @@ const BRANCHES: Branch[] = [
       title: 'Lãi suất thả nổi',
       who,
       bg: () => ({ place: 'nha', time: 'night' }),
-      text: (cx) => [`Hết ưu đãi, lãi vay mua nhà nhảy lên gần gấp đôi. Mỗi tháng trả góp ngốn quá nửa lương hai vợ chồng.${cx.s.kids ? ' Con lại sắp vào học.' : ''}`],
+      text: (cx) => [`Hết ưu đãi, lãi vay mua nhà nhảy lên gần gấp đôi. Mỗi tháng trả góp ngốn quá nửa lương${cx.s.married ? ' hai vợ chồng' : ''}.${cx.s.kids ? ' Con lại sắp vào học.' : ''}`],
       choices: [
         { t: 'Cả hai làm thêm buổi tối, gồng tiếp', do: (fx, cx) => (fx.flag('br_laisuat'), fx.cash(U(cx) * 6), fx.stat('khoe', -6), lv(fx, cx, 4)), note: () => 'Ba năm không đi đâu chơi. Nhưng căn nhà vẫn là của mình.' },
         { t: 'Cho thuê bớt một phòng', do: (fx, cx) => (fx.flag('br_laisuat'), fx.cash(U(cx) * 4), lv(fx, cx, -4), fx.stat('tam', -3)) },
@@ -614,7 +614,7 @@ const BRANCHES: Branch[] = [
         who,
         bg: () => ({ place: 'quan', time: 'day' }),
         text: (cx) => [
-          good ? `Năm thứ ba, cửa hàng có khách quen, tháng nào cũng có lãi. Có người gợi ý vay thêm mở chi nhánh thứ hai.` : `Năm thứ ba, cửa hàng vẫn lỗ. Tiền vay ngân hàng đến hạn, ${sp(cx)} bắt đầu mất ngủ.`,
+          good ? `Năm thứ ba, cửa hàng có khách quen, tháng nào cũng có lãi. Có người gợi ý vay thêm mở chi nhánh thứ hai.` : `Năm thứ ba, cửa hàng vẫn lỗ. Tiền vay ngân hàng đến hạn, ${cx.s.married ? sp(cx) : cx.me} bắt đầu mất ngủ.`,
         ],
         choices: good
           ? [

@@ -214,7 +214,10 @@ export interface Ctx {
   f: Family;
   s: Story;
   /** tên gọi ngắn: chữ cuối của tên */
+  /** ngôi thứ hai: câu chuyện nói với người chơi là "bạn" */
   me: string;
+  /** tên nhân vật (để hiện trên nhãn, điện thoại...) */
+  name: string;
   age: number;
   year: number;
   /** tên người yêu theo giới */
@@ -387,7 +390,8 @@ export function ctxOf(c: Character, f: Family, s: Story, age: number): Ctx {
     c,
     f,
     s,
-    me: c.name.trim().split(/\s+/).pop() || c.name,
+    me: 'bạn',
+    name: c.name.trim().split(/\s+/).pop() || c.name,
     age,
     year: c.birthYear + age,
     L: (id) => LOVES[id][lg],
@@ -401,7 +405,9 @@ export function ctxOf(c: Character, f: Family, s: Story, age: number): Ctx {
   };
 }
 
-export const txt = (v: string | ((x: Ctx) => string) | undefined, x: Ctx) => (typeof v === 'function' ? v(x) : (v ?? ''));
+/** kể ở ngôi thứ hai: "bạn" đứng đầu câu thì viết hoa */
+export const cap = (t: string) => t.replace(/(^|[.!?…]\s+|🦋\s*|↳\s*|"|“|\(|:\s+)bạn\b/gu, '$1Bạn');
+export const txt = (v: string | ((x: Ctx) => string) | undefined, x: Ctx) => cap(typeof v === 'function' ? v(x) : (v ?? ''));
 
 function core(s: Story): StoryCore {
   // bỏ hist khi chụp ảnh trạng thái
@@ -501,7 +507,10 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
       s.loveEnd = null;
     },
     divorce: () => {
-      if (s.partner && s.partner !== 'xemmat') (fx.flag(`${s.partner}_out`), fx.flag(`vccu_${s.partner}`));
+      // ly hôn là dọn ra ở riêng: tình cảm nguội hẳn, không còn chung nhà
+      if (s.partner && s.partner !== 'xemmat') (fx.flag(`${s.partner}_out`), fx.flag(`vccu_${s.partner}`), (s.love[s.partner] = Math.min(s.love[s.partner], 25)));
+      s.flags = s.flags.filter((f) => f !== 'o_chung');
+      fx.flag('o_rieng');
       s.married = false;
       s.partner = null;
       fx.flag('lyhon');
@@ -542,7 +551,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
       if (!s.mids.includes(id)) s.mids.push(id);
       fb.mids.push(id);
     },
-    say: (t) => fb.notes.push(t),
+    say: (t) => fb.notes.push(cap(t)),
     meet: (id) => {
       if (s.met.includes(id) || s.pending === id) return;
       if (s.met.length >= MAX_LIFE) {
@@ -597,7 +606,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
     if (parts.length) fb.delta = parts.slice(0, 4).join(' · ');
     // lựa chọn lớn với một người: người ấy sẽ nhớ
     const ids = LOVE_IDS.filter((id) => Math.abs(s.love[id] - before.love[id]) >= 8 && s.met.includes(id));
-    const t0 = txt(ch.t, x0);
+    const t0 = txt(ch.t, x0).split(' · ')[0];
     if (t0 && !t0.startsWith('▶')) for (const id of ids) s.memo = [...(s.memo ?? []), { age: scene.age, who: id, t: t0, d: s.love[id] - before.love[id] }].slice(-40);
     // cảnh này đã nhắc lại một lựa chọn cũ: đánh dấu đã dùng
     const w = scene.who?.(x0);
@@ -607,7 +616,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
   const note = txt(ch.note, x);
   if (note) fb.notes.unshift(note);
   // không còn giọng "Hệ Thống" bình luận sau mỗi lựa chọn (góp ý chơi thử: bỏ hẳn Hệ Thống)
-  s.path.push({ scene: scene.id, age: scene.age, title: txt(scene.title, x0), choice: txt(ch.t, x0) });
+  s.path.push({ scene: scene.id, age: scene.age, title: txt(scene.title, x0), choice: txt(ch.t, x0).split(' · ')[0] });
   s.peak = Math.max(s.peak ?? 0, activeOf(s).filter((id) => s.love[id] >= 50).length);
 
   let next = ch.to ? txt(ch.to, x) : txt(scene.next, x);

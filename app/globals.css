@@ -4582,3 +4582,6 @@ p {
 .lb-goal-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .lb-goal-row button { font: inherit; font-size: 15px; padding: 6px 4px; background: transparent; color: var(--ink); border: 2px solid var(--line, #4a3a6a); cursor: pointer; }
 .lb-goal-row button.on { background: var(--accent); color: #211832; }
+
+/* câu hỏi ngôi thứ hai trước lựa chọn */
+.ch-ask { margin: 0 0 6px; font-size: 13px; opacity: .8; font-style: italic; }

@@ -1109,8 +1109,8 @@ const VICE: Drama[] = [
         return [
           doi
             ? `Đã hai năm ${sp(x)} ${k === 'traigai' ? 'không liên lạc với' : 'không đụng đến'} ${what}. Tối nào cũng về ăn cơm đúng bảy giờ${x.s.kids ? ', kèm con học bài' : ''}. Nhưng ${x.me} vẫn giật mình mỗi khi điện thoại ${sp(x)} sáng lên.`
-            : `Lại thêm một lần nữa. ${k === 'cobac' ? `Lần này là sổ đỏ ${x.year < 2005 ? 'mảnh đất của ' + x.bm : 'căn nhà'} đem đi cắm.` : k === 'ruou' ? 'Lần này là trận cãi nhau to nhất, đồ đạc vỡ tung tóe.' : 'Lần này người kia có bầu.'}`,
-          `${x.year < 2000 ? 'Cả họ' : x.mom === 'mẹ' ? 'Mẹ' : 'Bà'} bảo: "Đàn ${x.lg === 'm' ? 'ông' : 'bà'} ai chẳng có lúc sai, nhịn đi con." Bạn thân thì bảo: "Đi đi, đời còn dài."`,
+            : `Lại thêm một lần nữa. ${k === 'cobac' ? `Lần này là sổ đỏ ${x.year < 2005 ? 'mảnh đất của ' + x.bm : 'căn nhà'} đem đi cắm.` : k === 'ruou' ? 'Lần này là trận cãi nhau to nhất, đồ đạc vỡ tung tóe.' : (x.lg === 'm' ? 'Lần này người kia có bầu.' : `Lần này ${sp(x)} có bầu, mà không phải con của ${x.me}.`)}`,
+          `${x.year < 2000 ? 'Cả họ' : x.mom === 'mẹ' ? 'Mẹ' : 'Bà'} bảo: "Đàn ${x.lg === 'm' ? 'ông' : 'bà'} ai chẳng có lúc sai, nhịn đi con." Bạn bè thì bảo: "Đi đi, đời còn dài."`,
         ];
       },
       choices: [

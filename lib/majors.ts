@@ -9,6 +9,8 @@ export const passMark = (y: number) => (y < 2000 ? 64 : y < 2015 ? 55 : 50);
 
 /** khả năng đỗ (0-1) khi sức `score` thi vào chỗ cần `req` */
 export const chanceOf = (score: number, req: number) => Math.max(0.03, Math.min(0.97, 0.5 + (score - req) / 25));
+/** khả năng người ấy nhận lời */
+export const loveLabel = (p: number) => (p >= 0.85 ? 'gần như chắc' : p >= 0.6 ? 'khá cao' : p >= 0.4 ? 'năm ăn năm thua' : p >= 0.2 ? 'hơi khó' : 'khó lắm');
 export const chanceLabel = (p: number) => (p >= 0.85 ? 'chắc đỗ' : p >= 0.6 ? 'khá chắc' : p >= 0.4 ? 'năm ăn năm thua' : p >= 0.2 ? 'hơi xa' : 'xa vời');
 /** số may rủi cố định theo đời và theo kỳ thi (quay lại vẫn ra cùng kết quả) */
 export function luck(x: Ctx, key: string) {
