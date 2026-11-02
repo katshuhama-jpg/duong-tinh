@@ -147,11 +147,31 @@ export const GOALS: { k: GoalKey; t: string; icon: string; d: string; from: numb
   { k: 'nha', t: 'Gia đình', icon: '⌂', d: 'Bố mẹ, vợ chồng, con cái gần hơn', from: 6 },
   { k: 'minh', t: 'Bản thân', icon: '✦', d: 'Sức khỏe, Vui vẻ tăng', from: 6 },
 ];
-/** mỗi năm sống theo mục tiêu */
+/** trần năng lực bẩm sinh của từng đời: người thường 70-80, giỏi 82-88, xuất chúng mới 90 trở lên */
+export function talentOf(s: { seed?: number }, k: StatKey) {
+  let h = 2166136261 ^ (s.seed ?? 0);
+  for (let i = 0; i < k.length; i++) h = Math.imul(h ^ k.charCodeAt(i), 16777619);
+  h ^= h >>> 13;
+  const u = ((h >>> 0) % 1000) / 1000;
+  const v = ((h >>> 10) % 100) / 100;
+  return u < 0.05 ? 90 + v * 6 : u < 0.2 ? 82 + v * 6 : u < 0.7 ? 70 + v * 10 : 60 + v * 10;
+}
+/** càng gần trần càng khó tăng (giảm thì vẫn giảm đủ) */
+function softGain(s: StoryCore, k: StatKey, d: number) {
+  if (d <= 0 || !['hoc', 'duyen', 'tien', 'tinh', 'noi'].includes(k)) return d;
+  const cap = talentOf(s, k);
+  const v = s.stats[k];
+  const f = v < cap - 20 ? 1 : v < cap - 8 ? 0.6 : v < cap ? 0.3 : 0.05;
+  return d * f;
+}
+/** mỗi năm: đi học thì hiểu biết lớn dần; rồi sống theo mục tiêu */
 function goalYear(s: Story, age: number) {
+  const add = (k: StatKey, d: number) => (s.stats[k] = clamp(s.stats[k] + softGain(s, k, d)));
+  // đi học: lớn lên là hiểu biết hơn (đi làm sớm thì thôi)
+  if (age >= 6 && age < 18) add('hoc', 1.5);
+  if (age >= 18 && age < 22 && s.flags.includes('daihoc')) add('hoc', 1.5);
   const g = s.goal;
   if (!g) return;
-  const add = (k: StatKey, d: number) => (s.stats[k] = clamp(s.stats[k] + d));
   const p = s.partner && s.partner !== 'xemmat' ? s.partner : null;
   if (g === 'hoc') add('hoc', 2);
   if (g === 'ban') ((s.rel.banthan = clamp(s.rel.banthan + 3)), add('duyen', 1), add('tam', 1));
@@ -437,7 +457,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
   const earning = () => scene.age >= 22 || s.flags.includes('dilam') || s.married;
   const fx: Fx = {
     stat: (k, d) => {
-      s.stats[k] = clamp(s.stats[k] + d);
+      s.stats[k] = clamp(s.stats[k] + softGain(s, k, d));
       // tiền thật đi theo điểm Tài chính: được thì cộng, tiêu thì trừ đúng số tiền (hết tiền thì thành nợ)
       if (k === 'tien' && earning()) s.cash = (s.cash ?? 0) + d * unitOf(c.birthYear + scene.age, scene.age);
     },

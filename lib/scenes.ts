@@ -2480,7 +2480,8 @@ function innerResolver0(c: Character, f: Family): Resolve {
         return rivalScene(age);
       case 'rf':
         // câu hỏi tự viết: chỉ giữ một lần ở tuổi 70 (đỡ dài)
-        return ASK[age] ? ([30, 50, 70].includes(age) ? reflectScene(age) : { ...reflectScene(age), skip: () => true }) : undefined;
+        // bỏ câu hỏi suy ngẫm "nếu gặp lại mình năm ấy..." (góp ý chơi thử)
+        return ASK[age] ? { ...reflectScene(age), skip: () => true } : undefined;
       case 'chat':
         return chatScene(age, n, who as LoveId);
       case 'date':
