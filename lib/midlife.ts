@@ -526,7 +526,8 @@ const BRANCHES: Branch[] = [
     due: (x) => {
       const working = x.age >= 22 || x.has('dilam');
       const last = Math.max(-99, ...x.s.flags.filter((g) => /^tien_\d+$/.test(g)).map((g) => Number(g.slice(5))));
-      return working && x.age >= 23 && x.age <= 70 && x.age - last >= 5 && (cash(x) >= U(x) * 6 || (x.s.inv ?? []).length > 0);
+      const times = x.s.flags.filter((g) => /^tien_\d+$/.test(g)).length;
+      return working && x.age >= 23 && x.age <= 70 && x.age - last >= 7 && times < 3 && (cash(x) >= U(x) * 6 || (x.s.inv ?? []).length > 0);
     },
     scene: (x, base) => ({
       ...base,

@@ -281,11 +281,19 @@ const proposeChoices: Choice[] = [
 ];
 
 /** mình tự cầu hôn: đủ thân thì thành, chưa đủ thì người ấy xin thêm thời gian */
+/** khả năng được nhận lời cầu hôn */
+const proposeChance = (x: Ctx) => chanceOf(x.s.love[P(x)] - (x.has('noidoi') ? 15 : 0), 66);
 function myPropose(fx: Fx, x: Ctx) {
   const p = P(x);
   const lie = x.has('noidoi') ? 15 : 0;
   if (lie) fx.say(`${x.L(p)} vẫn nhớ lời nói dối năm 23 tuổi.`);
-  if (x.s.love[p] - lie >= 70) return accept(fx, x);
+  if (luck(x, `ch_${p}`) < proposeChance(x)) return accept(fx, x);
+  // bị từ chối lần thứ hai: người ấy nói lời chia tay
+  if (x.has('cauhon_hut') && luck(x, `ch2_${p}`) < 0.5) {
+    fx.say(`${x.L(p)} tháo chiếc vòng ${x.me} tặng, đặt lên bàn: "Mình không hợp để đi đến cuối đâu."`);
+    fx.drop(p);
+    return;
+  }
   if (x.s.stats[LOVES[p].likes] >= 55) {
     fx.love(p, -10);
     fx.say(`${x.L(p)} lùi lại: "Cho ${x.xung} nghĩ thêm. Đừng giận ${x.xung} nhé." Câu ấy nhẹ, mà đau.`);
@@ -1645,14 +1653,14 @@ function msScene(age: number): Scene {
     bg: () => ({ place: 'congvien', time: 'night' }),
     who: (x) => top(x) ?? null,
     // vừa "chờ thêm" năm ngoái thì năm nay chưa hỏi lại
-    skip: (x) => x.s.married || hasPartner(x) || !top(x) || x.s.love[top(x)!] < 55 || x.has(`chothem_${age - 1}`) || x.has(`chothem_${age - 2}`),
+    skip: (x) => x.s.married || hasPartner(x) || !top(x) || x.s.love[top(x)!] < 42 || x.has(`chothem_${age - 1}`) || x.has(`chothem_${age - 2}`),
     title: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Mối tình học trò, giờ đã lớn' : 'Đã đến lúc nói ra chưa?'),
     text: (x) =>
       x.has(`teen_yeu_${top(x)}`)
         ? [`Hồi cấp ba hai đứa từng "yêu" nhau bằng những mảnh giấy gấp. Rồi thi cử, mỗi người một ngả.`, `Giờ ${x.L(top(x)!)} đứng trước mặt ${x.me}, lớn hẳn, hỏi nhỏ: "Mình bắt đầu lại, nghiêm túc lần này nhé?"`]
         : [`Đi bộ về cùng ${x.L(top(x)!)}. Gió hơi lạnh. ${x.ay[0].toUpperCase() + x.ay.slice(1)} dừng lại, như chờ ${x.me} nói gì đó.`],
     choices: [
-      { t: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Gật đầu, lần này là thật' : `Tỏ tình với ${x.L(top(x)!)}`), do: (fx, x) => confess(fx, x, top(x)!) },
+      { t: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Gật đầu, lần này là thật' : `Tỏ tình với ${x.L(top(x)!)} · khả năng nhận lời: ${chanceLabel(confessChance(x, top(x)!))}`), do: (fx, x) => confess(fx, x, top(x)!) },
       { t: 'Chờ thêm một chút', do: (fx, x) => (fx.flag(`chothem_${age}`), fx.love(top(x)!, 2)) },
     ],
     next: `ch@${age}`,
@@ -1668,14 +1676,14 @@ function proposeScene(age: number): Scene {
     bg: (x) => (x.year < 1995 ? { place: 'congvien', time: 'night' } : { place: 'quan', time: 'night' }),
     who: (x) => P(x),
     // vừa thành người yêu trong năm thì chưa cầu hôn ngay
-    skip: (x) => age < 23 || x.s.married || !hasPartner(x) || x.s.love[P(x)] < 62 || x.has(`ch_${age - 1}`) || x.has(`ch_${age - 2}`) || x.s.path.some((p) => p.scene === `ms@${age}`),
+    skip: (x) => age < 23 || x.s.married || !hasPartner(x) || x.s.love[P(x)] < 50 || x.has(`ch_${age - 1}`) || x.has(`ch_${age - 2}`) || x.s.path.some((p) => p.scene === `ms@${age}`),
     title: 'Chiếc nhẫn trong túi áo',
     text: (x) => [
       `${x.age} tuổi. Yêu ${x.L(P(x))} đủ lâu để biết ${x.ay} uống cà phê mấy thìa đường, sợ gì nhất, hay nói mớ câu gì.`,
       `Tối nay hai người ngồi ở ${spotOf(x.year)}. Trong túi áo ${x.me} có ${x.year < 2000 ? 'một chiếc nhẫn vàng ta mua ở tiệm đầu chợ' : 'một chiếc nhẫn đã chọn ba tuần'}.`,
     ],
     choices: [
-      { t: (x) => `Cầu hôn ${x.L(P(x))} ngay tối nay`, do: (fx, x) => (fx.flag(`ch_${age}`), myPropose(fx, x)) },
+      { t: (x) => `Cầu hôn ${x.L(P(x))} ngay tối nay · khả năng nhận lời: ${chanceLabel(proposeChance(x))}`, do: (fx, x) => (fx.flag(`ch_${age}`), myPropose(fx, x)) },
       { t: 'Chưa vội, cứ yêu thêm đã', do: (fx, x) => (fx.flag(`ch_${age}`), fx.love(P(x), 2)) },
     ],
     next: (x) => (x.s.married && !x.has('cuoi_done') ? `tq@${age}` : `end@${age}`),
@@ -1803,12 +1811,18 @@ function focusScene(age: number): Scene {
 }
 
 /** Tỏ tình: từ 60 là thành, 50-59 thì nhờ Duyên dáng */
+/** khả năng được nhận lời khi tỏ tình: không phải yêu ai người ta cũng đồng ý */
+export const confessChance = (x: Ctx, id: LoveId) => chanceOf(x.s.love[id] + (x.s.stats.duyen - 50) / 3 + (x.has(`teen_yeu_${id}`) ? 10 : 0), 60);
 function confess(fx: Fx, x: Ctx, id: LoveId) {
   const v = x.s.love[id];
-  const ok = v >= 60 || (v >= 50 && (x.s.stats.duyen >= 50 || x.has(`teen_yeu_${id}`)));
+  const ok = luck(x, `tt_${id}`) < confessChance(x, id);
   if (!ok) {
-    fx.love(id, -8);
-    fx.say(`${x.L(id)} cười ngượng: "Cho ${x.xung} thêm thời gian nhé." Hai người chưa đủ thân.`);
+    fx.love(id, -10);
+    fx.flag(`tuchoi_${id}`);
+    if (v < 50 && luck(x, `tt2_${id}`) < 0.5) {
+      fx.drop(id);
+      fx.say(`${x.L(id)} cúi đầu: "Xin lỗi, ${x.xung} đã có người trong lòng rồi." Tháng sau ${x.ay} đăng ảnh đi chơi với người khác.`);
+    } else fx.say(`${x.L(id)} cười ngượng: "Cho ${x.xung} thêm thời gian nhé." Câu ấy nhẹ, mà đau.`);
     return;
   }
   const old = x.s.partner && x.s.partner !== 'xemmat' ? (x.s.partner as LoveId) : null;
@@ -2313,6 +2327,8 @@ export function resolverOf(c: Character, f: Family): Resolve {
   const gated = (s: Story, age: number) => s.path.some((p) => p.age >= age - 3 && p.choice && !p.choice.startsWith('▶'));
   const gate = (sc: Scene | undefined, s: Story): Scene | undefined => {
     if (!sc || sc.kind === 'feed' || isCore(sc.id)) return sc;
+    // drama lớn và chuyện nổ lại: chỉ cần cách câu hỏi trước hai năm
+    if (sc.core && sc.age >= 18 && !s.path.some((p) => p.age >= sc.age - 1 && p.choice && !p.choice.startsWith('▶'))) return sc;
     // những mốc khác (chuyện riêng người ấy, con cái, bố mẹ, thời cuộc...) xếp hàng: cái nào đến lượt thì hỏi, cách nhau 4-5 năm
     // tuổi thơ không hỏi gì, chỉ tự trôi
     if (sc.age < 18 || gated(s, sc.age)) return { ...sc, skip: () => true };

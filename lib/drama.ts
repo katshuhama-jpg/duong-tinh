@@ -9,6 +9,7 @@
  */
 
 import { eldest, goldOf, goldText, kidsWord, youngest } from './family';
+import { LOVE_IDS } from './story';
 import { fmtGold } from './money';
 import type { Bg } from '@/components/Backdrop';
 import { FLAVOR } from './dates';
@@ -1659,7 +1660,249 @@ const PLACE_DR: Drama[] = [
   },
 ];
 
-const ALL: Drama[] = [...YEU, ...CUOI, ...VICE, ...HIST, ...MONEY, ...PLACE_DR, ...DON];
+
+/* =========================================================
+   CẨU HUYẾT: drama ngập trời kiểu phim ngắn. Mỗi chuyện có hệ quả, vài chuyện nổ lại nhiều năm sau.
+   ========================================================= */
+const rich = (x: Ctx) => !!pid(x) && ['tuananh', 'hung', 'quan', 'kai', 'tai'].includes(pid(x)!);
+const inlawM = (x: Ctx) => (x.c.gender === 'f' ? 'mẹ chồng' : 'mẹ vợ');
+const CQ: Drama[] = [
+  {
+    // yêu mà không còn thương: chia tay
+    id: 'cq_chiatay',
+    pool: 'yeu',
+    callback: true,
+    if: (x) => !!pid(x) && x.s.love[pid(x)!] < 28,
+    title: 'Nói chia tay',
+    bg: () => ({ place: 'pho', time: 'night' }),
+    who,
+    text: (x) => [`${sp(x)} hẹn ra quán cũ, không gọi đồ uống: "Mình dừng lại ở đây nhé. Lâu rồi ${x.xung} không còn thấy vui."`],
+    choices: [
+      { t: 'Gật đầu, chúc người ấy hạnh phúc', do: (fx, x) => (breakup(fx, x), fx.stat('tinh', 6), fx.stat('tam', -6)), note: () => '🦋 Có những người đi cùng mình một đoạn thôi.' },
+      { t: 'Níu kéo, xin thêm một cơ hội', do: (fx, x) => (luckOf(x, 'niu') < 0.35 ? (lv(fx, x, 15), fx.say('Người ấy khóc, rồi gật đầu. Một cơ hội cuối.')) : (breakup(fx, x), fx.stat('tam', -12), fx.say('Người ấy đứng dậy, không quay lại.'))) },
+      { t: 'Chia tay trước, cho đỡ đau', do: (fx, x) => (breakup(fx, x), fx.stat('noi', 6)) },
+    ],
+  },
+  {
+    // vợ chồng cạn tình: ly hôn hay giữ
+    id: 'cq_rannut',
+    pool: 'cuoi',
+    callback: true,
+    if: (x) => (pid(x) ? x.s.love[pid(x)!] : x.s.stats.tam) < 25 && !x.has('dr_cq_tt_lyhon'),
+    title: 'Ngồi hai đầu bàn ăn',
+    bg: () => ({ place: 'nha', time: 'night' }),
+    who,
+    text: (x) => [`Ba tuần nay hai người không nói với nhau câu nào ngoài chuyện tiền điện. Tối nay ${sp(x)} đặt tờ đơn ly hôn lên bàn.`],
+    choices: [
+      { t: 'Ký đơn, mỗi người một ngả', do: (fx, x) => { fx.loveEnd(pid(x) ? `lyhon_${pid(x)}` : 'lyhon'); fx.divorce(); fx.stat('tam', -6); fx.stat('noi', 6); }, note: () => '🦋 Đời rẽ sang một lối khác.' },
+      { t: 'Xin đi tư vấn hôn nhân một lần', do: (fx, x) => (luckOf(x, 'tuvan') < 0.5 ? (lv(fx, x, 20), fx.say('Buổi thứ năm thì hai người cười được với nhau.')) : (fx.loveEnd(pid(x) ? `lyhon_${pid(x)}` : 'lyhon'), fx.divorce(), fx.say('Ba buổi tư vấn. Rồi vẫn ký.'))) },
+      { t: 'Xé đơn: "Còn con, còn nhà, đừng nghĩ dại"', if: (x) => !!x.s.kids, do: (fx, x) => (lv(fx, x, 6), fx.stat('tam', -8), fx.rel('con', 4)) },
+    ],
+  },
+  {
+    id: 'cq_sec',
+    pool: 'yeu',
+    minAge: 20,
+    maxAge: 32,
+    title: 'Năm trăm triệu',
+    bg: () => ({ place: 'quan', time: 'day' }),
+    who: () => 'mom',
+    text: (x) => [`Mẹ ${sp(x)} hẹn ra quán, đẩy một phong bì dày cộp qua bàn: "${tien(U(x) * 40)}. Cầm lấy, rời xa con tôi."`, `${rich(x) ? 'Nhà họ có ba công ty.' : 'Nhà họ đã chọn sẵn một mối môn đăng hộ đối.'}`],
+    choices: [
+      { t: 'Xé phong bì ngay trước mặt bà', do: (fx, x) => (fx.flag('cq_xesec'), lv(fx, x, 10), fx.stat('noi', 6)), note: () => '🦋 Bà đứng dậy bỏ về. Nhưng bà sẽ nhớ cái nhìn hôm ấy.' },
+      { t: 'Nhận tiền, lặng lẽ biến mất', do: (fx, x) => (fx.flag('cq_nhantien'), fx.flag(`cq_nt_${pid(x) ?? 'x'}`), fx.cash(U(x) * 40), breakup(fx, x), fx.stat('tam', -10)), note: (x) => `🦋 ${sp(x)} gọi ba mươi cuộc nhỡ. Rồi thôi gọi.` },
+      { t: (x) => `Về kể hết cho ${sp(x)}`, do: (fx, x) => (low(x, 55) ? (lv(fx, x, -8), fx.say(`${sp(x)} im lặng rất lâu: "Để anh nói chuyện với mẹ."`)) : (lv(fx, x, 12), fx.say(`${sp(x)} nắm tay ${x.me} đi thẳng về nhà: "Mẹ, con chỉ cưới người này."`))) },
+    ],
+  },
+  {
+    id: 'cq_gaplai',
+    pool: 'any',
+    callback: true,
+    minAge: 26,
+    if: (x) => x.has('cq_nhantien') && !x.has('dr_cq_gaplai'),
+    title: 'Gặp lại sau bao năm',
+    bg: () => ({ place: 'vanphong', time: 'day' }),
+    who: (x) => (LOVE_IDS.find((id) => x.has(`cq_nt_${id}`)) ?? null) as LoveId | null,
+    text: (x) => {
+      const id = LOVE_IDS.find((i) => x.has(`cq_nt_${i}`));
+      return [`Buổi phỏng vấn xin việc. Người ngồi ghế giám đốc ngẩng lên: là ${id ? x.L(id) : 'người năm ấy'}.`, `"Năm đó ${x.goi} cầm tiền rồi đi. Vì sao?"`];
+    },
+    choices: [
+      { t: 'Nói thật: tiền ấy để chữa bệnh cho bố mẹ', do: (fx, x) => { const id = LOVE_IDS.find((i) => x.has(`cq_nt_${i}`)); if (id) (fx.unflag(`${id}_out`), fx.love(id, 25)); fx.stat('tam', 6); }, note: () => '🦋 Người ấy quay mặt ra cửa sổ rất lâu.' },
+      { t: '"Vì tôi chọn tiền. Thế thôi."', do: (fx) => (fx.stat('noi', 6), fx.stat('tam', -6)) },
+      { t: 'Đứng dậy, ra về, không nhận việc', do: (fx) => (fx.stat('tam', 2), fx.stat('tien', -3)) },
+    ],
+  },
+  {
+    id: 'cq_bechon',
+    pool: 'yeu',
+    minAge: 22,
+    maxAge: 34,
+    if: (x) => !!pid(x),
+    title: 'Đứa bé trước cổng',
+    bg: () => ({ place: 'cong', time: 'dusk' }),
+    who,
+    text: (x) => [`Một người phụ nữ bế đứa bé chừng hai tuổi đứng trước cổng: "Đây là con của ${sp(x)}."`, `Đứa bé có đôi mắt giống ${sp(x)} đến lạ.`],
+    choices: [
+      { t: 'Đưa đi xét nghiệm ADN, không nói gì trước', do: (fx, x) => (fx.stat('hoc', 4), luckOf(x, 'adn') < 0.7 ? (lv(fx, x, 8), fx.say(`Kết quả: không cùng huyết thống. Người phụ nữ là bạn gái cũ của anh trai ${sp(x)}.`)) : (lv(fx, x, -25), fx.flag('cq_conriêng'), fx.say(`Kết quả: là con ${sp(x)}, từ trước khi hai người quen nhau.`))) },
+      { t: 'Hủy hẹn, chia tay ngay', do: (fx, x) => (breakup(fx, x), fx.stat('tam', -8)), note: () => '🦋 Nhiều năm sau mới biết đó là một màn kịch.' },
+      { t: (x) => `Tin ${sp(x)}, đuổi người kia đi`, do: (fx, x) => (lv(fx, x, 6), fx.stat('tinh', 4)) },
+    ],
+  },
+  {
+    id: 'cq_matri',
+    pool: 'yeu',
+    minAge: 21,
+    maxAge: 35,
+    if: (x) => !!pid(x),
+    title: 'Mất trí nhớ',
+    bg: () => ({ place: 'nha', time: 'night' }),
+    who,
+    text: (x) => [`${sp(x)} bị tai nạn xe. Tỉnh dậy, nhìn ${x.me} như nhìn người lạ: "Xin lỗi, ${x.goi} là ai?"`],
+    choices: [
+      { t: 'Làm quen lại từ đầu, như lần đầu gặp', do: (fx, x) => (lv(fx, x, 14), fx.stat('tinh', 6), pid(x) && fx.photo({ who: pid(x)!, place: 'Lần đầu gặp, lần thứ hai', bg: { place: 'congvien', time: 'dusk' }, line: 'Lại hỏi tên nhau, lại ngượng ngùng như ngày xưa.' })), note: () => '▣ Một tấm ảnh vừa vào album kỷ niệm.' },
+      { t: 'Kể lại mọi chuyện, đưa xem ảnh cũ', do: (fx, x) => (x.s.album.length >= 3 ? (lv(fx, x, 12), fx.say('Đến tấm ảnh thứ ba thì người ấy bật khóc: "Anh nhớ rồi."')) : (lv(fx, x, -4), fx.say('Ảnh ít quá. Người ấy chỉ gật đầu cho lịch sự.'))) },
+      { t: 'Coi như duyên đã hết, lặng lẽ đi', do: (fx, x) => (breakup(fx, x), fx.stat('tam', -10)) },
+    ],
+  },
+  {
+    id: 'cq_bachnguyet',
+    pool: 'any',
+    minAge: 23,
+    maxAge: 45,
+    if: (x) => !!pid(x),
+    title: 'Người cũ của người ấy trở về',
+    bg: () => ({ place: 'quan', time: 'night' }),
+    who,
+    text: (x) => [`Mối tình đầu của ${sp(x)} từ nước ngoài về, đăng một tấm ảnh cũ của hai người, ghi: "Cuối cùng cũng về nhà."`, `${sp(x)} xem ảnh ấy hơi lâu.`],
+    choices: [
+      { t: 'Mời luôn người kia đi ăn cùng hai đứa', do: (fx, x) => (lv(fx, x, 8), fx.stat('duyen', 4)), note: () => 'Bữa ăn ngượng nhất đời. Nhưng mọi chuyện rõ ràng.' },
+      { t: 'Hỏi thẳng: "Còn thương không?"', do: (fx, x) => (low(x, 60) ? (lv(fx, x, -10), fx.say('Người ấy không trả lời ngay. Thế là đủ hiểu.')) : (lv(fx, x, 10), fx.say('"Thương là chuyện cũ. Người anh chọn là em."'))) },
+      { t: 'Im lặng, chặn tài khoản người kia', do: (fx, x) => (lv(fx, x, -3), fx.stat('noi', 4)) },
+    ],
+  },
+  {
+    id: 'cq_hamon',
+    pool: 'any',
+    minAge: 22,
+    maxAge: 45,
+    if: (x) => ((x.s.seed ?? 0) >> 5) % 5 === 0 && x.f.wealth !== 'Hào môn',
+    title: 'Hào môn thất lạc',
+    bg: () => ({ place: 'pho', time: 'day' }),
+    who: () => null,
+    text: (x) => [`Một chiếc xe đen đỗ trước nhà. Người đàn ông tóc bạc đưa tờ giấy xét nghiệm: ${x.me} là con ruột của ông, bị bế nhầm ở nhà hộ sinh năm ${x.c.birthYear}.`, `Ông là chủ một tập đoàn bất động sản.`],
+    choices: [
+      { t: 'Nhận lại gia đình, về làm người thừa kế', do: (fx, x) => (fx.flag('cq_hamon'), fx.cash(U(x) * 150), fx.rel('bome', -20), fx.stat('noi', 6)), note: (x) => `🦋 Bố mẹ nuôi tiễn ${x.me} ra cổng, không ai khóc thành tiếng.` },
+      { t: 'Từ chối: bố mẹ là người nuôi mình lớn', do: (fx) => (fx.rel('bome', 25), fx.stat('tinh', 8)), note: () => 'Ông để lại danh thiếp. Mười năm sau tấm danh thiếp vẫn nằm trong ví.' },
+      { t: 'Nhận cả hai bên làm bố mẹ', do: (fx, x) => (fx.flag('cq_hamon'), fx.cash(U(x) * 60), fx.rel('bome', 6), fx.stat('duyen', 4)) },
+    ],
+  },
+  {
+    id: 'cq_tieutam',
+    pool: 'cuoi',
+    minAge: 28,
+    maxAge: 55,
+    title: 'Tiểu tam đến tận nhà',
+    bg: () => ({ place: 'nha', time: 'day' }),
+    who,
+    text: (x) => [`Một ${x.lg === 'm' ? 'người đàn ông' : 'cô gái'} trẻ bấm chuông, tay đặt lên bụng: "${x.c.gender === 'f' ? 'Chị' : 'Anh'} ơi, em có bầu với ${sp(x)} rồi."`, `${sp(x)} đứng sau lưng, mặt cắt không còn giọt máu.`],
+    choices: [
+      { t: 'Bình tĩnh mời vào, rót nước, gọi luật sư', do: (fx, x) => (fx.stat('hoc', 4), fx.stat('noi', 4), lv(fx, x, -15), fx.flag('cq_tt')), note: () => '🦋 Tờ giấy chia tài sản được soạn ngay trong đêm.' },
+      { t: (x) => `Tát ${sp(x)} một cái, đóng sầm cửa`, do: (fx, x) => (lv(fx, x, -20), fx.stat('tam', -10), fx.stat('noi', 8)) },
+      { t: 'Đòi xét nghiệm trước khi tin bất kỳ ai', do: (fx, x) => (luckOf(x, 'tt') < 0.5 ? (lv(fx, x, 4), fx.say('Là lừa đảo, nhắm vào tài sản nhà mình.')) : (lv(fx, x, -25), fx.flag('cq_tt'), fx.say('Là thật. Hai người ngồi hai đầu bàn đến sáng.'))) },
+    ],
+  },
+  {
+    id: 'cq_tt_lyhon',
+    pool: 'cuoi',
+    callback: true,
+    if: (x) => x.has('cq_tt') && !x.has('dr_cq_tt_lyhon'),
+    title: 'Ly hôn hay tha thứ',
+    bg: () => ({ place: 'nha', time: 'night' }),
+    who,
+    text: (x) => [`${sp(x)} quỳ ở phòng khách cả đêm.${x.s.kids ? ` ${kidsWord(x) === 'con' ? 'Con' : 'Các con'} đứng nép sau cửa phòng.` : ''}`],
+    choices: [
+      { t: 'Ly hôn, giành quyền nuôi con, giữ nhà', do: (fx, x) => { const n = sp(x); fx.loveEnd(pid(x) ? `lyhon_${pid(x)}` : 'lyhon'); fx.divorce(); fx.stat('noi', 8); fx.say(`${n} ra đi tay trắng. Hai năm sau ${x.me} mở công ty riêng.`); } },
+      { t: 'Tha thứ một lần, vì con', if: (x) => !!x.s.kids, do: (fx, x) => (lv(fx, x, 6), fx.stat('tam', -10), fx.rel('con', 6)) },
+      { t: 'Không ly hôn, nhưng sống như hai người lạ', do: (fx, x) => (lv(fx, x, -20), fx.stat('tam', -8)) },
+    ],
+  },
+  {
+    id: 'cq_mechong',
+    pool: 'cuoi',
+    minAge: 25,
+    maxAge: 45,
+    title: (x) => `${x.c.gender === 'f' ? 'Mẹ chồng' : 'Mẹ vợ'} đòi sổ đỏ`,
+    bg: () => ({ place: 'nha', time: 'day' }),
+    who: () => 'mom',
+    text: (x) => [`${x.c.gender === 'f' ? 'Mẹ chồng' : 'Mẹ vợ'} đến, đặt lên bàn tờ giấy sang tên nhà: "Nhà này phải đứng tên con trai mẹ. Người ngoài không có phần."`],
+    choices: [
+      { t: 'Không ký, tiền mua nhà mình cũng góp nửa', do: (fx, x) => (fx.rel('bome', -12), fx.stat('noi', 6), low(x, 55) ? lv(fx, x, -8) : lv(fx, x, 6)) },
+      { t: (x) => `Để ${sp(x)} tự quyết`, do: (fx, x) => (low(x, 55) ? (lv(fx, x, -12), fx.say(`${sp(x)} ký. Không nhìn ${x.me}.`)) : (lv(fx, x, 12), fx.say(`${sp(x)} xé tờ giấy: "Mẹ, nhà này là của vợ chồng con."`))) },
+      { t: 'Ký cho êm cửa êm nhà', do: (fx) => (fx.rel('bome', 8), fx.stat('tam', -10)) },
+    ],
+  },
+  {
+    id: 'cq_vamat',
+    pool: 'any',
+    minAge: 30,
+    maxAge: 55,
+    if: (x) => x.has('lyhon') || x.has('phasan'),
+    callback: true,
+    title: 'Ngày quay lại',
+    bg: () => ({ place: 'pho', time: 'day' }),
+    who: () => null,
+    text: (x) => [`Buổi họp lớp năm ấy. Những người từng nói ${x.me} "${x.has('phasan') ? 'trắng tay thì đừng mơ' : 'bị bỏ là đáng'}" giờ ngồi cùng bàn.`, `${x.me} vừa ký xong hợp đồng lớn nhất đời mình.`],
+    choices: [
+      { t: 'Thanh toán cả bữa, mỉm cười ra về', do: (fx, x) => (fx.cash(-U(x) * 2), fx.stat('duyen', 8), fx.stat('tam', 8)), note: () => 'Không cần nói một lời nào.' },
+      { t: 'Kể hết hành trình làm lại từ đầu', do: (fx) => (fx.stat('noi', 4), fx.stat('tam', 6)) },
+      { t: 'Không đến họp lớp nữa', do: (fx) => fx.stat('tam', 2) },
+    ],
+  },
+  {
+    id: 'cq_traonham',
+    pool: 'cuoi',
+    minAge: 30,
+    maxAge: 55,
+    if: (x) => !!x.s.kids && eldest(x) >= 5 && ((x.s.seed ?? 0) >> 7) % 6 === 0,
+    title: 'Trao nhầm con',
+    bg: () => ({ place: 'nha', time: 'night' }),
+    who,
+    text: (x) => [`Bệnh viện gọi: năm ${x.year - eldest(x)}, hai đứa trẻ sinh cùng đêm có thể đã bị trao nhầm. Một gia đình khác đang ngồi ở phòng chờ.`],
+    choices: [
+      { t: 'Không xét nghiệm. Nuôi bao năm thì là con mình', do: (fx) => (fx.rel('con', 20), fx.stat('tinh', 8)), note: () => '🦋 Đứa trẻ không bao giờ biết chuyện ngày hôm ấy.' },
+      { t: 'Xét nghiệm, rồi hai nhà cùng nuôi cả hai đứa', do: (fx, x) => (fx.rel('con', 8), fx.stat('duyen', 6), lv(fx, x, 6)) },
+      { t: 'Kiện bệnh viện', do: (fx, x) => (fx.cash(U(x) * 10), fx.stat('noi', 6), fx.rel('con', -4)) },
+    ],
+  },
+  {
+    id: 'cq_dichuc',
+    pool: 'any',
+    minAge: 45,
+    maxAge: 68,
+    if: (x) => x.has('bm_mat') && (x.f.siblings?.length ?? 0) > 0,
+    title: 'Di chúc',
+    bg: () => ({ place: 'nha', time: 'day' }),
+    who: () => null,
+    text: (x) => [`Đọc di chúc: căn nhà và mảnh đất để cả cho ${(() => { const sb = x.f.siblings![0]; return sb.older ? (sb.gender === 'm' ? 'anh cả' : 'chị cả') : sb.gender === 'm' ? 'cậu em trai' : 'cô em gái'; })()}. ${x.me} chỉ được bộ ấm chén cũ.`, `Họ hàng nhìn nhau, chờ xem ai lên tiếng trước.`],
+    choices: [
+      { t: 'Không tranh, giữ tình anh em', do: (fx) => (fx.stat('tinh', 8), fx.stat('tam', 4)), note: () => '🦋 Đáy ấm chén có một lá thư viết tay của mẹ.' },
+      { t: 'Thuê luật sư chia lại cho công bằng', do: (fx, x) => (fx.cash(U(x) * 15), fx.rel('bome', -10), fx.stat('noi', 6)) },
+      { t: 'Cãi nhau một trận rồi cắt đứt', do: (fx) => (fx.stat('tam', -10), fx.stat('noi', 8)) },
+    ],
+  },
+];
+/** đời sóng gió: khoảng sáu phần mười số đời; yêu ngôi sao, nhà giàu hay tính nổi loạn thì chắc chắn sóng gió */
+export const stormy = (x: Ctx) => ((x.s.seed ?? 0) >> 9) % 10 < 6 || rich(x) || x.s.stats.noi >= 60 || x.has('cq_hamon');
+/** may rủi cố định theo đời */
+const luckOf = (x: Ctx, k: string) => {
+  let h = 7 ^ (x.s.seed ?? 0);
+  const key = `${k}|${x.age}`;
+  for (let i = 0; i < key.length; i++) h = Math.imul(h ^ key.charCodeAt(i), 0x9e3779b1);
+  return ((h >>> 0) % 1000) / 1000;
+};
+
+const ALL: Drama[] = [...CQ, ...YEU, ...CUOI, ...VICE, ...HIST, ...MONEY, ...PLACE_DR, ...DON];
 export const DRAMA_IDS = ALL.map((d) => d.id);
 
 function hash(s: string) {
@@ -1702,6 +1945,7 @@ const fits = (d: Drama, x: Ctx) =>
   // chuyện tiền bạc: khoảng một nửa số đời gặp, mỗi đời nhiều nhất hai lần
   (!d.id.startsWith('m_') || (((x.s.seed ?? 0) >> 4) % 2 === 0 && x.s.flags.filter((g) => g.startsWith('dr_m_')).length < 2)) &&
   !x.has(`dr_${d.id}`) &&
+  (!d.id.startsWith('cq_') || !!d.callback || stormy(x)) &&
   x.year >= (d.from ?? 0) &&
   x.year <= (d.to ?? 9999) &&
   x.age >= (d.minAge ?? 0) &&
@@ -1712,7 +1956,10 @@ const fits = (d: Drama, x: Ctx) =>
 export function dramaAt(age: number, x: Ctx, next: string): Scene {
   const chapter = age < 30 ? 'Tuổi trẻ' : age < 60 ? 'Lập gia đình' : 'Tuổi già';
   const seed = `${x.s.seed ?? 0}|${x.c.name}|${x.c.birthYear}|${x.f.province}`;
-  const cands = ALL.filter((d) => fits(d, x)).sort((a, b) => Number(!!b.callback) - Number(!!a.callback) || hash(seed + a.id) - hash(seed + b.id));
+  // chuyện cũ nổ lại trước, rồi đến drama cẩu huyết (ngập trời kiểu phim ngắn), rồi mới đến chuyện thường
+  const cq = (d: Drama) => (d.id.startsWith('cq_') ? 1 : 0);
+  // đời bình yên thì drama cẩu huyết chỉ đến khi chính mình gây ra (chuyện nổ lại); đời sóng gió thì ngập trời
+  const cands = ALL.filter((d) => fits(d, x)).sort((a, b) => Number(!!b.callback) - Number(!!a.callback) || cq(b) - cq(a) || hash(seed + a.id) - hash(seed + b.id));
   const d = cands[0];
   if (!d) return { id: `dr@${age}`, age, chapter, title: '', text: () => [], choices: [], next, skip: () => true };
   return {
@@ -1731,8 +1978,9 @@ export function dramaAt(age: number, x: Ctx, next: string): Scene {
     call: d.call,
     choices: d.choices.map((c) => ({ ...c, do: (fx, cx) => (fx.flag(`dr_${d.id}`), c.do?.(fx, cx)) })),
     next,
-    core: CORE_DR.includes(d.id) || !!d.callback,
+    // mốc đời và drama cẩu huyết: chen vào sớm hơn nhịp thường (hai năm thay vì bốn)
+    core: CORE_DR.includes(d.id) || !!d.callback || d.id.startsWith('cq_'),
   };
 }
 /** chuyện là mốc của đời: người cũ, kỷ vật, bố mẹ ốm, con dẫn người yêu về */
-const CORE_DR = ['kyvat', 'kyvatcu', 'domam', 'concuoi', 'venha'];
+const CORE_DR = ['kyvat', 'kyvatcu', 'domam', 'concuoi', 'venha', 'cq_gaplai', 'cq_tt_lyhon', 'cq_chiatay', 'cq_rannut'];
