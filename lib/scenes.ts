@@ -1301,7 +1301,7 @@ export function candidatesOf(x: Ctx): LoveId[] {
   return list;
 }
 const needPick = (x: Ctx, age: number) =>
-  !x.s.married && (age === 20 || !inPool(x).length || ((age === 23 || age === 26) && !hasPartner(x)) || ((x.has(`ac_${age - 1}_yeu`) && (x.has('ac_app') || x.has('ac_maimoi'))) && !hasPartner(x)));
+  !x.s.married && !hasPartner(x) && (age === 20 || !inPool(x).length);
 
 function pickScene(age: number): Scene {
   return {
@@ -1496,7 +1496,8 @@ function yearFeed(age: number): Scene {
       if (news) lines.push({ age, year: x.year, t: news });
       return lines;
     },
-    choices: [{ t: '▶ Sống tiếp', do: (fx, x) => inPool(x).forEach((id) => fx.love(id, 2)) }],
+    // không còn hỏi hẹn hò mỗi năm: năm tháng bên nhau tự làm tình cảm lớn dần
+    choices: [{ t: '▶ Sống tiếp', do: (fx, x) => inPool(x).forEach((id) => fx.love(id, x.s.married ? 2 : 8)) }],
     next: `tm@${age}`,
   };
 }
@@ -1568,7 +1569,8 @@ function msScene(age: number): Scene {
     chapter: CH.tre,
     bg: () => ({ place: 'congvien', time: 'night' }),
     who: (x) => top(x) ?? null,
-    skip: (x) => x.s.married || hasPartner(x) || !top(x) || x.s.love[top(x)!] < 55,
+    // vừa "chờ thêm" năm ngoái thì năm nay chưa hỏi lại
+    skip: (x) => x.s.married || hasPartner(x) || !top(x) || x.s.love[top(x)!] < 55 || x.has(`chothem_${age - 1}`),
     title: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Mối tình học trò, giờ đã lớn' : 'Đã đến lúc nói ra chưa?'),
     text: (x) =>
       x.has(`teen_yeu_${top(x)}`)
@@ -1576,7 +1578,7 @@ function msScene(age: number): Scene {
         : [`Đi bộ về cùng ${x.L(top(x)!)}. Gió hơi lạnh. ${x.ay[0].toUpperCase() + x.ay.slice(1)} dừng lại, như chờ ${x.me} nói gì đó.`],
     choices: [
       { t: (x) => (x.has(`teen_yeu_${top(x)}`) ? 'Gật đầu, lần này là thật' : `Tỏ tình với ${x.L(top(x)!)}`), do: (fx, x) => confess(fx, x, top(x)!) },
-      { t: 'Chờ thêm một chút', do: (fx, x) => fx.love(top(x)!, 2) },
+      { t: 'Chờ thêm một chút', do: (fx, x) => (fx.flag(`chothem_${age}`), fx.love(top(x)!, 2)) },
     ],
     next: `ch@${age}`,
   };
@@ -1590,7 +1592,8 @@ function proposeScene(age: number): Scene {
     chapter: CH.tre,
     bg: (x) => (x.year < 1995 ? { place: 'congvien', time: 'night' } : { place: 'quan', time: 'night' }),
     who: (x) => P(x),
-    skip: (x) => age < 23 || x.s.married || !hasPartner(x) || x.s.love[P(x)] < 62 || x.has(`ch_${age - 1}`),
+    // vừa thành người yêu trong năm thì chưa cầu hôn ngay
+    skip: (x) => age < 23 || x.s.married || !hasPartner(x) || x.s.love[P(x)] < 62 || x.has(`ch_${age - 1}`) || x.s.path.some((p) => p.scene === `ms@${age}`),
     title: 'Chiếc nhẫn trong túi áo',
     text: (x) => [
       `${x.age} tuổi. Yêu ${x.L(P(x))} đủ lâu để biết ${x.ay} uống cà phê mấy thìa đường, sợ gì nhất, hay nói mớ câu gì.`,
@@ -2230,10 +2233,14 @@ export function resolverOf(c: Character, f: Family): Resolve {
       },
     };
   };
-  // chuyện phụ (thời cuộc, drama, chuyện năm, giữa đời): nhiều nhất một lần mỗi hai năm, để đời trôi nhanh
-  const gated = (s: Story, age: number) => s.path.some((p) => p.age >= age - 1 && p.choice && !p.choice.startsWith('▶'));
-  const gate = (sc: Scene | undefined, s: Story): Scene | undefined =>
-    sc && /^(ev|dr|ly|hs|tm)@/.test(sc.id) && gated(s, sc.age) ? { ...sc, skip: () => true } : sc;
+  // nhịp kiểu 1in8b: đời tự trôi, chỉ hỏi ở những mốc chính; chuyện phụ nhiều nhất một lần mỗi ba năm
+  const gated = (s: Story, age: number) => s.path.some((p) => p.age >= age - 2 && p.choice && !p.choice.startsWith('▶'));
+  const gate = (sc: Scene | undefined, s: Story): Scene | undefined => {
+    if (!sc || sc.kind === 'feed' || isCore(sc.id)) return sc;
+    // tuổi thơ không hỏi gì, chỉ tự trôi
+    if (sc.age < 18 || gated(s, sc.age)) return { ...sc, skip: () => true };
+    return sc;
+  };
   // sự kiện thời cuộc có thật: khi sang năm mới, nếu giữa năm cũ và năm mới có một sự kiện hợp thì chen vào trước
   const pick = (id: string, s: Story): Scene | undefined => {
     const sc = gate(inner(id, s), s);
@@ -2241,7 +2248,7 @@ export function resolverOf(c: Character, f: Family): Resolve {
     const last = s.path[s.path.length - 1].age;
     if (sc.age <= last) return sc;
     // chuyện thời cuộc ngay trong năm vừa rồi
-    if (last >= 15 && !gated(s, last)) {
+    if (last >= 17 && !gated(s, last)) {
       const h0 = histAt(last, ctxOf(c, f, s, last), id);
       if (h0) return h0;
     }
@@ -2254,13 +2261,15 @@ export function resolverOf(c: Character, f: Family): Resolve {
     // từng năm một, đúng thứ tự thời gian: thời cuộc, kỷ niệm ngày cưới, ngã rẽ sau cưới (ở đâu, con cái, nhà, xe, làm ăn)
     for (let a = last + 1; a <= sc.age; a++) {
       const ax = ctxOf(c, f, s, a);
-      const h = a >= 15 && !gated(s, a) ? histAt(a, ax, id) : null;
+      const g = gated(s, a);
+      const h = a >= 17 && !g ? histAt(a, ax, id) : null;
       if (h) return h;
-      if (annivAgeIn({ s }, a - 1, a) !== null) {
+      if (!g && annivAgeIn({ s }, a - 1, a) !== null) {
         const ma = midlifeAt(a, ax, id);
         if (ma) return ma;
       }
-      const br = branchAt(a, ax, id);
+      // mốc chính sau cưới (ở đâu, con cái, nhà) luôn hỏi; ngã rẽ phụ theo nhịp ba năm
+      const br = branchAt(a, ax, id, g);
       if (br) return br;
     }
     // những năm giữa đời không có chuyện lớn: vẫn sống từng năm, có dòng tự trôi và thỉnh thoảng dừng hỏi
@@ -2279,6 +2288,11 @@ export function resolverOf(c: Character, f: Family): Resolve {
     const sc = pick(id, s);
     return sc && sc.kind !== 'feed' ? { ...sc, text: (x) => short(sc.text(x)) } : sc;
   };
+}
+
+/** mốc chính của đời: luôn dừng hỏi (thi đại học, chọn người, tỏ tình, cầu hôn, cưới, phá sản, tuổi già) */
+function isCore(id: string) {
+  return /^(fo|ms|ch|wd|ps|bat|end)@/.test(id) || ['t17_thi', 'y27_cauhon', 'y28_hethong', 'y28_xemmat', 'y29_quaylai', 'o60', 'o75', 'rf@70'].includes(id);
 }
 
 /** gọn kiểu "đọc và bấm": nhiều nhất hai câu, giữ câu đầu và câu cánh bướm (nhắc lựa chọn cũ) nếu có */

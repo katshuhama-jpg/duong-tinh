@@ -666,9 +666,11 @@ const BRANCHES: Branch[] = [
 ];
 
 /** ngã rẽ sau cưới đến hạn ở tuổi này */
-export function branchAt(age: number, x: Ctx, next: string): Scene | null {
+/** ngã rẽ là mốc chính: luôn hỏi */
+const CORE_BR = ['br_o', 'br_con', 'br_con2', 'br_mua'];
+export function branchAt(age: number, x: Ctx, next: string, coreOnly = false): Scene | null {
   if (age < 22 || age > 60) return null;
-  const b = BRANCHES.find((r) => r.due(x));
+  const b = BRANCHES.find((r) => r.due(x) && (!coreOnly || CORE_BR.includes(r.id)));
   if (!b) return null;
   const sc = b.scene(x, { id: `br@${age}`, age, chapter: age < 30 ? 'Tuổi trẻ' : 'Lập gia đình', next });
   return { ...sc, text: (cx) => sc.text(cx).filter(Boolean) };

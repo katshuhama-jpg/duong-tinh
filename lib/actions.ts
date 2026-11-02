@@ -334,11 +334,13 @@ export function mOptions(m: Milestone, x: Ctx) {
 }
 const mDone = (s: Story, m: Milestone) => s.flags.includes(`ms_done_${m.id}`);
 /** mốc đang chờ chọn ở tuổi này (mốc gần nhất đã tới mà chưa chọn, chưa sang mốc sau) */
+/** mốc tuổi thơ và mốc trùng với ngã rẽ sau cưới: không hỏi nữa (kiểu 1in8b: chỉ hỏi mốc chính) */
+const QUIET = ['lop1', 'cap2', 'cap3', 'oxe'];
 export function milestoneDue(s: Story, age: number): Milestone | null {
   let due: Milestone | null = null;
   MILESTONES.forEach((m, i) => {
     const next = MILESTONES[i + 1];
-    if (age >= m.age && (!next || age < next.age) && !mDone(s, m) && !m.skip?.(s)) due = m;
+    if (age >= m.age && (!next || age < next.age) && !mDone(s, m) && !m.skip?.(s) && !QUIET.includes(m.id)) due = m;
   });
   return due;
 }
