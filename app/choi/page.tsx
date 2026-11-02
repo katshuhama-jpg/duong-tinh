@@ -124,7 +124,9 @@ export default function Choi() {
 
 /* ---------- bảng đời kiểu 1 in 8 Billion ---------- */
 const WEALTH_DOTS: Record<string, number> = { 'Mồ côi, ở với ông bà': 1, 'Nhà nông': 2, 'Lao động phổ thông': 2, 'Tiểu thương': 3, 'Công chức trung lưu': 3, 'Khá giả': 4, 'Hào môn': 5 };
-const SPEEDS = [1, 2, 4, 8, 12, 16];
+/** ba tốc độ: nhãn 2×, 4×, 6× (6× nhanh bằng 12× cũ) */
+const SPEEDS = [4, 8, 12];
+const SPEED_LABEL: Record<number, string> = { 4: '2×', 8: '4×', 12: '6×' };
 /** 1× = 60 giây một năm, 16× = khoảng 4 giây một năm */
 const YEAR_SEC = 60;
 
@@ -151,7 +153,7 @@ function Board({
   const sc = story.scene !== 'end' ? R(story.scene, story) : undefined;
   const age = sc?.age ?? 0;
   const x = ctxOf(char, family, story, age);
-  const [speed, setSpeed] = useState(1);
+  const [speed, setSpeed] = useState(4);
   const [paused, setPaused] = useState(false);
   const [auto, setAuto] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -283,7 +285,7 @@ function Board({
           </button>
           {SPEEDS.map((v) => (
             <button key={v} type="button" className={`px ${speed === v ? 'on' : ''}`} onClick={() => (setSpeed(v), setPaused(false))}>
-              {v}×
+              {SPEED_LABEL[v]}
             </button>
           ))}
           <button type="button" className="px" onClick={() => (isFeed ? (shown < lines.length ? setShown(lines.length) : go(0, undefined, true)) : undefined)} disabled={!isFeed}>
