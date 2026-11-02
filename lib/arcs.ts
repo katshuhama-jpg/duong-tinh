@@ -18,7 +18,18 @@ const ARCS = ARCS_RAW as unknown as Record<string, RawArc>;
 const SITS = SITS_RAW as unknown as RawSit[];
 
 /** thay {n} bằng tên người ấy, {me} bằng tên mình */
-const fill = (t: string, x: Ctx, id: LoveId) => t.replace(/\{n\}/g, x.L(id)).replace(/\{me\}/g, x.me).replace(/—/g, '-');
+const fill = (t: string, x: Ctx, id: LoveId) =>
+  t
+    .replace(/\{n\}/g, x.L(id))
+    .replace(/\{me\}/g, x.me)
+    // chữ theo giới: mình là nữ thì "dâu", nam thì "rể"; người ấy nữ thì "giày cao gót"...
+    .replace(/\{dâu\}/g, x.c.gender === 'f' ? 'dâu' : 'rể')
+    .replace(/\{con dâu\}/g, x.c.gender === 'f' ? 'con dâu' : 'con rể')
+    .replace(/\{cô\}/g, x.c.gender === 'f' ? 'cô' : 'cậu')
+    .replace(/\{chị\}/g, x.c.gender === 'f' ? 'chị' : 'anh')
+    .replace(/\{Ba\}/g, x.lg === 'm' ? 'Ba' : 'Mẹ')
+    .replace(/\{cởi giày\}/g, x.lg === 'f' ? 'cởi đôi giày cao gót' : 'nới cà vạt')
+    .replace(/—/g, '-');
 
 /** đọc dòng hệ quả do người viết kịch bản ghi ("♥ +10, tiền -5, chia tay") thành thay đổi thật */
 export function applyEffect(fx: Fx, x: Ctx, id: LoveId, effect: string, tone: string) {

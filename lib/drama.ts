@@ -1805,7 +1805,10 @@ const CQ: Drama[] = [
     title: 'Tiểu tam đến tận nhà',
     bg: () => ({ place: 'nha', time: 'day' }),
     who,
-    text: (x) => [`Một ${x.lg === 'm' ? 'người đàn ông' : 'cô gái'} trẻ bấm chuông, tay đặt lên bụng: "${x.c.gender === 'f' ? 'Chị' : 'Anh'} ơi, em có bầu với ${sp(x)} rồi."`, `${sp(x)} đứng sau lưng, mặt cắt không còn giọt máu.`],
+    text: (x) =>
+      x.lg === 'm'
+        ? [`Một cô gái trẻ bấm chuông, tay đặt lên bụng: "Chị ơi, em có bầu với ${sp(x)} rồi."`, `${sp(x)} đứng sau lưng, mặt cắt không còn giọt máu.`]
+        : [`Một người đàn ông lạ bấm chuông: "Anh ơi, đứa bé trong bụng ${sp(x)} là con tôi."`, `${sp(x)} đứng sau lưng, mặt cắt không còn giọt máu.`],
     choices: [
       { t: 'Bình tĩnh mời vào, rót nước, gọi luật sư', do: (fx, x) => (fx.stat('hoc', 4), fx.stat('noi', 4), lv(fx, x, -15), fx.flag('cq_tt')), note: () => '🦋 Tờ giấy chia tài sản được soạn ngay trong đêm.' },
       { t: (x) => `Tát ${sp(x)} một cái, đóng sầm cửa`, do: (fx, x) => (lv(fx, x, -20), fx.stat('tam', -10), fx.stat('noi', 8)) },
@@ -1945,7 +1948,8 @@ const fits = (d: Drama, x: Ctx) =>
   // chuyện tiền bạc: khoảng một nửa số đời gặp, mỗi đời nhiều nhất hai lần
   (!d.id.startsWith('m_') || (((x.s.seed ?? 0) >> 4) % 2 === 0 && x.s.flags.filter((g) => g.startsWith('dr_m_')).length < 2)) &&
   !x.has(`dr_${d.id}`) &&
-  (!d.id.startsWith('cq_') || !!d.callback || stormy(x)) &&
+  // đời sóng gió cũng chỉ gặp khoảng hai phần ba số chuyện cẩu huyết, mỗi đời một bộ khác nhau
+  (!d.id.startsWith('cq_') || !!d.callback || (stormy(x) && hash(`${x.s.seed ?? 0}|${d.id}`) % 3 !== 0)) &&
   x.year >= (d.from ?? 0) &&
   x.year <= (d.to ?? 9999) &&
   x.age >= (d.minAge ?? 0) &&

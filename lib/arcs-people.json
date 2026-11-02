@@ -1,1 +1,817 @@
-{}
+{
+  "khoi": {
+    "flaw": "Hiền nhưng nhu nhược, sợ mẹ, ngại thay đổi; nhà đang gánh nợ, chuyện gì cũng im lặng chịu thay vì nói ra.",
+    "date": [
+      {
+        "title": "Mái hiên chung",
+        "tone": "ngọt",
+        "text": "Mưa rào, cả ngõ mất điện, {n} mang sang nửa gói mì và cây nến. Hai đứa ngồi hiên nhà chung, kể lại chuyện hồi nhỏ trốn ngủ trưa.",
+        "choices": [
+          { "t": "Tựa đầu vào vai {n}", "result": "{n} ngồi im như tượng, tai đỏ lựng tới tận cổ.", "effect": "♥ +2" },
+          { "t": "Rủ {n} nấu mì chung", "result": "Nồi mì hơi khét nhưng cả hai ăn sạch, cười suốt.", "effect": "♥ +1" },
+          { "t": "Chê {n} quê mùa", "result": "{n} cười trừ, nhưng từ hôm đó ít sang chơi hơn.", "effect": "♥ -1" }
+        ]
+      },
+      {
+        "title": "Sổ nợ nhà bên",
+        "tone": "drama",
+        "text": "Chủ nợ đến đập cửa nhà {n} lúc nửa đêm, đòi 200 triệu bố {n} vay đánh đề. {n} quỳ xin khất, không dám nhìn {me}.",
+        "choices": [
+          { "t": "Đưa sổ tiết kiệm của mình", "result": "Nợ tạm yên, {n} khóc, hứa trả từng đồng.", "effect": "♥ +3, tiền -" },
+          { "t": "Báo công an phường", "result": "Chủ nợ rút, nhưng bố {n} trách {me} làm nhục nhà.", "effect": "♥ +1, nhà người ấy -" },
+          { "t": "Đóng cửa, vờ không biết", "result": "Sáng ra {n} chào {me} như người dưng.", "effect": "♥ -3" }
+        ]
+      },
+      {
+        "title": "Lời mẹ dặn",
+        "tone": "drama",
+        "text": "Mẹ {n} nói thẳng: cưới xong phải về quê ở, lo ruộng, sinh cháu đích tôn. {n} đứng sau lưng mẹ, không nói nửa lời.",
+        "choices": [
+          { "t": "Bắt {n} tự nói ra", "result": "{n} lắp bắp nhưng lần đầu dám cãi mẹ.", "effect": "♥ +2, {n} trưởng thành" },
+          { "t": "Ngoan ngoãn gật đầu", "result": "Mẹ {n} hài lòng, còn {me} thấy đời mình đóng lại.", "effect": "♥ +1, tự do -" },
+          { "t": "Bỏ về giữa bữa cơm", "result": "{n} không đuổi theo. Cả tuần không ai nhắn ai.", "effect": "♥ -2, có thể chia tay" }
+        ]
+      },
+      {
+        "title": "Nhẫn bạc đầu ngõ",
+        "tone": "ngọt",
+        "text": "{n} để dành ba năm mua chiếc nhẫn bạc, quỳ ở đúng chỗ hai đứa từng chơi ô ăn quan. \"Tớ chưa giàu, nhưng tớ không bao giờ đi đâu.\"",
+        "choices": [
+          { "t": "Gật đầu, ôm chặt", "result": "Cả ngõ vỗ tay, bà bán xôi khóc theo.", "effect": "♥ +3, đính hôn" },
+          { "t": "Xin đợi trả xong nợ", "result": "{n} gật, hứa hai năm nữa hỏi lại.", "effect": "♥ +1" },
+          { "t": "Từ chối, muốn lên phố", "result": "{n} cất nhẫn, chúc {me} đi thật xa.", "effect": "chia tay" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Ống tre tiết kiệm",
+        "tone": "ngọt",
+        "text": "Mỗi tối {n} bỏ vào ống tre tờ 50 nghìn, ghi chữ \"nhà mình\". Cuối năm đập ra, đủ trả nốt món nợ cuối.",
+        "choices": [
+          { "t": "Mua thêm cái ống mới", "result": "Ống thứ hai ghi \"cho con\", {n} cười rạng rỡ.", "effect": "♥ +2, gia đình +" },
+          { "t": "Đi Đà Lạt ăn mừng", "result": "Chuyến đi đầu tiên trong đời của {n}, chụp 300 tấm ảnh.", "effect": "♥ +2, tiền -" },
+          { "t": "Gửi bố mẹ chồng hết", "result": "Mẹ {n} lần đầu khen {me} là {dâu} hiền.", "effect": "♥ +1, nhà người ấy +" }
+        ]
+      },
+      {
+        "title": "Về quê hay ở lại",
+        "tone": "drama",
+        "text": "Bố {n} đột quỵ, mẹ {n} gọi cả hai về quê chăm, bỏ việc trên phố. {n} nhìn {me}, lần này chờ {me} quyết.",
+        "choices": [
+          { "t": "Cùng về quê", "result": "Lương giảm một nửa, nhưng {n} biết ơn suốt đời.", "effect": "♥ +3, sự nghiệp -" },
+          { "t": "Thuê người chăm, gửi tiền", "result": "Mẹ {n} giận, nói {con dâu} phố là thế.", "effect": "♥ -1, tiền -" },
+          { "t": "Để {n} về một mình", "result": "Vợ chồng sống hai nơi, cuộc gọi thưa dần.", "effect": "♥ -3, hôn nhân lung lay" }
+        ]
+      }
+    ]
+  },
+
+  "long": {
+    "flaw": "Nóng tính, bốc đồng, tiêu tiền như nước, dính dáng đua xe và tín dụng đen; thương thì thương thật nhưng không biết nghĩ cho ngày mai.",
+    "date": [
+      {
+        "title": "Xe chết giữa đêm",
+        "tone": "ngọt",
+        "text": "Xe {me} chết máy trên cầu Sài Gòn lúc 1 giờ sáng, {n} chạy tới với hộp đồ nghề và điếu thuốc. Sửa xong, không lấy tiền, chỉ xin số điện thoại.",
+        "choices": [
+          { "t": "Cho số, mời ly cà phê", "result": "Cà phê vỉa hè tới 4 giờ sáng, nói đủ chuyện.", "effect": "♥ +2" },
+          { "t": "Nhét tiền vào túi {n}", "result": "{n} trả lại, cười: \"Coi thường nhau hả?\"", "effect": "♥ +1" },
+          { "t": "Cảm ơn rồi đi luôn", "result": "Ba hôm sau {n} vẫn tìm ra quán {me} hay ngồi.", "effect": "♥ +0" }
+        ]
+      },
+      {
+        "title": "Đêm đua Võ Văn Kiệt",
+        "tone": "drama",
+        "text": "{n} rủ {me} ngồi sau đi đua độ ăn tiền, cá cược 50 triệu. Đến khúc cua thì tiếng còi công an hú dồn dập.",
+        "choices": [
+          { "t": "Hét bắt {n} dừng lại", "result": "{n} dừng, bị tạm giữ xe, nhưng cả hai lành lặn.", "effect": "♥ +1, {n} nể {me}" },
+          { "t": "Ôm chặt, mặc kệ", "result": "Thoát được, adrenaline ngập trời, nhưng {n} càng liều hơn.", "effect": "♥ +2, nguy hiểm +" },
+          { "t": "Nhảy xuống, bắt taxi về", "result": "{n} gọi 30 cuộc, {me} không nghe.", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Món nợ của xưởng",
+        "tone": "drama",
+        "text": "Xưởng độ của {n} bị dán giấy đòi nợ, lãi tín dụng đen ngày 3%. {n} đập vỡ gương, nói sẽ \"tự xử\" với tụi nó.",
+        "choices": [
+          { "t": "Giữ tay, cùng tính đường trả", "result": "{n} bình tĩnh lại, bán con xe quý nhất trả nợ.", "effect": "♥ +3" },
+          { "t": "Cho mượn tiền của mình", "result": "Nợ hết, nhưng tháng sau {n} lại mua xe mới.", "effect": "♥ +1, tiền --" },
+          { "t": "Ra điều kiện: bỏ nghề", "result": "{n} quát \"Đừng dạy đời tui\", rồi bỏ đi.", "effect": "♥ -2, có thể chia tay" }
+        ]
+      },
+      {
+        "title": "Treo xe lên tường",
+        "tone": "ngọt",
+        "text": "{n} treo chiếc mũ bảo hiểm đua lên tường xưởng, xăm thêm chữ cái tên {me} lên cổ tay. \"Từ giờ chỉ chở một người.\"",
+        "choices": [
+          { "t": "Đi xăm chữ đôi", "result": "Hai hình xăm nhỏ, xấu hoắc nhưng ai cũng khoe.", "effect": "♥ +3, đính hôn" },
+          { "t": "Đòi {n} hứa trước bố mẹ", "result": "{n} mặc sơ mi lần đầu, đến nhà xin phép đàng hoàng.", "effect": "♥ +2, nhà mình +" },
+          { "t": "Không tin lời hứa", "result": "{n} im lặng, đêm đó lại ra đường đua.", "effect": "♥ -2" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Tiêu nửa tháng lương",
+        "tone": "drama",
+        "text": "Sinh nhật {me}, {n} bao cả quán nhậu 40 người, quẹt hết tiền nhà. Tiền học của con tháng sau chưa biết lấy đâu.",
+        "choices": [
+          { "t": "Giữ thẻ, phát tiền tiêu vặt", "result": "{n} cằn nhằn cả tuần nhưng chịu nộp.", "effect": "♥ -1, tiền +" },
+          { "t": "Cãi tay đôi tới sáng", "result": "{n} đấm vỡ cửa tủ, rồi ôm {me} xin lỗi.", "effect": "♥ -2, căng thẳng +" },
+          { "t": "Mở tài khoản riêng âm thầm", "result": "Tiền an toàn, nhưng giữa hai người có bí mật.", "effect": "tiền +, tin tưởng -" }
+        ]
+      },
+      {
+        "title": "Xưởng mở lại",
+        "tone": "ngọt",
+        "text": "{n} mở xưởng mới, biển hiệu ghi tên hai vợ chồng. Đêm khai trương, {n} chở {me} chạy chậm rãi một vòng hồ Con Rùa.",
+        "choices": [
+          { "t": "Đứng ra quản lý sổ sách", "result": "Xưởng có lãi tháng đầu, {n} khoe khắp xóm.", "effect": "♥ +2, tiền +" },
+          { "t": "Chỉ cổ vũ từ xa", "result": "{n} tự lo, hơi bừa nhưng sống được.", "effect": "♥ +1" },
+          { "t": "Nhận học viên đường phố", "result": "Mấy đứa nhỏ bỏ đua, theo {n} học nghề.", "effect": "♥ +2, danh tiếng +" }
+        ]
+      }
+    ]
+  },
+
+  "minh": {
+    "flaw": "Lạnh lùng, tính toán chi li từng đồng, coi kế hoạch hơn cảm xúc; hay ngầm coi thường người kém mình và kiểm soát chi tiêu.",
+    "date": [
+      {
+        "title": "Bàn học thư viện",
+        "tone": "ngọt",
+        "text": "Mùa thi, {n} lặng lẽ đặt lên bàn {me} một tập đề cương viết tay, gạch chân bằng ba màu mực. Không nói gì, chỉ ghi: \"Chỗ này hay ra.\"",
+        "choices": [
+          { "t": "Mua trà sữa cảm ơn", "result": "{n} uống, rồi chuyển khoản lại đúng 35 nghìn.", "effect": "♥ +1" },
+          { "t": "Rủ {n} học chung", "result": "Hai đứa ngồi tới lúc thư viện đóng cửa.", "effect": "♥ +2" },
+          { "t": "Trêu \"thích tui hả?\"", "result": "{n} đỏ mặt, giật lại tập đề, bỏ đi.", "effect": "♥ +1, ngại ngùng" }
+        ]
+      },
+      {
+        "title": "Bảng Excel tình yêu",
+        "tone": "drama",
+        "text": "{n} gửi {me} file Excel chia đôi chi phí hẹn hò ba tháng, lệch 127 nghìn. Cột cuối ghi: \"Đề xuất: tuần này {me} trả.\"",
+        "choices": [
+          { "t": "Trả đủ, kèm lời nhắn", "result": "{n} không hiểu vì sao {me} buồn.", "effect": "♥ -1" },
+          { "t": "Nói thẳng: yêu đâu phải sổ sách", "result": "{n} im lâu, rồi xóa file, xin lỗi vụng về.", "effect": "♥ +2, {n} thay đổi" },
+          { "t": "Làm bảng phản biện lại", "result": "Hai đứa cãi bằng số liệu, cuối cùng cùng phì cười.", "effect": "♥ +1" }
+        ]
+      },
+      {
+        "title": "Học bổng Singapore",
+        "tone": "drama",
+        "text": "{n} nhận học bổng thạc sĩ ở Singapore, đi ngay tháng sau. Trong kế hoạch năm năm của {n}, không có dòng nào nhắc tên {me}.",
+        "choices": [
+          { "t": "Khuyên {n} đi, chờ đợi", "result": "Yêu xa hai năm, {n} gọi video đúng 9 giờ mỗi tối.", "effect": "♥ +2" },
+          { "t": "Hỏi: em ở đâu trong kế hoạch?", "result": "{n} cứng họng, đêm đó viết lại kế hoạch.", "effect": "♥ +1, {n} thay đổi" },
+          { "t": "Chia tay trước khi bị bỏ", "result": "{n} không níu, chỉ nói \"Hợp lý.\"", "effect": "chia tay" }
+        ]
+      },
+      {
+        "title": "Kế hoạch có hai người",
+        "tone": "ngọt",
+        "text": "{n} đưa {me} cuốn sổ mới: kế hoạch mua nhà, nuôi con, du lịch, trang đầu ghi \"Đồng tác giả: {me}\". Bên trong kẹp chiếc nhẫn.",
+        "choices": [
+          { "t": "Ký tên vào trang đầu", "result": "{n} cười, nụ cười hiếm hoi nhất từ trước tới giờ.", "effect": "♥ +3, đính hôn" },
+          { "t": "Thêm mục \"Ngày không kế hoạch\"", "result": "{n} nhăn mặt, rồi gạch dưới hai lần.", "effect": "♥ +2" },
+          { "t": "Thấy ngộp, xin thời gian", "result": "{n} gật đầu, đặt lịch hỏi lại sau ba tháng.", "effect": "♥ -1" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Sổ chi tiêu chung",
+        "tone": "drama",
+        "text": "{n} soát sao kê, chất vấn {me} khoản 2 triệu mua váy. \"Không có trong ngân sách quý này.\"",
+        "choices": [
+          { "t": "Đòi quyền tiêu tiền riêng", "result": "Cãi to, nhưng {n} chịu chia quỹ tự do mỗi tháng.", "effect": "♥ +1, tự do +" },
+          { "t": "Trả lại váy cho êm", "result": "Nhà yên, nhưng {me} thấy mình nhỏ lại.", "effect": "♥ -1, bản thân -" },
+          { "t": "Lôi sổ {n} ra soát lại", "result": "Phát hiện {n} lén gửi tiền nuôi em ăn học.", "effect": "♥ +2, bí mật lộ" }
+        ]
+      },
+      {
+        "title": "Đêm {n} khóc",
+        "tone": "ngọt",
+        "text": "{n} bị loại khỏi đợt thăng chức, lần đầu tiên không có kế hoạch B. Nửa đêm, {n} gục vào vai {me} như đứa trẻ.",
+        "choices": [
+          { "t": "Ôm im lặng tới sáng", "result": "Sáng ra {n} nói \"Cảm ơn\", rất khẽ.", "effect": "♥ +3" },
+          { "t": "Rủ nghỉ phép đi biển", "result": "Ba ngày không lịch trình, {n} ngủ say như chết.", "effect": "♥ +2" },
+          { "t": "Lập kế hoạch mới cùng", "result": "{n} lấy lại tinh thần, bắt đầu đi phỏng vấn chỗ khác.", "effect": "♥ +1, sự nghiệp +" }
+        ]
+      }
+    ]
+  },
+
+  "phong": {
+    "flaw": "Nghiện việc, luôn vắng mặt, giấu hết áp lực trong lòng; nhà truyền thống y khoa coi thường nghề nghiệp của {me}.",
+    "date": [
+      {
+        "title": "Ca trực đêm",
+        "tone": "ngọt",
+        "text": "{me} vào cấp cứu vì sốt cao, {n} trực đêm truyền dịch, ngồi canh tới sáng. Lúc về, trên đầu giường có tờ giấy: \"Nhớ ăn cháo nhé.\"",
+        "choices": [
+          { "t": "Quay lại tặng hộp bánh", "result": "{n} chia bánh cho cả khoa, giữ lại một cái.", "effect": "♥ +2" },
+          { "t": "Nhắn tin qua số trên đơn", "result": "{n} trả lời sau 12 tiếng: \"Xin lỗi, vừa xong ca.\"", "effect": "♥ +1" },
+          { "t": "Thôi, chỉ là bác sĩ", "result": "Một tuần sau tình cờ gặp lại ở quán phở.", "effect": "♥ +0" }
+        ]
+      },
+      {
+        "title": "Lỡ hẹn lần ba",
+        "tone": "drama",
+        "text": "Kỷ niệm 100 ngày, {me} chờ ở nhà hàng hai tiếng, {n} lại có ca mổ cấp cứu. Đây là lần lỡ hẹn thứ ba trong tháng.",
+        "choices": [
+          { "t": "Mang đồ ăn vào viện", "result": "Ăn cơm hộp ở hành lang, {n} cảm động tới đỏ mắt.", "effect": "♥ +2" },
+          { "t": "Nhắn: \"Chắc mình không hợp\"", "result": "{n} gọi lại lúc 3 giờ sáng, giọng khàn đặc.", "effect": "♥ -1, căng thẳng +" },
+          { "t": "Đi ăn với bạn bè", "result": "{n} thấy ảnh trên mạng, không nói gì, chỉ like.", "effect": "♥ -1" }
+        ]
+      },
+      {
+        "title": "Bị đánh trong viện",
+        "tone": "drama",
+        "text": "Bệnh nhân của {n} mất, người nhà xông vào đánh {n} chảy máu. Clip lan khắp mạng, tiêu đề \"Bác sĩ vô cảm\".",
+        "choices": [
+          { "t": "Lên tiếng bảo vệ {n}", "result": "Bị chửi lây, nhưng {n} biết có người đứng về phía mình.", "effect": "♥ +3, danh tiếng -" },
+          { "t": "Ở cạnh, tắt hết điện thoại", "result": "{n} lần đầu kể hết những ca mất mát giấu kín.", "effect": "♥ +2" },
+          { "t": "Khuyên {n} bỏ nghề", "result": "{n} lạnh mặt: \"{me} không hiểu nghề này.\"", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Bữa cơm nhà bác sĩ",
+        "tone": "drama",
+        "text": "Bố mẹ {n} đều là giáo sư y khoa, hỏi {me} \"làm nghề gì mà rảnh thế\". Họ đã nhắm sẵn một {cô} bác sĩ nội trú cho {n}.",
+        "choices": [
+          { "t": "Tự tin kể về nghề mình", "result": "Bố {n} gật gù, mẹ vẫn lạnh nhạt.", "effect": "♥ +1, nhà người ấy +" },
+          { "t": "Chờ {n} lên tiếng", "result": "{n} nắm tay {me}: \"Con chọn rồi.\"", "effect": "♥ +3, đính hôn" },
+          { "t": "Đứng dậy, chào về", "result": "{n} chạy theo, nhưng mẹ {n} ghi thù.", "effect": "♥ +1, mẹ chồng --" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Tết trong bệnh viện",
+        "tone": "drama",
+        "text": "Đêm giao thừa, {n} lại nhận trực. Con sốt 39 độ, {me} một mình bế con giữa phố pháo hoa.",
+        "choices": [
+          { "t": "Bế con vào viện tìm {n}", "result": "Cả nhà đón giao thừa ở phòng trực, trẻ con ngủ ngon.", "effect": "♥ +2" },
+          { "t": "Gọi điện trách {n}", "result": "{n} xin chuyển khoa nhẹ hơn, rồi lén hối tiếc.", "effect": "♥ +1, {n} hy sinh" },
+          { "t": "Về nhà ngoại ăn Tết", "result": "{n} về nhà trống trơn, ngồi một mình tới sáng.", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Ngày nghỉ hiếm hoi",
+        "tone": "ngọt",
+        "text": "{n} tắt điện thoại cả ngày, lần đầu sau ba năm. Sáng nấu cháo, chiều đạp xe quanh hồ Tây với {me}.",
+        "choices": [
+          { "t": "Nằm võng ngủ trưa cùng", "result": "{n} ngủ say, tay vẫn nắm tay {me}.", "effect": "♥ +2" },
+          { "t": "Rủ đi chụp ảnh cưới bù", "result": "Bộ ảnh mặc áo blouse, đẹp tới mức lên báo.", "effect": "♥ +2, danh tiếng +" },
+          { "t": "Nói chuyện sinh thêm con", "result": "{n} cười, xin cho mình một năm sắp xếp lịch.", "effect": "♥ +1" }
+        ]
+      }
+    ]
+  },
+
+  "hai": {
+    "flaw": "Mơ mộng, vô trách nhiệm với tiền bạc, hay vay không trả; tự ái nghệ sĩ cao, dễ xao lòng trước lời tung hô của khán giả.",
+    "date": [
+      {
+        "title": "Quán acoustic Đà Lạt",
+        "tone": "ngọt",
+        "text": "{n} hát ở quán nhỏ đồi Cù, mời {me} lên song ca dù {me} hát lạc tông. Cả quán vỗ tay, {n} tặng {me} cây đàn gỗ cũ.",
+        "choices": [
+          { "t": "Hẹn mai lại tới nghe", "result": "Tối nào {n} cũng hát một bài có tên {me}.", "effect": "♥ +2" },
+          { "t": "Mời {n} bữa lẩu gà lá é", "result": "{n} ăn ngon lành, thú thật cả tuần chỉ ăn mì.", "effect": "♥ +1" },
+          { "t": "Từ chối, trả đàn", "result": "{n} gảy một khúc buồn, rồi cười như chưa có gì.", "effect": "♥ -1" }
+        ]
+      },
+      {
+        "title": "Mượn tiền thuê phòng",
+        "tone": "drama",
+        "text": "{n} bị chủ trọ đuổi, mượn {me} 6 triệu, hứa trả sau show. Ba tháng sau, khoản nợ đã thành 15 triệu.",
+        "choices": [
+          { "t": "Đòi thẳng, có giấy tờ", "result": "{n} tự ái, nhưng đi hát đám cưới trả dần.", "effect": "♥ -1, {n} trưởng thành" },
+          { "t": "Cho {n} ở nhờ", "result": "Phòng đầy tiếng đàn, nhưng hóa đơn đổ lên đầu {me}.", "effect": "♥ +2, tiền --" },
+          { "t": "Cắt đứt, chặn số", "result": "{n} viết bài hát chửi khéo, nổi trên TikTok.", "effect": "chia tay" }
+        ]
+      },
+      {
+        "title": "Bán đứt bài hát",
+        "tone": "drama",
+        "text": "Công ty Sóng Nhạc trả 300 triệu mua đứt bài hát {n} viết về {me}, để cho idol khác hát. {n} cần tiền, nhưng đó là bài của hai người.",
+        "choices": [
+          { "t": "Khuyên {n} bán", "result": "Có tiền trả nợ, nhưng {n} nghe bài trên radio là bật khóc.", "effect": "♥ +1, tiền +" },
+          { "t": "Khuyên giữ, tự phát hành", "result": "Bài chỉ 20 nghìn view, nhưng {n} nhìn {me} biết ơn.", "effect": "♥ +3" },
+          { "t": "Mặc kệ {n} quyết", "result": "{n} bán, rồi đổ lỗi \"{me} không cản\".", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Bài hát cầu hôn",
+        "tone": "ngọt",
+        "text": "Đêm nhạc nhỏ 50 khán giả, {n} dừng giữa bài, gọi tên {me} lên sân khấu. Nhẫn được buộc vào dây đàn.",
+        "choices": [
+          { "t": "Đồng ý trước đám đông", "result": "Khán giả quay clip, cả mạng xã hội ghép đôi.", "effect": "♥ +3, đính hôn" },
+          { "t": "Hỏi nhỏ: lấy gì nuôi nhau?", "result": "{n} lúng túng, hứa nhận dạy đàn kiếm thêm.", "effect": "♥ +1, {n} trưởng thành" },
+          { "t": "Ngượng quá, bỏ chạy", "result": "{n} hát nốt bài một mình, giọng run run.", "effect": "♥ -2" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Tiền điện chưa đóng",
+        "tone": "drama",
+        "text": "Nhà bị cắt điện vì {n} quên đóng tiền, tiền đó đã đi mua cây guitar mới. Con khóc vì nóng, {n} ngồi đàn cho con nghe.",
+        "choices": [
+          { "t": "Bắt {n} bán đàn", "result": "{n} bán, cả tuần không hát một câu.", "effect": "♥ -2, tiền +" },
+          { "t": "Giao {me} giữ hết tiền", "result": "{n} nhẹ nhõm, chỉ việc sáng tác.", "effect": "♥ +1, tiền +" },
+          { "t": "Đốt nến, nghe {n} hát", "result": "Đêm mất điện thành đêm nhớ nhất của con.", "effect": "♥ +2, tiền -" }
+        ]
+      },
+      {
+        "title": "Đêm nhạc đầu tiên",
+        "tone": "ngọt",
+        "text": "Sau mười năm hát quán, {n} có liveshow riêng 500 ghế, bán hết vé. Bài cuối, {n} cúi đầu cảm ơn \"người đã nuôi tôi\".",
+        "choices": [
+          { "t": "Lên sân khấu ôm {n}", "result": "Khán giả đứng dậy vỗ tay, {n} khóc như mưa.", "effect": "♥ +3" },
+          { "t": "Ngồi hàng ghế đầu, mỉm cười", "result": "{n} hát nhìn mãi một chỗ, không rời mắt.", "effect": "♥ +2" },
+          { "t": "Lo lắng đầu tư show sau", "result": "Lời ít, nhưng {n} có quản lý giỏi nhất là {me}.", "effect": "♥ +1, tiền +" }
+        ]
+      }
+    ]
+  },
+
+  "tuananh": {
+    "flaw": "Kiểm soát, coi tiền là câu trả lời cho mọi chuyện, hay thử lòng người khác; bị mẹ là chủ tịch tập đoàn chi phối.",
+    "date": [
+      {
+        "title": "Hợp đồng người yêu",
+        "tone": "drama",
+        "text": "{n}, tổng giám đốc Tập đoàn Vạn Thịnh, đưa {me} bản hợp đồng: đóng vai người yêu 6 tháng, 50 triệu mỗi tháng. Mục đích: thoát vụ mai mối của mẹ.",
+        "choices": [
+          { "t": "Ký, thêm điều khoản riêng", "result": "{n} nhướng mày, lần đầu có người dám mặc cả.", "effect": "♥ +2, tiền +" },
+          { "t": "Xé hợp đồng trước mặt", "result": "{n} sững người, ba ngày sau đến xin lỗi trực tiếp.", "effect": "♥ +1" },
+          { "t": "Ký, không đòi gì", "result": "{n} nghi ngờ {me} có mục đích khác.", "effect": "♥ -1, tiền +" }
+        ]
+      },
+      {
+        "title": "Tầng 68 lúc nửa đêm",
+        "tone": "ngọt",
+        "text": "Sau buổi tiệc giả vờ, {n} {cởi giày}, ngồi bệt sân thượng ăn bánh mì với {me}. \"Lâu lắm rồi mới ăn mà không phải diễn.\"",
+        "choices": [
+          { "t": "Kể chuyện đời thường của mình", "result": "{n} nghe chăm chú, hỏi lại từng chi tiết nhỏ.", "effect": "♥ +2" },
+          { "t": "Hỏi về tuổi thơ {n}", "result": "{n} kể về người cha bỏ đi, giọng run nhẹ.", "effect": "♥ +3" },
+          { "t": "Nhắc: chỉ là hợp đồng thôi", "result": "{n} đứng dậy, lạnh lại như cũ.", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Tấm séc của mẹ",
+        "tone": "drama",
+        "text": "Mẹ {n} hẹn {me} ra quán, đặt tấm séc 5 tỷ lên bàn. \"Biến khỏi đời con tôi, hoặc tôi cho gia đình {cô} mất việc.\"",
+        "choices": [
+          { "t": "Đẩy séc lại, đứng dậy", "result": "Mẹ {n} lần đầu nhìn {me} bằng ánh mắt khác.", "effect": "♥ +2, nhà người ấy +" },
+          { "t": "Cầm séc, kể hết với {n}", "result": "{n} nổi giận với mẹ, nhưng cũng nghi {me}.", "effect": "♥ +0, tin tưởng -" },
+          { "t": "Nhận séc, rời đi", "result": "Giàu sau một đêm, nhưng tin nhắn cuối của {n} là \"Hóa ra vậy.\"", "effect": "chia tay, tiền +++" }
+        ]
+      },
+      {
+        "title": "Phá sản giả",
+        "tone": "drama",
+        "text": "Báo đăng Vạn Thịnh phá sản, {n} trắng tay, dọn ra căn trọ 15 mét vuông. Sau này {me} mới biết: đó là màn thử lòng.",
+        "choices": [
+          { "t": "Tát một cái, rồi ở lại", "result": "{n} quỳ xin lỗi, hứa không bao giờ thử lòng nữa.", "effect": "♥ +2, đính hôn" },
+          { "t": "Bỏ đi, bắt {n} theo đuổi lại", "result": "{n} theo ba tháng, mất hết vẻ tổng tài.", "effect": "♥ +3, quyền lực +" },
+          { "t": "Chia tay vì bị coi thường", "result": "{n} hiểu ra quá muộn, đứng dưới nhà cả đêm mưa.", "effect": "chia tay" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Hợp đồng tiền hôn nhân",
+        "tone": "drama",
+        "text": "Luật sư nhà {n} đưa bản thỏa thuận tài sản: ly hôn thì {me} ra đi tay trắng, con theo họ {n}. {n} nói \"chỉ là thủ tục\".",
+        "choices": [
+          { "t": "Đòi sửa điều khoản về con", "result": "{n} đứng về phía {me}, cãi lại cả hội đồng gia tộc.", "effect": "♥ +2" },
+          { "t": "Ký, không cần tiền nhà {n}", "result": "Mẹ {n} bắt đầu tôn trọng {me}.", "effect": "♥ +1, nhà người ấy +" },
+          { "t": "Hủy cưới phút chót", "result": "Báo lá cải đưa tin rầm rộ suốt tuần.", "effect": "chia tay, danh tiếng -" }
+        ]
+      },
+      {
+        "title": "Bữa sáng {n} nấu",
+        "tone": "ngọt",
+        "text": "Người chưa từng vào bếp lại dậy 5 giờ nấu phở, khét nồi nước dùng. {n} đeo tạp dề hình con gấu, mặt dính nhọ.",
+        "choices": [
+          { "t": "Ăn hết, khen ngon", "result": "Từ đó Chủ nhật nào {n} cũng nấu, ngày càng ngon.", "effect": "♥ +2" },
+          { "t": "Chụp ảnh gửi nhóm gia đình", "result": "Mẹ {n} thả tim, lần đầu tiên.", "effect": "♥ +1, nhà người ấy +" },
+          { "t": "Dạy {n} nấu lại từ đầu", "result": "Hai vợ chồng nấu tới trưa, bỏ cả họp HĐQT.", "effect": "♥ +3" }
+        ]
+      }
+    ]
+  },
+
+  "kai": {
+    "flaw": "Vui vẻ nhưng trẻ con, sợ cam kết, dễ đổi ý; bị kẹt giữa visa, công việc ở nước ngoài và gia đình bên kia muốn {n} về.",
+    "date": [
+      {
+        "title": "Dạy chữ \"thương\"",
+        "tone": "ngọt",
+        "text": "{n} học tiếng Việt qua app Chào Bạn, cứ nói nhầm \"thương\" thành \"thường\". {me} dạy mãi, cuối cùng {n} nói đúng, nhìn thẳng vào mắt {me}.",
+        "choices": [
+          { "t": "Dạy thêm chữ \"nhớ\"", "result": "Tối đó {n} nhắn \"Nhớ {me}\" kèm 10 cái sticker.", "effect": "♥ +2" },
+          { "t": "Trêu phát âm của {n}", "result": "{n} giả vờ dỗi, rồi bắt {me} nói tiếng Anh.", "effect": "♥ +1" },
+          { "t": "Lảng sang chuyện khác", "result": "{n} gãi đầu, tưởng mình nói sai.", "effect": "♥ -1" }
+        ]
+      },
+      {
+        "title": "Thử thách mắm tôm",
+        "tone": "ngọt",
+        "text": "{me} dắt {n} đi ăn bún đậu mắm tôm ngõ phố cổ. {n} nhăn mặt, nín thở, rồi gọi thêm suất thứ hai.",
+        "choices": [
+          { "t": "Quay clip đăng mạng", "result": "Clip triệu view, {n} được gọi là \"Tây mắm tôm\".", "effect": "♥ +1, danh tiếng +" },
+          { "t": "Chở {n} đi ăn khắp phố", "result": "Một tuần tăng ba ký, {n} nói yêu Hà Nội.", "effect": "♥ +2" },
+          { "t": "Dắt về ăn cơm mẹ nấu", "result": "Mẹ {me} thích {n} ngay, gắp thức ăn liên tục.", "effect": "♥ +2, nhà mình +" }
+        ]
+      },
+      {
+        "title": "Visa hết hạn",
+        "tone": "drama",
+        "text": "Visa của {n} không được gia hạn, phải về Melbourne trong 30 ngày. {n} rủ {me} đi cùng, nhưng không nói gì về cưới.",
+        "choices": [
+          { "t": "Hỏi thẳng: mình là gì?", "result": "{n} ấp úng, rồi thú nhận sợ hứa mà không giữ được.", "effect": "♥ +1, căng thẳng +" },
+          { "t": "Theo {n} sang Úc thử", "result": "Ba tháng chật vật, làm phụ bếp, nhớ nhà.", "effect": "♥ +2, sự nghiệp -" },
+          { "t": "Để {n} đi, không hứa hẹn", "result": "Ngày tiễn ở Nội Bài, {n} khóc như con nít.", "effect": "♥ -1, có thể chia tay" }
+        ]
+      },
+      {
+        "title": "Ra mắt qua video",
+        "tone": "drama",
+        "text": "Mẹ {n} gọi video, hỏi {me} có định \"bám con tôi để ra nước ngoài\" không. {n} cười cười, không dịch hết cho {me} nghe.",
+        "choices": [
+          { "t": "Nói tiếng Anh, trả lời thẳng", "result": "Mẹ {n} bất ngờ, gật đầu: \"Cô thẳng thắn đấy.\"", "effect": "♥ +2, nhà người ấy +" },
+          { "t": "Trách {n} không bênh mình", "result": "{n} xin lỗi, lần đầu cãi mẹ bằng giọng nghiêm.", "effect": "♥ +2, đính hôn" },
+          { "t": "Tắt máy, khóc", "result": "{n} không biết dỗ, chỉ ngồi cạnh im lặng.", "effect": "♥ -1" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Nhớ nhà hai đầu",
+        "tone": "drama",
+        "text": "Bố {n} ốm nặng ở Úc, {n} muốn cả nhà dọn về hẳn bên đó. Con đang học lớp một, bà ngoại không rời được cháu.",
+        "choices": [
+          { "t": "Cả nhà sang Úc", "result": "Con chuyển trường, khóc cả tháng, rồi quen dần.", "effect": "♥ +2, nhà mình -" },
+          { "t": "{n} đi trước, mình theo sau", "result": "Nửa năm sống hai múi giờ, gọi nhau lúc nửa đêm.", "effect": "♥ -1" },
+          { "t": "Đề nghị đón bố {n} sang Việt Nam", "result": "Ông cụ bất ngờ thích Đà Nẵng, ở lại luôn.", "effect": "♥ +3, gia đình +" }
+        ]
+      },
+      {
+        "title": "Tết đầu ở Việt Nam",
+        "tone": "ngọt",
+        "text": "{n} lần đầu gói bánh chưng, dây lạt quấn méo mó, bánh như quả bóng. Cả họ cười nghiêng ngả, {n} cười to nhất.",
+        "choices": [
+          { "t": "Dạy {n} chúc Tết họ hàng", "result": "{n} chúc \"An khang thịnh vượng\" chuẩn từng chữ.", "effect": "♥ +2, nhà mình +" },
+          { "t": "Đăng ảnh bánh méo", "result": "Bạn bè bên Úc xin công thức, {n} tự hào lắm.", "effect": "♥ +1" },
+          { "t": "Lì xì {n} phong bao đỏ", "result": "{n} giữ phong bao trong ví suốt nhiều năm.", "effect": "♥ +2" }
+        ]
+      }
+    ]
+  },
+
+  "quan": {
+    "flaw": "Ham danh, đặt hình tượng lên trên người yêu, nghe lời công ty quản lý tuyệt đối; sẵn sàng giấu hoặc chối bỏ {me} để giữ fan.",
+    "date": [
+      {
+        "title": "Phim trường lúc 3 giờ",
+        "tone": "ngọt",
+        "text": "{me} làm phục trang ở phim trường, {n} - nam chính đang hot - bị rách áo phút chót. {me} khâu vội, {n} nhìn {me} mãi không chớp.",
+        "choices": [
+          { "t": "Nhét kẹo gừng vào túi {n}", "result": "Hôm sau quản lý {n} xin số {me}, \"có việc\".", "effect": "♥ +2" },
+          { "t": "Lạnh nhạt, làm việc tiếp", "result": "{n} lần đầu bị phớt lờ, càng tò mò hơn.", "effect": "♥ +1" },
+          { "t": "Xin chụp ảnh chung", "result": "{n} chụp, nhưng nụ cười như diễn.", "effect": "♥ +0" }
+        ]
+      },
+      {
+        "title": "Yêu trong bóng tối",
+        "tone": "drama",
+        "text": "Công ty Tinh Quang Entertainment cấm {n} hẹn hò, mỗi lần gặp phải đeo khẩu trang, vào cửa sau. {me} chưa từng được nắm tay {n} ngoài đường.",
+        "choices": [
+          { "t": "Chấp nhận, yêu lén", "result": "Ngọt trong căn hộ kín, nhưng {me} dần thấy ngộp.", "effect": "♥ +1, bản thân -" },
+          { "t": "Đòi một buổi hẹn công khai", "result": "{n} chở {me} đi biển lúc 2 giờ sáng, không ai nhận ra.", "effect": "♥ +2" },
+          { "t": "Hỏi: tôi là gì của {n}?", "result": "{n} né: \"Đợi hết hợp đồng.\" Hợp đồng còn bốn năm.", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Ảnh bị chụp lén",
+        "tone": "drama",
+        "text": "Trang Hóng Biz tung ảnh {n} ôm {me} ở hầm xe, fan đào ra địa chỉ nhà {me}. Công ty ra thông cáo: \"Chỉ là trợ lý.\"",
+        "choices": [
+          { "t": "Đòi {n} tự lên tiếng", "result": "{n} im lặng ba ngày, rồi đăng story mập mờ.", "effect": "♥ -1, căng thẳng +" },
+          { "t": "Chịu làm \"trợ lý\" cho êm", "result": "Scandal lắng xuống, nhưng {me} khóc một mình mỗi đêm.", "effect": "♥ +1, bản thân --" },
+          { "t": "Tự đăng bài nói rõ", "result": "Mạng nổ tung, {n} bị hủy hai hợp đồng quảng cáo.", "effect": "♥ -3, có thể chia tay" }
+        ]
+      },
+      {
+        "title": "Đêm trao giải",
+        "tone": "ngọt",
+        "text": "{n} nhận giải Nam chính xuất sắc, cầm cúp nói: \"Cảm ơn người đã khâu áo cho tôi năm đó.\" Camera lia khắp khán phòng tìm {me}.",
+        "choices": [
+          { "t": "Đứng dậy, vẫy tay", "result": "Cả nước biết mặt {me}, {n} cầu hôn ngay sau lễ.", "effect": "♥ +3, đính hôn, danh tiếng +" },
+          { "t": "Cúi mặt, lặng lẽ ra về", "result": "{n} chạy theo ra bãi xe, bỏ cả tiệc mừng.", "effect": "♥ +2" },
+          { "t": "Nghi đây là chiêu PR", "result": "{n} chết lặng: \"{me} nghĩ tôi diễn cả cái này?\"", "effect": "♥ -2" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Fan cuồng tới nhà",
+        "tone": "drama",
+        "text": "Một fan cuồng trèo cổng, để lại bức thư máu đòi {me} ly hôn. {n} lại đang quay phim ở Thái Lan.",
+        "choices": [
+          { "t": "Báo công an, đăng công khai", "result": "Fan bị xử lý, nhưng fandom chia rẽ dữ dội.", "effect": "♥ +1, danh tiếng -" },
+          { "t": "Gọi {n} về ngay", "result": "{n} bỏ phim, bị phạt hợp đồng 2 tỷ.", "effect": "♥ +3, tiền --" },
+          { "t": "Dọn về nhà ngoại", "result": "An toàn, nhưng báo đồn vợ chồng {n} ly thân.", "effect": "♥ -1" }
+        ]
+      },
+      {
+        "title": "Ngày không lịch diễn",
+        "tone": "ngọt",
+        "text": "{n} trốn quản lý, đội nón lá chở {me} đi chợ quê. Không ai nhận ra ngôi sao đang trả giá mớ rau muống.",
+        "choices": [
+          { "t": "Nấu bữa cơm quê", "result": "{n} ăn ba bát cơm, nói đây mới là sống thật.", "effect": "♥ +2" },
+          { "t": "Rủ {n} giảm bớt show", "result": "{n} gật đầu, lần đầu từ chối một phim lớn.", "effect": "♥ +2, tiền -" },
+          { "t": "Chụp lén {n} làm kỷ niệm", "result": "Bức ảnh mặc áo ba lỗ, chỉ {me} được xem.", "effect": "♥ +1" }
+        ]
+      }
+    ]
+  },
+
+  "bao": {
+    "flaw": "Hài hước nhưng hời hợt, lấy đùa giỡn né mọi chuyện nghiêm túc; chiều bạn bè, nợ thẻ tín dụng vì sĩ diện bao đồng.",
+    "date": [
+      {
+        "title": "Bàn bên cạnh",
+        "tone": "ngọt",
+        "text": "Deadline dồn dập, {n} gửi qua chat công ty một meme con mèo đội deadline. {me} bật cười giữa phòng họp, sếp quay lại nhìn.",
+        "choices": [
+          { "t": "Gửi lại meme xịn hơn", "result": "Hai bàn đấu meme tới giờ tan ca.", "effect": "♥ +2" },
+          { "t": "Rủ {n} đi ăn trưa", "result": "{n} bao, rồi lén chuyển khoản trả góp thẻ.", "effect": "♥ +1" },
+          { "t": "Nhắc {n} tập trung làm", "result": "{n} làm mặt nghiêm, cả buổi chiều im re.", "effect": "♥ -1" }
+        ]
+      },
+      {
+        "title": "Luật cấm yêu nội bộ",
+        "tone": "drama",
+        "text": "Công ty Nhật Minh Tech phát hiện hai người hẹn hò, theo quy định một người phải chuyển phòng. {n} đùa: \"Thôi tui nghỉ cho {me} thăng chức.\"",
+        "choices": [
+          { "t": "Hỏi {n} nghiêm túc", "result": "{n} hết đùa, nói thật: không muốn mất {me}.", "effect": "♥ +2" },
+          { "t": "Tự xin chuyển phòng", "result": "{n} áy náy, dọn bàn giúp, gửi hoa sang phòng mới.", "effect": "♥ +1, sự nghiệp -" },
+          { "t": "Giấu, chối là bạn", "result": "{n} cười, nhưng câu \"chỉ là bạn\" làm {n} đau.", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Sao kê thẻ tín dụng",
+        "tone": "drama",
+        "text": "{me} vô tình thấy tin nhắn ngân hàng: {n} nợ thẻ 180 triệu, toàn tiền bao nhậu đồng nghiệp. {n} lại cười trừ: \"Chuyện nhỏ mà.\"",
+        "choices": [
+          { "t": "Lập kế hoạch trả nợ cùng", "result": "{n} xấu hổ, bỏ nhậu, nấu cơm mang đi làm.", "effect": "♥ +2, {n} trưởng thành" },
+          { "t": "Mắng trước mặt bạn bè", "result": "{n} mất mặt, lần đầu tiên nổi cáu với {me}.", "effect": "♥ -2" },
+          { "t": "Nói nếu không đổi thì thôi", "result": "{n} im lặng, sáng sau cắt thẻ gửi ảnh cho {me}.", "effect": "♥ +1" }
+        ]
+      },
+      {
+        "title": "Team building Phú Quốc",
+        "tone": "ngọt",
+        "text": "Đêm gala, {n} được giao làm MC, giữa chương trình gọi tên {me} lên sân khấu. Cả công ty hô to: \"Đồng ý đi!\"",
+        "choices": [
+          { "t": "Đồng ý, ôm {n}", "result": "Sếp tổng nâng ly chúc mừng, quên luôn luật nội bộ.", "effect": "♥ +3, đính hôn" },
+          { "t": "Kéo {n} ra biển nói riêng", "result": "Không có khán giả, {n} nói những lời thật nhất.", "effect": "♥ +2" },
+          { "t": "Giận vì bị ép trước đám đông", "result": "{n} tưởng vui, hóa ra làm {me} bẽ mặt.", "effect": "♥ -2" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Nhậu với anh em",
+        "tone": "drama",
+        "text": "Con sốt, gọi mười cuộc {n} không nghe, đang nhậu sinh nhật sếp. {n} về lúc 1 giờ sáng, còn đùa \"Ba về rồi nè!\"",
+        "choices": [
+          { "t": "Khóa cửa, cho ngủ ngoài", "result": "{n} ngồi bậc thềm tới sáng, tỉnh hẳn rượu.", "effect": "♥ -1, {n} thay đổi" },
+          { "t": "Nói chuyện lúc {n} tỉnh", "result": "Lần đầu {n} không đùa, khóc xin lỗi.", "effect": "♥ +2" },
+          { "t": "Đăng status bóng gió", "result": "Đồng nghiệp đọc hết, {n} mất mặt ở công ty.", "effect": "♥ -2, danh tiếng -" }
+        ]
+      },
+      {
+        "title": "Cười suốt bữa cơm",
+        "tone": "ngọt",
+        "text": "{n} diễn lại cảnh sếp ngủ gật trong họp, con cười sặc cơm. Căn nhà nhỏ lúc nào cũng ồn ào tiếng cười.",
+        "choices": [
+          { "t": "Diễn cùng {n}", "result": "Hai vợ chồng thành cặp hài của cả xóm.", "effect": "♥ +2" },
+          { "t": "Quay clip làm kỷ niệm", "result": "Mười năm sau mở lại xem, vẫn cười chảy nước mắt.", "effect": "♥ +2" },
+          { "t": "Hỏi chuyện thật trong lòng {n}", "result": "{n} kể áp lực bị cắt lương, nhẹ nhõm vì được hỏi.", "effect": "♥ +3" }
+        ]
+      }
+    ]
+  },
+
+  "duy": {
+    "flaw": "Lãng mạn nhưng trốn chạy trách nhiệm, hay biến mất không báo; từng bỏ dở một đám hỏi và chưa dứt được người cũ.",
+    "date": [
+      {
+        "title": "Tàu SE1 đêm",
+        "tone": "ngọt",
+        "text": "Tàu Bắc - Nam dừng ở Huế lúc 3 giờ sáng, người lạ giường đối diện mời {me} miếng bánh ít. {n} kể đã đi 40 tỉnh, chỉ mang một ba lô.",
+        "choices": [
+          { "t": "Xuống tàu đi Huế cùng", "result": "Một ngày lang thang Đại Nội, như quen nhau từ kiếp trước.", "effect": "♥ +3" },
+          { "t": "Xin Instagram của {n}", "result": "{n} không xài mạng, chỉ đưa địa chỉ email.", "effect": "♥ +1" },
+          { "t": "Đeo tai nghe, ngủ tiếp", "result": "Sáng ra giường {n} trống, để lại tấm bưu thiếp.", "effect": "♥ +0" }
+        ]
+      },
+      {
+        "title": "Biến mất ba tháng",
+        "tone": "drama",
+        "text": "Đang yêu, {n} bỗng tắt máy, không một lời. Ba tháng sau gửi bưu thiếp từ Lào: \"Xin lỗi, tôi cần đi.\"",
+        "choices": [
+          { "t": "Gửi lại: Về thì nói chuyện", "result": "{n} về, ngồi trước cửa nhà {me} cả đêm.", "effect": "♥ +1" },
+          { "t": "Xé bưu thiếp, sống tiếp", "result": "{n} về thấy {me} đã khác, phải theo đuổi lại từ đầu.", "effect": "♥ -1, quyền lực +" },
+          { "t": "Bay sang Lào tìm", "result": "Gặp {n} ở Luang Prabang, cả hai bật khóc.", "effect": "♥ +2, tiền -" }
+        ]
+      },
+      {
+        "title": "Người cũ ở Đà Lạt",
+        "tone": "drama",
+        "text": "Một người tìm đến, xưng là vị hôn thê cũ bị {n} bỏ lại ngay trước lễ ăn hỏi. \"{n} sẽ bỏ {me} y như vậy.\"",
+        "choices": [
+          { "t": "Bắt {n} kể hết sự thật", "result": "{n} thú nhận: sợ bị trói buộc, từng bỏ chạy thật.", "effect": "♥ +1, tin tưởng -" },
+          { "t": "Tin {n}, không hỏi", "result": "{n} cảm động, nhưng vết nứt vẫn còn đó.", "effect": "♥ +2" },
+          { "t": "Rời đi trước khi bị bỏ", "result": "{n} không níu, chỉ đứng nhìn theo.", "effect": "chia tay" }
+        ]
+      },
+      {
+        "title": "Tam giác mạch",
+        "tone": "ngọt",
+        "text": "Hà Giang mùa hoa, {n} dừng xe giữa đèo Mã Pì Lèng, tháo ba lô đặt xuống. \"Lần này tôi không đi một mình nữa.\"",
+        "choices": [
+          { "t": "Đồng ý giữa đỉnh đèo", "result": "Gió thổi tung tóc, {n} cười như trút được gánh nặng.", "effect": "♥ +3, đính hôn" },
+          { "t": "Đòi {n} ở yên một năm", "result": "{n} nhận việc ở Hà Nội, cố gắng từng ngày.", "effect": "♥ +2, {n} trưởng thành" },
+          { "t": "Cười: Để xem giữ được bao lâu", "result": "{n} chột dạ, nhẫn vẫn nằm trong túi.", "effect": "♥ -1" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Ba lô sau cửa",
+        "tone": "drama",
+        "text": "{me} phát hiện ba lô của {n} xếp sẵn sau cửa, kèm vé xe đi Mộc Châu. Con mới tròn sáu tháng.",
+        "choices": [
+          { "t": "Hỏi thẳng, không la mắng", "result": "{n} khóc, kể bị ngộp vì làm cha, xin đi tư vấn.", "effect": "♥ +2" },
+          { "t": "Xé vé, khóa cửa", "result": "{n} ở lại, nhưng mặt mày lầm lì cả tháng.", "effect": "♥ -2" },
+          { "t": "Rủ cả nhà cùng đi", "result": "Chuyến đi bế con lên núi, {n} như tìm lại chính mình.", "effect": "♥ +3, tiền -" }
+        ]
+      },
+      {
+        "title": "Nhà gỗ Đà Lạt",
+        "tone": "ngọt",
+        "text": "{n} tự tay dựng homestay nhỏ trên đồi, đặt tên theo chuyến tàu năm ấy. Khách phương xa đến, nghe chuyện hai người mà ở lại thêm đêm.",
+        "choices": [
+          { "t": "Treo bưu thiếp năm xưa", "result": "Góc tường thành chỗ check-in nổi nhất Đà Lạt.", "effect": "♥ +2, tiền +" },
+          { "t": "Mỗi năm đi một chuyến", "result": "{n} hết bỏ trốn, giờ chỉ đi cùng nhau.", "effect": "♥ +3" },
+          { "t": "Nhận nuôi chó lạc", "result": "Con chó tên Tàu, ngủ dưới chân {n} mỗi tối.", "effect": "♥ +1" }
+        ]
+      }
+    ]
+  },
+
+  "hung": {
+    "flaw": "Nghiện view, biến đời tư và cả {me} thành content; bị công ty MCN và nhãn hàng điều khiển, hình tượng lạnh lùng chỉ là kịch bản.",
+    "date": [
+      {
+        "title": "Bơ cắn dép",
+        "tone": "ngọt",
+        "text": "Con capybara Bơ trốn khỏi studio, chạy vào quán cà phê {me} đang ngồi và cắn mất chiếc dép. Chủ nó - Mr. Capy - chạy theo, mặt nhắng nhít khác hẳn trên mạng.",
+        "choices": [
+          { "t": "Cho Bơ ăn dưa leo", "result": "Bơ nằm gọn trong lòng {me}, {n} ngơ ngác ghen với thú cưng.", "effect": "♥ +2" },
+          { "t": "Đòi đền dép", "result": "{n} mua đôi dép in hình Bơ, tặng kèm số điện thoại.", "effect": "♥ +1" },
+          { "t": "Nói không xem clip {n}", "result": "{n} sững sờ, lần đầu có người không biết mình.", "effect": "♥ +1, tò mò +" }
+        ]
+      },
+      {
+        "title": "Lên sóng không xin",
+        "tone": "drama",
+        "text": "Clip mới của {n} đạt 8 triệu view, có cảnh {me} ngủ gật ôm Bơ, không che mặt. Bình luận đã đào ra chỗ làm của {me}.",
+        "choices": [
+          { "t": "Bắt {n} gỡ clip ngay", "result": "{n} gỡ, mất deal quảng cáo, nhưng lập luật \"không quay {me}\".", "effect": "♥ +2" },
+          { "t": "Chấp nhận, thành \"chị Bơ\"", "result": "Có fan riêng, nhưng mọi buổi hẹn đều có máy quay.", "effect": "♥ +1, riêng tư --" },
+          { "t": "Giận, block {n}", "result": "{n} quay clip xin lỗi, lại thêm 5 triệu view.", "effect": "♥ -2" }
+        ]
+      },
+      {
+        "title": "Antifan đào quá khứ",
+        "tone": "drama",
+        "text": "Kênh Bóc Phốt 247 tung tin \"Mr. Capy lạnh lùng là diễn, nuôi Bơ để câu view\". Công ty MCN ép {n} livestream chia tay {me} để lấy lại hình tượng.",
+        "choices": [
+          { "t": "Livestream cùng {n} nói thật", "result": "Mất 300 nghìn follow, nhưng được 1 triệu người mới thương thật.", "effect": "♥ +3, danh tiếng +" },
+          { "t": "Lùi lại, để {n} chọn", "result": "{n} do dự hai ngày, rồi xé hợp đồng MCN.", "effect": "♥ +2, tiền -" },
+          { "t": "Đồng ý diễn cảnh chia tay", "result": "Diễn xong, không ai chắc mình còn yêu thật không.", "effect": "♥ -3, có thể chia tay" }
+        ]
+      },
+      {
+        "title": "Tắt máy quay",
+        "tone": "ngọt",
+        "text": "{n} tắt hết điện thoại, đèn ring light, chỉ còn Bơ và nến. Lần đầu tiên {n} nói một câu không để đăng: \"Ở với {me} tui không cần diễn.\"",
+        "choices": [
+          { "t": "Đồng ý cưới", "result": "Bơ đeo nơ cầm nhẫn, không ai quay, chỉ hai người biết.", "effect": "♥ +3, đính hôn" },
+          { "t": "Hỏi: lần này có quay lén không?", "result": "{n} đưa điện thoại cho {me} kiểm tra, cười buồn.", "effect": "♥ +1" },
+          { "t": "Bảo {n} đăng lên đi", "result": "{n} chần chừ, rồi đăng, triệu like nhưng lòng trống trải.", "effect": "♥ -1, danh tiếng +" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Đám cưới tài trợ",
+        "tone": "drama",
+        "text": "Ba nhãn hàng đề nghị tài trợ trọn gói đám cưới 3 tỷ, đổi lại được livestream từ lễ gia tiên tới đêm tân hôn. {n} nhìn {me}, ánh mắt thèm thuồng.",
+        "choices": [
+          { "t": "Từ chối, cưới nhỏ", "result": "Đám cưới 30 khách ở vườn, Bơ làm phù dâu.", "effect": "♥ +2, tiền -" },
+          { "t": "Nhận, nhưng giới hạn cảnh quay", "result": "Cãi nhau với nhãn hàng tới sát ngày, cuối cùng cũng xong.", "effect": "♥ +0, tiền +" },
+          { "t": "Nhận hết", "result": "Đám cưới top trending, mẹ {me} khóc vì bị quay cận mặt.", "effect": "♥ -2, tiền ++, nhà mình -" }
+        ]
+      },
+      {
+        "title": "Bơ có em",
+        "tone": "ngọt",
+        "text": "Bơ sinh ba bé capybara, {n} thức trắng đêm chăm như chăm con ruột. Sáng ra hai vợ chồng ngồi đặt tên, cãi nhau vì quá nhiều tên dễ thương.",
+        "choices": [
+          { "t": "Đặt tên Cơm, Cháo, Phở", "result": "{n} cười lăn, nói nghe đói bụng quá.", "effect": "♥ +2" },
+          { "t": "Không đăng mạng, giữ riêng", "result": "Bí mật nhỏ của nhà, ấm áp hơn mọi clip.", "effect": "♥ +3" },
+          { "t": "Mở trang trại nhỏ", "result": "Trẻ con khắp nơi đến thăm, {n} học làm người lớn.", "effect": "♥ +1, tiền +" }
+        ]
+      }
+    ]
+  },
+
+  "tai": {
+    "flaw": "Tính toán, keo kiệt vì sợ nghèo lại; tiền đều gửi về cho má giữ, cả họ trông vào, bầu show nắm thóp.",
+    "date": [
+      {
+        "title": "Xuồng ba lá",
+        "tone": "ngọt",
+        "text": "{me} về Cần Thơ chơi, ngồi xuồng ba lá nghe {n} hát \"Đêm buồn tỉnh lẻ\" giữa chợ nổi. Clip ai đó quay lén, sáng hôm sau đã một triệu view.",
+        "choices": [
+          { "t": "Xin {n} hát thêm bài", "result": "{n} hát tới trưa, quên luôn bán trái cây.", "effect": "♥ +2" },
+          { "t": "Mua hết thúng chôm chôm", "result": "{n} tính tiền rất kỹ, rồi tặng thêm một nải chuối.", "effect": "♥ +1" },
+          { "t": "Khuyên {n} lập kênh", "result": "{n} gãi đầu: \"Lập rồi ai trả tiền mạng?\"", "effect": "♥ +1" }
+        ]
+      },
+      {
+        "title": "Cát-xê má giữ",
+        "tone": "drama",
+        "text": "Nổi tiếng rồi, mỗi show {n} nhận 20 triệu, nhưng đưa hết cho má giữ. Đi chơi với {me}, {n} vẫn chia đôi từng ly nước mía.",
+        "choices": [
+          { "t": "Nói thẳng: thấy bị tính toán", "result": "{n} kể nhà từng mất đất vì nợ, sợ nghèo tới chết.", "effect": "♥ +2, hiểu nhau" },
+          { "t": "Lén trả hết mọi lần", "result": "{n} quen dần, coi đó là chuyện đương nhiên.", "effect": "♥ +0, tiền -" },
+          { "t": "Về gặp má {n} nói chuyện", "result": "Má {n} nghi {me} nhắm tiền con mình.", "effect": "♥ -1, nhà người ấy -" }
+        ]
+      },
+      {
+        "title": "Bầu show ép ký",
+        "tone": "drama",
+        "text": "Bầu show Phước Lộc đưa hợp đồng 10 năm, chia 70-30, cấm công khai người yêu. {n} định ký vì tiền ứng trước 500 triệu.",
+        "choices": [
+          { "t": "Tìm luật sư đọc giùm", "result": "Phát hiện điều khoản phạt 5 tỷ, {n} toát mồ hôi, bỏ ký.", "effect": "♥ +3" },
+          { "t": "Để {n} ký, hy sinh tình riêng", "result": "Tiền về ào ào, nhưng {me} thành người tình bí mật.", "effect": "♥ -1, tiền +" },
+          { "t": "Đề nghị tự làm quản lý", "result": "Hai đứa chạy show tỉnh bằng xe máy, cực mà vui.", "effect": "♥ +2, tiền -" }
+        ]
+      },
+      {
+        "title": "Đám giỗ ra mắt",
+        "tone": "ngọt",
+        "text": "Đám giỗ ông nội, cả họ {n} hỏi {me} lương bao nhiêu, biết nấu canh chua không. {n} cầm micro karaoke, hát tặng {me} trước bàn thờ tổ tiên.",
+        "choices": [
+          { "t": "Xuống bếp nấu canh chua", "result": "Má {n} nếm thử, gật đầu, gắp cho {me} miếng cá ngon nhất.", "effect": "♥ +2, nhà người ấy +" },
+          { "t": "Hát song ca cùng {n}", "result": "Cả họ vỗ tay, chú út quay clip đăng lên mạng.", "effect": "♥ +2, danh tiếng +" },
+          { "t": "Ngại, xin về sớm", "result": "Họ hàng xì xào \"dâu thành phố chảnh\".", "effect": "♥ -1, nhà người ấy -" }
+        ]
+      }
+    ],
+    "married": [
+      {
+        "title": "Họ hàng mượn tiền",
+        "tone": "drama",
+        "text": "Chú hai mượn 300 triệu làm ao tôm, cô út mượn mua xe, má {n} gật đầu hết. Tiền mua nhà của vợ chồng bay sạch.",
+        "choices": [
+          { "t": "Ra luật: mượn phải có giấy", "result": "Họ hàng giận, nhưng {n} lần đầu dám nói \"không\".", "effect": "♥ +2, nhà người ấy -" },
+          { "t": "Nhịn cho êm nhà", "result": "Năm sau lại thêm ba người hỏi mượn.", "effect": "♥ -1, tiền --" },
+          { "t": "Dọn ra ở riêng", "result": "Má {n} khóc, nhưng vợ chồng tự chủ được tiền.", "effect": "♥ +1, tiền +" }
+        ]
+      },
+      {
+        "title": "Hát ru con",
+        "tone": "ngọt",
+        "text": "Đêm mưa, {n} ôm con hát ru bằng giọng bolero ngọt lịm. Con ngủ say, {n} thì thầm: \"Giờ tui hết sợ nghèo rồi.\"",
+        "choices": [
+          { "t": "Hát nối câu tiếp theo", "result": "Hai giọng hòa nhau, con cười trong mơ.", "effect": "♥ +3" },
+          { "t": "Thu âm làm album ru con", "result": "Album nhỏ bán chạy, tiền gửi quỹ học cho con.", "effect": "♥ +2, tiền +" },
+          { "t": "Rủ {n} về thăm chợ nổi", "result": "Cả nhà ngồi xuồng, {n} hát lại bài năm xưa.", "effect": "♥ +2" }
+        ]
+      }
+    ]
+  }
+}
