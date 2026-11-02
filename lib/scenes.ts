@@ -26,6 +26,7 @@ import { routeScene } from './routes';
 import { GIFT_CAT, GIFT_PREF, GIFT_VND, shelfOf } from './gifts';
 import { cashOf, fmtGold, fmtVND, pointsOf, priceAt } from './money';
 import { eldest, weddingGold } from './family';
+import { chanceLabel, chanceOf, luck, majorOf, wishesOf } from './majors';
 
 const CH = { tho: 'Tuổi thơ', teen: 'Tuổi teen', tre: 'Tuổi trẻ', nha: 'Lập gia đình', gia: 'Tuổi già' };
 
@@ -37,7 +38,30 @@ const drinkOf = (y: number) => (y < 2008 ? 'chè' : 'trà sữa');
 const tvOf = (y: number) => (y < 1995 ? 'phim hoạt hình trên chiếc tivi đen trắng cả xóm xem chung' : y <= 2026 ? 'phim hoạt hình' : 'phim hoạt hình chiếu nổi giữa phòng');
 const wall = (y: number) => (y < 2011 ? 'kể cho cả xóm' : y <= 2026 ? 'đăng lên Tường' : 'phát lên mạng thực tế ảo');
 /** điểm Học vấn cần để đỗ đại học theo thời: 1990s rất khó (vài % vào được), 2002-2014 thi ba chung, từ 2015 dễ hơn */
-const passMark = (y: number) => (y < 2000 ? 64 : y < 2015 ? 55 : 50);
+/** các lựa chọn nguyện vọng: ngành, khả năng đỗ; bấm là thi, đỗ hay trượt theo may rủi */
+function wishChoices(bonus: number, n: number): Choice[] {
+  return Array.from({ length: n }, (_, i) => ({
+    t: (x: Ctx) => {
+      const m = wishesOf(x, bonus)[i];
+      return m ? `${m.name} · khả năng đỗ: ${chanceLabel(chanceOf(m.score(x) + bonus, m.req(x)))}` : '';
+    },
+    if: (x: Ctx) => !!wishesOf(x, bonus)[i],
+    do: (fx: Fx, x: Ctx) => {
+      const m = wishesOf(x, bonus)[i];
+      const p = chanceOf(m.score(x) + bonus, m.req(x));
+      if (luck(x, `dh_${m.k}`) < p) {
+        fx.flag('daihoc');
+        fx.flag(`nganh_${m.k}`);
+        fx.stat('hoc', 4);
+        m.do(fx);
+        fx.say(`Đỗ ${m.name}! ${m.note}`);
+      } else {
+        fx.flag('truot_dh');
+        fx.say(`Trượt ${m.name}${p < 0.4 ? ', nguyện vọng này vốn đã xa' : ', chỉ thiếu vài điểm'}.`);
+      }
+    },
+  }));
+}
 const xemJob = (y: number) => (y < 2000 ? 'kế toán hợp tác xã' : y < 2015 ? 'nhân viên ngân hàng' : y <= 2026 ? 'kỹ sư phần mềm' : 'người huấn luyện AI');
 
 /** Nhà bạn thơ ấu chuyển đi đâu: miền Bắc lên Hà Nội, miền Trung và miền Nam thì vào Sài Gòn */
@@ -686,61 +710,59 @@ const list: Scene[] = [
     next: 'ly@16',
   },
   {
+    // thi đại học: chọn một nguyện vọng, khả năng đỗ ghi rõ bên cạnh
     id: 't17_thi',
     age: 18,
     chapter: CH.teen,
     bg: () => ({ place: 'cong', time: 'day' }),
-    title: 'Thi đại học',
-    text: (x) => {
-      const pass = x.s.stats.hoc >= passMark(x.year);
-      const lines = [pass ? `Có kết quả: ${x.me} đỗ đại học!` : `Có kết quả: ${x.me} trượt, thiếu hai điểm.`];
-      if (!pass && x.s.love.long >= 25) lines.push(`Chiều hôm ấy, ${x.L('long')} ngồi ngoài cổng trường, chìa cho ${x.me} một cốc ${drinkOf(x.year)}.`);
-      if (!pass && x.s.love.minh >= 25) lines.push(`${x.L('minh')} gửi ${msgOf(x.year)}: "Năm sau thi lại, tớ kèm."`);
-      return lines;
-    },
-    choices: [
-      {
-        t: (x) => (x.f.urban && (x.f.province === 'Hà Nội' || x.f.province === 'TP. Hồ Chí Minh') ? 'Vào đại học, ngày ngày đạp xe đến giảng đường' : 'Lên thành phố học, ở ký túc xá'),
-        if: (x) => x.s.stats.hoc >= passMark(x.year),
-        do: (fx, x) => {
-          fx.flag('daihoc');
-          fx.stat('hoc', 5);
-          if (x.s.love.minh >= 20) (fx.love('minh', 8), fx.say(`${x.L('minh')} học cùng trường.`));
-        },
-      },
-      { t: 'Ôn thi lại một năm', if: (x) => x.s.stats.hoc < 55, do: (fx) => (fx.flag('daihoc'), fx.stat('hoc', 10), fx.love('minh', 8)) },
-      {
-        t: (x) => `Nhận cốc ${drinkOf(x.year)}, ngồi cạnh ${x.L('long')} đến tối`,
-        if: (x) => x.s.stats.hoc < 55 && x.s.love.long >= 25,
-        do: (fx) => (fx.love('long', 12), fx.stat('tinh', 5)),
-        note: (x) => `${x.L('long')} chưa từng đợi ai lâu như thế.`,
-      },
-      { t: 'Đi làm luôn, kiếm tiền sớm', do: (fx) => (fx.flag('dilam'), fx.stat('tien', 15), fx.stat('noi', 5), fx.love('long', 5)) },
-    ],
-    next: 't18_nganh',
+    wide: true,
+    title: 'Thi đại học: đăng ký nguyện vọng',
+    text: (x) => [`Tờ phiếu nguyện vọng nằm trên bàn. ${x.bm === 'ông bà' ? 'Ông bà' : 'Bố mẹ'} bảo: "${[...wishesOf(x)].sort((m, n) => n.score(x) - n.req(x) - (m.score(x) - m.req(x)))[0]?.mom ?? 'Học gì cũng được, miễn con thích.'}"`],
+    choices: [...wishChoices(0, 7), { t: 'Không thi, đi làm luôn cho đỡ bố mẹ', do: (fx) => (fx.flag('dilam'), fx.flag('khongthi'), fx.stat('tien', 12), fx.stat('noi', 4), fx.love('long', 5)) }],
+    next: 't18_ketqua',
   },
   {
-    // đỗ đại học: chọn khoa, ngành. Ngành quyết định gặp ai ở giảng đường và nghề sau này
-    id: 't18_nganh',
+    // trượt đại học: thi lại, đi làm hay học nghề
+    id: 't18_ketqua',
     age: 18,
     chapter: CH.teen,
-    bg: () => ({ place: 'lop', time: 'day' }),
-    skip: (x) => !x.has('daihoc') || MAJORS.some((m) => x.has(`nganh_${m.k}`)),
-    title: 'Chọn ngành',
-    text: (x) => [`Tờ phiếu đăng ký nguyện vọng nằm trên bàn. ${x.bm === 'ông bà' ? 'Ông bà' : 'Bố mẹ'} bảo: "${majorsOf(x)[0].mom}"`],
-    choices: [0, 1, 2].map(
-      (i): Choice => ({
-        t: (x) => majorsOf(x)[i]?.t(x) ?? '',
-        if: (x) => !!majorsOf(x)[i],
-        do: (fx, x) => {
-          const m = majorsOf(x)[i];
-          fx.flag(`nganh_${m.k}`);
-          m.do(fx);
-        },
-        note: (x) => majorsOf(x)[i]?.note ?? '',
-      }),
-    ),
+    bg: () => ({ place: 'cong', time: 'dusk' }),
+    skip: (x) => !x.has('truot_dh') || x.has('daihoc') || x.has('dilam'),
+    title: 'Trượt đại học',
+    text: (x) => {
+      const l = [`Có kết quả: ${x.me} trượt. ${x.bm === 'ông bà' ? 'Ông bà' : 'Bố mẹ'} không nói gì, chỉ dọn mâm cơm muộn hơn mọi ngày.`];
+      if (x.s.love.long >= 25) l.push(`Chiều hôm ấy, ${x.L('long')} ngồi ngoài cổng, chìa cho ${x.me} một cốc ${drinkOf(x.year)}.`);
+      else if (x.s.love.minh >= 25) l.push(`${x.L('minh')} gửi ${msgOf(x.year)}: "Năm sau thi lại, tớ kèm."`);
+      return l;
+    },
+    wide: true,
+    choices: [
+      { t: 'Ôn thi lại một năm', do: (fx) => (fx.flag('thilai'), fx.stat('hoc', 8), fx.love('minh', 6)), note: () => '🦋 Một năm ôn thi, sáng học chiều học tối học.' },
+      { t: 'Đi làm luôn, kiếm tiền sớm', do: (fx) => (fx.flag('dilam'), fx.stat('tien', 12), fx.stat('noi', 4), fx.love('long', 5)) },
+      { t: 'Học nghề: điện, may, nấu ăn, sửa xe', do: (fx) => (fx.flag('dilam'), fx.flag('hocnghe'), fx.stat('hoc', 3), fx.stat('tien', 8)), note: () => '🦋 Hai năm học nghề, ra trường có tay nghề trong tay.' },
+      {
+        t: (x) => `Nhận cốc ${drinkOf(x.year)}, ngồi cạnh ${x.L('long')} đến tối`,
+        if: (x) => x.s.love.long >= 25,
+        do: (fx) => (fx.love('long', 12), fx.stat('tinh', 5), fx.flag('thilai')),
+        note: (x) => `${x.L('long')} chưa từng đợi ai lâu như thế. Năm sau thi lại.`,
+      },
+    ],
     next: 'ly@18',
+  },
+  // bản cũ còn lưu ở cảnh chọn ngành: đi tiếp
+  { id: 't18_nganh', age: 18, chapter: CH.teen, title: '', text: () => [], choices: [], skip: () => true, next: 'ly@18' },
+  {
+    // thi lại năm sau: sức học đã khá hơn
+    id: 't19_thilai',
+    age: 19,
+    chapter: CH.tre,
+    bg: () => ({ place: 'cong', time: 'day' }),
+    wide: true,
+    skip: (x) => !x.has('thilai') || x.has('daihoc') || x.has('dilam'),
+    title: 'Thi lại đại học',
+    text: (x) => [`Một năm ôn thi. Lần này ${x.me} tự tin hơn hẳn. Chọn nguyện vọng nào?`],
+    choices: [...wishChoices(4, 7), { t: 'Thôi, đi làm', do: (fx) => (fx.flag('dilam'), fx.stat('tien', 10)) }],
+    next: 'y19_veve',
   },
 
   // ===== Tuổi trẻ =====
@@ -1243,22 +1265,6 @@ const DR_NEXT: Record<number, string> = {
   53: 'dr@56',
   56: 'o60',
 };
-
-/** Khoa, ngành đại học: theo thời, theo sức học; mỗi ngành mở ra những người khác nhau */
-export const MAJORS: { k: string; name: string; t: (x: Ctx) => string; ok: (x: Ctx) => boolean; score: (x: Ctx) => number; mom: string; people: LoveId[]; note: string; do: (fx: Fx) => void }[] = [
-  { k: 'y', name: 'Y khoa', t: () => 'Y khoa: sáu năm, học đến mờ mắt', ok: (x) => x.s.stats.hoc >= 60, score: (x) => x.s.stats.hoc, mom: 'Làm bác sĩ là nhất, cả họ được nhờ.', people: ['phong'], note: '🦋 Sáu năm áo blouse trắng, trực đêm là chuyện thường.', do: (fx) => (fx.stat('hoc', 6), fx.stat('khoe', -3)) },
-  { k: 'it', name: 'Công nghệ thông tin', t: (x) => (x.year < 2000 ? 'Tin học: ngành mới, ít người hiểu' : 'Công nghệ thông tin: ra trường dễ kiếm việc'), ok: (x) => x.year >= 1993, score: (x) => x.s.stats.hoc + (x.year >= 2010 ? 15 : 0), mom: 'Máy tính là tương lai đấy con.', people: ['tuananh', 'kai'], note: '🦋 Phòng máy toàn con trai, đêm nào cũng code đến sáng.', do: (fx) => (fx.stat('hoc', 4), fx.stat('tien', 6)) },
-  { k: 'kt', name: 'Kinh tế', t: () => 'Kinh tế, ngân hàng: lương cao, áo sơ mi trắng', ok: () => true, score: (x) => x.s.stats.tien + 10, mom: 'Vào ngân hàng cho ổn định.', people: ['tuananh', 'bao'], note: '🦋 Câu lạc bộ, thực tập, ai cũng nói chuyện "khởi nghiệp".', do: (fx) => (fx.stat('tien', 8), fx.stat('duyen', 2)) },
-  { k: 'sp', name: 'Sư phạm', t: () => 'Sư phạm: miễn học phí, ra trường đi dạy', ok: () => true, score: (x) => x.s.stats.tinh + 5, mom: 'Làm cô giáo, thầy giáo, nhàn mà được kính trọng.', people: ['minh'], note: '🦋 Lớp toàn người hiền, thực tập ở trường cấp ba cũ.', do: (fx) => (fx.stat('tinh', 5), fx.stat('tam', 4)) },
-  { k: 'nn', name: 'Ngoại ngữ', t: () => 'Ngoại ngữ: mơ một ngày đi du học', ok: () => true, score: (x) => x.s.stats.hoc + (x.has('ac_tienganh') ? 15 : 0), mom: 'Giỏi tiếng thì đi đâu cũng được.', people: ['kai'], note: '🦋 Nói chuyện với người nước ngoài ở phố đi bộ mỗi tối thứ bảy.', do: (fx) => (fx.stat('hoc', 4), fx.flag('ac_tienganh')) },
-  { k: 'nt', name: 'Nghệ thuật', t: (x) => (x.year < 2005 ? 'Sân khấu điện ảnh: cả nhà can ngăn' : 'Nghệ thuật, truyền thông: làm thứ mình thích'), ok: (x) => x.s.stats.duyen >= 45 || x.s.stats.noi >= 50, score: (x) => x.s.stats.duyen + x.s.stats.noi / 2, mom: 'Học cái gì cho ra tiền ấy, nghệ thuật đói lắm.', people: ['hai', 'quan', 'hung'], note: '🦋 Giảng đường đầy người đẹp, ai cũng muốn nổi tiếng.', do: (fx) => (fx.stat('duyen', 6), fx.stat('noi', 4)) },
-];
-/** ba ngành hợp nhất với người này ở năm ấy */
-export const majorsOf = (x: Ctx) =>
-  MAJORS.filter((m) => m.ok(x))
-    .sort((a, b) => b.score(x) - a.score(x) || a.k.localeCompare(b.k))
-    .slice(0, 3);
-export const majorOf = (s: { flags: string[] }) => MAJORS.find((m) => s.flags.includes(`nganh_${m.k}`)) ?? null;
 
 /** Số giả ngẫu nhiên cố định theo trạng thái, để quay lại ngã rẽ vẫn ra cùng kết quả */
 function roll(s: Story, salt: number) {
@@ -2363,7 +2369,7 @@ export function resolverOf(c: Character, f: Family): Resolve {
 
 /** mốc chính của đời: luôn dừng hỏi (thi đại học, chọn người, tỏ tình, cầu hôn, cưới, phá sản, tuổi già) */
 function isCore(id: string) {
-  return /^(fo|ms|ch|wd|ps|bat|end)@/.test(id) || ['t17_thi', 't18_nganh', 'y27_cauhon', 'y28_hethong', 'y28_xemmat', 'y29_quaylai', 'o75'].includes(id);
+  return /^(fo|ms|ch|wd|ps|bat|end)@/.test(id) || ['t17_thi', 't18_ketqua', 't19_thilai', 'y27_cauhon', 'y28_hethong', 'y28_xemmat', 'y29_quaylai', 'o75'].includes(id);
 }
 
 /** gọn kiểu "đọc và bấm": nhiều nhất hai câu, giữ câu đầu và câu cánh bướm (nhắc lựa chọn cũ) nếu có */

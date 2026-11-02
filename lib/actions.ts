@@ -8,6 +8,7 @@
 
 import { choose, ctxOf, type Choice, type Ctx, type Feedback, type Fx, type LoveId, type Resolve, type Scene, type Story } from './story';
 import type { Character, Family } from './character';
+import { chanceLabel, chanceOf, luck, majorOf, studyBonus } from './majors';
 import { cashOf, fmtVND, pointsOf, priceAt } from './money';
 import type { Place } from '@/components/Backdrop';
 
@@ -185,7 +186,15 @@ export const AREA_PEOPLE: Record<AreaKey, LoveId[]> = {
  * Mỗi lựa chọn tính vào một mảng (để vẫn ra "cả đời dành cho điều gì"), có thể tốn tiền thật (VNĐ theo năm 2020).
  */
 
-export type MOpt = Opt & { k: AreaKey; /** giá theo mặt bằng 2020 */ vnd?: number };
+export type MOpt = Opt & {
+  k: AreaKey;
+  /** giá theo mặt bằng 2020 */
+  vnd?: number;
+  /** lương tháng theo mặt bằng 2020 (việc làm) */
+  pay?: (x: Ctx) => number;
+  /** gợi ý ngắn: được gì, mất gì */
+  hint?: (x: Ctx) => string;
+};
 export interface Milestone {
   id: string;
   age: number;
@@ -195,20 +204,12 @@ export interface Milestone {
   opts: MOpt[];
   /** đời đã rẽ qua chuyện này ở chỗ khác (vd đã mua nhà) thì không hỏi nữa */
   skip?: (s: Story) => boolean;
+  /** cho xem nhiều lựa chọn hơn (chọn nghề) */
+  wide?: boolean;
 }
 
 const land = (y: number) => (y >= 2001 && y <= 2007) || (y >= 2015 && y <= 2021);
 const landDown = (y: number) => (y >= 2008 && y <= 2012) || y >= 2022;
-
-const MAJOR_KEYS = ['y', 'it', 'kt', 'sp', 'nn', 'nt'];
-const JOB_BY_MAJOR: Record<string, { t: string; do: (fx: Fx) => void }> = {
-  y: { t: 'Vào bệnh viện, trực đêm cách ngày', do: (fx) => (fx.stat('tien', 8), fx.stat('khoe', -3), fx.flag('nghe_bacsi')) },
-  it: { t: 'Vào công ty phần mềm, lương khởi điểm cao', do: (fx) => (fx.stat('tien', 11), fx.stat('khoe', -2), fx.flag('nghe_it')) },
-  kt: { t: 'Vào ngân hàng, mặc sơ mi trắng mỗi ngày', do: (fx) => (fx.stat('tien', 9), fx.stat('tam', -2), fx.flag('nghe_nganhang')) },
-  sp: { t: 'Về dạy ở trường cấp ba', do: (fx) => (fx.stat('tien', 3), fx.stat('tam', 6), fx.flag('ms_congchuc'), fx.flag('nghe_giaovien')) },
-  nn: { t: 'Làm phiên dịch cho công ty nước ngoài', do: (fx) => (fx.stat('tien', 8), fx.stat('duyen', 3), fx.flag('nghe_phiendich')) },
-  nt: { t: 'Làm truyền thông, quay dựng tự do', do: (fx) => (fx.stat('tien', 4), fx.stat('duyen', 6), fx.flag('nghe_truyenthong')) },
-};
 
 export const MILESTONES: Milestone[] = [
   {
@@ -231,7 +232,14 @@ export const MILESTONES: Milestone[] = [
     title: () => 'Lên cấp Hai',
     sub: (x) => `Hết tiểu học. ${x.me} mười một tuổi, bước vào cấp Hai.`,
     opts: [
-      { k: 'hoc', t: 'Thi vào lớp chọn', do: (fx) => (fx.stat('hoc', 7), fx.stat('khoe', -2)) },
+      {
+        k: 'hoc',
+        t: (x) => `Thi vào lớp chọn · khả năng đỗ: ${chanceLabel(chanceOf(x.s.stats.hoc + studyBonus(x), 50))}`,
+        do: (fx, x) =>
+          luck(x, 'lopchon') < chanceOf(x.s.stats.hoc + studyBonus(x), 50)
+            ? (fx.stat('hoc', 7), fx.stat('khoe', -2), fx.flag('ac_lopchon'), fx.say('Đỗ lớp chọn! Bố mẹ khoe với cả xóm.'))
+            : (fx.stat('hoc', 2), fx.stat('tam', -3), fx.say('Trượt lớp chọn, học lớp thường. Không sao, bạn mới cũng vui.')),
+      },
       { k: 'hoc', t: (x) => (x.year < 2000 ? 'Học tiếng Anh ở nhà thầy giáo' : 'Học tiếng Anh ở trung tâm'), vnd: 6_000_000, do: (fx) => (fx.stat('hoc', 5), fx.flag('ac_tienganh')), note: '🦋 Tiếng Anh sẽ mở ra một cánh cửa.' },
       { k: 'ban', t: 'Vào đội bóng, đội văn nghệ của trường', do: (fx) => (fx.stat('duyen', 4), fx.stat('khoe', 3), fx.rel('banthan', 4)) },
       { k: 'nha', t: 'Phụ bố mẹ việc nhà, bán hàng', do: (fx) => (fx.stat('tien', 4), fx.rel('bome', 6)) },
@@ -244,7 +252,14 @@ export const MILESTONES: Milestone[] = [
     title: () => 'Thi vào cấp Ba',
     sub: (x) => `Năm lớp Chín. ${x.me} phải chọn đường vào cấp Ba.`,
     opts: [
-      { k: 'hoc', t: 'Ôn thi trường chuyên', do: (fx) => (fx.stat('hoc', 8), fx.stat('khoe', -2), fx.flag('ac_chuyen')), note: '🦋 Thi chuyên năm ấy sẽ còn được nhắc lại.' },
+      {
+        k: 'hoc',
+        t: (x) => `Ôn thi trường chuyên · khả năng đỗ: ${chanceLabel(chanceOf(x.s.stats.hoc + studyBonus(x), 62))}`,
+        do: (fx, x) =>
+          luck(x, 'chuyen') < chanceOf(x.s.stats.hoc + studyBonus(x), 62)
+            ? (fx.stat('hoc', 8), fx.stat('khoe', -2), fx.flag('ac_chuyen'), fx.say('Đỗ chuyên! 🦋 Thi chuyên năm ấy sẽ còn được nhắc lại.'))
+            : (fx.stat('hoc', 3), fx.stat('tam', -4), fx.say('Trượt chuyên, vào trường công gần nhà. Ba ngày không muốn ra khỏi phòng.')),
+      },
       { k: 'minh', t: 'Thi trường công gần nhà, học nhẹ nhàng', do: (fx) => (fx.stat('hoc', 3), fx.stat('tam', 4)) },
       { k: 'hoc', t: 'Học trường tư thục', vnd: 30_000_000, do: (fx) => (fx.stat('hoc', 4), fx.stat('duyen', 3)) },
       { k: 'tien', t: 'Vừa học vừa phụ việc kiếm tiền', do: (fx) => (fx.stat('tien', 6), fx.stat('hoc', -2)) },
@@ -254,28 +269,33 @@ export const MILESTONES: Milestone[] = [
     id: 'dilam',
     age: 22,
     place: 'vanphong',
+    wide: true,
     title: (x) => (x.has('daihoc') ? 'Ra trường, đi làm' : 'Chọn một nghề'),
     sub: (x) => (x.has('daihoc') ? `Cầm tấm bằng ${x.s.flags.includes('nganh_y') ? 'bác sĩ' : x.s.flags.includes('nganh_sp') ? 'sư phạm' : x.s.flags.includes('nganh_it') ? 'kỹ sư' : 'cử nhân'} trên tay, ${x.me} bắt đầu đi làm.` : `${x.me} hai mươi hai tuổi, cần một công việc lâu dài.`),
     opts: [
       // việc đúng ngành đã học
       {
         k: 'tien',
-        t: (x) => JOB_BY_MAJOR[MAJOR_KEYS.find((m) => x.has(`nganh_${m}`)) ?? 'kt'].t,
-        when: (x) => MAJOR_KEYS.some((m) => x.has(`nganh_${m}`)),
-        do: (fx, x) => JOB_BY_MAJOR[MAJOR_KEYS.find((m) => x.has(`nganh_${m}`)) ?? 'kt'].do(fx),
+        t: (x) => majorOf(x.s)?.job.t ?? '',
+        when: (x) => !!majorOf(x.s),
+        pay: (x) => majorOf(x.s)?.job.pay ?? 0,
+        hint: (x) => majorOf(x.s)?.job.hint ?? '',
+        do: (fx, x) => majorOf(x.s)?.job.do(fx),
         note: '🦋 Làm đúng ngành đã học.',
       },
-      { k: 'tien', t: 'Thi công chức, vào cơ quan nhà nước', do: (fx) => (fx.stat('tien', 5), fx.stat('tam', 3), fx.flag('ms_congchuc')) },
-      { k: 'tien', t: (x) => (x.year < 2000 ? 'Xin vào công ty liên doanh' : 'Vào công ty tư nhân, công ty nước ngoài'), do: (fx) => (fx.stat('tien', 9), fx.stat('khoe', -2)) },
+      { k: 'tien', t: 'Mở tiệm nhỏ đúng nghề đã học', when: (x) => x.has('hocnghe'), pay: () => 8_000_000, hint: () => 'Thu nhập theo tay nghề, làm chủ giờ giấc', vnd: 20_000_000, do: (fx) => (fx.stat('tien', 8), fx.stat('tam', 3)) },
+      { k: 'tien', t: 'Thi công chức, vào cơ quan nhà nước', pay: () => 6_000_000, hint: () => 'Lương thấp nhưng ổn định, ít áp lực', do: (fx) => (fx.stat('tien', 5), fx.stat('tam', 3), fx.flag('ms_congchuc')) },
+      { k: 'tien', t: (x) => (x.has('daihoc') ? (x.year < 2000 ? 'Xin vào công ty liên doanh' : 'Vào công ty tư nhân, công ty nước ngoài') : 'Vào làm công nhân khu công nghiệp'), pay: (x) => (x.has('daihoc') ? 13_000_000 : 7_000_000), hint: (x) => (x.has('daihoc') ? 'Lương cao, tăng ca nhiều, dễ bị cắt giảm' : 'Lương ổn, đứng máy cả ngày, tăng ca thì thêm tiền'), do: (fx) => (fx.stat('tien', 9), fx.stat('khoe', -2)) },
       {
         k: 'tien',
         t: 'Khởi nghiệp, mở cửa hàng nhỏ',
         vnd: 80_000_000,
+        hint: () => 'Không lương cố định: được ăn cả, ngã về không',
         do: (fx, x) =>
           x.s.stats.duyen >= 50 || x.s.stats.hoc >= 55 ? (fx.stat('tien', 18), fx.say('Cửa hàng đông khách, vốn về sau hai năm.')) : (fx.stat('tien', -4), fx.say('Ế ẩm một năm, phải sang lại cửa hàng.')),
         note: '🦋 Làm chủ thì gặp nhiều người hơn.',
       },
-      { k: 'nha', t: 'Về quê lập nghiệp, gần bố mẹ', do: (fx) => (fx.rel('bome', 8), fx.stat('tam', 4), fx.stat('tien', 3)) },
+      { k: 'nha', t: 'Về quê lập nghiệp, gần bố mẹ', pay: () => 4_000_000, hint: () => 'Lương thấp nhưng gần bố mẹ, sống chậm', do: (fx) => (fx.rel('bome', 8), fx.stat('tam', 4), fx.stat('tien', 3)) },
     ],
   },
   {
@@ -348,7 +368,7 @@ export const mPriceText = (v: number) => fmtVND(v);
 
 export function mOptions(m: Milestone, x: Ctx) {
   // nhiều nhất 3 lựa chọn mỗi mốc
-  return m.opts.filter((o) => x.year >= (o.y0 ?? 0) && x.year <= (o.y1 ?? 9999) && (!o.when || o.when(x))).slice(0, 3);
+  return m.opts.filter((o) => x.year >= (o.y0 ?? 0) && x.year <= (o.y1 ?? 9999) && (!o.when || o.when(x))).slice(0, m.wide ? 5 : 3);
 }
 const mDone = (s: Story, m: Milestone) => s.flags.includes(`ms_done_${m.id}`);
 /** mốc đang chờ chọn ở tuổi này (mốc gần nhất đã tới mà chưa chọn, chưa sang mốc sau) */

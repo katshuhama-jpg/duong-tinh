@@ -27,13 +27,17 @@ for (let i = 0; i < N; i++) {
         const e = c.birthYear + 17 < 2000 ? '<2000' : c.birthYear + 17 < 2015 ? '2000-14' : '2015+';
         const p = (pass[e] ??= [0, 0]);
         p[1]++;
-        if (sc.text(x)[0].includes('đỗ')) p[0]++;
+        (s as unknown as { _e?: string })._e = e;
       }
       const opts = visibleChoices(sc, x);
       const idx = Math.floor(r() * opts.length);
       s = choose(R, c, fate.family, s, idx).s;
     }
     if (s.scene === 'end') ends++;
+    {
+      const e = fate.birthYear + 17 < 2000 ? '<2000' : fate.birthYear + 17 < 2015 ? '2000-14' : '2015+';
+      if (s.flags.includes('daihoc') && pass[e]) pass[e][0]++;
+    }
     const e = s.path.filter((p) => p.scene.startsWith('ev@'));
     evPerLife += e.length;
     for (const p of e) evs[p.title] = (evs[p.title] ?? 0) + 1;

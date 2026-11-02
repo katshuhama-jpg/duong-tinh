@@ -4571,3 +4571,14 @@ p {
   line-height: 1.35;
   animation: nb-fade 0.3s steps(3) both;
 }
+
+/* mục tiêu mấy năm tới */
+.lb-goal { border: 2px solid var(--line, #4a3a6a); padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+.lb-goal p { margin: 0; }
+.lb-goal p span { color: var(--mute); letter-spacing: 1px; }
+.lb-goal p b { font-weight: 400; color: var(--accent); }
+.lb-goal small { color: var(--mute); font-size: 14px; }
+.lb-goal.open { border-color: var(--accent); }
+.lb-goal-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.lb-goal-row button { font: inherit; font-size: 15px; padding: 6px 4px; background: transparent; color: var(--ink); border: 2px solid var(--line, #4a3a6a); cursor: pointer; }
+.lb-goal-row button.on { background: var(--accent); color: #211832; }

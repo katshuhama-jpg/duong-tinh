@@ -1299,7 +1299,7 @@ export const LY_NEXT: Record<string, string> = {
   '16#2': 'ev@16',
   '17': 'ly@17#2',
   '17#2': 't17_thi',
-  '18': 'y19_veve',
+  '18': 't19_thilai',
   '19': 'y20_chon',
 };
 

@@ -18,7 +18,8 @@ import { placeOf, siblingText, type Character, type Family } from '@/lib/charact
 import { fateResultOf, funeralOf, lifespanOf, loveEndOf, loveTypeOf, MIDS, oldEndOf, titlesOf } from '@/lib/endings';
 import { lpcLayers, type Stage } from '@/lib/look';
 import { loadMe, saveGame, saveMeta, type SaveState } from '@/lib/save';
-import { ageOfScene, majorOf, resolverOf, statusOf } from '@/lib/scenes';
+import { ageOfScene, resolverOf, statusOf } from '@/lib/scenes';
+import { majorOf } from '@/lib/majors';
 import { STARS } from '@/lib/stars';
 import { historyOf } from '@/lib/drama';
 import { moneyLabelOf } from '@/lib/lovemoney';
@@ -26,7 +27,7 @@ import { commit } from '@/lib/board';
 import { AREAS, doAction, doMilestone, lifePathOf, mByParents, milestoneDue, mOptions, mPrice, mWealth, optionsOf, tallyOf, type AreaKey, type Milestone } from '@/lib/actions';
 import { cashOf, fmtCash, fmtGold, fmtVND, goldPrice, INV_NAME, invValue, pointsOf, priceAt } from '@/lib/money';
 import { bornOf } from '@/lib/family';
-import { type FeedLine, activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
+import { type FeedLine, type GoalKey, GOALS, GOAL_YEARS, activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
 import { useAuth } from '@/lib/useAuth';
 import { stageOf as bgStage } from '@/lib/scenebg';
 import { newsOf } from '@/lib/world';
@@ -308,6 +309,14 @@ function Board({
           </div>
         )}
         <HeartLine story={story} x={x} onView={setPeek} />
+        <GoalBar
+          story={story}
+          age={curAge}
+          onPick={(g) => {
+            const G = GOALS.find((k) => k.k === g)!;
+            onStory({ ...story, goal: g, goalAt: curAge, log: [...(story.log ?? []), { age: curAge, year: char.birthYear + curAge, t: `Mục tiêu ${GOAL_YEARS} năm tới: ${G.icon} ${G.t}`, k: 'pick' as const }].slice(-500) });
+          }}
+        />
         <div className="lb-stats">
           {MAIN_STATS.map((r, i) => (
             <div key={r.label} className={`ms-${i}`}>
@@ -453,6 +462,41 @@ function Board({
         </div>
       )}
     </main>
+  );
+}
+
+/** Mục tiêu mấy năm tới: chọn một, giữ ít nhất ba năm; mỗi năm sống theo mục tiêu ấy */
+function GoalBar({ story, age, onPick }: { story: Story; age: number; onPick: (g: GoalKey) => void }) {
+  if (age < 6) return null;
+  const left = story.goal && story.goalAt != null ? GOAL_YEARS - (age - story.goalAt) : 0;
+  const locked = left > 0;
+  const cur = GOALS.find((g) => g.k === story.goal);
+  return (
+    <div className={`lb-goal ${!story.goal || !locked ? 'open' : ''}`}>
+      <p>
+        <span>MỤC TIÊU</span>{' '}
+        {cur ? (
+          <>
+            <b>
+              {cur.icon} {cur.t}
+            </b>{' '}
+            · {locked ? `còn ${left} năm mới đổi được` : 'đã đủ ba năm, chọn mục tiêu mới?'}
+          </>
+        ) : (
+          'Chọn mục tiêu cho 3 năm tới'
+        )}
+      </p>
+      {(!locked || !cur) && (
+        <div className="lb-goal-row">
+          {GOALS.filter((g) => age >= g.from).map((g) => (
+            <button key={g.k} type="button" className={`px ${story.goal === g.k ? 'on' : ''}`} onClick={() => onPick(g.k)} title={g.d}>
+              {g.icon} {g.t}
+            </button>
+          ))}
+        </div>
+      )}
+      {cur && locked && <small>{cur.d}</small>}
+    </div>
   );
 }
 
@@ -1558,7 +1602,10 @@ function MilestoneSheet({ m, x, onPick }: { m: Milestone; x: Ctx; onPick: (i: nu
             return (
               <button key={i} type="button" className={`opt px ms-opt ${lock ? 'lock' : ''}`} disabled={lock} onClick={() => onPick(i)}>
                 <b>{txt(o.t, x)}</b>
-                <small>{cost ? (lock ? `Cần ${fmtVND(cost)} · chưa đủ tiền` : `${mByParents(m) ? 'Bố mẹ chi' : 'Tốn'} ${fmtVND(cost)}`) : 'Không tốn tiền'}</small>
+                <small>
+                  {o.pay && o.pay(x) ? `Lương khoảng ${fmtVND(priceAt(o.pay(x), x.year))}/tháng` : cost ? (lock ? `Cần ${fmtVND(cost)} · chưa đủ tiền` : `${mByParents(m) ? 'Bố mẹ chi' : 'Tốn'} ${fmtVND(cost)}`) : o.hint ? '' : 'Không tốn tiền'}
+                  {o.hint && o.hint(x) ? `${(o.pay && o.pay(x)) || cost ? ' · ' : ''}${o.hint(x)}` : ''}
+                </small>
               </button>
             );
           })}

@@ -131,6 +131,38 @@ export interface StoryCore {
   gold?: number;
   /** những khoản đầu tư đang giữ: đất, cổ phiếu, tiền ảo, sổ tiết kiệm */
   inv?: Inv[];
+  /** mục tiêu mấy năm tới (học tập, tình yêu, bạn bè, sự nghiệp, gia đình, bản thân) và tuổi lúc đặt */
+  goal?: GoalKey;
+  goalAt?: number;
+}
+
+export type GoalKey = 'hoc' | 'yeu' | 'ban' | 'tien' | 'nha' | 'minh';
+/** mục tiêu đặt ra giữ ít nhất ba năm mới đổi được */
+export const GOAL_YEARS = 3;
+export const GOALS: { k: GoalKey; t: string; icon: string; d: string; from: number }[] = [
+  { k: 'hoc', t: 'Học tập', icon: '✎', d: 'Hiểu biết tăng, thi dễ đỗ hơn', from: 6 },
+  { k: 'ban', t: 'Bạn bè', icon: '☺', d: 'Gắn kết, Nhan sắc tăng', from: 6 },
+  { k: 'yeu', t: 'Tình yêu', icon: '♥', d: 'Tình duyên tăng, người ấy thân hơn', from: 14 },
+  { k: 'tien', t: 'Sự nghiệp', icon: '$', d: 'Tài chính tăng, sức khỏe hao', from: 18 },
+  { k: 'nha', t: 'Gia đình', icon: '⌂', d: 'Bố mẹ, vợ chồng, con cái gần hơn', from: 6 },
+  { k: 'minh', t: 'Bản thân', icon: '✦', d: 'Sức khỏe, Vui vẻ tăng', from: 6 },
+];
+/** mỗi năm sống theo mục tiêu */
+function goalYear(s: Story, age: number) {
+  const g = s.goal;
+  if (!g) return;
+  const add = (k: StatKey, d: number) => (s.stats[k] = clamp(s.stats[k] + d));
+  const p = s.partner && s.partner !== 'xemmat' ? s.partner : null;
+  if (g === 'hoc') add('hoc', 2);
+  if (g === 'ban') ((s.rel.banthan = clamp(s.rel.banthan + 3)), add('duyen', 1), add('tam', 1));
+  if (g === 'yeu') {
+    add('dao', 2);
+    const ids = p ? [p] : LOVE_IDS.filter((id) => s.flags.includes(`pool_${id}`));
+    for (const id of ids) s.love[id] = clamp(s.love[id] + 3);
+  }
+  if (g === 'tien' && age >= 18) (add('tien', 2), add('khoe', -1));
+  if (g === 'nha') ((s.rel.bome = clamp(s.rel.bome + 2)), s.kids && (s.rel.con = clamp(s.rel.con + 2)), p && (s.love[p] = clamp(s.love[p] + 2)));
+  if (g === 'minh') (add('khoe', 2), add('tam', 1));
 }
 
 export interface LogLine {
@@ -238,6 +270,8 @@ export interface Scene {
   skip?: (x: Ctx) => boolean;
   /** mốc chính của đời: luôn dừng hỏi, không theo nhịp ba năm */
   core?: boolean;
+  /** cho xem nhiều lựa chọn (nguyện vọng đại học...) */
+  wide?: boolean;
 }
 
 /** một dòng tự trôi; có `m` thì là một khoảnh khắc: sân khấu đổi cảnh, người ấy đứng cạnh, kèm chú thích */
@@ -577,6 +611,7 @@ export function choose(resolve: Resolve, c: Character, f: Family, s0: Story, idx
   const na = next === 'end' ? scene.age + 1 : resolve(next, s)?.age ?? scene.age;
   for (let a = scene.age; a < na; a++) {
     s.cash = (s.cash ?? 0) + savingOf(s, c.birthYear + a, a);
+    goalYear(s, a);
     // nợ thì đẻ lãi mỗi năm
     if (s.cash < 0) s.cash *= 1.06;
   }
@@ -590,7 +625,7 @@ export function visibleChoices(scene: Scene, x: Ctx) {
   const v = scene.choices.filter((ch) => !ch.if || ch.if(x));
   // gọn kiểu "đọc và bấm": cảnh thường nhiều nhất 3 lựa chọn (cảnh chat có hẹn giờ, quẹt, chạm giữ nguyên)
   const plain = !scene.kind || scene.kind === 'talk' || scene.kind === 'call' || scene.kind === 'cheer';
-  return plain && !scene.timer && v.length > 3 ? v.slice(0, 3) : v;
+  return plain && !scene.timer && !scene.wide && v.length > 3 ? v.slice(0, 3) : v;
 }
 
 /** Những cảnh quan trọng không tự chọn hộ khi tua nhanh (cầu hôn, cưới, người cũ) */

@@ -1628,7 +1628,8 @@ const PLACE_DR: Drama[] = [
     minAge: 18,
     maxAge: 21,
     from: 1998,
-    if: (x) => !x.f.urban && !x.has('daihoc'),
+    // chỉ khi không vào đại học (trượt, hoặc không thi)
+    if: (x) => !x.f.urban && !x.has('daihoc') && (x.has('truot_dh') || x.has('khongthi') || x.has('dilam')),
     callback: true,
     title: 'Lên khu công nghiệp',
     bg: () => ({ place: 'pho', time: 'dusk' }),
