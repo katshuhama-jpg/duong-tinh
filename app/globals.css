@@ -4303,10 +4303,18 @@ p {
 .lb-heart {
   display: flex;
   gap: 10px;
-  align-items: baseline;
+  align-items: center;
+  width: 100%;
+  font: inherit;
   font-size: 17px;
   white-space: nowrap;
   overflow: hidden;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--line, #4a3a6a);
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
 }
 .lb-heart span {
   color: var(--mute);
@@ -4317,6 +4325,12 @@ p {
   color: var(--accent);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.lb-heart em {
+  margin-left: auto;
+  font-style: normal;
+  color: var(--mute);
+  flex: none;
 }
 
 /* năm nay tập trung cho gì: khối nút như Bảng tình duyên cũ */

@@ -158,14 +158,16 @@ function Board({
   const [more, setMore] = useState(24);
   const [born, setBorn] = useState(story.path.length > 0);
   const [area, setArea] = useState<AreaKey | null>(null);
+  // đang xem sổ tay / hồ sơ: thời gian dừng, không bật câu hỏi mới
+  const [peek, setPeek] = useState(false);
   const isFeed = sc?.kind === 'feed';
   const lines = useMemo(() => (isFeed && sc?.feed ? sc.feed(x) : []), [story.scene, story.path.length]); // eslint-disable-line react-hooks/exhaustive-deps
   const stop = !!sc && isStop(sc.id);
   const ageNow = isFeed ? (lines[Math.max(0, shown - 1)]?.age ?? age) : age;
   const busy = !!fb || (!!sc && !isFeed && (!auto || stop));
   // mốc đời: đến tuổi thì dừng đồng hồ và hỏi
-  const ms = born && !busy ? milestoneDue(story, ageNow) : null;
-  const running = born && !paused && !menu && !area && !ms;
+  const ms = born && !busy && !peek ? milestoneDue(story, ageNow) : null;
+  const running = born && !paused && !menu && !area && !ms && !peek;
 
   useEffect(() => setShown(0), [story.scene, story.path.length]);
 
@@ -265,7 +267,7 @@ function Board({
             {year} · {x.me}
              · 1 năm ≈ {Math.round(YEAR_SEC / speed)} giây
           </small>
-          <Notebook x={x} story={story} />
+          <Notebook x={x} story={story} onView={setPeek} />
         </div>
         <div className="lb-money" aria-label="Tài sản">
           <span>{curAge < 15 ? 'Heo đất' : 'Tài sản'}</span>
@@ -305,7 +307,7 @@ function Board({
             </button>
           </div>
         )}
-        <HeartLine story={story} x={x} />
+        <HeartLine story={story} x={x} onView={setPeek} />
         <div className="lb-stats">
           {MAIN_STATS.map((r, i) => (
             <div key={r.label} className={`ms-${i}`}>
@@ -429,6 +431,7 @@ function Board({
                 </button>
               )}
             </div>
+            <HeartLine story={story} x={x} onView={setPeek} />
             {lastFx && (
               <p className="lb-last" role="status">
                 <span>Vừa rồi</span> {lastFx}
@@ -453,24 +456,38 @@ function Board({
   );
 }
 
+/** đánh dấu "đang xem": mọi đồng hồ trong màn chơi dừng lại */
+const peekFlag = (on: boolean) => {
+  if (typeof document === 'undefined') return;
+  if (on) document.body.dataset.peek = '1';
+  else delete document.body.dataset.peek;
+};
+
 /** Người trong lòng: người yêu, hoặc những người đang tìm hiểu */
-function HeartLine({ story, x }: { story: Story; x: Ctx }) {
+function HeartLine({ story, x, onView }: { story: Story; x: Ctx; onView?: (on: boolean) => void }) {
   const p = story.partner && story.partner !== 'xemmat' ? story.partner : null;
   const pool = LOVE_IDS.filter((id) => story.flags.includes(`pool_${id}`) && !story.flags.includes(`${id}_out`) && id !== p).sort((a, b) => story.love[b] - story.love[a]);
-  const hearts = (id: LoveId) => '♥'.repeat(Math.max(1, Math.min(5, Math.ceil(story.love[id] / 20))));
-  if (!p && !pool.length) return null;
+  const [view, setView] = useState<LoveId | null>(null);
+  useEffect(() => (onView?.(!!view), peekFlag(!!view)), [view]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ids = p ? [p] : pool.slice(0, 2);
+  if (!ids.length) return null;
+  const role = story.married ? (x.lg === 'm' ? 'Chồng' : 'Vợ') : p ? 'Người yêu' : 'Đang tìm hiểu';
   return (
-    <div className="lb-heart">
-      <span>{story.married ? (x.lg === 'm' ? 'Chồng' : 'Vợ') : p ? 'Người yêu' : 'Đang tìm hiểu'}</span>
-      <b>
-        {p
-          ? `${x.L(p)} ${hearts(p)}`
-          : pool
-              .slice(0, 3)
-              .map((id) => `${x.L(id)} ${hearts(id)}`)
-              .join(' · ')}
-      </b>
-    </div>
+    <>
+      {ids.map((id) => (
+        <button key={id} type="button" className="lb-heart px" onClick={() => setView(id)} aria-label={`Xem hồ sơ ${x.L(id)}, thời gian tạm dừng`}>
+          <span>{role}</span>
+          <b>{x.L(id)}</b>
+          <Hearts v={story.love[id]} />
+          <em>{Math.round(story.love[id])}/100 ›</em>
+        </button>
+      ))}
+      {view &&
+        createPortal(
+          <LoveDetail solid id={view} x={x} story={story} st={view === p ? `♥ ${role}` : statusOf(story, view)} back="‹ Quay lại" onClose={() => setView(null)} />,
+          document.body,
+        )}
+    </>
   );
 }
 
@@ -834,7 +851,8 @@ function Choices({ opts, onChoose, timer, timeout }: { opts: string[]; onChoose:
   const [left, setLeft] = useState(timer ?? 0);
   useEffect(() => {
     if (!timer) return;
-    const t = setInterval(() => setLeft((v) => v - 1), 1000);
+    // đang xem hồ sơ / sổ tay thì đồng hồ trả lời cũng dừng
+    const t = setInterval(() => setLeft((v) => (document.body.dataset.peek ? v : v - 1)), 1000);
     return () => clearInterval(t);
   }, [timer]);
   useEffect(() => {
@@ -1156,8 +1174,9 @@ function AlbumPhoto({ p, me, lg }: { p: Photo; me: ReturnType<typeof lpcLayers>;
   );
 }
 
-function Notebook({ x, story }: { x: Ctx; story: Story }) {
+function Notebook({ x, story, onView }: { x: Ctx; story: Story; onView?: (on: boolean) => void }) {
   const [open, setOpen] = useState(false);
+  useEffect(() => (onView?.(open), peekFlag(open)), [open]); // eslint-disable-line react-hooks/exhaustive-deps
   const met = story.met ?? LOVE_IDS.filter((id) => story.love[id] > 0);
   useEffect(() => {
     if (!open) return;
@@ -1374,7 +1393,7 @@ function LoveDetail({ id, x, story, st, onClose, back = '‹ Sổ tay', action, 
         </ul>
         <div className="mt-h">CHỈ SỐ CỦA {x.L(id).toUpperCase()} (0 ĐẾN 100)</div>
         <StatBars rows={PERSONA_AXES.map((label, i) => ({ label, value: p[i] }))} />
-        <div className="mt-h">TÌNH CẢM VỚI BẠN</div>
+        <div className="mt-h">TÌNH CẢM VỚI BẠN · {Math.round(story.love[id])}/100</div>
         <Hearts v={story.love[id]} />
         <p className="mt-hint">{signOf(story.love[id], x.L(id))}</p>
         {action && (
