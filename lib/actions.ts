@@ -397,6 +397,8 @@ export function doMilestone(R: Resolve, c: Character, f: Family, s0: Story, age:
         ...o,
         do: (fx, cx) => {
           fx.flag(`ms_done_${m.id}`);
+          // nhớ mức lương của nghề đã chọn (đơn vị 100 nghìn, theo giá 2020): ví tiền và khoản để dành tính theo đó
+          if (o.pay && o.pay(cx)) fx.flag(`luong_${Math.round(o.pay(cx) / 100_000)}`);
           fx.flag(`ac_${age}_${o.k}`);
           if (cost && !mByParents(m)) fx.stat('tien', -pointsOf(cost, cx.year, cx.age));
           o.do?.(fx, cx);

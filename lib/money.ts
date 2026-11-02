@@ -75,7 +75,7 @@ export function fmtVND(v: number) {
 
 /** Tiền để dành được trong một năm (VNĐ): bé thì lì xì bỏ heo đất, lớn thì tiền lương trừ chi tiêu.
  *  Điểm Tài chính là "khả năng kiếm tiền"; con nhỏ thì tốn kém, về già có lương hưu ít ỏi. */
-export function savingOf(s: { stats: { tien: number }; kids?: number; kidBorn?: number[]; flags: string[]; marriedAge?: number | null }, year: number, age: number) {
+export function savingOf(s: { stats: { tien: number }; kids?: number; kidBorn?: number[]; flags: string[]; marriedAge?: number | null; married?: boolean }, year: number, age: number) {
   const u = unitOf(year, age);
   const t = s.stats.tien;
   const work = s.flags.includes('dilam');
@@ -84,13 +84,27 @@ export function savingOf(s: { stats: { tien: number }; kids?: number; kidBorn?: 
   if (age < 22 && !work) k = 0;
   else if (age < 18) k = 6;
   else if (age < 22) k = 8 + t / 12;
-  else if (age < 60) k = t / 7 - 1;
+  else if (age < 60) {
+    // có lương thật (nghề đã chọn lúc đi làm): thu nhập trừ chi tiêu, cộng phần người bạn đời góp
+    const lf = s.flags.find((f) => f.startsWith('luong_'));
+    if (lf) {
+      const m = (v: number) => (v * priceScale(year) * 12) / u;
+      let pay = m(Number(lf.slice(6)) * 100_000) * (0.85 + t / 300);
+      if (s.flags.includes('thacsi')) pay *= 1.3;
+      if (s.flags.includes('tienganh')) pay *= 1.08;
+      const que = s.flags.includes('o_que');
+      k = pay - m(que ? 4_500_000 : 7_000_000);
+      // vợ/chồng đi làm, góp phần dư sau chi tiêu; có chuyện không góp tiền thì phần ấy mất
+      if (s.married && !s.flags.includes('vc_khonggop')) k += m(que ? 2_000_000 : 3_500_000);
+    } else k = t / 7 - 1;
+  }
   else k = 1 + t / 30;
   // nuôi con: mỗi đứa tốn chừng hai phần ba khoản để dành của một năm, đến khi con lớn
   // (tính theo tuổi thật của từng đứa: từ lúc chào đời đến năm hai mươi hai tuổi)
   if (s.kids) {
     const born = s.kidBorn?.length ? s.kidBorn.slice(0, s.kids) : Array.from({ length: s.kids }, (_, i) => 33 + i * 3);
-    k -= 1.6 * born.filter((b) => age >= b && age - b < 22).length;
+    const perKid = age < 60 && s.flags.some((f) => f.startsWith('luong_')) ? (30_000_000 * priceScale(year)) / u : 1.6;
+    k -= perKid * born.filter((b) => age >= b && age - b < 22).length;
   }
   // trả góp nhà: hai mươi năm, mỗi năm một khoản
   const gop = s.flags.find((f) => f.startsWith('nha_gop_'));

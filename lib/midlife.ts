@@ -4,6 +4,7 @@
  * con vào lớp một, con thi đại học, bạn bè giới thiệu người mới cho người còn một mình.
  */
 
+import { walletEcho } from './wallet';
 import { LOVE_IDS, type Ctx, type FeedLine, type Fx, type LoveId, type Scene } from './story';
 import { fmtGold, fmtVND, goldPrice, INV_NAME, invValue, priceAt, unitOf, type InvKind } from './money';
 import { bornOf, eldest, goldOf, goldText, goldVND, homeOf, kidsWord, youngest } from './family';
@@ -326,7 +327,7 @@ export function midlifeAt(age: number, x: Ctx, next: string, feedOnly = false): 
     bg: () => ({ place: 'nha', time: 'day' }),
     text: () => [],
     feed: (cx) => {
-      const out: FeedLine[] = lines(cx).map((t) => ({ age, year: cx.year, t }));
+      const out: FeedLine[] = [...lines(cx), ...walletEcho(cx)].map((t) => ({ age, year: cx.year, t }));
       const m = momentOf(cx);
       if (m) out.push({ age, year: cx.year, t: `▣ ${m.cap}`, m });
       return out;

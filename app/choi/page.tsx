@@ -24,6 +24,8 @@ import { STARS } from '@/lib/stars';
 import { historyOf } from '@/lib/drama';
 import { moneyLabelOf } from '@/lib/lovemoney';
 import { commit } from '@/lib/board';
+import { INTEREST_TEXT, interestOf } from '@/lib/hearts';
+import { doWallet, payOf, PLACES as WPLACES, slotsUsed, SLOTS, walletOf, type Place as WPlace } from '@/lib/wallet';
 import { AREAS, doAction, doMilestone, lifePathOf, mByParents, milestoneDue, mOptions, mPrice, mWealth, optionsOf, tallyOf, type AreaKey, type Milestone } from '@/lib/actions';
 import { cashOf, fmtCash, fmtGold, fmtVND, goldPrice, INV_NAME, invValue, pointsOf, priceAt } from '@/lib/money';
 import { bornOf } from '@/lib/family';
@@ -161,6 +163,8 @@ function Board({
   const [more, setMore] = useState(24);
   const [born, setBorn] = useState(story.path.length > 0);
   const [area, setArea] = useState<AreaKey | null>(null);
+  // ví tiền: trò chơi phụ, mở ra thì thời gian dừng
+  const [wallet, setWallet] = useState(false);
   // đang xem sổ tay / hồ sơ: thời gian dừng, không bật câu hỏi mới
   const [peek, setPeek] = useState(false);
   const isFeed = sc?.kind === 'feed';
@@ -170,7 +174,7 @@ function Board({
   const busy = !!fb || (!!sc && !isFeed && (!auto || stop));
   // mốc đời: đến tuổi thì dừng đồng hồ và hỏi
   const ms = born && !busy && !peek ? milestoneDue(story, ageNow) : null;
-  const running = born && !paused && !menu && !area && !ms && !peek;
+  const running = born && !paused && !menu && !area && !ms && !peek && !wallet;
 
   useEffect(() => setShown(0), [story.scene, story.path.length]);
 
@@ -291,6 +295,9 @@ function Board({
           <button type="button" className="px" onClick={() => (isFeed ? (shown < lines.length ? setShown(lines.length) : go(0, undefined, true)) : undefined)} disabled={!isFeed}>
             Tiếp »
           </button>
+          <button type="button" className="px lb-wbtn" onClick={() => setWallet(true)} disabled={decide || curAge < 16} aria-label="Ví tiền">
+            ¥ Ví
+          </button>
           <button type="button" className="px" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Thêm">
             ⋯
           </button>
@@ -373,6 +380,19 @@ function Board({
           <p className="mt-hint">Màu càng đậm là năm càng vui. Ô viền sáng là năm đang sống.</p>
         </section>
       </div>
+
+      {wallet && !decide && (
+        <WalletSheet
+          x={xa}
+          onClose={() => setWallet(false)}
+          onDo={(id) => {
+            const r = doWallet(R, char, family, story, curAge, id);
+            const add = [{ age: curAge, year, t: `Ví tiền: ${r.t}`, k: 'pick' as const }, ...(r.fb.delta ? [{ age: curAge, year, t: `→ ${r.fb.delta}`, k: 'note' as const }] : []), ...r.fb.notes.slice(0, 1).map((t) => ({ age: curAge, year, t, k: 'note' as const }))];
+            onStory({ ...r.s, log: [...(r.s.log ?? []), ...add].slice(-500) });
+            setToast([r.fb.notes[0], r.fb.delta].filter(Boolean).join('\n') || r.t);
+          }}
+        />
+      )}
 
       {area && !decide && (
         <div className="lb-veil" onClick={() => setArea(null)}>
@@ -464,6 +484,61 @@ function Board({
         </div>
       )}
     </main>
+  );
+}
+
+/** Ví tiền: đầu tư, đi học, đi chơi, mua nhà mua xe. Mỗi năm 2 lượt. */
+function WalletSheet({ x, onClose, onDo }: { x: Ctx; onClose: () => void; onDo: (id: string) => void }) {
+  const [tab, setTab] = useState<WPlace>('bank');
+  const all = walletOf(x);
+  const list = all.filter((w) => w.a.place === tab);
+  const left = SLOTS - slotsUsed(x);
+  return (
+    <div className="lb-veil" onClick={onClose}>
+      <div className="lb-sheet lb-small px wl" role="dialog" aria-modal="true" aria-label="Ví tiền" onClick={(e) => e.stopPropagation()}>
+        <div className="lb-sh">
+          <span>
+            VÍ TIỀN · {x.age} tuổi · {x.year}
+          </span>
+          <button type="button" onClick={onClose}>
+            Đóng
+          </button>
+        </div>
+        <p className="wl-sum">
+          Đang có <b>{fmtCash(cashOf(x.s, x.year, x.age))}</b>
+          {x.age >= 22 || x.has('dilam') ? <> · lương {fmtVND(payOf(x))}/tháng</> : <> · chưa đi làm, bố mẹ lo</>} · còn <b>{left}</b>/{SLOTS} lượt năm nay
+        </p>
+        <div className="wl-tabs" role="tablist">
+          {WPLACES.map((p) => {
+            const n = all.filter((w) => w.a.place === p.k && !w.lock).length;
+            return (
+              <button key={p.k} type="button" role="tab" aria-selected={tab === p.k} className={`px ${tab === p.k ? 'on' : ''}`} onClick={() => setTab(p.k)}>
+                {p.icon} {p.t}
+                {n ? <i>{n}</i> : null}
+              </button>
+            );
+          })}
+        </div>
+        <div className="choices lb-acts wl-list">
+          {list.length ? (
+            list.map(({ a, lock, cost }) => (
+              <button key={a.id} type="button" className="opt px" disabled={!!lock} onClick={() => onDo(a.id)}>
+                <b>{a.t(x)}</b>
+                <small>
+                  {cost ? `${fmtVND(cost)}` : 'Không mất tiền'}
+                  {(a.slots ?? 1) > 1 ? ' · 2 lượt' : ''}
+                  {lock ? ` · ${lock}` : ''}
+                </small>
+                <small className="wl-d">{a.d(x)}</small>
+              </button>
+            ))
+          ) : (
+            <p className="wl-empty">{x.age < 22 && !x.has('dilam') ? 'Chưa đi làm thì chưa có tiền riêng cho mục này.' : 'Thời này chưa có gì ở đây.'}</p>
+          )}
+        </div>
+        <p className="wl-foot">Thời gian đang dừng. Những gì làm ở đây sẽ được nhắc lại trong truyện nhiều năm sau.</p>
+      </div>
+    </div>
   );
 }
 
@@ -1105,7 +1180,7 @@ function PickPeople({ x, ids, onDone }: { x: Ctx; ids: LoveId[]; onDone: (ids: L
             id={view}
             x={x}
             story={x.s}
-            st={`${STARS.includes(view) ? '★ Ngôi sao · ' : ''}${x.s.met.includes(view) ? statusOf(x.s, view) : 'Người mới'}`}
+            st={`${STARS.includes(view) ? '★ Ngôi sao · ' : ''}${x.s.met.includes(view) ? statusOf(x.s, view) : 'Người mới'} · ${INTEREST_TEXT[interestOf(x.s, view)]}`}
             back="‹ Quay lại"
             onClose={() => setView(null)}
             action={{ label: `♥ CHỌN ${x.L(view).toUpperCase()}`, on: () => choose(view) }}
@@ -1126,6 +1201,7 @@ function PickCard({ id, x, on, onTap }: { id: LoveId; x: Ctx; on: boolean; onTap
       <b>{x.L(id)}</b>
       <small>{jobOf(id, x.lg, x.age, x.year)}</small>
       <small className="pk-st">{STARS.includes(id) ? '★ Ngôi sao · ' : ''}{met ? statusOf(x.s, id) : 'Người mới'}</small>
+      <small className={`pk-int pk-${interestOf(x.s, id)}`}>{INTEREST_TEXT[interestOf(x.s, id)]}</small>
       {on && <i className="pk-tick">♥</i>}
     </button>
   );

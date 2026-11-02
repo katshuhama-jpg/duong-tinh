@@ -8,7 +8,7 @@ import { CAST } from './cast';
 import type { Bg } from '@/components/Backdrop';
 import { activeOf, ctxOf, isOut, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, type Choice, type Ctx, type Fx, type LoveId, type Post, type Resolve, type Scene, type Story, type SwipeCard, type FeedLine } from './story';
 import { jobOf } from './profiles';
-import { dramaAt } from './drama';
+import { dramaAt, nxAt } from './drama';
 import { dateStep, FLAVOR, snap, spotChoice } from './dates';
 import { newsOfLoves } from './lives';
 import { lyScene } from './life';
@@ -17,6 +17,7 @@ import { regionOf } from './names';
 import { AREA_PEOPLE, away, tallyOf, type AreaKey } from './actions';
 import { STARS, starNight, starScene } from './stars';
 import { cap, memoLine } from './story';
+import { interestBonus, interestStart } from './hearts';
 import { bankruptAt, histAt, stormy } from './drama';
 import { marriedBeat, situationAt } from './arcs';
 import { annivAgeIn, branchAt, midlifeAt } from './midlife';
@@ -283,7 +284,7 @@ const proposeChoices: Choice[] = [
 
 /** mình tự cầu hôn: đủ thân thì thành, chưa đủ thì người ấy xin thêm thời gian */
 /** khả năng được nhận lời cầu hôn */
-const proposeChance = (x: Ctx) => chanceOf(x.s.love[P(x)] - (x.has('noidoi') ? 15 : 0), 66);
+const proposeChance = (x: Ctx) => chanceOf(x.s.love[P(x)] - (x.has('noidoi') ? 15 : 0) + interestBonus(x.s, P(x)) / 2, 66);
 function myPropose(fx: Fx, x: Ctx) {
   const p = P(x);
   const lie = x.has('noidoi') ? 15 : 0;
@@ -1391,7 +1392,7 @@ function pickScene(age: number): Scene {
           }
           for (const id of picked) {
             fx.flag(`pool_${id}`);
-            fx.love(id, x.s.met.includes(id) ? 6 : 14);
+            fx.love(id, (x.s.met.includes(id) ? 6 : 14) + interestStart(x.s, id));
             // người được chọn thành tuyến tình chính: đời rẽ theo người này
             for (const g of x.s.flags) if (g.startsWith('route_') && g.slice(6) !== x.s.partner) fx.unflag(g);
             if (!x.has(`rdone_${id}`)) fx.flag(`route_${id}`);
@@ -1577,12 +1578,22 @@ function dateMoment(x: Ctx): { bg: Bg; who: LoveId; cap: string; place: string }
   const F = FLAVOR[id];
   const k = (x.age + (x.s.seed ?? 0)) % 3;
   if (k === 0 && x.s.love[id] >= 40) return { bg: F.spotBg, who: id, place: F.spot(x.year), cap: `Cùng ${x.L(id)} ở ${F.spot(x.year).charAt(0).toLowerCase() + F.spot(x.year).slice(1)}, chỗ ${x.ay} thích nhất.` };
-  const spots: [string, Bg][] = [
-    [spotOf(x.year), { place: 'quan', time: 'dusk' }],
-    ['công viên lúc hoàng hôn', { place: 'congvien', time: 'dusk' }],
-    [x.year < 2000 ? 'phố đêm, ăn chè vỉa hè' : 'phố đêm, ăn vặt vỉa hè', { place: 'pho', time: 'night' }],
-  ];
-  const [pl, bg] = spots[(x.age + LOVE_IDS.indexOf(id)) % 3];
+  // hẹn hò đổi theo thời: mỗi thời một kiểu đi chơi
+  const y = x.year;
+  const era: [string, Bg][] =
+    y < 1990
+      ? [['đạp xe ra bờ hồ, ăn kem que', { place: 'congvien', time: 'dusk' }], ['xem phim ở rạp chiếu bóng, vé xé tay', { place: 'pho', time: 'night' }], ['ngồi ghế đá, chung một gói lạc rang', { place: 'congvien', time: 'night' }], ['đi xem văn công ở sân vận động huyện', { place: 'pho', time: 'night' }]]
+      : y < 2000
+        ? [['chở nhau trên chiếc Cub dạo phố đêm', { place: 'pho', time: 'night' }], ['quán cà phê nhạc Trịnh, ngồi ghế mây', { place: 'quan', time: 'dusk' }], ['ăn chè, rồi đi hát karaoke tăng hai', { place: 'pho', time: 'night' }], ['chụp ảnh ở hiệu ảnh, phông nền Vịnh Hạ Long', { place: 'quan', time: 'day' }]]
+        : y < 2010
+          ? [['trà chanh, hướng dương ở vỉa hè', { place: 'pho', time: 'dusk' }], ['xem phim ở rạp mới mở trong trung tâm thương mại', { place: 'pho', time: 'night' }], ['đi phượt Tam Đảo cuối tuần', { place: 'congvien', time: 'day' }], ['ngồi quán net chơi game đôi', { place: 'quan', time: 'night' }]]
+          : y < 2020
+            ? [['quán cà phê sống ảo, chụp ba trăm tấm', { place: 'quan', time: 'day' }], ['đi Đà Lạt hai ngày một đêm', { place: 'congvien', time: 'dusk' }], ['xem đêm nhạc ngoài trời', { place: 'pho', time: 'night' }], ['ăn lẩu băng chuyền, xếp hàng nửa tiếng', { place: 'quan', time: 'night' }]]
+            : y < 2030
+              ? [['chạy bộ quanh hồ lúc sáu giờ sáng', { place: 'congvien', time: 'day' }], ['đi concert, săn vé từ nửa đêm', { place: 'pho', time: 'night' }], ['cắm trại ven hồ, nướng xúc xích', { place: 'congvien', time: 'dusk' }], ['quán cà phê cấm dùng điện thoại', { place: 'quan', time: 'dusk' }]]
+              : [['xem phim bằng kính thực tế ảo, ngồi cạnh nhau', { place: 'phong', time: 'night' }], ['đi tàu cao tốc vào Huế ăn sáng', { place: 'pho', time: 'day' }], ['học làm gốm ở xưởng cuối tuần', { place: 'quan', time: 'day' }], ['dạo phố đi bộ, chụp ảnh phim', { place: 'pho', time: 'night' }]];
+  const spots: [string, Bg][] = [[spotOf(x.year), { place: 'quan', time: 'dusk' }], ...era];
+  const [pl, bg] = spots[(x.age + LOVE_IDS.indexOf(id)) % spots.length];
   return { bg, who: id, place: pl.charAt(0).toUpperCase() + pl.slice(1), cap: `Hẹn hò với ${x.L(id)}: ${pl}.` };
 }
 
@@ -1813,7 +1824,7 @@ function focusScene(age: number): Scene {
 
 /** Tỏ tình: từ 60 là thành, 50-59 thì nhờ Duyên dáng */
 /** khả năng được nhận lời khi tỏ tình: không phải yêu ai người ta cũng đồng ý */
-export const confessChance = (x: Ctx, id: LoveId) => chanceOf(x.s.love[id] + (x.s.stats.duyen - 50) / 3 + (x.has(`teen_yeu_${id}`) ? 10 : 0), 60);
+export const confessChance = (x: Ctx, id: LoveId) => chanceOf(x.s.love[id] + (x.s.stats.duyen - 50) / 3 + (x.has(`teen_yeu_${id}`) ? 10 : 0) + interestBonus(x.s, id), 60);
 function confess(fx: Fx, x: Ctx, id: LoveId) {
   const v = x.s.love[id];
   const ok = luck(x, `tt_${id}`) < confessChance(x, id);
@@ -2367,6 +2378,8 @@ export function resolverOf(c: Character, f: Family): Resolve {
       if (!g2 && a >= 20) {
         const pb = marriedBeat(ax, a, id);
         if (pb) return pb;
+        const nx = nxAt(a, ax, id);
+        if (nx) return nx;
       }
       // mốc chính sau cưới (ở đâu, con cái, nhà) luôn hỏi; ngã rẽ phụ theo nhịp ba năm
       const br = g ? null : branchAt(a, ax, id);
