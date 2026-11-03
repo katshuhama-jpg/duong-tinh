@@ -1636,7 +1636,7 @@ function goScene(age: number): Scene {
       { t: 'Tăng ca thêm, gửi tiền về nhà', if: (x) => away(x), do: (fx) => (fx.stat('tien', 6), fx.rel('bome', 4), fx.stat('khoe', -2)) },
       ...LOVE_IDS.map(
         (id): Choice => ({
-          t: (x) => `${x.L(id)} · ${statusOf(x.s, id)} ${'♥'.repeat(Math.min(5, Math.max(1, Math.ceil(x.s.love[id] / 20))))}`,
+          t: (x) => `${x.L(id)} · ${statusOf(x.s, id)}`,
           loveId: id,
           if: (x) => !away(x) && inPool(x).includes(id),
           do: (fx, x) => {
@@ -1786,7 +1786,7 @@ function rivalScene(age: number): Scene {
 const FOCUS: { k: string; t: string; d: string; do: (fx: Fx, x: Ctx) => void }[] = [
   { k: 'yeu', t: '♥ Yêu', d: 'Thêm một lượt hẹn hò, tâm sự, tặng quà', do: (fx) => fx.stat('dao', 3) },
   { k: 'hoc', t: '✎ Học thêm', d: 'Hiểu biết tăng', do: (fx) => (fx.stat('hoc', 8), fx.stat('tam', -2)) },
-  { k: 'lam', t: '₫ Lo sự nghiệp', d: 'Tài chính tăng', do: (fx) => (fx.stat('tien', 10), fx.flag('dilam')) },
+  { k: 'lam', t: 'Lo sự nghiệp', d: 'Tài chính tăng', do: (fx) => (fx.stat('tien', 10), fx.flag('dilam')) },
   { k: 'nha', t: '⌂ Gia đình', d: 'Gần bố mẹ hơn', do: (fx) => (fx.rel('bome', 12), fx.stat('tinh', 3)) },
   { k: 'minh', t: '✦ Chăm bản thân', d: 'Nhan sắc, Vui vẻ tăng', do: (fx) => (fx.stat('tam', 6), fx.stat('duyen', 5)) },
 ];
@@ -2086,7 +2086,7 @@ function giftScene(age: number, n: number, id: LoveId): Scene {
     choices: [
       ...shelf.map(
         (cat): Choice => ({
-          t: (x) => `${GIFT_CAT[cat].icon} ${GIFT_CAT[cat].name(x.year)}${GIFT_VND[cat] ? ` · ${fmtVND(priceAt(GIFT_VND[cat], x.year))}` : ' · tự tay làm'}`,
+          t: (x) => `${GIFT_CAT[cat].name(x.year)}${GIFT_VND[cat] ? ` · ${fmtVND(priceAt(GIFT_VND[cat], x.year))}` : ' · tự tay làm'}`,
           act: 'gift',
           // quà đắt cần đủ tiền; quà tự làm cần đủ khéo và tình cảm
           if: (x) => (cat === 'handmade' ? x.s.stats.tinh >= 35 : cashOf(x.s, x.year, x.age) >= priceAt(GIFT_VND[cat], x.year)),

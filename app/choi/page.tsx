@@ -323,7 +323,7 @@ function Board({
           age={curAge}
           onPick={(g) => {
             const G = GOALS.find((k) => k.k === g)!;
-            onStory({ ...story, goal: g, goalAt: curAge, log: [...(story.log ?? []), { age: curAge, year: char.birthYear + curAge, t: `Mục tiêu ${GOAL_YEARS} năm tới: ${G.icon} ${G.t}`, k: 'pick' as const }].slice(-500) });
+            onStory({ ...story, goal: g, goalAt: curAge, log: [...(story.log ?? []), { age: curAge, year: char.birthYear + curAge, t: `Mục tiêu ${GOAL_YEARS} năm tới: ${G.t}`, k: 'pick' as const }].slice(-500) });
           }}
         />
         <div className="lb-stats">
@@ -399,7 +399,7 @@ function Board({
           <div className="lb-sheet lb-small px" role="dialog" aria-modal="true" aria-label="Chọn việc" onClick={(e) => e.stopPropagation()}>
             <div className="lb-sh">
               <span>
-                {AREAS.find((a) => a.k === area)?.icon} {AREAS.find((a) => a.k === area)?.t.toUpperCase()} · {curAge} tuổi · {year}
+                {AREAS.find((a) => a.k === area)?.t.toUpperCase()} · {curAge} tuổi · {year}
               </span>
               <button type="button" onClick={() => setArea(null)}>
                 Đóng
@@ -513,7 +513,7 @@ function WalletSheet({ x, onClose, onDo }: { x: Ctx; onClose: () => void; onDo: 
             const n = all.filter((w) => w.a.place === p.k && !w.lock).length;
             return (
               <button key={p.k} type="button" role="tab" aria-selected={tab === p.k} className={`px ${tab === p.k ? 'on' : ''}`} onClick={() => setTab(p.k)}>
-                {p.icon} {p.t}
+                {p.t}
                 {n ? <i>{n}</i> : null}
               </button>
             );
@@ -555,7 +555,7 @@ function GoalBar({ story, age, onPick }: { story: Story; age: number; onPick: (g
         {cur ? (
           <>
             <b>
-              {cur.icon} {cur.t}
+              {cur.t}
             </b>{' '}
             · {locked ? `còn ${left} năm mới đổi được` : 'đã đủ ba năm, chọn mục tiêu mới?'}
           </>
@@ -567,7 +567,7 @@ function GoalBar({ story, age, onPick }: { story: Story; age: number; onPick: (g
         <div className="lb-goal-row">
           {GOALS.filter((g) => age >= g.from).map((g) => (
             <button key={g.k} type="button" className={`px ${story.goal === g.k ? 'on' : ''}`} onClick={() => onPick(g.k)} title={g.d}>
-              {g.icon} {g.t}
+              {g.t}
             </button>
           ))}
         </div>
@@ -897,7 +897,7 @@ function Play({ R, char, family, story, fb, onChoose, onNext, onFast, embedded }
         ) : sc.kind === 'hub' ? (
           <HubBoard x={x} opts={opts} onChoose={onChoose} />
         ) : (
-          !chat && !swipe && !call && !tap && <Choices key={sc.id} ask={askOf(sc.id, x)} opts={opts.map((o) => txt(o.t, x))} onChoose={onChoose} timer={sc.timer} timeout={sc.timeout} />
+          !chat && !swipe && !call && !tap && <Choices key={sc.id} ask={askOf(sc.id, x)} opts={opts.map((o) => txt(o.t, x).replace(/^[▶★♥✦✎⌂◎₫☺]\s*/u, ''))} onChoose={onChoose} timer={sc.timer} timeout={sc.timeout} />
         )}
 
         {!fb && !embedded && (
@@ -941,7 +941,6 @@ function GiftShelf({ opts, onChoose }: { opts: string[]; onChoose: (i: number) =
     <div className="gifts">
       {opts.map((t, i) => {
         const [name, price] = t.split(' · ');
-        const icon = name.charAt(0);
         const last = i === opts.length - 1;
         return (
           <button
@@ -955,8 +954,7 @@ function GiftShelf({ opts, onChoose }: { opts: string[]; onChoose: (i: number) =
               onChoose(i);
             }}
           >
-            {!last && <i aria-hidden="true">{icon}</i>}
-            <b>{last ? t : name.slice(2)}</b>
+            <b>{last ? t : name}</b>
             {price && <small>{price}</small>}
           </button>
         );
@@ -1082,7 +1080,6 @@ function HubBoard({ x, opts, onChoose }: { x: Ctx; opts: Choice[]; onChoose: (i:
   const rest = act.length - top.length;
   const shown: (LoveId | null)[] = all ? act : [...top, ...Array(Math.max(0, 4 - top.length)).fill(null)];
   const global = opts.filter((o) => !o.loveId);
-  const ICON: Record<string, string> = { chat: '✉', date: '♥', gift: '✦', confess: '❀', drop: '✕', quet: '⇆', explore: '✈', friends: '☺', work: '▣' };
   return (
     <div className="hub">
       <div className="hub-slots">
@@ -1120,7 +1117,7 @@ function HubBoard({ x, opts, onChoose }: { x: Ctx; opts: Choice[]; onChoose: (i:
             .map((o) => (
               <button key={o.act} type="button" className={`opt px act-${o.act}`} onClick={() => pick(o)}>
                 <b>
-                  {ICON[o.act ?? '']} {txt(o.t, x)}
+                  {txt(o.t, x)}
                 </b>
               </button>
             ))}
@@ -1130,7 +1127,6 @@ function HubBoard({ x, opts, onChoose }: { x: Ctx; opts: Choice[]; onChoose: (i:
       <div className="hub-global">
         {global.map((o) => (
           <button key={o.act} type="button" className="tile px hub-g" onClick={() => pick(o)}>
-            <i aria-hidden="true">{ICON[o.act ?? '']}</i>
             {txt(o.t, x)}
           </button>
         ))}
@@ -1180,10 +1176,10 @@ function PickPeople({ x, ids, onDone }: { x: Ctx; ids: LoveId[]; onDone: (ids: L
             id={view}
             x={x}
             story={x.s}
-            st={`${STARS.includes(view) ? '★ Ngôi sao · ' : ''}${x.s.met.includes(view) ? statusOf(x.s, view) : 'Người mới'} · ${INTEREST_TEXT[interestOf(x.s, view)]}`}
+            st={`${STARS.includes(view) ? 'Ngôi sao · ' : ''}${x.s.met.includes(view) ? statusOf(x.s, view) : 'Người mới'} · ${INTEREST_TEXT[interestOf(x.s, view)]}`}
             back="‹ Quay lại"
             onClose={() => setView(null)}
-            action={{ label: `♥ CHỌN ${x.L(view).toUpperCase()}`, on: () => choose(view) }}
+            action={{ label: `CHỌN ${x.L(view).toUpperCase()}`, on: () => choose(view) }}
           />,
           document.body,
         )}
@@ -1200,7 +1196,7 @@ function PickCard({ id, x, on, onTap }: { id: LoveId; x: Ctx; on: boolean; onTap
       </span>
       <b>{x.L(id)}</b>
       <small>{jobOf(id, x.lg, x.age, x.year)}</small>
-      <small className="pk-st">{STARS.includes(id) ? '★ Ngôi sao · ' : ''}{met ? statusOf(x.s, id) : 'Người mới'}</small>
+      <small className="pk-st">{STARS.includes(id) ? 'Ngôi sao · ' : ''}{met ? statusOf(x.s, id) : 'Người mới'}</small>
       <small className={`pk-int pk-${interestOf(x.s, id)}`}>{INTEREST_TEXT[interestOf(x.s, id)]}</small>
       {on && <i className="pk-tick">♥</i>}
     </button>

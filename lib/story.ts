@@ -407,7 +407,7 @@ export function ctxOf(c: Character, f: Family, s: Story, age: number): Ctx {
 
 /** kể ở ngôi thứ hai: "bạn" đứng đầu câu thì viết hoa */
 // bỏ biểu tượng cánh bướm khỏi chữ hiện ra (góp ý chơi thử); trong mã vẫn giữ để biết câu nào là câu nhắc lựa chọn cũ
-export const cap = (t: string) => t.replace(/🦋\s*/gu, '').replace(/(^|[.!?…]\s+|↳\s*|"|“|\(|:\s+)bạn\b/gu, '$1Bạn');
+export const cap = (t: string) => t.replace(/[🦋▣]\s*/gu, '').replace(/(^|[.!?…]\s+|↳\s*|"|“|\(|:\s+)bạn\b/gu, '$1Bạn');
 export const txt = (v: string | ((x: Ctx) => string) | undefined, x: Ctx) => cap(typeof v === 'function' ? v(x) : (v ?? ''));
 
 function core(s: Story): StoryCore {
