@@ -29,7 +29,7 @@ import { doWallet, payOf, PLACES as WPLACES, slotsUsed, SLOTS, walletOf, type Pl
 import { AREAS, doAction, doMilestone, lifePathOf, mByParents, milestoneDue, mOptions, mPrice, mWealth, optionsOf, tallyOf, type AreaKey, type Milestone } from '@/lib/actions';
 import { cashOf, fmtCash, fmtGold, fmtVND, goldPrice, INV_NAME, invValue, pointsOf, priceAt } from '@/lib/money';
 import { bornOf } from '@/lib/family';
-import { type FeedLine, type GoalKey, GOALS, GOAL_YEARS, activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
+import { cap, type FeedLine, type GoalKey, GOALS, GOAL_YEARS, activeOf, choose, ctxOf, canRewind, fastForward, isStop, prevOf, LOVE_IDS, LOVES, MAX_ACTIVE, MAX_LIFE, normalizeStory, rewind, MAIN_STATS, STAT_KEYS, STAT_LABEL, txt, visibleChoices, type Choice, type Ctx, type Feedback, type LoveId, type Photo, type Resolve, type Story } from '@/lib/story';
 import { useAuth } from '@/lib/useAuth';
 import { stageOf as bgStage } from '@/lib/scenebg';
 import { newsOf } from '@/lib/world';
@@ -296,7 +296,7 @@ function Board({
             Tiếp »
           </button>
           <button type="button" className="px lb-wbtn" onClick={() => setWallet(true)} disabled={decide || curAge < 16} aria-label="Ví tiền">
-            ¥ Ví
+            ₫ Ví
           </button>
           <button type="button" className="px" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Thêm">
             ⋯
@@ -352,7 +352,7 @@ function Board({
             {log.slice(0, more).map((l, i) => (
               <li key={`${log.length - i}`} className={`k-${l.k} ${i < pending.length ? 'new' : ''}`}>
                 <span className="lb-y">{l.k === 'ch' ? '' : `${l.age} tuổi`}</span>
-                <span>{l.t}</span>
+                <span>{cap(l.t)}</span>
               </li>
             ))}
           </ol>
@@ -1225,7 +1225,7 @@ function LifeFeed({ lines, onDone }: { lines: { age: number; year: number; t: st
             <span className="lf-y">
               {l.age} tuổi · {l.year}
             </span>
-            <span>{l.t}</span>
+            <span>{cap(l.t)}</span>
           </li>
         ))}
       </ol>

@@ -20,7 +20,7 @@ export function payOf(x: Pick<Ctx, 's' | 'year' | 'age'>) {
 
 export type Place = 'bank' | 'school' | 'trip' | 'home' | 'car' | 'care';
 export const PLACES: { k: Place; t: string; icon: string }[] = [
-  { k: 'bank', t: 'Ngân hàng & sàn', icon: '¥' },
+  { k: 'bank', t: 'Ngân hàng & sàn', icon: '₫' },
   { k: 'school', t: 'Đi học', icon: '✎' },
   { k: 'trip', t: 'Đi chơi', icon: '✈\uFE0E' },
   { k: 'home', t: 'Nhà đất', icon: '⌂' },

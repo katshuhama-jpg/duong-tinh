@@ -143,7 +143,7 @@ export const GOALS: { k: GoalKey; t: string; icon: string; d: string; from: numb
   { k: 'hoc', t: 'Học tập', icon: '✎', d: 'Hiểu biết tăng, thi dễ đỗ hơn', from: 6 },
   { k: 'ban', t: 'Bạn bè', icon: '☺', d: 'Gắn kết, Nhan sắc tăng', from: 6 },
   { k: 'yeu', t: 'Tình yêu', icon: '♥', d: 'Tình duyên tăng, người ấy thân hơn', from: 14 },
-  { k: 'tien', t: 'Sự nghiệp', icon: '$', d: 'Tài chính tăng, sức khỏe hao', from: 18 },
+  { k: 'tien', t: 'Sự nghiệp', icon: '₫', d: 'Tài chính tăng, sức khỏe hao', from: 18 },
   { k: 'nha', t: 'Gia đình', icon: '⌂', d: 'Bố mẹ, vợ chồng, con cái gần hơn', from: 6 },
   { k: 'minh', t: 'Bản thân', icon: '✦', d: 'Sức khỏe, Vui vẻ tăng', from: 6 },
 ];
@@ -406,7 +406,8 @@ export function ctxOf(c: Character, f: Family, s: Story, age: number): Ctx {
 }
 
 /** kể ở ngôi thứ hai: "bạn" đứng đầu câu thì viết hoa */
-export const cap = (t: string) => t.replace(/(^|[.!?…]\s+|🦋\s*|↳\s*|"|“|\(|:\s+)bạn\b/gu, '$1Bạn');
+// bỏ biểu tượng cánh bướm khỏi chữ hiện ra (góp ý chơi thử); trong mã vẫn giữ để biết câu nào là câu nhắc lựa chọn cũ
+export const cap = (t: string) => t.replace(/🦋\s*/gu, '').replace(/(^|[.!?…]\s+|↳\s*|"|“|\(|:\s+)bạn\b/gu, '$1Bạn');
 export const txt = (v: string | ((x: Ctx) => string) | undefined, x: Ctx) => cap(typeof v === 'function' ? v(x) : (v ?? ''));
 
 function core(s: Story): StoryCore {

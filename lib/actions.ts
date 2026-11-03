@@ -16,7 +16,7 @@ export type AreaKey = 'hoc' | 'yeu' | 'tien' | 'dulich' | 'nha' | 'ban' | 'minh'
 export const AREAS: { k: AreaKey; t: string; icon: string; d: string }[] = [
   { k: 'hoc', t: 'Học hành', icon: '✎', d: 'Hiểu biết ↑' },
   { k: 'yeu', t: 'Tình yêu', icon: '♥', d: 'Tình duyên ↑' },
-  { k: 'tien', t: 'Kiếm tiền', icon: '$', d: 'Tài chính ↑' },
+  { k: 'tien', t: 'Kiếm tiền', icon: '₫', d: 'Tài chính ↑' },
   { k: 'dulich', t: 'Du lịch', icon: '✈', d: 'Vui vẻ ↑ gặp người lạ' },
   { k: 'nha', t: 'Gia đình', icon: '⌂', d: 'Gắn kết ↑' },
   { k: 'ban', t: 'Bạn bè', icon: '☺', d: 'Bạn thân ↑' },
