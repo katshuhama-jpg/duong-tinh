@@ -139,7 +139,9 @@ a:hover { color: #6d1a11; }
 
 .c-paths { display: flex; flex-direction: column; gap: 10px; }
 .c-path { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 12px 14px; background: var(--card); border: 1.5px solid var(--gold2); outline: 1px solid var(--line2); outline-offset: -5px; cursor: pointer; }
-.c-path:hover { background: #fff6e2; border-color: var(--son); }
+.c-path:hover:not(:disabled) { background: #fff6e2; border-color: var(--son); }
+.c-path:disabled { opacity: 0.55; cursor: not-allowed; border-style: dashed; }
+.c-soon { margin-left: 8px; font-style: normal; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 1px; color: var(--card); background: var(--mute); padding: 2px 6px; vertical-align: middle; }
 .c-path b { font-family: var(--serif); font-size: 19px; color: var(--son); }
 .c-path span { font-size: 13.5px; line-height: 1.45; }
 .c-path small { font-size: 11.5px; color: var(--mute); }

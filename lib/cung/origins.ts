@@ -20,6 +20,8 @@ export interface Origin {
   rank: number;
   n: Partial<Record<NumK, number>>;
   flags: string[];
+  /** đang mở cho người chơi chọn */
+  open?: boolean;
   /** đoạn mở đầu trên màn đặt tên */
   intro: string[];
   /** cảnh màn đặt tên */
@@ -39,6 +41,7 @@ export const ORIGINS: Origin[] = [
     rank: 0,
     n: {},
     flags: ['g_dan'],
+    open: true,
     intro: [
       'Bạn là con gái nhà làm chè ở làng Mai Đông. Năm mười sáu tuổi, bạn đứng tựa gốc đại ở chùa Vân Tịch đúng lúc Hoàng thượng đi lễ cầu tự. Một tháng sau, kiệu đón vào cung.',
       'Mẹ dúi vào tay bạn gói chè: "Trong ấy, chén nào cũng phải nhìn hai lần, con ạ."',

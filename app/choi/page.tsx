@@ -91,8 +91,11 @@ export default function Play() {
             </p>
             <div className="c-paths">
               {ORIGINS.map((o) => (
-                <button key={o.k} type="button" className="c-path" onClick={() => (setOg(o.k), setName(DEFAULT_NAME[o.k]), setRoll(0))}>
-                  <b>{o.t}</b>
+                <button key={o.k} type="button" className="c-path" disabled={!o.open} aria-disabled={!o.open} onClick={() => o.open && (setOg(o.k), setName(DEFAULT_NAME[o.k]), setRoll(0))}>
+                  <b>
+                    {o.t}
+                    {!o.open && <em className="c-soon">Sắp mở</em>}
+                  </b>
                   <span>{o.pitch}</span>
                   <small>
                     Họ {o.ho} · vào cung làm {o.k === 'cung' ? 'cung nga' : o.rank === 0 ? 'Tài nhân' : o.rank === 2 ? 'Mỹ nhân' : 'Tiệp dư'}
