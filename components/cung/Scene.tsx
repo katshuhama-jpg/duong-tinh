@@ -77,6 +77,12 @@ export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: bool
       return { robe: '#2f6a6a', collar: GOLD, hat: 'phuong', phuong: 3, sly: true, pattern: 'phuong', prop: 'chuoi' };
     case 'uyentan':
       return { robe: '#c4384a', collar: GOLD, hat: 'bun', paint: true, build: 'slim', scale: 0.94, prop: 'quat' };
+    case 'tao':
+      return { robe: '#8a2a2a', collar: '#f1ead8', hat: 'khantg', male: true, build: 'plump', old: true, grey: true, sly: true, prop: 'phattran', pants: '#f1ead8' };
+    case 'xuanlan':
+      return { robe: '#6a5a8a', collar: '#e8dcc0', hat: 'bun', scale: 0.88, sly: true, prop: 'khay', build: 'slim' };
+    case 'mac':
+      return { robe: '#2a4a3a', collar: '#4a3022', hat: 'mutuong', beard: true, grey: true, old: true, male: true, build: 'broad', prop: 'kiem', pattern: 'giap', skin: '#e2b48e' };
     case 'nghia':
       return { robe: '#8a3a2a', collar: GOLD2, hat: 'tre', male: true, build: 'broad', pattern: 'rong', prop: 'kiem' };
     case 'con':
@@ -602,7 +608,7 @@ function SpecialBg({ bg, time }: { bg: BgK; time: TimeK }) {
 
 /* ---------- mùa và thời tiết phủ lên cảnh ---------- */
 export type SeasonK = 'xuan' | 'ha' | 'thu' | 'dong';
-function SeasonFx({ season, rain, indoor }: { season?: SeasonK; rain?: boolean; indoor: boolean }) {
+function SeasonFx({ season, rain, wind, indoor }: { season?: SeasonK; rain?: boolean; wind?: boolean; indoor: boolean }) {
   return (
     <g pointerEvents="none">
       {!indoor && season === 'xuan' && (
@@ -624,6 +630,12 @@ function SeasonFx({ season, rain, indoor }: { season?: SeasonK; rain?: boolean; 
         <g opacity="0.85">
           <ellipse cx="40" cy="296" rx="26" ry="8" fill="#5a8a5a" />
           <path d="M40 290 Q36 270 44 262 Q52 270 46 290 Z" fill="#f2b8c2" stroke="#c46a7a" strokeWidth="0.6" />
+        </g>
+      )}
+      {wind && !indoor && (
+        <g className="c-wind" fill="none" stroke="#f7eedb" strokeWidth="1.4" opacity="0.7" strokeLinecap="round">
+          {[40, 110, 170, 230].map((y, i) => <path key={y} style={{ animationDelay: `${i * 0.4}s` }} d={`M-40 ${y} q30 -10 60 0 t60 0`} />)}
+          {Array.from({ length: 8 }).map((_, i) => <path key={i} className="c-leaf" style={{ animationDelay: `${i * 0.3}s` }} d={`M-10 ${40 + i * 28} q5 -4 8 2 q-4 5 -8 -2 z`} fill="#8a9a5a" stroke="none" />)}
         </g>
       )}
       {rain && (
@@ -980,7 +992,7 @@ function Motif({ m, solo }: { m: MotifK; solo: boolean }) {
 const SLOTS = [180, 296, 76];
 
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain }: { motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
+export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain, wind }: { motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; wind?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -997,7 +1009,7 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
       </defs>
       <g clipPath="url(#c-clip)">
         {bg ? <SpecialBg bg={bg} time={time} /> : <Backdrop place={place} time={time} />}
-        <SeasonFx season={season} rain={rain} indoor={!!bg || place === 'phong'} />
+        <SeasonFx season={season} rain={rain} wind={wind} indoor={!!bg || place === 'phong'} />
         {motif && motif !== 'hoa' && motif !== 'den' && <Motif m={motif} solo={!cast.length} />}
         {order.slice(0, 3).map((k, i) => {
           const look = looks[k as CastK] ?? lookOf(k as CastK);

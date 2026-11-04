@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
 import Scene, { Person, lookOf, type BgK, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { alliesOf, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
@@ -13,7 +13,7 @@ import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
 import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
 import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
-import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone } from '@/lib/cung/world';
+import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone, guardsOf } from '@/lib/cung/world';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
@@ -72,6 +72,7 @@ const SEASON_K: SeasonK[][] = [
   ['thu', 'dong'],
 ];
 const seasonOf = (card: { id: string }, l: Life): SeasonK => SEASON_K[Math.round(l.age * 2) % 2][hash(card.id) % 2];
+const windOf = (card: NonNullable<ReturnType<typeof cardOf>>) => /gió (to|lớn|thổi|rít|lùa|bấc|mùa|giật)|gió nổi|bão|lộng gió/.test(card.text.join(' ').toLowerCase());
 const rainOf = (card: NonNullable<ReturnType<typeof cardOf>>) => /mưa (to|lớn|rơi|dầm|ngâu|gió)|trời mưa|giữa mùa mưa|dưới mưa/.test(card.text.join(' ').toLowerCase());
 
 /** câu nối cảnh: bao lâu sau, mùa nào, giờ nào, ở đâu */
@@ -141,6 +142,9 @@ const SHORT: Partial<Record<CastK, string>> = {
   ninh: 'Ninh mỹ nhân',
   hienphi: 'Hiền phi',
   uyentan: 'Uyển tần',
+  tao: 'Tào công công',
+  xuanlan: 'Xuân Lan',
+  mac: 'Mạc tướng quân',
 };
 function namesOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): Partial<Record<CastK, string>> {
   const n: Partial<Record<CastK, string>> = { ...SHORT, meday: cap(originOf(l.origin).me) };
@@ -529,6 +533,24 @@ export default function Play() {
             <h1 className="c-title">{next.t}</h1>
             <p className="c-chapter-epi">{next.epi}</p>
             <p className="c-chapter-hook">{next.hook}</p>
+            {!!life.focus?.length && life.riv && (
+              <div className="c-chapter-foe">
+                <small>Kẻ thù của chương này</small>
+                <span>
+                  {life.focus.map((k) => (
+                    <span key={k}>
+                      <RivalFace k={k} r={life.riv![k]} size={46} />
+                      <b>{RIVALS.find((x) => x.k === k)?.t}</b>
+                    </span>
+                  ))}
+                </span>
+                {alliesOf(life).map((p) => (
+                  <small key={p.join()} className="ally">
+                    {RIVALS.find((x) => x.k === p[0])?.t} đã liên thủ với {RIVALS.find((x) => x.k === p[1])?.t}
+                  </small>
+                ))}
+              </div>
+            )}
           </section>
           <button type="button" className="c-btn" onClick={go}>
             Vào chương {NUM_HOI[next.n] ?? next.n}
@@ -590,7 +612,7 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>
@@ -770,7 +792,8 @@ function RivalFace({ k, r, size = 44 }: { k: RivalK; r: RivalState; size?: numbe
 function ThreatStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
   const rv = life.riv;
   if (!rv) return null;
-  const shown = RIVALS.filter((x) => rv[x.k] && rv[x.k].st !== 'an');
+  const shown = RIVALS.filter((x) => !x.of && rv[x.k] && rv[x.k].st !== 'an');
+  const focus = life.focus ?? [];
   const hau = rv.hoanghau;
   const crowned = life.flags.includes('hoang_hau');
   return (
@@ -780,7 +803,7 @@ function ThreatStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
         {shown.map((x) => {
           const r = rv[x.k];
           return (
-            <span key={x.k} className={`c-threat ${gone(r.st) ? 'out' : ''}`}>
+            <span key={x.k} className={`c-threat ${gone(r.st) ? 'out' : ''} ${focus.includes(x.k) && !gone(r.st) ? 'focus' : ''}`}>
               <RivalFace k={x.k} r={r} size={30} />
               <i>
                 <em style={{ width: `${gone(r.st) ? 0 : r.th}%` }} />
@@ -797,19 +820,34 @@ function ThreatStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
 function ThreatBoard({ life }: { life: Life }) {
   const rv = life.riv;
   if (!rv) return null;
+  const allies = alliesOf(life);
+  const focus = life.focus ?? [];
+  const nameOf = (k: RivalK) => RIVALS.find((y) => y.k === k)?.t ?? k;
   return (
     <div className="c-board">
-      {RIVALS.map((x) => {
+      {RIVALS.filter((x) => !x.of).flatMap((x) => [x, ...RIVALS.filter((y) => y.of === x.k)]).map((x) => {
         const r = rv[x.k];
         if (!r) return null;
         return (
-          <div key={x.k} className={`c-board-row ${gone(r.st) ? 'out' : ''} ${r.st === 'an' ? 'hide' : ''}`}>
+          <div key={x.k} className={`c-board-row ${gone(r.st) ? 'out' : ''} ${r.st === 'an' ? 'hide' : ''} ${x.of ? 'guard' : ''}`}>
             {r.st === 'an' ? <span className="c-board-q">?</span> : <RivalFace k={x.k} r={r} />}
             <div>
               <b>
                 {r.st === 'an' ? 'Chưa lộ mặt' : x.t} <small>{r.st === 'an' ? `từ chương ${x.from}` : RIV_ST[r.st]}</small>
               </b>
               {r.st !== 'an' && <span className="c-note">{x.d}</span>}
+              {r.st !== 'an' && !gone(r.st) && (
+                <span className="c-board-tags">
+                  {focus.includes(x.k) && <em className="focus">Kẻ thù chương này</em>}
+                  {x.of && <em>Vây cánh của {nameOf(x.of)}</em>}
+                  {guardsOf(x.k).filter((g) => !gone(rv[g].st) && rv[g].st !== 'an').map((g) => (
+                    <em key={g}>Còn được {nameOf(g)} che chở</em>
+                  ))}
+                  {allies.filter((p) => p.includes(x.k)).map((p) => (
+                    <em key={p.join()} className="ally">Liên thủ với {nameOf(p[0] === x.k ? p[1] : p[0])}</em>
+                  ))}
+                </span>
+              )}
               {r.st !== 'an' && !gone(r.st) && (
                 <span className="c-board-bars">
                   <span>

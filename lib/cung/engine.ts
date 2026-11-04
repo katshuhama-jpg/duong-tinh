@@ -3,7 +3,7 @@
  * Thuần dữ liệu (không đụng tới giao diện) để chạy thử hàng loạt bằng script.
  */
 import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
-import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, type Rank } from './world';
+import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, guardsOf, type Rank } from './world';
 import { CRISIS } from './content/big';
 import { ALL_BIG, BRANCH_CARDS, SMALL, bigsOf } from './content/index';
 import { fillText, originOf } from './origins';
@@ -48,6 +48,7 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
     riv: rivInit(1),
   };
   l.chStart = snapOf(l);
+  pickFocus(l);
   l.showCh = { to: 1 };
   l.card = nextCard(l);
   return l;
@@ -92,8 +93,33 @@ export function applyRiv(l: Life, d: Fx['riv']) {
     else if (r.th >= 30 && r.st === 'yeu') r.st = 'manh';
   }
 }
-const RIV_NAME: Record<RivalK, string> = { thucphi: 'Thục phi', hoanghau: 'Hoàng hậu', ninh: 'Ninh mỹ nhân', hienphi: 'Hiền phi', uyentan: 'Uyển tần', letan: 'Lệ tần', thaipho: 'Thái phó Tôn', nghia: 'Hoàng tử Nghĩa' };
+const RIV_NAME = Object.fromEntries(RIVALS.map((x) => [x.k, x.t])) as Record<RivalK, string>;
 const ST_LOG: Partial<Record<RivalState['st'], string>> = { giang: 'bị giáng, rời khỏi cuộc chơi', chet: 'đã chết', phuc: 'đã quy phục bạn', yeu: 'thất thế' };
+
+/** liên minh giữa hai mối nguy: lưu bằng cờ lien:<a>+<b> (xếp theo chữ) */
+export const allyFlag = (a: RivalK, b: RivalK) => `lien:${[a, b].sort().join('+')}`;
+export const alliesOf = (l: Life): [RivalK, RivalK][] =>
+  l.flags.filter((f) => f.startsWith('lien:')).map((f) => f.slice(5).split('+') as [RivalK, RivalK]);
+/** đầu chương: hai kẻ mạnh nhất chưa liên minh có thể bắt tay nhau */
+function formAlliance(l: Life) {
+  const rv = l.riv;
+  if (!rv) return;
+  const alive = RIVALS.filter((x) => !x.of && (rv[x.k].st === 'manh') && rv[x.k].th >= 35).sort((a, b) => rv[b.k].th - rv[a.k].th);
+  if (alive.length < 2) return;
+  const [a, b] = [alive[0].k, alive[1].k];
+  if (l.flags.includes(allyFlag(a, b))) return;
+  if (rand(l.seed, `lien|${l.chapter}`) < 0.6) {
+    l.flags.push(allyFlag(a, b));
+    l.log.push({ age: Math.floor(l.age), t: `${RIV_NAME[a]} và ${RIV_NAME[b]} bắt tay nhau. Từ nay đánh một người là đụng cả hai.`, k: 'rank' });
+  }
+}
+/** kẻ thù chính của chương: kẻ uy hiếp cao nhất đang lộng hành (và vây cánh của họ) */
+function pickFocus(l: Life) {
+  const rv = l.riv;
+  if (!rv) return;
+  const top = RIVALS.filter((x) => !x.of && rv[x.k].st === 'manh').sort((a, b) => rv[b.k].th - rv[a.k].th)[0];
+  l.focus = top ? [top.k, ...guardsOf(top.k).filter((g) => !gone(rv[g].st))] : [];
+}
 
 /** bản lưu cũ (quan hệ 0-100): dời về thang -100..100 */
 export const REL_KEYS = ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as const;
@@ -168,7 +194,9 @@ export function nextCard(l: Life): string | null {
       const first = l.smalls === 0;
       const lastBefore = l.smalls === chap(ch).smalls - 1;
       const beatW = (c: Card) => (c.beat === 'hook' ? (first ? 8 : 0.4) : c.beat === 'lang' ? (lastBefore ? 8 : 0.5) : 1);
-      const w = (c: Card) => (c.weight ?? 1) * beatW(c) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
+      const focus = l.focus ?? [];
+      const focusW = (c: Card) => (c.when?.riv && Object.keys(c.when.riv).some((k) => focus.includes(k as RivalK)) ? 4 : c.when?.riv ? 2 : 1);
+      const w = (c: Card) => (c.weight ?? 1) * beatW(c) * focusW(c) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
       const total = pool.reduce((a, c) => a + w(c), 0);
       let r = rand(l.seed, step(l)) * total;
       for (const c of pool) {
@@ -217,6 +245,8 @@ function moveTo(l: Life, ch: number) {
       l.log.push({ age: Math.floor(l.age), t: `Mối nguy mới: ${x.t}. ${x.d}`, k: 'note' });
     }
   }
+  pickFocus(l);
+  formAlliance(l);
   l.showCh = { to: ch, from, end, picks };
   l.chStart = snapOf(l);
 }
@@ -327,7 +357,14 @@ export function choose(l0: Life, idx: number): Result {
     l.n.tien = clamp('tien', l.n.tien + rankOf(l).luong * 0.4);
     if (l.n.an > 50) l.n.an = clamp('an', l.n.an - 2);
     // kẻ đang lộng hành mạnh dần theo năm tháng
-    for (const r of Object.values(l.riv ?? {})) if (r.st === 'manh') r.th = clamp100(r.th + 2);
+    for (const [k, r] of Object.entries(l.riv ?? {}) as [RivalK, RivalState][]) {
+      if (r.st !== 'manh') continue;
+      const guards = guardsOf(k).filter((g) => l.riv && !gone(l.riv[g].st)).length;
+      const allied = alliesOf(l).some((p) => p.includes(k));
+      r.th = clamp100(r.th + 2 + guards + (allied ? 1 : 0));
+    }
+    // liên minh tan khi một bên đã bị diệt
+    l.flags = l.flags.filter((f) => !f.startsWith('lien:') || f.slice(5).split('+').every((k) => l.riv && !gone(l.riv[k as RivalK].st)));
   }
   // ghi vào nhật ký khi một mối nguy đổi trạng thái
   if (riv0 !== JSON.stringify(l.riv ?? null) && l.riv) {

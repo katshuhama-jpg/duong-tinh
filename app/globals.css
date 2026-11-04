@@ -309,3 +309,20 @@ a:hover { color: #6d1a11; }
 .c-pro-line { margin: 0; font-family: var(--serif); font-size: 16px; line-height: 1.45; text-align: center; animation: c-rise 0.8s ease-out both; }
 .c-pro-line.strong { color: var(--son); font-weight: 700; font-size: 17px; }
 .c-pro-skip { align-self: center; background: none; border: none; color: var(--mute); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+
+.c-threat.focus .c-rface { border-color: var(--son); box-shadow: 0 0 0 2px rgba(168,40,29,0.35); }
+.c-board-row.guard { margin-left: 22px; border-left-width: 2px; }
+.c-board-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.c-board-tags em { font-style: normal; font-size: 11px; padding: 1px 7px; border-radius: 9px; background: #e8dcc0; color: var(--ink); }
+.c-board-tags em.focus { background: var(--son); color: #f7eedb; }
+.c-board-tags em.ally { background: #4a3022; color: #f7eedb; }
+.c-chapter-foe { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 8px; animation: c-rise 0.7s ease-out 2s both; }
+.c-chapter-foe > small { letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute); font-size: 11px; }
+.c-chapter-foe > span { display: flex; gap: 12px; justify-content: center; }
+.c-chapter-foe > span > span { display: flex; flex-direction: column; align-items: center; font-size: 12px; }
+.c-chapter-foe small.ally { color: var(--son); font-weight: 600; }
+
+.c-scene .c-wind path { animation: c-wind 2.6s linear infinite; }
+@keyframes c-wind { from { transform: translateX(0); opacity: 0; } 20% { opacity: 0.8; } to { transform: translateX(440px); opacity: 0; } }
+.c-scene .c-wind .c-leaf { animation: c-leaf 2.2s linear infinite; }
+@keyframes c-leaf { from { transform: translate(0, 0) rotate(0); } to { transform: translate(420px, 30px) rotate(540deg); } }

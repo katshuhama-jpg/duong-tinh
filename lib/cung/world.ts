@@ -42,18 +42,23 @@ export const THAI_PHI: Rank = { t: 'Hoàng thái phi', giai: 'Mẹ vua', luong: 
 export const THAI_HAU: Rank = { t: 'Hoàng thái hậu', giai: 'Mẫu nghi', luong: 1500, gao: 500, o: 'cung Tĩnh Hòa', phuong: 9, ao: '#d9a441', vien: '#8f2419' };
 
 /** mối nguy: tên, vai trong tranh, chương bắt đầu lộ mặt, uy hiếp ban đầu, một dòng giới thiệu */
-export const RIVALS: { k: import('./types').RivalK; t: string; cast: import('./types').CastK; from: number; th: number; d: string; goal?: boolean }[] = [
+export const RIVALS: { k: import('./types').RivalK; t: string; cast: import('./types').CastK; from: number; th: number; d: string; goal?: boolean; of?: import('./types').RivalK }[] = [
   { k: 'thucphi', t: 'Thục phi', cast: 'thucphi', from: 1, th: 45, d: 'Sủng phi lâu năm, mẹ của Hoàng tử Nghĩa. Ai được vua để mắt, bà đều nhớ tên.' },
   { k: 'hoanghau', t: 'Hoàng hậu', cast: 'hoanghau', from: 1, th: 25, d: 'Người đang ngồi ở cung Ngọc Khuê. Bà còn đó, ngôi hậu không bao giờ là của bạn.', goal: true },
   { k: 'ninh', t: 'Ninh mỹ nhân', cast: 'ninh', from: 1, th: 25, d: 'Cùng đợt tuyển với bạn, từng ngủ chung chiếu, chia nhau miếng bánh. Giờ nàng muốn đúng thứ bạn muốn.' },
   { k: 'hienphi', t: 'Hiền phi', cast: 'hienphi', from: 2, th: 35, d: 'Con gái võ tướng họ Mạc. Cả cung khen hiền, chỉ những người đã ngã mới biết nàng đứng ở đâu.' },
   { k: 'uyentan', t: 'Uyển tần', cast: 'uyentan', from: 2, th: 30, d: 'Vũ nữ giáo phường được vua đưa vào cung sau một đêm yến. Không có gì để mất, nên dám làm mọi thứ.' },
+  { k: 'tao', t: 'Tào công công', cast: 'tao', from: 1, th: 30, of: 'hoanghau', d: 'Chưởng sự thái giám cung Hoàng hậu. Mọi tin trong hậu cung đi qua tay ông trước khi tới tai bà.' },
+  { k: 'xuanlan', t: 'Xuân Lan', cast: 'xuanlan', from: 1, th: 25, of: 'thucphi', d: 'Cung nữ thân tín của Thục phi, theo bà từ nhà ra. Việc bẩn nào của Thục phi cũng do đôi tay này làm.' },
+  { k: 'mac', t: 'Mạc tướng quân', cast: 'mac', from: 2, th: 30, of: 'hienphi', d: 'Cha Hiền phi, giữ một nửa cấm quân. Đụng vào con gái ông là đụng vào giáo mác.' },
   { k: 'letan', t: 'Lệ tần', cast: 'letan', from: 3, th: 35, d: 'Tân sủng mười lăm tuổi, cháu gái Thái phó Tôn, được đưa vào đúng lúc bạn mang thai.' },
   { k: 'thaipho', t: 'Thái phó Tôn', cast: 'quan', from: 4, th: 40, d: 'Quyền thần nắm nửa triều đình, muốn đặt người của mình vào Đông cung.' },
   { k: 'nghia', t: 'Hoàng tử Nghĩa', cast: 'nghia', from: 4, th: 35, d: 'Con trưởng của Thục phi, tranh ngôi Đông cung với con bạn.' },
 ];
 export const RIV_ST: Record<import('./types').RivalSt, string> = { an: 'Chưa lộ mặt', manh: 'Đang lộng hành', yeu: 'Thất thế', giang: 'Bị giáng, bị đày', chet: 'Đã chết', phuc: 'Đã quy phục' };
 export const gone = (st: import('./types').RivalSt) => st === 'giang' || st === 'chet' || st === 'phuc';
+/** vây cánh của một mối nguy */
+export const guardsOf = (k: import('./types').RivalK) => RIVALS.filter((x) => x.of === k).map((x) => x.k);
 export const HOANG_HAU_RANK: Rank = { t: 'Hoàng hậu', giai: 'Chính cung', luong: 1400, gao: 400, o: 'cung Ngọc Khuê', phuong: 9, ao: '#c49a3a', vien: '#8f2419' };
 
 /** các chặng đời */

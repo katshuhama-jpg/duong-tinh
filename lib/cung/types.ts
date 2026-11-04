@@ -19,7 +19,7 @@ export type RelK =
   | 'tuong'; // phe võ tướng
 export type NumK = StatK | RelK | 'tien';
 /** mối nguy trên đường lên ngôi: Thục phi, Hoàng hậu (chắn ngôi hậu), Lệ tần (tân sủng), Thái phó Tôn (quyền thần), Hoàng tử Nghĩa (tranh ngôi Đông cung) */
-export type RivalK = 'thucphi' | 'hoanghau' | 'ninh' | 'hienphi' | 'uyentan' | 'letan' | 'thaipho' | 'nghia';
+export type RivalK = 'thucphi' | 'hoanghau' | 'ninh' | 'hienphi' | 'uyentan' | 'letan' | 'thaipho' | 'nghia' | 'tao' | 'xuanlan' | 'mac';
 /** an: chưa lộ mặt; manh: đang lộng hành; yeu: thất thế; giang: bị giáng, bị đày; chet: đã chết; phuc: đã quy phục */
 export type RivalSt = 'an' | 'manh' | 'yeu' | 'giang' | 'chet' | 'phuc';
 export interface RivalState {
@@ -55,7 +55,10 @@ export type CastK =
   | 'nghia' // Hoàng tử Nghĩa đã lớn, con Thục phi
   | 'ninh' // Ninh mỹ nhân, bạn cùng đợt tuyển thành thù
   | 'hienphi' // Hiền phi họ Mạc, con gái võ tướng, mặt hiền bụng hiểm
-  | 'uyentan'; // Uyển tần, vũ nữ được sủng
+  | 'uyentan' // Uyển tần, vũ nữ được sủng
+  | 'tao' // Tào công công, chưởng sự thái giám cung Hoàng hậu
+  | 'xuanlan' // Xuân Lan, cung nữ thân tín của Thục phi
+  | 'mac'; // Mạc tướng quân, cha Hiền phi, giữ cấm quân
 
 /** điều kiện để thẻ hoặc lựa chọn xuất hiện */
 export interface Cond {
@@ -171,6 +174,8 @@ export interface EndArt {
   mood?: MoodK;
   moods?: Partial<Record<CastK, MoodK>>;
   motif?: MotifK;
+  where?: string;
+  bg?: 'cong' | 'lanh' | 'bep' | 'tam' | 'thu' | 'hanh' | 'trieu';
   /** đoạn dẫn truyện 3-5 câu, kể đời người ấy khép lại ra sao */
   story: string;
 }
@@ -255,6 +260,8 @@ export interface Life {
   showCh?: { to: number; from?: ChapterSnap; end?: ChapterSnap; picks?: string[] };
   /** bàn cờ mối nguy */
   riv?: Record<RivalK, RivalState>;
+  /** kẻ thù chính của chương đang chơi (thẻ của họ ra dày hơn) */
+  focus?: RivalK[];
   /** các ngã rẽ đã đi qua, mỗi cái giữ một bản để quay lại chọn lại */
   marks?: Mark[];
   /** tuổi và chỗ của thẻ trước, để viết câu nối cảnh */
