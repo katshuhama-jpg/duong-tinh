@@ -352,11 +352,11 @@ export const ENDING_ART: Record<string, EndArt> = {
   e_nu_de: {
     place: 'dien',
     time: 'ngay',
-    cast: ['me', 'quan'],
-    moods: { me: 'dac', quan: 'lo' },
-    motif: 'ngai',
+    cast: ['me', 'con', 'quan'],
+    moods: { me: 'dac', quan: 'so' },
+    motif: 'rem',
     story:
-      'Từ áo nâu lên ngai vàng, {ho} thị là người đàn bà duy nhất xưng "trẫm" trong sử Khánh Vân. Bà trị nước nghiêm, ít cười, nhớ tên từng quan huyện. Lúc mất, bà dặn để bia mộ trống. Đời sau ai muốn khắc gì thì khắc, nhưng đến nay tấm bia vẫn chưa có chữ nào.',
+      'Từ {goc} lên ngồi sau tấm rèm trúc, {ho} thị chưa một ngày ngồi ngai, mà ba đời vua nhỏ đều đọc chiếu theo lời bà. Bà trị nước nghiêm, ít cười, nhớ tên từng quan huyện. Lúc mất, bà dặn đừng ghi công vào bia, chỉ ghi một dòng: người ngồi sau rèm.',
   },
   d_thoai_vi: {
     place: 'dien',
@@ -365,7 +365,7 @@ export const ENDING_ART: Record<string, EndArt> = {
     mood: 'gian',
     motif: 'chen',
     story:
-      'Ngồi ngai được mười lăm năm, {ho} thị thức dậy giữa đêm vì tiếng giáp sắt quanh điện. Đứa trẻ năm nào bà nuôi đã thành người, đứng trước cửa xin bà trả ấn. Trên án đã có chén rượu tiễn rót sẵn. Bà trao ấn, uống cạn, và nói một câu mà sử quan không được phép chép.',
+      'Buông rèm được mười lăm năm, {ho} thị thức dậy giữa đêm vì tiếng giáp sắt quanh điện. Đứa trẻ năm nào bà đặt lên ngai đã thành người, đứng trước rèm xin bà trả ấn. Trên án đã có chén rượu tiễn rót sẵn. Bà trao ấn, uống cạn, và nói một câu mà sử quan không được phép chép.',
   },
   d_tram_ngua: {
     place: 'lang',

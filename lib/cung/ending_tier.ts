@@ -1,7 +1,7 @@
-/** độ uy lực 0-100 của từng kết cục: nữ đế 100, hoàng hậu 95, nhiếp chính 90..., lặng lẽ cả đời 10 */
+/** độ uy lực 0-100 của từng kết cục: rèm trúc nhiếp chính trọn đời 100, hoàng hậu 95, nhiếp chính 90..., lặng lẽ cả đời 10 */
 export const ENDING_TIER: Record<string, number> = {
   // ---- 95-100: đỉnh quyền lực ----
-  e_nu_de: 100, // Nữ đế Khánh Vân
+  e_nu_de: 100, // Rèm trúc Khánh Vân: Hoàng thái hậu nhiếp chính trọn đời
   e_hoang_hau: 95, // Chính cung Hoàng hậu
 
   // ---- 80-94: nắm quyền ----
@@ -18,7 +18,7 @@ export const ENDING_TIER: Record<string, number> = {
   e_hai_dong: 80, // Hai dòng máu một ngai
 
   // ---- 60-79: thắng theo cách khác, chết oanh liệt ----
-  d_thoai_vi: 79, // ngồi ngai mười lăm năm rồi bị bức thoái vị
+  d_thoai_vi: 79, // buông rèm mười lăm năm rồi bị ép cuốn rèm
   e_doi_lai: 78, // Ba mươi năm đòi lại
   d_tran_mac: 77, // chết trận, chép vào mục tướng sĩ
   e_q_phuc_vi: 76, // Phế rồi phục vị
