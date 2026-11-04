@@ -80,81 +80,96 @@ Chỉ khuôn mặt thay đổi giữa 8 ảnh. Thân, tay, áo, tóc, mũ, khung
 
 ---
 
-## 5. NHÂN VẬT
+## 5. NHÂN VẬT (ĐỦ MỌI ĐỘ TUỔI)
 
-### Nhân vật chính (cùng một khuôn mặt qua 5 giai đoạn)
+Đời trong game kéo dài từ năm nhân vật chính 16 tuổi đến khoảng 65 tuổi, qua 7 chương: 1 Nhập cung, 2 Được gọi, 3 Mang thai, 4 Ngôi Đông cung, 5 Vua băng, 6 Buông rèm, 7 Tuổi già. Mỗi người có một hoặc nhiều giai đoạn tuổi. **Các mã cùng tên gốc (vd `hanh`, `hanh2`, `hanh3`) là CÙNG MỘT NGƯỜI**: giữ nguyên khuôn mặt, dáng xương mặt, màu mắt, chỉ đổi tuổi, tóc, trang phục như mô tả. Nên vẽ giai đoạn đầu trước rồi dùng làm mẫu cho các giai đoạn sau.
 
-| Mã | Mô tả |
-| --- | --- |
-| `me1` | Tài nhân mới vào cung, 16 tuổi. Cô gái gốc làng chè trung du, mặt trái xoan, da hơi nâu nắng, mắt sáng to, ánh nhìn hiền mà cứng cỏi, môi hồng tự nhiên. Tóc đen dài búi gọn sau gáy, cài một trâm bạc nhỏ có hạt đỏ. Áo giao lĩnh màu xanh ngọc nhạt viền vàng mảnh, bên trong yếm trắng, thắt lưng lụa xanh đậm, quần lụa trắng. Hai tay đan trước bụng, dáng còn rụt rè. |
-| `me2` | Cùng người, 20 tuổi, phi tần được sủng. Da trắng hơn, nét mặt sắc sảo và tự tin. Tóc vấn cao, cài trâm phượng vàng ba ngọn, hoa tai ngọc. Áo nhật bình tím hoa cà thêu hoa sen vàng ở vạt, cổ vuông viền vàng. |
-| `me3` | Cùng người, 26 tuổi, Hoàng hậu. Uy nghi, ánh mắt lạnh và trầm. Đội mũ phượng chín đuôi bằng vàng kiểu Huế, chuỗi ngọc trước trán. Áo nhật bình vàng nghệ thêu phượng lớn, viền đỏ son, chuỗi hạt dài trước ngực. |
-| `me4` | Cùng người, 40 tuổi, Hoàng thái hậu buông rèm nhiếp chính. Vài nếp nhăn đuôi mắt, uy quyền tuyệt đối, khóe môi hơi nhếch. Mũ phượng chín đuôi, áo nhật bình vàng sẫm thêu phượng và mây, áo choàng đỏ thẫm khoác ngoài, tay cầm chuỗi tràng hạt gỗ trầm. |
-| `me5` | Cùng người, 62 tuổi. Tóc bạc búi thấp, mặt nhiều nếp nhăn nhưng mắt vẫn sáng. Áo tấc lụa nâu trầm, khăn vấn đen, lưng hơi còng, tay chống gậy trúc. |
+Tổng cộng 57 mã. Thứ tự nên làm: nhóm 1, rồi nhóm 2, rồi nhóm 3.
 
-### Người bên cạnh
+### Nhóm 1: nhân vật chính và người thân cận (làm trước)
 
-| Mã | Mô tả |
-| --- | --- |
-| `hanh` | Hạnh, thị nữ thân tín, 17 tuổi. Dáng nhỏ, mặt tròn, má hồng, mắt to lanh lợi. Tóc búi thấp quấn dây vải xanh. Áo cánh vải thường màu xanh lam nhạt, cổ trắng, yếm trắng, quần đen, không thêu thùa. Hai tay bưng khay sơn son có ấm trà và chén sứ. |
-| `phuc` | Phúc, thái giám giữ sổ, đàn ông 35 tuổi. Mặt tròn trắng không râu, mắt hí, nụ cười khó đoán, dáng hơi bệu. Mũ thái giám đen, áo thụng xanh lam viền trắng, đai lưng đen. Tay cầm phất trần lông trắng. |
-| `mama` | Ma ma họ Trịnh dạy lễ, bà 58 tuổi. Gầy, mặt dài nghiêm, môi mỏng, tóc muối tiêu vấn khăn nhung đen. Áo tấc nâu sẫm. Tay cầm thước gỗ. |
-| `vua` | Hoàng thượng, đàn ông 32 tuổi. Mặt vuông, mày rậm, râu mỏng trên môi, ánh mắt mệt mỏi mà có uy, hơi xanh xao vì bệnh. Mũ xung thiên đen thếp vàng, long bào vàng thêu rồng năm móng, đai ngọc. |
-| `thaihau` | Thái hậu, mẹ vua, bà 62 tuổi. Tóc bạc vấn gọn, mặt phúc hậu nhưng mắt sắc, nhiều nếp nhăn. Mũ phượng chín đuôi, áo nhật bình nâu vàng thêu phượng và chữ thọ, tay lần tràng hạt. |
-| `con` | Hoàng tử nhỏ, bé trai 6 tuổi. Mặt bầu bĩnh, tóc cạo chừa hai chỏm hai bên. Áo đỏ thẫm viền vàng. |
-| `con_vua` | Vua nhỏ, cậu bé 10 tuổi. Long bào vàng nhỏ, mũ xung thiên nhỏ, vẻ nghiêm trang gượng gạo. |
-| `su` | Sư bà chùa Vân Tịch, 70 tuổi. Đầu cạo trọc, mặt hiền từ, nhiều nếp nhăn. Áo nâu nhà chùa, tay lần tràng hạt gỗ. |
-| `meday` | Mẹ ở quê, phụ nữ nông thôn 45 tuổi. Da rám nắng, tay thô, mắt hiền. Khăn mỏ quạ, áo tứ thân nâu, yếm đào, tay cầm nón lá. |
-| `cungnu` | Cung nữ, cô gái 18 tuổi, mặt thanh, bình thường. Tóc búi quấn dây. Áo cánh xanh lá nhạt, tay xách giỏ tre. |
-| `tuong` | Tướng quân Lê Trực, đàn ông 38 tuổi. Vạm vỡ, da rám, râu quai nón, một vết sẹo nhỏ trên mày trái. Mũ trận, giáp vảy đỏ sẫm khoác ngoài áo chiến, kiếm đeo bên hông trái, tay đặt lên chuôi kiếm. Chính trực, ít nói. |
-| `ngoai` | Sứ thần nước láng giềng, đàn ông 45 tuổi. Râu dài, mắt sâu. Nón sứ vành rộng đen có tua đỏ, áo bào xanh rêu thêu mây vàng, tay cầm cuộn quốc thư. |
-
-### Mối nguy
-
-| Mã | Mô tả |
-| --- | --- |
-| `thucphi` | Thục phi, sủng phi 26 tuổi, đẹp sắc sảo nhất hậu cung. Mắt phượng dài, phấn mắt tím nhạt, môi đỏ thắm, nụ cười quyến rũ mà lạnh. Mũ năm phượng vàng, áo nhật bình tím thẫm thêu phượng vàng. Tay cầm quạt lụa vẽ hoa mẫu đơn. |
-| `hoanghau` | Hoàng hậu, phụ nữ 32 tuổi, đoan trang, mặt đầy đặn, nụ cười mực thước nhưng ánh mắt tính toán. Mũ phượng chín đuôi, áo nhật bình vàng nghệ viền đỏ son thêu phượng, chuỗi ngọc trước ngực. |
-| `ninh` | Ninh mỹ nhân, cô gái 17 tuổi, cùng đợt tuyển với nhân vật chính. Mặt ngây thơ dễ thương nhưng mắt hay liếc. Tóc búi cài hoa lụa hồng, áo giao lĩnh xanh lá non thêu hoa nhỏ, tay cầm quạt giấy. |
-| `hienphi` | Hiền phi họ Mạc, 28 tuổi, con nhà võ tướng. Mặt hiền dịu, nụ cười luôn nhẹ, nhưng đôi mắt sâu không đoán được. Mũ ba phượng, áo nhật bình xanh rêu thêu trúc, tay lần chuỗi hạt. |
-| `uyentan` | Uyển tần, vũ nữ giáo phường 19 tuổi được vua đưa vào cung. Đẹp rực rỡ, dáng thon, mắt long lanh đầy tham vọng. Tóc búi cao cài nhiều trâm nhỏ, áo giao lĩnh đỏ son kín đáo, dải lụa mỏng vắt qua hai vai, tay cầm quạt múa. |
-| `letan` | Lệ tần, cô gái 15 tuổi, cháu gái Thái phó. Đẹp như búp bê, da trắng sứ, ánh mắt kiêu kỳ. Mũ một phượng nhỏ, áo nhật bình hồng đào thêu bướm. |
-| `tao` | Tào công công, thái giám 55 tuổi, chưởng sự cung Hoàng hậu. Béo, mặt phệ trắng bệch không râu, mắt nhỏ như sợi chỉ, nụ cười nịnh. Mũ thái giám đen có hạt ngọc, áo thụng đỏ sẫm, tay cầm phất trần và cuốn sổ bìa lam. |
-| `xuanlan` | Xuân Lan, cung nữ thân tín của Thục phi, 24 tuổi. Gầy, mặt sắc, mắt xếch lạnh, môi mím. Tóc búi chặt, áo cánh tím than viền trắng, tay bưng khay có bát thuốc. |
-| `mac` | Mạc tướng quân, cha Hiền phi, giữ cấm quân, đàn ông 55 tuổi. Vạm vỡ, râu tóc muối tiêu, mắt dữ. Mũ trận đen, giáp xanh rêu sẫm, tay đặt trên chuôi đao. |
-| `quan` | Thái phó Tôn, quan đại thần 60 tuổi. Gầy, râu dê bạc dài, mắt hẹp đầy mưu tính. Mũ cánh chuồn đen, áo thụng xanh đậm có bổ tử thêu hạc trước ngực, tay cầm hốt ngà. |
-| `nghia` | Hoàng tử Nghĩa đã lớn, chàng trai 20 tuổi, con Thục phi. Đẹp trai giống mẹ, mắt sắc kiêu ngạo. Khăn vấn vàng, áo bào đỏ thẫm thêu rồng bốn móng, kiếm đeo bên hông. |
-
----
-
-### Các nhân vật ở tuổi khác (game đổi ảnh theo năm tháng)
-
-Cùng khuôn mặt với mã gốc, chỉ đổi tuổi và trang phục như mô tả.
-
-| Mã | Gốc | Mô tả | Game dùng khi |
+| Mã | Tuổi | Chương | Mô tả |
 | --- | --- | --- | --- |
-| `hanh2` | `hanh` | Hạnh 45 tuổi: tóc điểm bạc, khăn vấn nâu, áo tấc xanh lam sẫm, nét mặt điềm đạm, vẫn bưng khay trà. | nhân vật chính từ 40 tuổi |
-| `hanh3` | `hanh` | Hạnh 62 tuổi: tóc bạc trắng búi thấp, lưng còng, áo nâu, tay chống gậy. | chương Tuổi già |
-| `thucphi2` | `thucphi` | Thục phi 45 tuổi: vẫn đẹp nhưng sắc lạnh hơn, vài nếp nhăn đuôi mắt, mũ năm phượng, áo nhật bình tím than. | chương 4 trở đi |
-| `thucphi3` | `thucphi` | Thục phi 60 tuổi sau khi mất thế: tóc bạc, áo nâu tu hành hoặc áo vải xám, chống gậy, ánh mắt vẫn kiêu. | chương Tuổi già |
-| `hoanghau2` | `hoanghau` | Hoàng hậu 48 tuổi: đầy đặn hơn, nét mặt mệt mỏi, mũ phượng chín đuôi, áo nhật bình vàng sẫm. | chương 4-5 |
-| `vua2` | `vua` | Hoàng thượng 42 tuổi ốm nặng: gầy, má hóp, mặt tái, áo long bào vàng khoác ngoài áo lụa trắng, tay cầm khăn tay. | chương 4-5 lúc vua bệnh |
-| `con2` | `con` | Hoàng tử 14 tuổi: thiếu niên, tóc vấn khăn vàng nhỏ, áo bào đỏ viền vàng, cầm quyển sách. | chương Ngôi Đông cung |
-| `con3` | `con` | Con lên làm vua, 22 tuổi: long bào vàng, mũ xung thiên, giống mẹ ở đôi mắt. | chương Buông rèm và Tuổi già |
-| `nghia0` | `nghia` | Hoàng tử Nghĩa lúc 8 tuổi: cậu bé kiêu kỳ, áo đỏ thẫm, tóc để chỏm, cầm kiếm gỗ. | chương 2-3 |
-| `phuc2` | `phuc` | Phúc 55 tuổi: béo hơn, mặt nhiều nếp nhăn, mũ thái giám có hạt ngọc (đã lên chưởng sự), vẫn phất trần. | chương 5 trở đi |
-| `tuong2` | `tuong` | Lê Trực 55 tuổi: râu tóc bạc, giáp cũ sờn, vẫn vạm vỡ. | chương 6-7 |
-| `meday2` | `meday` | Mẹ ở quê 65 tuổi: tóc bạc, lưng còng, khăn mỏ quạ, chống gậy tre. | chương 4 trở đi |
+| `me1` | 16 | 1-2 | Tài nhân mới vào cung. Cô gái gốc làng chè trung du, mặt trái xoan, da hơi nâu nắng, mắt sáng to, ánh nhìn hiền mà cứng cỏi, môi hồng tự nhiên. Tóc đen dài búi gọn sau gáy, cài một trâm bạc nhỏ có hạt đỏ. Áo giao lĩnh xanh ngọc nhạt viền vàng mảnh, yếm trắng, thắt lưng lụa xanh đậm, quần lụa trắng, hài vải. Hai tay đan trước bụng, dáng còn rụt rè. |
+| `me2` | 20 | 2-3 | Cùng người, phi tần được sủng. Da trắng hơn, nét mặt sắc sảo, tự tin. Tóc vấn cao, trâm phượng vàng ba ngọn, hoa tai ngọc. Áo nhật bình tím hoa cà thêu hoa sen vàng ở vạt, cổ vuông viền vàng. |
+| `me3` | 28 | 3-5 | Cùng người, phi cao bậc hoặc Hoàng hậu. Uy nghi, ánh mắt lạnh và trầm. Mũ phượng chín đuôi bằng vàng kiểu Huế, chuỗi ngọc trước trán. Áo nhật bình vàng nghệ thêu phượng lớn, viền đỏ son, chuỗi hạt dài. |
+| `me4` | 42 | 5-6 | Cùng người, Hoàng thái hậu buông rèm nhiếp chính. Vài nếp nhăn đuôi mắt, uy quyền tuyệt đối, khóe môi hơi nhếch. Mũ phượng chín đuôi, áo nhật bình vàng sẫm thêu phượng và mây, áo choàng đỏ thẫm, tay cầm chuỗi tràng hạt gỗ trầm. |
+| `me5` | 62 | 7 | Cùng người, tuổi già. Tóc bạc búi thấp, mặt nhiều nếp nhăn nhưng mắt vẫn sáng. Áo tấc lụa nâu trầm, khăn vấn đen, lưng hơi còng, tay chống gậy trúc. |
+| `hanh` | 17 | 1-3 | Hạnh, thị nữ thân tín. Dáng nhỏ, mặt tròn, má hồng, mắt to lanh lợi. Tóc búi thấp quấn dây vải xanh. Áo cánh vải thường màu xanh lam nhạt, cổ trắng, yếm trắng, quần đen, không thêu. Hai tay bưng khay sơn son có ấm trà và chén sứ. |
+| `hanh2` | 35 | 4-6 | Hạnh trưởng thành: mặt bớt tròn, điềm đạm, khăn vấn nâu, áo tấc xanh lam sẫm, vẫn bưng khay trà. |
+| `hanh3` | 60 | 7 | Hạnh già: tóc bạc trắng búi thấp, lưng còng, áo nâu, tay chống gậy, nụ cười hiền móm mém. |
+| `phuc` | 30 | 1-4 | Phúc, thái giám giữ sổ. Mặt tròn trắng không râu, mắt hí, nụ cười khó đoán, dáng hơi bệu. Mũ thái giám đen, áo thụng xanh lam viền trắng, đai lưng đen, tay cầm phất trần lông trắng. |
+| `phuc2` | 50 | 5-7 | Phúc lên chưởng sự: béo hơn, mặt nhiều nếp, mũ thái giám có hạt ngọc, áo thụng xanh đậm thêu mây, vẫn phất trần. |
+| `vua` | 30 | 1-3 | Hoàng thượng. Mặt vuông, mày rậm, râu mỏng trên môi, ánh mắt mệt mỏi mà có uy. Mũ xung thiên đen thếp vàng, long bào vàng thêu rồng năm móng, đai ngọc. |
+| `vua2` | 40 | 4-5 | Hoàng thượng ốm nặng: gầy, má hóp, mặt tái, long bào vàng khoác ngoài áo lụa trắng, không đội mũ, tóc búi, tay cầm khăn tay có vết máu nhỏ. |
+| `con` | 6 | 3-4 | Hoàng tử nhỏ: bé trai bầu bĩnh, mắt giống mẹ, tóc cạo chừa hai chỏm, áo đỏ thẫm viền vàng. |
+| `con2` | 14 | 4-5 | Hoàng tử thiếu niên (Đông cung): khăn vấn vàng nhỏ, áo bào đỏ viền vàng, cầm quyển sách, dáng nghiêm. |
+| `con_vua` | 10 | 5-6 | Con lên ngôi còn nhỏ: long bào vàng nhỏ, mũ xung thiên nhỏ, vẻ nghiêm trang gượng gạo. |
+| `con3` | 24 | 6-7 | Con là vua trưởng thành: long bào vàng, mũ xung thiên, đôi mắt giống mẹ, vẻ cứng cỏi. |
+| `con4` | 42 | 7 | Con là vua trung niên: râu mỏng, long bào vàng sẫm, ánh mắt trầm. |
+| `congchua` | 8 | 3-6 | Con gái nhỏ (công chúa): bé gái tóc để trái đào, áo hồng viền vàng, cầm con diều giấy. |
+| `congchua2` | 18 | 6-7 | Công chúa lớn: thiếu nữ dịu dàng giống mẹ, áo nhật bình hồng phấn, trâm ngọc. |
 
-### Nhân vật chính của 3 đường vào cung khác (làm sau)
+### Nhóm 2: mối nguy và vây cánh
 
-| Mã | Mô tả |
-| --- | --- |
-| `quan1` | Con gái quan Thượng thư họ Đoàn, 16 tuổi. Tiểu thư đài các, da trắng, mặt thanh tú, ánh mắt kiêu hãnh mà buồn. Tóc vấn cao cài trâm ngọc, áo giao lĩnh gấm hồng nhạt viền bạc, tay cầm quạt lụa. |
-| `cung1` | Cung nga giặt áo họ Lương, 16 tuổi. Gầy, da xanh, tay đỏ nứt vì nước tro, mắt to lanh lợi. Tóc buộc khăn vải nâu, áo cánh vải nâu bạc màu, tay áo xắn, ôm chậu gỗ có áo. |
-| `chua1` | Công chúa triều trước họ Lạc, 18 tuổi. Cao quý, buồn, mặt trái xoan nhợt nhạt. Tóc vấn cao cài trâm rồng nhỏ đã cũ, áo nhật bình trắng ngà thêu rồng nhỏ đã bạc màu, tay cầm chuỗi hạt. |
+| Mã | Tuổi | Chương | Mô tả |
+| --- | --- | --- | --- |
+| `thucphi` | 26 | 1-3 | Thục phi, sủng phi đẹp sắc sảo nhất hậu cung. Mắt phượng dài, phấn mắt tím nhạt, môi đỏ thắm, nụ cười quyến rũ mà lạnh. Mũ năm phượng vàng, áo nhật bình tím thẫm thêu phượng vàng, tay cầm quạt lụa vẽ mẫu đơn. |
+| `thucphi2` | 40 | 4-6 | Thục phi trung niên, giờ tranh ngôi cho con: vẫn đẹp nhưng sắc lạnh, vài nếp nhăn đuôi mắt, mũ năm phượng, áo nhật bình tím than. |
+| `thucphi3` | 58 | 7 | Thục phi già sau khi mất thế: tóc bạc, áo vải xám hoặc áo nâu tu hành, chống gậy, ánh mắt vẫn kiêu. |
+| `xuanlan` | 24 | 1-4 | Xuân Lan, cung nữ thân tín của Thục phi. Gầy, mặt sắc, mắt xếch lạnh, môi mím. Tóc búi chặt, áo cánh tím than viền trắng, tay bưng khay có bát thuốc. |
+| `xuanlan2` | 40 | 5-7 | Xuân Lan trung niên: mặt hằn nếp, khăn vấn tím than, ánh mắt càng lạnh. |
+| `hoanghau` | 32 | 1-3 | Hoàng hậu: đoan trang, mặt đầy đặn, nụ cười mực thước nhưng ánh mắt tính toán. Mũ phượng chín đuôi, áo nhật bình vàng nghệ viền đỏ son thêu phượng, chuỗi ngọc trước ngực. |
+| `hoanghau2` | 46 | 4-5 | Hoàng hậu trung niên: đầy đặn hơn, nét mặt mệt mỏi, áo nhật bình vàng sẫm. |
+| `hoanghau3` | 60 | 6-7 | Bà sau khi bị phế hoặc lui về: tóc bạc, áo nâu sồng, không mũ phượng, tay lần tràng hạt. |
+| `tao` | 50 | 1-4 | Tào công công, chưởng sự thái giám cung Hoàng hậu. Béo, mặt phệ trắng bệch không râu, mắt nhỏ như sợi chỉ, nụ cười nịnh. Mũ thái giám đen có hạt ngọc, áo thụng đỏ sẫm, tay cầm phất trần và cuốn sổ bìa lam. |
+| `tao2` | 65 | 5-6 | Tào công công già: tóc bạc dưới mũ, lưng còng, mặt nhăn nheo, vẫn ôm sổ. |
+| `ninh` | 17 | 1-2 | Ninh mỹ nhân, cùng đợt tuyển với nhân vật chính. Mặt ngây thơ dễ thương nhưng mắt hay liếc. Tóc búi cài hoa lụa hồng, áo giao lĩnh xanh lá non thêu hoa nhỏ, tay cầm quạt giấy. |
+| `ninh2` | 24 | 3-4 | Ninh khi đã thành thù: nét mặt sắc hơn, tóc vấn cao, trâm bạc, áo nhật bình xanh lục đậm. |
+| `hienphi` | 28 | 2-4 | Hiền phi họ Mạc, con nhà võ tướng. Mặt hiền dịu, nụ cười luôn nhẹ, đôi mắt sâu không đoán được. Mũ ba phượng, áo nhật bình xanh rêu thêu trúc, tay lần chuỗi hạt. |
+| `hienphi2` | 42 | 5-6 | Hiền phi trung niên: vẫn hiền mà lạnh hơn, áo nhật bình xanh rêu sẫm, mũ ba phượng. |
+| `mac` | 52 | 2-5 | Mạc tướng quân, cha Hiền phi, giữ cấm quân. Vạm vỡ, râu tóc muối tiêu, mắt dữ. Mũ trận đen, giáp xanh rêu sẫm, tay đặt trên chuôi đao. |
+| `mac2` | 64 | 6 | Mạc tướng quân già: râu tóc bạc trắng, mặc tang phục trắng khoác ngoài giáp (đòi báo thù cho con gái). |
+| `uyentan` | 19 | 2-4 | Uyển tần, vũ nữ giáo phường được vua đưa vào cung. Đẹp rực rỡ, dáng thon, mắt long lanh đầy tham vọng. Tóc búi cao cài nhiều trâm nhỏ, áo giao lĩnh đỏ son kín đáo, dải lụa mỏng vắt qua hai vai, tay cầm quạt múa. |
+| `uyentan2` | 30 | 5 | Uyển tần khi đã thất sủng hoặc trong lãnh cung: áo đỏ bạc màu, tóc xõa một nửa, mắt trũng mà vẫn đẹp. |
+| `letan` | 15 | 3-4 | Lệ tần, cháu gái Thái phó. Đẹp như búp bê, da trắng sứ, ánh mắt kiêu kỳ. Mũ một phượng nhỏ, áo nhật bình hồng đào thêu bướm. |
+| `letan2` | 25 | 5 | Lệ tần trưởng thành: sắc sảo, áo nhật bình hồng đậm, mũ ba phượng. |
+| `quan` | 58 | 1-5 | Thái phó Tôn, quyền thần. Gầy, râu dê bạc dài, mắt hẹp đầy mưu tính. Mũ cánh chuồn đen, áo thụng xanh đậm có bổ tử thêu hạc trước ngực, tay cầm hốt ngà. |
+| `quan2` | 72 | 6-7 | Thái phó Tôn già: râu tóc bạc trắng, lưng còng, vẫn áo thụng xanh và hốt ngà, ánh mắt chưa tắt. |
+| `nghia0` | 8 | 2-3 | Hoàng tử Nghĩa lúc nhỏ, con Thục phi: cậu bé kiêu kỳ, áo đỏ thẫm, tóc để chỏm, cầm kiếm gỗ. |
+| `nghia` | 20 | 4-6 | Hoàng tử Nghĩa đã lớn: đẹp trai giống mẹ, mắt sắc kiêu ngạo. Khăn vấn vàng, áo bào đỏ thẫm thêu rồng bốn móng, kiếm đeo bên hông. |
+| `nghia2` | 30 | 6-7 | Nghĩa khi mặc giáp khởi binh hoặc khi bị đày: giáp đen ngoài áo đỏ, râu lún phún, mắt đầy hận. |
 
-Với 3 nhân vật này, các giai đoạn sau dùng mô tả của `me2` đến `me5` nhưng giữ khuôn mặt riêng: gõ `quan1 giai đoạn me3 góc A` nghĩa là con quan lúc làm Hoàng hậu.
+### Nhóm 3: nhân vật phụ
+
+| Mã | Tuổi | Chương | Mô tả |
+| --- | --- | --- | --- |
+| `mama` | 58 | 1-2 | Ma ma họ Trịnh dạy lễ. Gầy, mặt dài nghiêm, môi mỏng, tóc muối tiêu vấn khăn nhung đen. Áo tấc nâu sẫm, tay cầm thước gỗ. |
+| `thaihau` | 60 | 1-5 | Thái hậu, mẹ vua. Tóc bạc vấn gọn, mặt phúc hậu nhưng mắt sắc, nhiều nếp nhăn. Mũ phượng chín đuôi, áo nhật bình nâu vàng thêu phượng và chữ thọ, tay lần tràng hạt. |
+| `thaihau2` | 72 | 4-5 | Thái hậu già yếu: ngồi trên ghế, tóc bạc trắng, áo nâu vàng khoác chăn mỏng, mắt mờ mà vẫn tinh. |
+| `tuong` | 36 | 2-5 | Tướng quân Lê Trực. Vạm vỡ, da rám, râu quai nón, vết sẹo nhỏ trên mày trái. Mũ trận, giáp vảy đỏ sẫm ngoài áo chiến, kiếm đeo bên hông trái, tay đặt lên chuôi kiếm. Chính trực, ít nói. |
+| `tuong2` | 52 | 6-7 | Lê Trực già: râu tóc bạc, giáp cũ sờn, vẫn vạm vỡ và thẳng lưng. |
+| `su` | 70 | 1-7 | Sư bà chùa Vân Tịch. Đầu cạo trọc, mặt hiền từ, nhiều nếp nhăn. Áo nâu nhà chùa, tay lần tràng hạt gỗ. |
+| `meday` | 42 | 1-3 | Mẹ ở quê. Phụ nữ nông thôn, da rám nắng, tay thô, mắt hiền. Khăn mỏ quạ, áo tứ thân nâu, yếm đào, tay cầm nón lá. |
+| `meday2` | 62 | 4-7 | Mẹ ở quê lúc già: tóc bạc, lưng còng, khăn mỏ quạ, chống gậy tre. |
+| `cungnu` | 18 | 1-7 | Cung nữ thường. Mặt thanh, bình thường, tóc búi quấn dây, áo cánh xanh lá nhạt, tay xách giỏ tre. |
+| `cungnu2` | 20 | 1-7 | Cung nữ khác để thay đổi: mặt tròn, áo cánh hồng nhạt, tay ôm chồng áo gấp. |
+| `thaiy` | 50 | 1-6 | Thái y: đàn ông râu thưa, mũ ô sa đen, áo thụng xám, tay ôm hộp thuốc gỗ. |
+| `ngoai` | 45 | 5-6 | Sứ thần nước láng giềng. Râu dài, mắt sâu. Nón sứ vành rộng đen có tua đỏ, áo bào xanh rêu thêu mây vàng, tay cầm cuộn quốc thư. |
+| `linh` | 25 | 1-7 | Lính cấm quân: nón dấu, áo nẹp đỏ, cầm giáo. |
+
+### Nhóm 4: nhân vật chính của 3 đường vào cung khác (làm sau cùng)
+
+Mỗi đường có khuôn mặt riêng. Giai đoạn sau dùng trang phục như `me2` đến `me5` nhưng giữ mặt riêng của đường đó.
+
+| Mã | Tuổi | Mô tả |
+| --- | --- | --- |
+| `quan1` | 16 | Con gái quan Thượng thư họ Đoàn. Tiểu thư đài các, da trắng, mặt thanh tú, ánh mắt kiêu hãnh mà buồn. Tóc vấn cao cài trâm ngọc, áo giao lĩnh gấm hồng nhạt viền bạc, tay cầm quạt lụa. |
+| `quan2_me` đến `quan5_me` | 20 / 28 / 42 / 62 | Cùng người, trang phục như `me2`, `me3`, `me4`, `me5`. |
+| `cung1` | 16 | Cung nga giặt áo họ Lương. Gầy, da xanh, tay đỏ nứt vì nước tro, mắt to lanh lợi. Tóc buộc khăn vải nâu, áo cánh vải nâu bạc màu, tay áo xắn, ôm chậu gỗ có áo. |
+| `cung2_me` đến `cung5_me` | 20 / 28 / 42 / 62 | Cùng người, trang phục như `me2` đến `me5`. |
+| `chua1` | 18 | Công chúa triều trước họ Lạc. Cao quý, buồn, mặt trái xoan nhợt nhạt. Tóc vấn cao cài trâm rồng nhỏ đã cũ, áo nhật bình trắng ngà thêu rồng nhỏ đã bạc màu, tay cầm chuỗi hạt. |
+| `chua2_me` đến `chua5_me` | 20 / 28 / 42 / 62 | Cùng người, trang phục như `me2` đến `me5`. |
 
 ---
 
