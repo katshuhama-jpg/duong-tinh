@@ -3,6 +3,8 @@
  * Khung bậc, lương, nơi ở mô phỏng Cửu giai nhà Nguyễn (Minh Mạng, 1836); tên riêng đều tự đặt.
  */
 import type { Ending, NumK } from './types';
+import { ENDINGS_VN } from './content/routesVN';
+import { ENDINGS_CN } from './content/routesCN';
 
 export const ERA = 'Khánh Vân';
 export const CAPITAL = 'Phượng Thành';
@@ -78,6 +80,7 @@ export const CAST_NAME: Record<string, string> = {
   su: 'Sư bà chùa Vân Tịch',
   meday: 'Mẹ',
   cungnu: 'Cung nữ',
+  ngoai: 'Sứ thần',
 };
 
 /** kết cục: sống thì có tên theo kiểu người, chết thì có điềm báo */
@@ -99,7 +102,8 @@ export const ENDINGS: Ending[] = [
   { id: 'd_binh_bien', name: 'Đêm binh biến', desc: 'Kẻ thua năm nào quay lại, mang theo trăm người và một mối thù đã chín.', dead: true },
   { id: 'd_gieng', name: 'Giếng sau viện', desc: 'Sáng ra người ta vớt được chiếc hài thêu. Không ai thấy gì, không ai nghe gì.', dead: true },
 ];
-export const endingOf = (id: string) => ENDINGS.find((e) => e.id === id);
+export const ALL_ENDINGS: Ending[] = [...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN];
+export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id);
 
 /** tên con */
 export const SON_NAMES = ['Khải', 'Hạo', 'Thuyên', 'Diễn', 'Tuấn', 'Lâm'];

@@ -76,6 +76,7 @@ export const BIG: Card[] = [
     choices: [
       { t: 'Xin được về quê trong số một trăm người ấy', fx: { end: 'e_cau_mua' }, note: 'Bạn bước qua cổng thành với một tay nải nhỏ. Ngoài kia trời đang chuyển mưa.' },
       { t: 'Xin lên chùa Vân Tịch tu hành, cầu phúc cho nước', fx: { end: 'e_di_tu' }, note: 'Sư bà xuống tóc cho bạn dưới gốc đại năm nào.' },
+      { t: 'Xin sang Ngự dược phòng học nghề thuốc', need: { num: { muu: [35, 100] } }, lockHint: 'Cần Mưu từ 35', fx: { flag: ['nu_y'], d: { muu: 6, duc: 4 }, years: 1 }, note: 'Bạn cởi áo phi tần, khoác áo xanh của nữ y. Mùi thuốc bắc thay mùi hương trầm.' },
       { t: 'Ở lại, chờ thêm một mùa nữa', fx: { d: { muu: 6, an: 12, duc: 3 }, years: 1 }, note: 'Bạn thêu một chiếc túi thơm, nhờ Phúc đặt vào thư phòng. Tháng sau, đèn đỏ treo trước cửa.', risk: { p: 0.45, fail: { flag: ['bi_quen'], chapter: 7, years: 20 }, failNote: 'Chiếc túi thơm nằm mãi trong hộc bàn của thái giám. Năm tháng cứ thế trôi.' } },
     ],
   },
@@ -274,7 +275,7 @@ export const BIG: Card[] = [
     omen: 'Ở dưới tay người từng là đối thủ, không có chỗ nào thật sự an toàn.',
     choices: [
       { t: 'Xin được ban gả cho tướng Lê Trực, xuất cung', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { end: 'e_lay_tuong' }, note: 'Kiệu hoa ra cổng thành giữa mùa gió. Người tướng già đứng chờ ở bến đò.' },
-      { t: 'Lên chùa Vân Tịch, cầu siêu cho tiên đế', fx: { end: 'e_di_tu' }, note: 'Bạn cởi áo thêu, gấp lại thật phẳng.' },
+      { t: 'Lên chùa Vân Tịch, cầu siêu cho tiên đế', fx: { flag: ['o_chua'], d: { duc: 8, an: -30 }, years: 3 }, note: 'Bạn cởi áo thêu, gấp lại thật phẳng. Ba năm tụng kinh, tóc ngắn rồi lại dài.' },
       { t: 'Ở lại hậu cung, cúi đầu mà sống', fx: { d: { duc: 6, an: -20 }, flag: ['duoi_thucphi'], years: 2, chapter: 7 }, note: 'Viện bạn bị dời ra góc thành, gần viện Lạc Mai.', risk: { p: 0.3, fail: { end: 'd_gieng' }, failNote: 'Thục phi chưa từng quên.' } },
       { t: 'Bên Thục phi chưa vững: liều kết phe với Hoàng hậu cũ', need: { flags: ['ban_hau'] }, lockHint: 'Cần từng bắt tay Hoàng hậu', fx: { d: { muu: 10, thucphi: -20 }, flag: ['nhiep', 'chia_quyen'], years: 1, chapter: 6 }, note: 'Hai người đàn bà không con ngồi sau rèm, nói thay vua nhỏ mỗi khi vua quên lời.', risk: { p: 0.5, fail: { end: 'd_phe' }, failNote: 'Mưu lộ trước một đêm.' } },
     ],

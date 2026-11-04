@@ -19,7 +19,7 @@ export type RelK =
   | 'tuong'; // phe võ tướng
 export type NumK = StatK | RelK | 'tien';
 
-export type PlaceK = 'vien' | 'phong' | 'vuon' | 'dien' | 'chua' | 'lang' | 'lang_mo';
+export type PlaceK = 'vien' | 'phong' | 'vuon' | 'dien' | 'chua' | 'lang' | 'lang_mo' | 'bien' | 'nui';
 export type TimeK = 'ngay' | 'chieu' | 'dem';
 /** ai đứng trong cảnh */
 export type CastK =
@@ -36,7 +36,8 @@ export type CastK =
   | 'con' // con của mình
   | 'su' // nhà sư, ni cô
   | 'meday' // mẹ đẻ ở quê
-  | 'cungnu'; // một cung nữ khác
+  | 'cungnu' // một cung nữ khác
+  | 'ngoai'; // người nước ngoài: sứ thần, vua nước láng giềng
 
 /** điều kiện để thẻ hoặc lựa chọn xuất hiện */
 export interface Cond {
@@ -101,6 +102,8 @@ export interface Card {
   cast: CastK[];
   /** người đang nói (hiện trên khung thoại) */
   who?: CastK;
+  /** tên hiện trên khung thoại thay cho tên mặc định của vai (vd: "Sứ thần nước Sa Hải") */
+  whoName?: string;
   title: string;
   /** tối đa 2 câu ngắn */
   text: string[];
@@ -109,6 +112,9 @@ export interface Card {
   omen?: string;
   /** được lặp lại trong một đời (mặc định không) */
   repeat?: boolean;
+  /** ngã rẽ lớn của tuyến phụ: xếp ngay sau (hoặc trước) ngã rẽ có id này trong cùng chặng */
+  after?: string;
+  before?: string;
 }
 
 export interface Kid {

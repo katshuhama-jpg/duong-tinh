@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Scene, { lookOf, type Look } from '@/components/cung/Scene';
 import { cardOf, choicesOf, choose, newLife, rankOf, rewind, sons, type Result } from '@/lib/cung/engine';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
-import type { CastK, Life, NumK } from '@/lib/cung/types';
+import type { CastK, Life, NumK, PlaceK } from '@/lib/cung/types';
 import { CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
@@ -111,7 +111,7 @@ export default function Play() {
       <main className="c-app">
         <div className="c-band" aria-hidden="true" />
         <div className="c-page">
-          <Scene place={e.dead ? 'lang_mo' : e.id === 'e_di_tu' ? 'chua' : e.id === 'e_cau_mua' || e.id === 'e_lay_tuong' ? 'lang' : 'vuon'} time="chieu" cast={e.dead ? [] : ['me']} looks={looksOf(life)} label={`Kết cục: ${e.name}`} />
+          <Scene place={endPlace(e.id, !!e.dead)} time="chieu" cast={e.dead ? [] : ['me']} looks={looksOf(life)} label={`Kết cục: ${e.name}`} />
           <div className="c-end c-ink">
             <p className="c-sub">{e.dead ? 'Một cách chết' : 'Kết cục'}</p>
             <h2 className={e.dead ? 'dead' : ''}>{e.name}</h2>
@@ -204,7 +204,7 @@ export default function Play() {
                 <div className="c-roll" />
                 <div className="c-sheet">
                   <div className="c-tag">
-                    <span>{card.who && card.who !== 'me' ? CAST_NAME[card.who] : card.title}</span>
+                    <span>{card.who && card.who !== 'me' ? (card.whoName ?? CAST_NAME[card.who]) : card.title}</span>
                     {card.who && card.who !== 'me' && <small>{card.title}</small>}
                   </div>
                   {card.text.map((t, i) => (
@@ -317,6 +317,16 @@ export default function Play() {
       )}
     </main>
   );
+}
+
+/** cảnh cho màn kết cục */
+function endPlace(id: string, dead: boolean): PlaceK {
+  if (dead) return 'lang_mo';
+  if (/di_tu|thuyen_ve|ao_nau/.test(id)) return 'chua';
+  if (/vuot_bien|hau_nuoc|hoa_than/.test(id)) return 'bien';
+  if (/cau_mua|lay_tuong|thu_dan/.test(id)) return 'lang';
+  if (/nhiep|mau_nghi|nu_de|chi_vua|giam_quoc|trao_ngoi|nu_su/.test(id)) return 'dien';
+  return 'vuon';
 }
 
 function FragmentRow({ label, v }: { label: string; v: number }) {

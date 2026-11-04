@@ -4,10 +4,10 @@
  */
 import type { Card, Choice, Cond, Fx, Life, NumK } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, RANKS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, type Rank } from './world';
-import { BIG, CRISIS } from './content/big';
-import { SMALL } from './content/index';
+import { CRISIS } from './content/big';
+import { ALL_BIG, SMALL, bigsOf } from './content/index';
 
-const ALL: Card[] = [...BIG, ...CRISIS, ...SMALL];
+const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL];
 export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
 
 /* ---------- ngẫu nhiên có hạt giống: cùng một đời, cùng một bước thì ra cùng một kết quả ---------- */
@@ -91,7 +91,7 @@ export function nextCard(l: Life): string | null {
       return pool[pool.length - 1].id;
     }
   }
-  const bigs = BIG.filter((c) => c.chapter.includes(ch));
+  const bigs = bigsOf(ch);
   for (let i = l.bigAt; i < bigs.length; i++) {
     if (ok(bigs[i].when, l) && !l.seen.includes(bigs[i].id)) {
       l.bigAt = i;
@@ -128,6 +128,9 @@ function promote(l: Life, d: number) {
 /* ---------- kết cục ---------- */
 export function autoEnding(l: Life) {
   const f = (x: string) => l.flags.includes(x);
+  // tuyến phụ tự đặt kết cục cuối đời bằng cờ kc_<id> (cờ đặt sau cùng thắng)
+  const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
+  if (kc && endingOf(kc.slice(3))) return kc.slice(3);
   if (f('bi_quen')) return 'e_lang_le';
   if (f('nhiep') && f('diet_dich')) return 'e_nhiep_mau';
   if (f('nhiep')) return 'e_mau_nghi';

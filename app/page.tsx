@@ -7,7 +7,7 @@ import { signOut } from '@/lib/auth';
 import { rankOf } from '@/lib/cung/engine';
 import { loadMe, type CMeta } from '@/lib/cung/save';
 import type { Life } from '@/lib/cung/types';
-import { ENDINGS } from '@/lib/cung/world';
+import { ALL_ENDINGS as ENDINGS } from '@/lib/cung/world';
 import { useAuth } from '@/lib/useAuth';
 
 export default function Home() {

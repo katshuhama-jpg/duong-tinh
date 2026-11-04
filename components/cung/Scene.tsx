@@ -52,6 +52,8 @@ export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: bool
       return { robe: '#7a5a3a', collar: '#5a3a22', hat: 'troc', grey: true, scale: 0.92 };
     case 'meday':
       return { robe: '#6e5a3e', collar: '#3a2a20', hat: 'khanmo', grey: true, scale: 0.92 };
+    case 'ngoai':
+      return { robe: '#3a5a4a', collar: '#c49a3a', hat: 'mutuong', beard: true };
     case 'con':
       return { robe: o.king ? '#d9a441' : '#c84a35', collar: GOLD2, hat: 'tre', scale: 0.62 };
   }
@@ -336,6 +338,36 @@ function Backdrop({ place, time }: { place: PlaceK; time: TimeK }) {
         <rect x="0" y="250" width="390" height="62" fill="#c4b088" />
         <rect x="0" y="250" width="390" height="62" fill="url(#c-stone)" opacity="0.5" />
         <path className="c-steam" d="M196 250 Q192 240 197 232 Q201 226 197 218" fill="none" stroke="#e8dcc0" strokeWidth="1" />
+      </g>
+    );
+  if (place === 'bien')
+    return (
+      <g>
+        <Sky time={time} />
+        <path d="M0 120 L60 104 L120 116 L200 100 L280 114 L390 104 L390 140 L0 140 Z" fill="#b39b6c" opacity="0.7" />
+        <rect x="0" y="140" width="390" height="172" fill={night ? '#2a4a5a' : '#5f8fa0'} />
+        <g className="c-ripple" fill="none" stroke={night ? '#4a6a7a' : '#a8cbd4'} strokeWidth="1.2">
+          {[160, 184, 210, 240, 272].map((y, i) => <path key={y} d={`M${i * 13} ${y} Q${40 + i * 13} ${y - 6} ${80 + i * 13} ${y} T${160 + i * 13} ${y} T${240 + i * 13} ${y} T${320 + i * 13} ${y} T${400 + i * 13} ${y}`} />)}
+        </g>
+        <g className="c-bob" style={{ transformOrigin: '50% 100%' }}>
+          <path d="M60 210 Q160 236 300 210 L284 230 Q170 246 76 230 Z" fill="#5a3a22" stroke={INK} strokeWidth="1" />
+          <path d="M176 210 V120" stroke="#4a3022" strokeWidth="3" />
+          <path d="M178 124 Q240 150 236 200 L178 204 Z" fill="#c8a46a" stroke={INK} strokeWidth="0.8" />
+          <path d="M184 140 H228 M184 160 H234 M184 180 H236" stroke="#9a7a48" strokeWidth="0.8" />
+          <path d="M70 212 Q60 196 72 190" fill="none" stroke={GOLD} strokeWidth="2" />
+        </g>
+      </g>
+    );
+  if (place === 'nui')
+    return (
+      <g>
+        <Sky time={time} />
+        <path d="M0 200 L70 90 L120 150 L180 70 L250 160 L310 100 L390 190 L390 312 L0 312 Z" fill="#6f8a64" stroke={INK} strokeWidth="0.8" />
+        <path d="M70 90 L84 112 L58 112 Z M180 70 L198 98 L164 98 Z M310 100 L324 122 L298 122 Z" fill="#e8dcc0" />
+        <path d="M0 240 L90 170 L170 220 L260 160 L390 230 L390 312 L0 312 Z" fill="#4e6a4a" stroke={INK} strokeWidth="0.8" />
+        <g className="c-drift" fill="#f3e8d0" opacity="0.7"><ellipse cx="120" cy="190" rx="60" ry="8" /><ellipse cx="290" cy="176" rx="50" ry="7" /></g>
+        {[30, 70, 340, 370].map((x) => <g key={x}><path d={`M${x} 300 L${x} 250`} stroke="#3a2414" strokeWidth="3" /><path d={`M${x - 16} 270 L${x} 230 L${x + 16} 270 Z`} fill="#2f5a3a" stroke={INK} strokeWidth="0.6" /></g>)}
+        <rect x="0" y="286" width="390" height="26" fill="#7a6a4a" />
       </g>
     );
   if (place === 'vuon')
