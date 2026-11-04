@@ -12,6 +12,8 @@ import type { Card, Ending, RivalSt } from '../types';
 const OUT = ['nu_y', 'h_hoa_than', 'bi_quen', 'o_chua'];
 const NO = ['cung_nga', ...OUT];
 const LIVE: RivalSt[] = ['manh', 'yeu'];
+/** thẻ có Hạnh hầu cận thì không gặp khi Hạnh đã phản hoặc bị đuổi */
+const NOH = [...NO, 'hanh_phan'];
 
 export const RIVALS_C: Card[] = [
   /* ===================================================================
@@ -22,7 +24,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ninh_thu',
     chapter: [1, 2, 3],
     weight: 3,
-    when: { not: NO, riv: { ninh: { st: LIVE, ev: [0, 70] } } },
+    when: { not: NOH, riv: { ninh: { st: LIVE, ev: [0, 70] } } },
     place: 'phong',
     time: 'dem',
     cast: ['me', 'hanh'],
@@ -50,7 +52,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ninh_banh',
     chapter: [1, 2, 3, 4],
     weight: 3,
-    when: { not: NO, riv: { ninh: { st: LIVE, ev: [0, 70] } } },
+    when: { not: NO, riv: { ninh: { st: LIVE, ev: [0, 70] }, thucphi: { st: LIVE } } },
     place: 'phong',
     time: 'chieu',
     cast: ['me', 'ninh', 'cungnu'],
@@ -75,7 +77,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ninh_dem',
     chapter: [1, 2, 3, 4],
     weight: 3,
-    when: { not: NO, riv: { ninh: { st: LIVE, ev: [0, 70] } } },
+    when: { not: NO, riv: { ninh: { st: LIVE, ev: [0, 70] }, thucphi: { st: LIVE } } },
     place: 'vien',
     bg: 'hanh',
     where: 'ở hành lang phía Tây',
@@ -109,7 +111,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ninh_ra',
     chapter: [1, 2, 3, 4],
     weight: 4,
-    when: { not: NO, riv: { ninh: { st: LIVE, ev: [40, 100] } } },
+    when: { not: NO, riv: { ninh: { st: LIVE, ev: [40, 100] }, thucphi: { st: LIVE } } },
     place: 'phong',
     where: 'trong phòng Ninh mỹ nhân',
     time: 'dem',
@@ -127,7 +129,7 @@ export const RIVALS_C: Card[] = [
         need: { num: { muu: [35, 100] } },
         lockHint: 'Cần Mưu từ 35',
         fx: { d: { muu: 2 }, next: 'rc_ninh_ra_ep' },
-        note: 'Ninh ngừng cười. Ngoài sân, Thu Cúc đã bị Hạnh giữ lại.',
+        note: 'Ninh ngừng cười. Ngoài sân, Thu Cúc đã bị người của bạn giữ lại.',
       },
     ],
   },
@@ -206,12 +208,12 @@ export const RIVALS_C: Card[] = [
     chapter: [1, 2, 3, 4],
     place: 'phong',
     time: 'dem',
-    cast: ['me', 'phuc', 'hanh'],
+    cast: ['me', 'phuc'],
     mood: 'dac',
-    moods: { phuc: 'lo', hanh: 'so' },
-    who: 'hanh',
+    moods: { phuc: 'lo' },
+    who: 'phuc',
     title: 'Hình nhân gỗ đào',
-    text: ['Phúc lật hình nhân cho bạn xem: sau lưng dán bát tự Thái hậu, kim châm kín ngực.', 'Hạnh níu tay áo bạn: "Tội vu cổ là tru di, nương nương nghĩ kỹ chưa?"'],
+    text: ['Phúc lật hình nhân cho bạn xem: sau lưng dán bát tự Thái hậu, kim châm kín ngực.', 'Phúc hạ giọng: "Tội vu cổ là tru di, nương nương nghĩ kỹ chưa?"'],
     choices: [
       { t: 'Sai Phúc nhét vào gối Ninh ngay đêm nay', fx: { d: { duc: -5 }, next: 'rc_ninh_ra_luc' }, note: 'Phúc đi rồi về, áo ướt sương. Sáng ra, bạn cho người báo lên cung Thái hậu có kẻ dùng tà thuật.' },
       { t: 'Đổi ý, chỉ giấu một gói xạ hương vào rương nàng', fx: { d: { duc: -2 }, next: 'rc_ninh_ra_luc' }, note: 'Xạ hương làm hư thai, tội nhẹ hơn vu cổ nhiều. Sáng ra ma ma Trịnh dẫn người đi lục các viện.' },
@@ -295,7 +297,7 @@ export const RIVALS_C: Card[] = [
         note: 'Thục phi nhìn hai người, cười nhạt rồi quay đi. Ninh từ nay đứng sau lưng bạn, không còn đường về phía kia.',
       },
       {
-        t: 'Bắt nàng uống bát thuốc tuyệt tự trước khi đi',
+        t: 'Bắt nàng uống bát thuốc tuyệt tự đã sắc sẵn rồi mới cho đi',
         fx: { d: { duc: -15, muu: 3 }, flag: ['rc_ninh_phuc', 'rc_ninh_tuyet'], riv: { ninh: { st: 'phuc' } } },
         note: 'Ninh uống cạn, không nói gì. Không con thì không tranh, nhưng cũng không còn gì để mất.',
       },
@@ -307,7 +309,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ninh_lai',
     chapter: [2, 3, 4],
     weight: 4,
-    when: { not: NO, flags: ['rc_ninh_phuc'], riv: { ninh: { st: ['phuc'] } } },
+    when: { not: NOH, flags: ['rc_ninh_phuc'], riv: { ninh: { st: ['phuc'] }, hoanghau: { st: LIVE } } },
     place: 'phong',
     time: 'dem',
     cast: ['me', 'ninh', 'hanh'],
@@ -354,7 +356,7 @@ export const RIVALS_C: Card[] = [
     text: ['Giữa bữa ngự thiện, Ninh rót rượu cho vua rồi khẽ cười: "Hồi mới vào, đêm nào chị ấy cũng nói mơ gọi tên một người ở {que}."', 'Vua đặt đũa xuống, nhìn bạn.'],
     choices: [
       {
-        t: 'Cười, kể đó là tên con trâu nhà mình',
+        t: 'Cười, kể đó là tên con chó nhỏ nuôi ở nhà',
         fx: { d: { an: -3, sac: 1 }, riv: { ninh: { th: -10 } } },
         note: 'Vua bật cười, cả bàn cười theo. Chỉ Ninh cúi xuống gắp thức ăn.',
         risk: { p: 0.3, fail: { d: { an: -15, vua: -10 }, riv: { ninh: { th: 10 } } }, failNote: 'Vua không cười. Đêm ấy đèn đỏ treo ở viện Ninh.' },
@@ -373,7 +375,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ninh_ph2',
     chapter: [1, 2, 3, 4],
     weight: 4,
-    when: { not: NO, riv: { ninh: { st: LIVE, th: [85, 100] } } },
+    when: { not: NOH, riv: { ninh: { st: LIVE, th: [85, 100] } } },
     place: 'phong',
     time: 'dem',
     cast: ['me', 'ninh', 'hanh'],
@@ -381,7 +383,7 @@ export const RIVALS_C: Card[] = [
     moods: { ninh: 'buon', hanh: 'so' },
     who: 'ninh',
     title: 'Đĩa bánh làm lành',
-    text: ['Đêm giỗ cha, Ninh mang sang một đĩa bánh gai còn ấm, đặt vào tay bạn như ngày xưa.', '"Chị ăn đi. Ăn rồi mình làm lành."'],
+    text: ['Đêm giỗ cha nàng, Ninh mang sang một đĩa bánh gai còn ấm, đặt vào tay bạn như ngày xưa.', '"Chị ăn đi. Ăn rồi mình làm lành."'],
     omen: 'Người biết bạn thích bánh gì nhất, cũng là người biết bạn ăn không bao giờ nghĩ ngợi.',
     choices: [
       {
@@ -410,7 +412,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_hp_cu',
     chapter: [2, 3, 4, 5],
     weight: 3,
-    when: { not: NO, riv: { hienphi: { st: LIVE, ev: [0, 75] } } },
+    when: { not: NOH, riv: { hienphi: { st: LIVE, ev: [0, 75] } } },
     place: 'vien',
     where: 'ngoài viện Hoán Y',
     time: 'chieu',
@@ -420,12 +422,12 @@ export const RIVALS_C: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ Liễu',
     title: 'Người cũ viện Mạc',
-    text: ['Ở viện Hoán Y có một cung nữ hai tay đầy vết bỏng, từng hầu Hiền phi ba năm.', '"Nương nương ấy chưa đánh ai bao giờ. Ai ngã, đều là người khác đẩy."'],
+    text: ['Đi ngang viện Hoán Y, bạn gặp một cung nữ hai tay đầy vết bỏng, từng hầu Hiền phi ba năm.', '"Nương nương ấy chưa đánh ai bao giờ. Ai ngã, đều là người khác đẩy."'],
     choices: [
       {
         t: 'Cho nàng ta bạc, hỏi xem những ai đã ngã',
         fx: { d: { tien: -40 }, riv: { hienphi: { ev: 15 } } },
-        note: 'Lương tài nhân sảy thai, Trần mỹ nhân trượt chân xuống hồ. Lần nào Hiền phi cũng là người đầu tiên khóc thương.',
+        note: 'Văn tài nhân sảy thai, Trần mỹ nhân trượt chân xuống hồ. Lần nào Hiền phi cũng là người đầu tiên khóc thương.',
       },
       {
         t: 'Xin nàng ta về viện mình làm việc vặt',
@@ -446,8 +448,8 @@ export const RIVALS_C: Card[] = [
     mood: 'lo',
     moods: { phuc: 'lo' },
     who: 'phuc',
-    title: 'Ống thư biên ải',
-    text: ['Phúc giữ được một ống thư Hiền phi gửi ra biên ải, giấu trong túi quân báo.', '"Dấu xi còn nguyên, bóc ra là khó gắn lại, nương nương."'],
+    title: 'Ống thư gửi doanh trại',
+    text: ['Người quen của Phúc ở trạm dịch giữ lại được một ống thư Hiền phi gửi ra doanh họ Mạc, giấu trong túi quân báo.', '"Dấu xi còn nguyên, bóc ra là khó gắn lại, nương nương."'],
     choices: [
       {
         t: 'Hơ xi trên hơi nước, đọc rồi gắn lại',
@@ -473,7 +475,7 @@ export const RIVALS_C: Card[] = [
     moods: { su: 'lo' },
     who: 'su',
     title: 'Bảy ngọn đèn không tên',
-    text: ['Sư cô chùa Vân Tịch kể Hiền phi rằm nào cũng tới, thắp một hàng đèn không ghi tên.', '"Đèn cho người đã khuất, thưa nương nương. Đếm được bảy ngọn."'],
+    text: ['Theo Thái hậu đi lễ rằm, bạn nghe sư bà chùa Vân Tịch kể Hiền phi rằm nào cũng tới, thắp một hàng đèn không ghi tên.', '"Đèn cho người đã khuất, thưa nương nương. Đếm được bảy ngọn."'],
     choices: [
       {
         t: 'Cúng dường, xin xem sổ công đức',
@@ -483,7 +485,7 @@ export const RIVALS_C: Card[] = [
       {
         t: 'Tự thắp thêm ngọn thứ tám cho những người ấy',
         fx: { d: { duc: 4 }, riv: { hienphi: { ev: 6, th: 5 } } },
-        note: 'Rằm sau Hiền phi thấy ngọn đèn lạ, đứng nhìn rất lâu. Sư cô bảo nàng có hỏi ai thắp.',
+        note: 'Rằm sau Hiền phi thấy ngọn đèn lạ, đứng nhìn rất lâu. Sư bà bảo nàng có hỏi ai thắp.',
       },
     ],
   },
@@ -499,8 +501,9 @@ export const RIVALS_C: Card[] = [
     cast: ['me', 'hienphi', 'thaihau'],
     mood: 'lo',
     moods: { hienphi: 'binh', thaihau: 'buon' },
+    bg: 'tam',
     title: 'Bên giường bệnh',
-    text: ['Thái hậu trở bệnh, Hiền phi ngày đêm hầu thuốc, cả cung khen hiếu.', 'Bạn đứng dưới thềm, trong tay áo là ống thư biên ải và lời của những người đã ngã.'],
+    text: ['Thái hậu trở bệnh, Hiền phi ngày đêm hầu thuốc, cả cung khen hiếu.', 'Bạn đứng dưới thềm, trong tay áo là ống thư gửi doanh họ Mạc và lời của những người đã ngã.'],
     choices: [
       { t: 'Chờ Thái hậu tỉnh, dâng chứng cứ thật', fx: { next: 'rc_hp_ra_to' }, note: 'Thái hậu tỉnh lúc chiều. Bà đọc xong, cho gọi Hiền phi vào, giọng rất nhẹ.' },
       {
@@ -510,7 +513,7 @@ export const RIVALS_C: Card[] = [
         fx: { d: { duc: -4 }, next: 'rc_hp_ra_muon' },
         note: 'Phúc để rơi ống thư ở lối đi viện Thục phi. Đến tối, ống thư đã không còn.',
       },
-      { t: 'Bỏ một vị khắc vào bát thuốc nàng vẫn nếm trước', fx: { d: { duc: -10 }, next: 'rc_hp_ra_doc' }, note: 'Lúc chập tối, bạn xuống ngự dược phòng. Bát thuốc của Hiền phi sôi lăn tăn trên bếp than.' },
+      { t: 'Bỏ một vị khắc vào bát thuốc nàng vẫn nếm trước', fx: { d: { duc: -10 }, next: 'rc_hp_ra_doc' }, note: 'Lúc chập tối, bạn xin xuống ngự dược phòng phụ sắc thuốc hầu Thái hậu. Bát thuốc của Hiền phi sôi lăn tăn trên bếp than.' },
     ],
   },
   // nhánh tố giác
@@ -529,7 +532,7 @@ export const RIVALS_C: Card[] = [
     choices: [
       { t: 'Thừa nhận có đưa bạc, nhưng chuyện kể là thật', fx: { d: { duc: 2 }, riv: { hienphi: { ev: -10, th: 5 } }, next: 'rc_hp_ra_tuong' }, note: 'Thái hậu im lặng rất lâu. Ngoài cửa báo vào: tướng quân họ Mạc xin vào thăm bệnh.' },
       {
-        t: 'Đặt ống thư biên ải lên án',
+        t: 'Đặt ống thư gửi doanh họ Mạc lên án',
         need: { num: { muu: [40, 100] } },
         lockHint: 'Cần Mưu từ 40',
         fx: { d: { muu: 2 }, next: 'rc_hp_ra_tuong' },
@@ -544,19 +547,19 @@ export const RIVALS_C: Card[] = [
     place: 'dien',
     where: 'ở cung Thái hậu',
     time: 'chieu',
-    cast: ['me', 'tuong', 'hienphi'],
+    cast: ['me', 'mac', 'hienphi'],
     mood: 'so',
-    moods: { tuong: 'gian', hienphi: 'buon' },
-    who: 'tuong',
+    moods: { mac: 'gian', hienphi: 'buon' },
+    who: 'mac',
     whoName: 'Tướng quân họ Mạc',
     title: 'Giáp chưa cởi',
-    text: ['Tướng quân họ Mạc giáp chưa cởi, quỳ ngay cạnh con gái, mắt không rời bạn.', '"Thần giữ ải hai mươi năm. Con thần có tội, xin Thái hậu xử cả cha lẫn con."'],
+    text: ['Tướng quân họ Mạc giáp chưa cởi, quỳ ngay cạnh con gái, mắt không rời bạn.', '"Thần cầm quân hai mươi năm. Con thần có tội, xin Thái hậu xử cả cha lẫn con."'],
     omen: 'Giáp tướng quân họ Mạc chưa cởi, mà bạn đã dồn cả nhà người ta vào đường cùng.',
     choices: [
       {
         t: 'Xin cho Hiền phi về chùa tĩnh tu, giữ thể diện họ Mạc',
         fx: { d: { duc: 3, tuong: -10 }, flag: ['rc_hp_giang'], riv: { hienphi: { st: 'giang' } } },
-        note: 'Hiền phi xuống tóc ở chùa Vân Tịch, tự tay thắp ngọn đèn thứ tám. Tướng Mạc trở ra ải, không ngoái đầu lần nào.',
+        note: 'Hiền phi xuống tóc ở chùa Vân Tịch, tự tay thắp ngọn đèn thứ tám. Tướng Mạc trở về doanh, không ngoái đầu lần nào.',
       },
       {
         t: 'Đem tội tiết lộ việc triều buộc cả họ Mạc',
@@ -565,7 +568,7 @@ export const RIVALS_C: Card[] = [
         risk: { p: 0.25, fail: { end: 'd_rc_giao_mac' }, failNote: 'Đêm ấy cổng Tây không đóng. Giáp sĩ họ Mạc đi qua sân viện bạn lặng như mèo.' },
       },
       {
-        t: 'Rút đơn, đổi lấy một lời thề của họ Mạc',
+        t: 'Rút lời tố, đổi lấy một lời thề của họ Mạc',
         fx: { d: { tuong: 20, the: 8, thaihau: -3 }, flag: ['rc_hp_phuc'], riv: { hienphi: { st: 'phuc' } } },
         note: 'Họ Mạc nợ bạn một mạng con gái. Hiền phi vẫn cười hiền, nhưng từ nay nụ cười ấy quay về phía bạn.',
       },
@@ -577,14 +580,14 @@ export const RIVALS_C: Card[] = [
     step: true,
     chapter: [2, 3, 4, 5],
     place: 'dien',
-    where: 'ở cung Hoàng hậu',
+    where: 'ngoài hiên cung Thái hậu',
     time: 'ngay',
     cast: ['me', 'thucphi', 'hienphi'],
     mood: 'so',
     moods: { thucphi: 'gian', hienphi: 'binh' },
     who: 'hienphi',
     title: 'Hai con hổ',
-    text: ['Thục phi ném ống thư xuống trước mặt Hiền phi, giọng sang sảng giữa cung Hoàng hậu.', 'Hiền phi không nhìn thư, chỉ quay sang bạn: "Thư này đi qua tay Phúc của chị, đúng không?"'],
+    text: ['Thục phi ném ống thư xuống trước mặt Hiền phi, giọng sang sảng ngay ngoài hiên cung Thái hậu.', 'Hiền phi không nhìn thư, chỉ quay sang bạn: "Thư này đi qua tay Phúc của chị, đúng không?"'],
     choices: [
       { t: 'Đứng về phía Thục phi, khai thêm chuyện bảy ngọn đèn', fx: { d: { thucphi: 5 }, riv: { hienphi: { ev: 10 } }, next: 'rc_hp_ra_canh' }, note: 'Thục phi được thế, đòi tra tới cùng. Hiền phi nhìn bạn, lần đầu tiên không cười.' },
       { t: 'Lắc đầu không biết, lùi ra sau', fx: { d: { muu: 2 }, next: 'rc_hp_ra_canh' }, note: 'Bạn lùi ra sau. Thục phi và Hiền phi giờ chỉ còn nhìn nhau.' },
@@ -606,7 +609,7 @@ export const RIVALS_C: Card[] = [
       {
         t: 'Không đáp, đóng cổng',
         fx: { d: { duc: -6 }, flag: ['rc_hp_giang'], riv: { hienphi: { st: 'giang' }, thucphi: { th: -15 } } },
-        note: 'Hoàng hậu giáng Hiền phi, đưa về chùa tĩnh tu. Thục phi cũng bị cấm túc vì làm lớn chuyện, tóc bạc đi một mảng.',
+        note: 'Thái hậu giáng Hiền phi, đưa về chùa tĩnh tu. Thục phi cũng bị cấm túc vì làm lớn chuyện, tóc bạc đi một mảng.',
       },
       {
         t: 'Nhận lời: nàng rút khỏi cuộc tranh, bạn rút khỏi chuyện này',
@@ -637,7 +640,7 @@ export const RIVALS_C: Card[] = [
     text: ['Hiền phi bưng bát thuốc lên, kề môi nếm rồi dừng lại, đưa sang tay bạn.', '"Chị bưng lên hầu Thái hậu đi. Người vừa hỏi sao lâu không thấy chị."'],
     omen: 'Người luôn nếm thuốc trước, là người biết rõ nhất thuốc nào không được nếm.',
     choices: [
-      { t: 'Giả vờ trượt chân, đánh đổ bát thuốc', fx: { d: { an: -2 }, next: 'rc_hp_ra_vo' }, note: 'Bát thuốc vỡ tan dưới chân giường Thái hậu. Con mèo của bà liếm một chút, rồi nằm im.' },
+      { t: 'Bưng lên, tới chân giường Thái hậu thì giả vờ trượt chân', fx: { d: { an: -2 }, next: 'rc_hp_ra_vo' }, note: 'Bát thuốc vỡ tan dưới chân giường Thái hậu. Con mèo của bà liếm một chút, rồi nằm im.' },
       {
         t: 'Tự uống một ngụm, rồi trả bát cho nàng',
         fx: { next: 'rc_hp_ra_nem' },
@@ -655,6 +658,7 @@ export const RIVALS_C: Card[] = [
     cast: ['me', 'thaihau', 'hienphi'],
     mood: 'so',
     moods: { thaihau: 'gian', hienphi: 'buon' },
+    bg: 'tam',
     who: 'hienphi',
     title: 'Con mèo nằm im',
     text: ['Con mèo của Thái hậu nằm im bên vũng thuốc, cả điện lặng ngắt.', 'Hiền phi quỳ xuống trước: "Bát thuốc qua tay chị cuối cùng, thần thiếp không dám nói gì."'],
@@ -677,6 +681,7 @@ export const RIVALS_C: Card[] = [
     cast: ['me', 'hienphi', 'thaihau'],
     mood: 'dac',
     moods: { hienphi: 'so', thaihau: 'buon' },
+    bg: 'tam',
     who: 'thaihau',
     title: 'Đưa qua đưa lại',
     text: ['Hiền phi cầm lại bát thuốc, nhìn bạn rất lâu.', 'Thái hậu trên giường hỏi vọng xuống: "Sao hai đứa cứ đưa qua đưa lại thế?"'],
@@ -696,7 +701,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_hp_ph1',
     chapter: [2, 3, 4, 5],
     weight: 4,
-    when: { not: NO, riv: { hienphi: { st: LIVE, th: [60, 100] } } },
+    when: { not: NOH, riv: { hienphi: { st: LIVE, th: [60, 100] } } },
     place: 'vien',
     time: 'ngay',
     cast: ['me', 'mama', 'hienphi'],
@@ -704,7 +709,7 @@ export const RIVALS_C: Card[] = [
     moods: { mama: 'gian', hienphi: 'lo' },
     who: 'mama',
     title: 'Dưới gốc lựu',
-    text: ['Ma ma Trịnh dẫn người lục viện bạn, đào dưới gốc lựu lên một hình nhân có bát tự Thái hậu.', 'Ngoài cổng, Hiền phi lần tràng hạt, mặt đầy lo lắng cho bạn.'],
+    text: ['Ma ma Trịnh vâng lệnh Thái hậu dẫn người lục viện bạn, đào dưới gốc lựu lên một hình nhân có bát tự Thái hậu.', 'Ngoài cổng, Hiền phi lần tràng hạt, mặt đầy lo lắng cho bạn.'],
     choices: [
       {
         t: 'Xin tra xem ai đã đào đất dưới gốc lựu',
@@ -725,12 +730,12 @@ export const RIVALS_C: Card[] = [
     id: 'rc_hp_ph2',
     chapter: [3, 4, 5],
     weight: 4,
-    when: { not: NO, riv: { hienphi: { st: LIVE, th: [85, 100] } } },
+    when: { not: NOH, riv: { hienphi: { st: LIVE, th: [85, 100] } } },
     place: 'vien',
     time: 'dem',
-    cast: ['me', 'hanh', 'tuong'],
+    cast: ['me', 'hanh', 'mac'],
     mood: 'so',
-    moods: { hanh: 'so', tuong: 'gian' },
+    moods: { hanh: 'so', mac: 'gian' },
     who: 'hanh',
     title: 'Cổng Tây không đóng',
     text: ['Đêm ấy cổng Tây không đóng, giáp sĩ họ Mạc đi lặng như mèo qua sân viện bạn.', 'Hạnh kéo tay bạn: "Họ nói vâng lệnh Hiền phi, bắt kẻ hạ độc Thái hậu."'],
@@ -739,7 +744,7 @@ export const RIVALS_C: Card[] = [
       {
         t: 'Theo Hạnh trốn qua lối giếng sau viện',
         fx: { d: { an: -10 }, riv: { hienphi: { th: -30, ev: 30 } } },
-        note: 'Bạn lội qua mương, trốn trong chùa Vân Tịch tới sáng. Tướng Mạc không bắt được ai, bị tước ấn vì tự ý mang quân vào cung.',
+        note: 'Bạn lội qua mương, trốn trong chùa nhỏ trong cung tới sáng. Tướng Mạc không bắt được ai, bị tước ấn vì tự ý mang quân vào cung.',
         risk: { p: 0.4, fail: { end: 'd_rc_giao_mac' }, failNote: 'Lối giếng đã có người chờ. Hiền phi biết bạn sẽ chạy đường nào, vì chính nàng dọn đường ấy.' },
       },
       {
@@ -766,7 +771,7 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ut_bua',
     chapter: [2, 3, 4],
     weight: 3,
-    when: { not: NO, riv: { uyentan: { st: LIVE, ev: [0, 70] } } },
+    when: { not: NOH, riv: { uyentan: { st: LIVE, ev: [0, 70] } } },
     place: 'vien',
     bg: 'cong',
     where: 'sau cửa Tây',
@@ -776,10 +781,10 @@ export const RIVALS_C: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Bà đồng đội nón',
-    text: ['Hạnh kéo bạn nấp sau cửa Tây: cung nữ của Uyển tần đang dúi bạc cho một bà đồng đội nón.', '"Bùa yêu đấy, nương nương. Ngoài giáo phường người ta dùng nhiều lắm."'],
+    text: ['Đi lễ về qua cửa Tây, Hạnh kéo bạn nấp sau cánh cổng: cung nữ của Uyển tần đang dúi bạc cho một bà đồng đội nón.', '"Bùa yêu đấy, nương nương. Ngoài giáo phường người ta dùng nhiều lắm."'],
     choices: [
       {
-        t: 'Sai Hạnh đi theo bà đồng về tận nhà',
+        t: 'Cho Hạnh xin thẻ ra cửa, đi theo bà đồng về tận nhà',
         fx: { d: { tien: -10 }, riv: { uyentan: { ev: 25 } } },
         note: 'Bà đồng khai đã bán cho Uyển tần cả bùa yêu lẫn một gói mê hương. Lá bùa chép tay bằng chữ nàng.',
         risk: { p: 0.25, fail: { riv: { uyentan: { th: 15, ev: 10 } } }, failNote: 'Bà đồng lắm mối, ngay chiều ấy đã sang báo với Uyển tần có người bám theo.' },
@@ -832,7 +837,7 @@ export const RIVALS_C: Card[] = [
         note: 'Canh ba, Uyển tần tới, không cầm đèn. Hai người ngồi rất gần, khúc tiêu bỏ dở.',
         risk: { p: 0.3, fail: { riv: { uyentan: { th: 20 } } }, failNote: 'Uyển tần không tới. Chỉ có gã thổi tiêu nhìn thẳng về chỗ bạn nấp, sáng hôm sau gã đã rời cung.' },
       },
-      { t: 'Cho gã chút bạc, hỏi chuyện giáo phường', fx: { d: { tien: -30 }, riv: { uyentan: { ev: 20 } } }, note: 'Gã kể Uyển tần từng hứa theo gã về Nam. Gã còn giữ chiếc trâm nàng tặng, khắc một chữ Uyển.' },
+      { t: 'Sai Phúc cho gã chút bạc, hỏi chuyện giáo phường', fx: { d: { tien: -30 }, riv: { uyentan: { ev: 20 } } }, note: 'Gã kể Uyển tần từng hứa theo gã về Nam. Gã còn giữ chiếc trâm nàng tặng, khắc một chữ Uyển.' },
     ],
   },
 
@@ -847,8 +852,8 @@ export const RIVALS_C: Card[] = [
     cast: ['me', 'uyentan', 'vua'],
     mood: 'lo',
     moods: { uyentan: 'vui', vua: 'vui' },
-    title: 'Đêm trung thu',
-    text: ['Đêm trung thu, vua ngồi bên hồ xem Uyển tần múa, ai cũng nói nàng sắp được phong phi.', 'Trong tay áo bạn là lá bùa chữ nàng, túi mê hương, và tên gã thổi tiêu.'],
+    title: 'Đêm yến bên hồ',
+    text: ['Đêm yến bên hồ, vua ngồi xem Uyển tần múa, ai cũng nói nàng sắp được phong phi.', 'Trong tay áo bạn là lá bùa chữ nàng, túi mê hương, và tên gã thổi tiêu.'],
     choices: [
       { t: 'Mang bùa và mê hương sang cung Thái hậu', fx: { next: 'rc_ut_ra_to' }, note: 'Thái hậu ghét nhất tà thuật. Bà cho ma ma Trịnh đi lục viện Uyển tần ngay trong đêm.' },
       { t: 'Gài gã thổi tiêu vào viện nàng, rồi dẫn vua qua', fx: { d: { duc: -6 }, next: 'rc_ut_ra_bay' }, note: 'Phúc đưa gã thổi tiêu một lá thư giả nét chữ Uyển tần, hẹn canh ba.' },
@@ -918,11 +923,12 @@ export const RIVALS_C: Card[] = [
     id: 'rc_ut_ra_bay',
     step: true,
     chapter: [2, 3, 4],
-    place: 'vuon',
+    place: 'vien',
     time: 'dem',
     cast: ['me', 'vua', 'uyentan'],
     mood: 'so',
     moods: { vua: 'gian', uyentan: 'dac' },
+    where: 'trước cổng viện Uyển tần',
     who: 'uyentan',
     title: 'Bẫy quay đầu',
     text: ['Bạn vừa dẫn vua tới cổng viện Uyển tần thì nàng từ sau hòn non bộ bước ra, áo chỉnh tề.', '"Bệ hạ, thiếp vừa thấy một bóng đàn ông lẻn vào viện chị ấy."'],
@@ -986,11 +992,11 @@ export const RIVALS_C: Card[] = [
     omen: 'Thuốc mua của bà đồng, mà bà đồng thì bán cho cả hai bên.',
     choices: [
       {
-        t: 'Mời nàng đổi chén, cho đúng lễ chị em',
+        t: 'Đỡ chén, mời nàng uống trước cho đúng lễ chị em',
         need: { num: { muu: [40, 100] } },
         lockHint: 'Cần Mưu từ 40',
         fx: { next: 'rc_ut_ra_nga' },
-        note: 'Bạn đưa chén của mình, cầm lấy chén của nàng. Tay nàng run một chút, rồi nàng uống cạn và quay vào múa tiếp.',
+        note: 'Bạn nâng chén ngang mày, đưa trả lại nàng: em kính thì em uống trước. Trước mặt vua nàng không chối được, tay run một chút rồi uống cạn, quay vào múa tiếp.',
       },
       {
         t: 'Nhận chén, nhấp môi rồi khen rượu ngon',
@@ -1024,7 +1030,7 @@ export const RIVALS_C: Card[] = [
         note: 'Người dâng rượu bị lôi đi tra, chết trong ngục mà không khai được gì. Uyển tần mất trong đêm, vua nắm tay bạn cảm ơn đã tỉnh táo.',
       },
       {
-        t: 'Bảo Hạnh chạy về lấy thuốc giải',
+        t: 'Sai người chạy về lấy thuốc giải bà đồng bán kèm',
         fx: { d: { duc: 3 }, flag: ['rc_ut_phuc'], riv: { uyentan: { st: 'phuc' } } },
         note: 'Nàng tỉnh lại trong tay bạn, nhìn chén rượu và hiểu hết. "Chị muốn em sống làm gì?" "Làm người của chị."',
       },
@@ -1105,7 +1111,7 @@ export const RIVALS_C: Card[] = [
         need: { num: { muu: [40, 100] } },
         lockHint: 'Cần Mưu từ 40',
         fx: { d: { an: 5 }, flag: ['rc_ut_giang'], riv: { uyentan: { st: 'giang' } } },
-        note: 'Gã ấp úng, đoán bừa bên trái. Hạnh vạch tóc bạn lên: nốt ruồi nằm bên phải. Vua đuổi Uyển tần về giáo phường ngay trong đêm.',
+        note: 'Gã ấp úng, đoán bừa bên trái. Bạn tự vén tóc gáy lên: nốt ruồi nằm bên phải. Vua đuổi Uyển tần về giáo phường ngay trong đêm.',
       },
       {
         t: 'Thề trước bài vị tiên đế, xin chết để rửa tiếng',
