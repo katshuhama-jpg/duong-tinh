@@ -991,8 +991,37 @@ function Motif({ m, solo }: { m: MotifK; solo: boolean }) {
 
 const SLOTS = [180, 296, 76];
 
+/** ảnh vẽ tay của một nhân vật (thư mục /nv/<mã>/<nét mặt>.webp), chân chạm đáy tranh */
+export interface CastImg {
+  /** thư mục ảnh, vd /nv/me1 */
+  dir: string;
+  /** ảnh gốc quay mặt về phía nào */
+  face: 'r' | 'l';
+}
+function ImgPerson({ x, img, mood, want, big, name }: { x: number; img: CastImg; mood: MoodK; want: 'r' | 'l' | null; big: boolean; name?: string }) {
+  const h = big ? 286 : 250;
+  const w = h * 0.3;
+  const flip = want != null && want !== img.face;
+  const href = `${img.dir}/${mood}.webp`;
+  return (
+    <g transform={`translate(${x} 306)`}>
+      <g transform={flip ? 'scale(-1 1)' : undefined}>
+        <g className="c-breath">
+          <image key={href} className="c-imgin" href={href} x={-w / 2} y={-h} width={w} height={h} preserveAspectRatio="xMidYMax meet" />
+        </g>
+      </g>
+      {name && (
+        <g>
+          <rect x={-name.length * 3.4 - 6} y="-18" width={name.length * 6.8 + 12} height="16" rx="2" fill={SON} stroke={GOLD} strokeWidth="1" opacity="0.92" />
+          <text x="0" y="-6" textAnchor="middle" fontSize="11.5" fontFamily="'Be Vietnam Pro', sans-serif" fontWeight="600" fill="#f7eedb">{name}</text>
+        </g>
+      )}
+    </g>
+  );
+}
+
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain, wind }: { motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; wind?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
+export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain, wind, imgs = {} }: { imgs?: Partial<Record<CastK, CastImg>>; motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; wind?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -1013,6 +1042,13 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
         {motif && motif !== 'hoa' && motif !== 'den' && <Motif m={motif} solo={!cast.length} />}
         {order.slice(0, 3).map((k, i) => {
           const look = looks[k as CastK] ?? lookOf(k as CastK);
+          const im = imgs[k as CastK];
+          if (im)
+            return (
+              <g key={k} className="c-enter" style={{ animationDelay: `${0.15 + i * 0.12}s` }}>
+                <ImgPerson x={SLOTS[i]} img={im} mood={moods[k as CastK] ?? mood} want={i === 1 ? 'l' : i === 2 ? 'r' : order.length > 1 ? 'r' : null} big={i === 0} name={names[k as CastK]} />
+              </g>
+            );
           return (
             <g key={k} className="c-enter" style={{ animationDelay: `${0.15 + i * 0.12}s` }}>
               <Person x={SLOTS[i]} look={i === 0 ? look : { ...look, scale: (look.scale ?? 1) * 0.82 }} flip={i === 2} blink={k === 'me'} mood={moods[k as CastK] ?? mood} name={names[k as CastK]} />

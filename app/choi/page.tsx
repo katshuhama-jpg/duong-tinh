@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
-import Scene, { Person, lookOf, type BgK, type Look, type SeasonK } from '@/components/cung/Scene';
+import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { alliesOf, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
@@ -123,6 +123,22 @@ function looksOf(l: Life): Partial<Record<CastK, Look>> {
   };
 }
 
+/** ảnh vẽ tay đã có: nhân vật chính (đường dân nữ) theo 5 giai đoạn, Hạnh theo 3 tuổi */
+function meStage(l: Life): string {
+  const f = (x: string) => l.flags.includes(x);
+  if (l.age >= 55) return 'me5';
+  if (f('thai_hau') || f('thai_phi') || f('nhiep') || l.chapter >= 6) return 'me4';
+  if (f('hoang_hau') || l.rank >= 8) return 'me3';
+  if (l.rank >= 3 || l.age >= 20) return 'me2';
+  return 'me1';
+}
+function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
+  const m: Partial<Record<CastK, CastImg>> = {};
+  if ((l.origin ?? 'dan') === 'dan' && !l.flags.includes('cung_nga')) m.me = { dir: `/nv/${meStage(l)}`, face: 'r' };
+  m.hanh = { dir: `/nv/${l.age >= 55 ? 'hanh3' : l.age >= 35 ? 'hanh2' : 'hanh'}`, face: 'l' };
+  return m;
+}
+
 /** bảng tên nhỏ dưới mỗi người trong tranh */
 const SHORT: Partial<Record<CastK, string>> = {
   mama: 'Ma ma Trịnh',
@@ -200,6 +216,12 @@ export default function Play() {
   );
 
   const card = life?.card ? cardOf(life.card) : null;
+  // tải trước ảnh nhân vật đang dùng, để đổi nét mặt không bị nháy trắng
+  const imgDirs = life ? Object.values(imgsOf(life)).map((x) => x!.dir).join('|') : '';
+  useEffect(() => {
+    if (!imgDirs) return;
+    for (const d of imgDirs.split('|')) for (const m of ['binh', 'vui', 'lo', 'gian', 'buon', 'so', 'dac']) new Image().src = `${d}/${m}.webp`;
+  }, [imgDirs]);
   const opts = useMemo(() => (card && life ? choicesOf(card, life) : []), [card, life]);
   // nhạc theo cảnh: chọn đường, quê nhà, thẻ đang hiện, kết cục
   const endDead = life?.end ? !!endingOf(life.end)?.dead : null;
@@ -362,6 +384,7 @@ export default function Play() {
                 moods={art?.moods}
                 motif={art?.motif ?? (e.dead ? 'mo' : undefined)}
                 looks={looksOf(life)}
+                imgs={imgsOf(life)}
                 label={`Kết cục: ${e.name}`}
               />
             </div>
@@ -613,7 +636,7 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} imgs={imgsOf(life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>

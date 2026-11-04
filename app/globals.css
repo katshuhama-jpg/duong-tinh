@@ -326,3 +326,7 @@ a:hover { color: #6d1a11; }
 @keyframes c-wind { from { transform: translateX(0); opacity: 0; } 20% { opacity: 0.8; } to { transform: translateX(440px); opacity: 0; } }
 .c-scene .c-wind .c-leaf { animation: c-leaf 2.2s linear infinite; }
 @keyframes c-leaf { from { transform: translate(0, 0) rotate(0); } to { transform: translate(420px, 30px) rotate(540deg); } }
+
+.c-scene .c-breath { transform-box: fill-box; transform-origin: 50% 100%; animation: c-breath 4.2s ease-in-out infinite; }
+@keyframes c-breath { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.004, 1.012); } }
+.c-scene .c-imgin { animation: c-fadein 0.35s ease-out both; }
