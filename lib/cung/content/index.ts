@@ -14,9 +14,10 @@ import { CHAINS_A } from './chains_a';
 import { BIG_STEPS } from './big_steps';
 import { CHAINS_B } from './chains_b';
 import { BEATS_A } from './beats_a';
+import { BEATS_B } from './beats_b';
 import { FEUD } from './feud';
 
-const ROUTES = [...BEATS_A, ...CHAINS_A, ...CHAINS_B, ...BIG_STEPS, ...DEEP_ARCS, ...DEEP_EVENTS, ...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN, ...FEUD];
+const ROUTES = [...BEATS_A, ...BEATS_B, ...CHAINS_A, ...CHAINS_B, ...BIG_STEPS, ...DEEP_ARCS, ...DEEP_EVENTS, ...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN, ...FEUD];
 /** thẻ nhỏ của mọi chặng (gồm cả thẻ mồi của các tuyến phụ) */
 export const SMALL: Card[] = [...CARDS_A, ...CARDS_B, ...ROUTES.filter((c) => !c.big)];
 
