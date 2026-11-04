@@ -138,6 +138,9 @@ const SHORT: Partial<Record<CastK, string>> = {
   ngoai: 'Sứ thần',
   letan: 'Lệ tần',
   nghia: 'Hoàng tử Nghĩa',
+  ninh: 'Ninh mỹ nhân',
+  hienphi: 'Hiền phi',
+  uyentan: 'Uyển tần',
 };
 function namesOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): Partial<Record<CastK, string>> {
   const n: Partial<Record<CastK, string>> = { ...SHORT, meday: cap(originOf(l.origin).me) };
@@ -778,7 +781,7 @@ function ThreatStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
           const r = rv[x.k];
           return (
             <span key={x.k} className={`c-threat ${gone(r.st) ? 'out' : ''}`}>
-              <RivalFace k={x.k} r={r} size={34} />
+              <RivalFace k={x.k} r={r} size={30} />
               <i>
                 <em style={{ width: `${gone(r.st) ? 0 : r.th}%` }} />
               </i>

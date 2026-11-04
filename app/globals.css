@@ -277,9 +277,9 @@ a:hover { color: #6d1a11; }
 /* mối nguy */
 .c-threats { display: flex; align-items: center; gap: 8px; margin: 6px 12px 0; padding: 4px 8px; background: var(--card); border: 1px solid var(--line); font: inherit; cursor: pointer; text-align: left; width: calc(100% - 24px); }
 .c-threats-goal { font-family: var(--serif); font-size: 12px; color: var(--son); font-weight: 700; flex: none; max-width: 88px; line-height: 1.15; }
-.c-threats-row { display: flex; gap: 6px; flex: 1; justify-content: flex-end; flex-wrap: wrap; }
+.c-threats-row { display: flex; gap: 4px; flex: 1; justify-content: flex-end; flex-wrap: wrap; }
 .c-threat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.c-threat i { display: block; width: 32px; height: 3px; background: #e1d2b0; }
+.c-threat i { display: block; width: 28px; height: 3px; background: #e1d2b0; }
 .c-threat i em { display: block; height: 3px; background: var(--son); }
 .c-rface { background: #ecdcb6; border-radius: 50%; border: 1.5px solid var(--son2); }
 .c-rface.out { filter: grayscale(1); opacity: 0.55; border-color: var(--mute); }

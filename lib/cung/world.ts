@@ -45,6 +45,9 @@ export const THAI_HAU: Rank = { t: 'Hoàng thái hậu', giai: 'Mẫu nghi', luo
 export const RIVALS: { k: import('./types').RivalK; t: string; cast: import('./types').CastK; from: number; th: number; d: string; goal?: boolean }[] = [
   { k: 'thucphi', t: 'Thục phi', cast: 'thucphi', from: 1, th: 45, d: 'Sủng phi lâu năm, mẹ của Hoàng tử Nghĩa. Ai được vua để mắt, bà đều nhớ tên.' },
   { k: 'hoanghau', t: 'Hoàng hậu', cast: 'hoanghau', from: 1, th: 25, d: 'Người đang ngồi ở cung Ngọc Khuê. Bà còn đó, ngôi hậu không bao giờ là của bạn.', goal: true },
+  { k: 'ninh', t: 'Ninh mỹ nhân', cast: 'ninh', from: 1, th: 25, d: 'Cùng đợt tuyển với bạn, từng ngủ chung chiếu, chia nhau miếng bánh. Giờ nàng muốn đúng thứ bạn muốn.' },
+  { k: 'hienphi', t: 'Hiền phi', cast: 'hienphi', from: 2, th: 35, d: 'Con gái võ tướng họ Mạc. Cả cung khen hiền, chỉ những người đã ngã mới biết nàng đứng ở đâu.' },
+  { k: 'uyentan', t: 'Uyển tần', cast: 'uyentan', from: 2, th: 30, d: 'Vũ nữ giáo phường được vua đưa vào cung sau một đêm yến. Không có gì để mất, nên dám làm mọi thứ.' },
   { k: 'letan', t: 'Lệ tần', cast: 'letan', from: 3, th: 35, d: 'Tân sủng mười lăm tuổi, cháu gái Thái phó Tôn, được đưa vào đúng lúc bạn mang thai.' },
   { k: 'thaipho', t: 'Thái phó Tôn', cast: 'quan', from: 4, th: 40, d: 'Quyền thần nắm nửa triều đình, muốn đặt người của mình vào Đông cung.' },
   { k: 'nghia', t: 'Hoàng tử Nghĩa', cast: 'nghia', from: 4, th: 35, d: 'Con trưởng của Thục phi, tranh ngôi Đông cung với con bạn.' },

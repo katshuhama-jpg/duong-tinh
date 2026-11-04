@@ -19,7 +19,7 @@ export type RelK =
   | 'tuong'; // phe võ tướng
 export type NumK = StatK | RelK | 'tien';
 /** mối nguy trên đường lên ngôi: Thục phi, Hoàng hậu (chắn ngôi hậu), Lệ tần (tân sủng), Thái phó Tôn (quyền thần), Hoàng tử Nghĩa (tranh ngôi Đông cung) */
-export type RivalK = 'thucphi' | 'hoanghau' | 'letan' | 'thaipho' | 'nghia';
+export type RivalK = 'thucphi' | 'hoanghau' | 'ninh' | 'hienphi' | 'uyentan' | 'letan' | 'thaipho' | 'nghia';
 /** an: chưa lộ mặt; manh: đang lộng hành; yeu: thất thế; giang: bị giáng, bị đày; chet: đã chết; phuc: đã quy phục */
 export type RivalSt = 'an' | 'manh' | 'yeu' | 'giang' | 'chet' | 'phuc';
 export interface RivalState {
@@ -52,7 +52,10 @@ export type CastK =
   | 'cungnu' // một cung nữ khác
   | 'ngoai' // người nước ngoài: sứ thần, vua nước láng giềng
   | 'letan' // Lệ tần, tân sủng trẻ đẹp
-  | 'nghia'; // Hoàng tử Nghĩa đã lớn, con Thục phi
+  | 'nghia' // Hoàng tử Nghĩa đã lớn, con Thục phi
+  | 'ninh' // Ninh mỹ nhân, bạn cùng đợt tuyển thành thù
+  | 'hienphi' // Hiền phi họ Mạc, con gái võ tướng, mặt hiền bụng hiểm
+  | 'uyentan'; // Uyển tần, vũ nữ được sủng
 
 /** điều kiện để thẻ hoặc lựa chọn xuất hiện */
 export interface Cond {

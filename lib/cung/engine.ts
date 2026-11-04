@@ -92,7 +92,7 @@ export function applyRiv(l: Life, d: Fx['riv']) {
     else if (r.th >= 30 && r.st === 'yeu') r.st = 'manh';
   }
 }
-const RIV_NAME: Record<RivalK, string> = { thucphi: 'Thục phi', hoanghau: 'Hoàng hậu', letan: 'Lệ tần', thaipho: 'Thái phó Tôn', nghia: 'Hoàng tử Nghĩa' };
+const RIV_NAME: Record<RivalK, string> = { thucphi: 'Thục phi', hoanghau: 'Hoàng hậu', ninh: 'Ninh mỹ nhân', hienphi: 'Hiền phi', uyentan: 'Uyển tần', letan: 'Lệ tần', thaipho: 'Thái phó Tôn', nghia: 'Hoàng tử Nghĩa' };
 const ST_LOG: Partial<Record<RivalState['st'], string>> = { giang: 'bị giáng, rời khỏi cuộc chơi', chet: 'đã chết', phuc: 'đã quy phục bạn', yeu: 'thất thế' };
 
 /** bản lưu cũ (quan hệ 0-100): dời về thang -100..100 */
@@ -107,6 +107,8 @@ export function migrate(l: Life): Life {
   fix(l);
   if (l.back) fix(l.back);
   if (!l.riv) l.riv = rivInit(l.chapter);
+  const fresh = rivInit(l.chapter);
+  for (const k of Object.keys(fresh) as RivalK[]) if (!l.riv[k]) l.riv[k] = fresh[k];
   return l;
 }
 

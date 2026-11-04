@@ -71,6 +71,12 @@ export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: bool
       return { robe: '#3a5a4a', collar: '#c49a3a', hat: 'nonsu', beard: true, male: true, prop: 'thu', skin: '#e6bf98' };
     case 'letan':
       return { robe: '#d46a8a', collar: GOLD, hat: 'phuong', phuong: 1, sly: true, paint: true, prop: 'quat', build: 'slim', scale: 0.94 };
+    case 'ninh':
+      return { robe: '#7aa07a', collar: '#e8dcc0', hat: 'bun', build: 'slim', scale: 0.92, prop: 'quat' };
+    case 'hienphi':
+      return { robe: '#2f6a6a', collar: GOLD, hat: 'phuong', phuong: 3, sly: true, pattern: 'phuong', prop: 'chuoi' };
+    case 'uyentan':
+      return { robe: '#c4384a', collar: GOLD, hat: 'bun', paint: true, build: 'slim', scale: 0.94, prop: 'quat' };
     case 'nghia':
       return { robe: '#8a3a2a', collar: GOLD2, hat: 'tre', male: true, build: 'broad', pattern: 'rong', prop: 'kiem' };
     case 'con':
