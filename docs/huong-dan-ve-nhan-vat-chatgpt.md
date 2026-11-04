@@ -84,7 +84,7 @@ Chỉ khuôn mặt thay đổi giữa 8 ảnh. Thân, tay, áo, tóc, mũ, khung
 
 Đời trong game kéo dài từ năm nhân vật chính 16 tuổi đến khoảng 65 tuổi, qua 7 chương: 1 Nhập cung, 2 Được gọi, 3 Mang thai, 4 Ngôi Đông cung, 5 Vua băng, 6 Buông rèm, 7 Tuổi già. Mỗi người có một hoặc nhiều giai đoạn tuổi. **Các mã cùng tên gốc (vd `hanh`, `hanh2`, `hanh3`) là CÙNG MỘT NGƯỜI**: giữ nguyên khuôn mặt, dáng xương mặt, màu mắt, chỉ đổi tuổi, tóc, trang phục như mô tả. Nên vẽ giai đoạn đầu trước rồi dùng làm mẫu cho các giai đoạn sau.
 
-Tổng cộng 57 mã. Thứ tự nên làm: nhóm 1, rồi nhóm 2, rồi nhóm 3.
+Tổng cộng 57 mã cho đường dân nữ (nhóm 1-3), thêm 12 mã cho 3 đường vào cung còn lại (nhóm 4). Thứ tự nên làm: nhóm 1, rồi nhóm 2, rồi nhóm 3, nhóm 4 làm sau cùng.
 
 ### Nhóm 1: nhân vật chính và người thân cận (làm trước)
 
