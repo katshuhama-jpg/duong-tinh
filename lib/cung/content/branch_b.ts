@@ -4,7 +4,7 @@
  * đi 2-3 cảnh rồi khép đời ở một kết cục riêng (branch: true).
  *  1. b4_lap   -> nb_lap_*   Bế con trốn khỏi cung, sống ở làng chài
  *  2. b4_bien  -> nb_bien_*  Cắt tóc theo tướng Lê Trực ra biên ải
- *  3. cb_dc    -> nb_dc_*    Cõng vua thổ huyết ra ngoài thành tìm thầy lang
+ *  3. cb_dc    -> nb_dc_*    Thái y bị mua chuộc, lén đưa vua ra ngoài thành chữa
  *  4. b5_bang2 -> nb_tron_*  Trốn khỏi cung cùng Hạnh, mở quán ở bến chợ
  *  5. cb_phe   -> nb_phe_*   Tự đọc sớ phế con, đổi lấy đất phong ruộng muối
  *  6. b6_tau   -> nb_tau_*   Tự theo xe thóc về phương nam phát chẩn
@@ -26,7 +26,7 @@ export const BRANCH_B_CHOICES: Record<string, Choice[]> = {
     { t: 'Cắt tóc, mặc áo lính, theo tướng quân ra biên ải', fx: { next: 'nb_bien_ai', d: { tuong: 6 } }, note: 'Lê Trực sững người, rồi tháo thanh đoản kiếm trao cho bạn. Sổ cung chép bạn ốm nặng, đóng cửa viện không tiếp ai.' },
   ],
   cb_dc: [
-    { t: 'Cõng Hoàng thượng ra cửa sau, tìm thầy lang ngoài thành', fx: { next: 'nb_dc_cong', d: { vua: 6 } }, note: 'Hoàng thượng nhìn bạn rất lâu, rồi gật đầu. Phúc lấy hai bộ áo thái giám, run tay trùm lên vai vua.' },
+    { t: 'Thuốc thái y càng uống càng nặng: lén đưa Hoàng thượng ra ngoài thành chữa', fx: { next: 'nb_dc_cong', d: { vua: 6 } }, note: 'Bạn kể ra ba thang thuốc đổi màu, và tên thái y nào cũng từng ra vào phủ Thái phó. Hoàng thượng nhìn bạn rất lâu, rồi gật đầu. Phúc lấy hai bộ áo thái giám trùm lên vai vua.' },
   ],
   b5_bang2: [
     {
@@ -174,7 +174,7 @@ export const BRANCH_B: Card[] = [
     bg: 'hanh',
     who: 'vua',
     title: 'Cửa sau tẩm điện',
-    text: ['Bạn dìu Hoàng thượng qua cửa sau, máu thấm ướt cả vai áo bạn.', 'Hoàng thượng lại cười: "Hai mươi năm làm vua, đây là lần đầu trẫm đi bộ qua cửa này."'],
+    text: ['Bạn dìu Hoàng thượng qua cửa sau, bỏ lại bát thuốc thái y vừa dâng còn bốc khói.', 'Hoàng thượng lại cười: "Hai mươi năm làm vua, đây là lần đầu trẫm đi bộ qua cửa này."'],
     choices: [
       { t: 'Trốn lên xe chở rau, ra thẳng ngoài thành', fx: { next: 'nb_dc_lang', years: 0.5 }, note: 'Xe rau xóc qua cổng thành lúc gà gáy. Phúc ở lại, đốt tờ di chiếu còn trống tên.' },
       { t: 'Rẽ qua chùa Vân Tịch, xin sư bà một bài thuốc', fx: { next: 'nb_dc_lang', years: 0.5, d: { duc: 2 } }, note: 'Sư bà bắt mạch, lắc đầu, rồi chỉ đường đến nhà một ông lang ở làng ven sông.' },
