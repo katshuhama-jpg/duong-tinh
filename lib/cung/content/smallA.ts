@@ -368,9 +368,8 @@ export const CARDS_A: Card[] = [
     cast: ['me', 'thaihau'],
     mood: 'lo',
     moods: { thaihau: 'binh' },
-    lead: 'Từ năm hạn hán ấy, cả kinh thành ngóng trời từng ngày.',
     who: 'thaihau',
-    when: { flags: ['han_han'], not: ['cung_nga'] },
+    when: { not: ['cung_nga'] },
     title: 'Chép kinh cầu mưa',
     text: ['Ruộng nứt chân chim, Thái hậu cho các phi tần ăn chay chép kinh cầu mưa.', '"Ai thành tâm, trời sẽ thấy. Ai còn mải trang điểm, bản cung cũng thấy."'],
     choices: [
