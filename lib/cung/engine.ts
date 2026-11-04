@@ -118,8 +118,9 @@ function formAlliance(l: Life) {
 function pickFocus(l: Life) {
   const rv = l.riv;
   if (!rv) return;
-  const top = RIVALS.filter((x) => !x.of && rv[x.k].st === 'manh').sort((a, b) => rv[b.k].th - rv[a.k].th)[0];
-  l.focus = top ? [top.k, ...guardsOf(top.k).filter((g) => !gone(rv[g].st))] : [];
+  // hai kẻ đầu sỏ đang lộng hành, kèm vây cánh còn sống của họ: mối nguy đến cùng lúc
+  const top = RIVALS.filter((x) => !x.of && rv[x.k].st === 'manh').sort((a, b) => rv[b.k].th - rv[a.k].th).slice(0, 2);
+  l.focus = top.flatMap((t) => [t.k, ...guardsOf(t.k).filter((g) => rv[g].st !== 'an' && !gone(rv[g].st))]);
 }
 
 /** bản lưu cũ (quan hệ 0-100): dời về thang -100..100 */
