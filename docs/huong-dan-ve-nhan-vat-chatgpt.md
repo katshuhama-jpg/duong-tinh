@@ -49,10 +49,10 @@ Gõ `<mã>` (vd `hanh`) cũng được: làm đủ các nét mặt của mã đ�
 
 **MỖI ẢNH MỘT NGƯỜI, NHIỀU ẢNH MỘT LƯỢT.** Một lệnh ra 8 ảnh riêng (8 nét mặt), không ghép vào một ảnh. Người chiếm gần hết chiều cao ảnh, độ phân giải cao nhất có thể (2K).
 
-Lệnh chính: **`<mã> góc <A/B/C>`**, ví dụ `me1 góc A`, `hanh góc C`, `thucphi2 góc B`.
+Lệnh chính: **`<mã>`**, ví dụ `me1`, `hanh`, `thucphi2`. Góc nhìn đã cố định theo mã (mục 3), không cần ghi góc.
 
 Khi nhận lệnh này, trong MỘT LƯỢT trả lời, hãy tạo **8 ảnh riêng biệt** (dùng chế độ tạo nhiều ảnh từ một lệnh, giữ nhân vật đồng nhất giữa các ảnh):
-1. Tra mã ở mục 5 (nhân vật, tuổi, trang phục, đồ cầm tay) và góc ở mục 3.
+1. Tra mã ở mục 5 (nhân vật, tuổi, trang phục, đồ cầm tay). Góc: mã bắt đầu bằng `me`, `quan1`-`quan5_me`, `cung1`-`cung5_me`, `chua1`-`chua5_me` (nhân vật chính) dùng góc A; mọi mã khác dùng góc B.
 2. Ảnh 1 đến 8 là 8 nét mặt ở mục 4, đúng thứ tự. Mỗi ảnh là MỘT người, toàn thân tới bàn chân, khổ dọc 2:3, chất lượng cao nhất, độ phân giải cao nhất có thể (2K, khoảng 1365 x 2048; tối thiểu 1024 x 1536).
 3. Tám ảnh phải giống nhau tuyệt đối về thân người, tư thế, tay, trang phục, tóc, mũ, trâm, góc đầu, khung hình, cỡ người, vị trí trong ảnh. Chỉ khuôn mặt thay đổi.
 4. Ghi tên file dưới từng ảnh (mục 6).
@@ -66,16 +66,15 @@ Lệnh phụ:
 
 | Lệnh | Bạn làm gì |
 | --- | --- |
-| `Tiếp` | Khi chưa đủ 8 ảnh: nét mặt kế tiếp, sửa riêng vùng mặt của ảnh 1. Khi đã đủ 8: chuyển sang góc kế tiếp (A, rồi B, rồi C). |
-| `<mã> đủ bộ` | Làm trọn một nhân vật: góc A (8 ảnh), rồi góc B (8 ảnh), rồi góc C (8 ảnh), mỗi lượt một góc; tôi gõ `Tiếp` để sang góc kế. Luôn ghi rõ đang ở góc nào. |
-| `<mã gốc> đủ tuổi` | Làm mọi giai đoạn tuổi của cùng một người (vd `hanh đủ tuổi` = `hanh`, `hanh2`, `hanh3`), mỗi giai đoạn đủ bộ như trên, theo thứ tự trẻ trước già sau, giữ cùng khuôn mặt. |
-| `nhóm <1/2/3/4> đủ bộ` | Làm lần lượt mọi mã trong nhóm đó ở mục 5, theo thứ tự trong bảng, mỗi mã đủ bộ. Khi xong một mã, báo "Xong <mã>, tiếp theo là <mã kế>". |
-| `Đang ở đâu?` | Nhắc lại đang làm mã nào, góc nào, nét mặt số mấy, còn bao nhiêu ảnh. |
-| `<mã> góc <A/B/C> <nét mặt>` | Vẽ thẳng một nét mặt cụ thể, vd `hanh góc A giận`. |
+| `Tiếp` | Khi chưa đủ 8 ảnh: nét mặt kế tiếp, sửa riêng vùng mặt của ảnh 1. Khi đã đủ 8: báo "Xong <mã>". |
+| `<mã gốc> đủ tuổi` | Làm mọi giai đoạn tuổi của cùng một người (vd `hanh đủ tuổi` = `hanh`, `hanh2`, `hanh3`), mỗi giai đoạn đủ 8 nét mặt, theo thứ tự trẻ trước già sau, giữ cùng khuôn mặt. |
+| `nhóm <1/2/3/4> đủ bộ` | Làm lần lượt mọi mã trong nhóm đó ở mục 5, theo thứ tự trong bảng, mỗi mã đủ 8 nét mặt. Khi xong một mã, báo "Xong <mã>, tiếp theo là <mã kế>". |
+| `Đang ở đâu?` | Nhắc lại đang làm mã nào, nét mặt số mấy, còn bao nhiêu ảnh. |
+| `<mã> <nét mặt>` | Vẽ thẳng một nét mặt cụ thể, vd `hanh giận`. |
 | `Sửa mặt <nét mặt>` | Khi tôi đã tô chọn vùng mặt: chỉ đổi nét mặt trong vùng chọn, giữ nguyên mọi thứ khác. |
 | `Làm lại` | Vẽ lại lần vừa rồi, sửa cho đúng quy tắc hơn (nhất là nền trong suốt, toàn thân, một người). |
 
-Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi gõ tên tiếng Việt (vd "Thục phi lúc già góc A"), tự tìm mã phù hợp.
+Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi gõ tên tiếng Việt (vd "Thục phi lúc già"), tự tìm mã phù hợp.
 
 ---
 
@@ -93,13 +92,14 @@ Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi g
 
 ---
 
-## 3. BA GÓC NHÌN
+## 3. GÓC NHÌN (cố định theo nhân vật)
 
-| Góc | Mô tả |
-| --- | --- |
-| **A** | Người xoay 3/4 về phía BÊN PHẢI khung ảnh, mặt hơi nghiêng, mắt nhìn về phía người xem. Đây là góc chính. |
-| **B** | Người xoay 3/4 về phía BÊN TRÁI khung ảnh, mắt nhìn sang trái như đang nói với người đứng cạnh. |
-| **C** | Đứng thẳng nhìn chính diện vào người xem, vai cân, dáng trang trọng. |
+Mỗi nhân vật chỉ vẽ MỘT góc:
+
+| Ai | Góc | Mô tả |
+| --- | --- | --- |
+| Nhân vật chính (mã `me1`-`me5`, `quan…`, `cung…`, `chua…`) | **A** | Người xoay 3/4 về phía BÊN PHẢI khung ảnh, mặt hướng sang phải, mắt nhìn sang phải như đang nói với người đứng bên phải. |
+| Mọi nhân vật khác | **B** | Người xoay 3/4 về phía BÊN TRÁI khung ảnh, mặt hướng sang trái, mắt nhìn sang trái như đang nói với người đứng bên trái. |
 
 Hai tay để phía trước bụng hoặc cầm đồ vật theo mô tả nhân vật. Tư thế đứng yên, không múa, không chạy.
 
@@ -219,9 +219,9 @@ Mỗi đường có khuôn mặt riêng. Giai đoạn sau dùng trang phục nh�
 
 ## 6. TÊN FILE KHI XUẤT
 
-Đặt tên ảnh theo mẫu `<mã>_<góc>_<nét mặt>.png`, chữ thường, không dấu:
+Đặt tên ảnh theo mẫu `<mã>_<nét mặt>.png`, chữ thường, không dấu:
 
-- `me1_a_binh.png`, `me1_a_vui.png`, `me1_a_lo.png`, `me1_a_gian.png`, `me1_a_buon.png`, `me1_a_so.png`, `me1_a_dac.png`, `me1_a_nham.png`
+- `me1_binh.png`, `me1_vui.png`, `me1_lo.png`, `me1_gian.png`, `me1_buon.png`, `me1_so.png`, `me1_dac.png`, `me1_nham.png`
 
 Mỗi lần xuất ảnh, ghi tên file đề xuất ngay dưới ảnh.
 
