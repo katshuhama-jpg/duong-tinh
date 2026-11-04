@@ -24,8 +24,8 @@ export const ROUTES_VN: Card[] = [
     title: 'Sính lễ hai châu đất',
     text: ['Sứ thần nước Sa Hải dâng sính lễ là hai châu đất phía nam, chỉ xin một người con gái nhà vua.', 'Thái hậu nhìn xuống hàng phi tần không được gọi, dừng lại ở bạn: "Ta không có con gái. Cô có muốn làm con gái ta không?"'],
     choices: [
-      { t: 'Quỳ lạy Thái hậu làm mẹ, nhận lên thuyền', fx: { d: { the: 20, thaihau: 15, duc: 6 }, flag: ['h_hoa_than'], years: 2 }, note: 'Làng Mai Đông được miễn thuế mười năm. Thuyền hoa rời bến, bạn không dám ngoảnh lại.' },
-      { t: 'Thưa mình là gái làng chè, không xứng làm công chúa', fx: { d: { duc: 6, thaihau: -10 } }, note: 'Thái hậu chọn một cung nữ khác. Hôm thuyền đi, cả hậu cung đứng xem, chỉ bạn ở lại trong viện.', risk: { p: 0.3, fail: { d: { thaihau: -15, an: -5 }, rank: -1 }, failNote: 'Thái hậu không quên lần bị từ chối trước mặt sứ thần. Bạn bị giáng một bậc.' } },
+      { t: 'Quỳ lạy Thái hậu làm mẹ, nhận lên thuyền', fx: { d: { the: 20, thaihau: 15, duc: 6 }, flag: ['h_hoa_than'], years: 2 }, note: 'Thái hậu ban cho nhà {ho} một tấm biển vàng. Thuyền hoa rời bến, bạn không dám ngoảnh lại.' },
+      { t: 'Thưa mình chỉ là {goc}, không xứng làm công chúa', fx: { d: { duc: 6, thaihau: -10 } }, note: 'Thái hậu chọn một cung nữ khác. Hôm thuyền đi, cả hậu cung đứng xem, chỉ bạn ở lại trong viện.', risk: { p: 0.3, fail: { d: { thaihau: -15, an: -5 }, rank: -1 }, failNote: 'Thái hậu không quên lần bị từ chối trước mặt sứ thần. Bạn bị giáng một bậc.' } },
       { t: 'Nhận đi, nhưng xin mang Hạnh theo cùng', need: { num: { hanh: [60, 100] } }, lockHint: 'Cần Hạnh trung thành từ 60', fx: { d: { the: 15, thaihau: 10, hanh: 10 }, flag: ['h_hoa_than', 'h_mang_hanh'], years: 2 }, note: 'Hạnh gói hai bộ áo nâu vào đáy rương cưới, nói là "phòng khi".' },
     ],
   },
@@ -157,10 +157,10 @@ export const ROUTES_VN: Card[] = [
     cast: ['me', 'meday'],
     who: 'meday',
     title: 'Thư em trai',
-    text: ['Em trai bạn đỗ đầu kỳ thi hương, gửi thư lên: "Chị nói với Hoàng thượng một câu, em làm được việc lớn."', 'Mẹ viết thêm một dòng nhỏ ở cuối thư: "Đừng."'],
+    text: ['Em trai bạn đỗ đầu kỳ thi hương, gửi thư lên: "Chị nói với Hoàng thượng một câu, em làm được việc lớn."', 'Cuối thư, {me} viết thêm một dòng nhỏ: "Đừng."'],
     choices: [
       { t: 'Xin Hoàng thượng cho em vào triều', fx: { d: { the: 15, quan: 6, duc: -3 }, flag: ['h_em_quan'] }, note: 'Ba tháng sau, em bạn mặc áo quan xanh đứng cuối hàng chầu, nhìn lên rèm tìm chị.' },
-      { t: 'Nghe mẹ, gửi tiền cho em mở trường làng', fx: { d: { duc: 6, the: 4, tien: -30 } }, note: 'Em gửi lại một lá thư ngắn, chữ rất đẹp, không có chữ "chị" nào.' },
+      { t: 'Nghe lời {me}, gửi tiền cho em mở trường dạy chữ', fx: { d: { duc: 6, the: 4, tien: -30 } }, note: 'Em gửi lại một lá thư ngắn, chữ rất đẹp, không có chữ "chị" nào.' },
     ],
   },
   {
@@ -178,9 +178,9 @@ export const ROUTES_VN: Card[] = [
     text: ['Em trai bạn giờ là Tể tướng, đổi tiền đồng thành tiền giấy, dựng kinh mới ở phía nam. Đêm nay nó vào cung, quỳ trước rèm.', '"Chị, cháu còn nhỏ, tôn thất họ cũ đang mài gươm. Để cháu nhường ngôi cho em, nhà mình mới giữ được."'],
     omen: 'Ân điển cho nhà mẹ đẻ, đến một ngày sẽ lớn hơn cả người ban ân.',
     choices: [
-      { t: 'Gật đầu, để con viết chiếu nhường ngôi cho cậu', fx: { d: { the: 25, duc: -15, quan: -10 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], unflag: ['nhiep'], chapter: 7, years: 3 }, note: 'Họ Diệp làng chè lên ngôi. Con bạn được phong vương, ở một phủ có tường cao.' },
-      { t: 'Gọi tôn thất và quan văn bắt em trai', fx: { d: { duc: -12, the: -30, quan: 12, muu: 8 }, flag: ['h_diet_em'], unflag: ['h_em_quan'] }, note: 'Em bạn bị đày ra hải đảo. Mẹ ở quê không viết thư lên nữa.', risk: { p: 0.45, fail: { end: 'd_binh_bien' }, failNote: 'Em bạn biết trước một đêm. Quân của Tể tướng vào cung trước quân tôn thất.' } },
-      { t: 'Viết thư xin mẹ lên kinh nói với em', fx: { d: { duc: 8, the: -10 }, unflag: ['h_em_quan'] }, note: 'Mẹ lên kinh, ngồi một đêm với em trong phủ. Sáng ra, Tể tướng dâng sớ về quê làm ruộng.', risk: { p: 0.5, fail: { d: { the: 15, duc: -8 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], unflag: ['nhiep'], chapter: 7, years: 3 }, failNote: 'Mẹ mất trên đường lên kinh. Không còn ai can được em, chiếu nhường ngôi viết xong trong một tuần.' } },
+      { t: 'Gật đầu, để con viết chiếu nhường ngôi cho cậu', fx: { d: { the: 25, duc: -15, quan: -10 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], unflag: ['nhiep'], chapter: 7, years: 3 }, note: 'Họ {ho} lên ngôi. Con bạn được phong vương, ở một phủ có tường cao.' },
+      { t: 'Gọi tôn thất và quan văn bắt em trai', fx: { d: { duc: -12, the: -30, quan: 12, muu: 8 }, flag: ['h_diet_em'], unflag: ['h_em_quan'] }, note: 'Em bạn bị đày ra hải đảo. Từ đó {me} không gửi thư cho bạn nữa.', risk: { p: 0.45, fail: { end: 'd_binh_bien' }, failNote: 'Em bạn biết trước một đêm. Quân của Tể tướng vào cung trước quân tôn thất.' } },
+      { t: 'Viết thư xin {me} vào nói với em', fx: { d: { duc: 8, the: -10 }, unflag: ['h_em_quan'] }, note: 'Đêm ấy {me} ngồi với em đến sáng. Rồi Tể tướng dâng sớ xin về quê làm ruộng.', risk: { p: 0.5, fail: { d: { the: 15, duc: -8 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], unflag: ['nhiep'], chapter: 7, years: 3 }, failNote: 'Chưa kịp gặp em, {me} ngã bệnh rồi mất. Không còn ai can được em, chiếu nhường ngôi viết xong trong một tuần.' } },
       { t: 'Cho mời tướng Lê Trực về đứng ở ngọ môn', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { d: { tuong: 8, the: -10, duc: 4 }, unflag: ['h_em_quan'] }, note: 'Em bạn nhìn hàng giáo ngoài cửa, hiểu ra, rồi xin về trấn giữ phía nam.' },
     ],
   },
@@ -201,7 +201,7 @@ export const ROUTES_VN: Card[] = [
     choices: [
       { t: 'Đóng ấn', fx: { d: { the: 25, duc: -15 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], years: 3 }, note: 'Con bạn được phong vương. Đêm ấy nó không sang chào mẹ.' },
       { t: 'Báo cho con, để vua bắt cậu', fx: { d: { duc: -10, the: -30, quan: 10 }, flag: ['h_diet_em'], unflag: ['h_em_quan'] }, note: 'Em bạn bị đày ra hải đảo. Bạn giữ lại tờ chiếu chưa đóng ấn, cất dưới đáy hộp sơn mài.', risk: { p: 0.45, fail: { end: 'd_binh_bien' }, failNote: 'Người hầu của bạn là người của Tể tướng.' } },
-      { t: 'Xé tờ chiếu, bảo em về quê thăm mộ cha', fx: { d: { duc: 8, the: -10 }, unflag: ['h_em_quan'] }, note: 'Em bạn quỳ rất lâu, rồi đi. Năm sau nó xin về hưu.', risk: { p: 0.4, fail: { d: { the: 10, duc: -5 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], years: 3 }, failNote: 'Em bạn không cần ấn nữa. Ba tháng sau, chiếu nhường ngôi đọc giữa sân rồng, ấn đóng bằng tay người khác.' } },
+      { t: 'Xé tờ chiếu, bảo em về {que} thắp hương tổ tiên', fx: { d: { duc: 8, the: -10 }, unflag: ['h_em_quan'] }, note: 'Em bạn quỳ rất lâu, rồi đi. Năm sau nó xin về hưu.', risk: { p: 0.4, fail: { d: { the: 10, duc: -5 }, flag: ['h_ho_diep', 'kc_e_chi_vua'], years: 3 }, failNote: 'Em bạn không cần ấn nữa. Ba tháng sau, chiếu nhường ngôi đọc giữa sân rồng, ấn đóng bằng tay người khác.' } },
     ],
   },
   {
@@ -220,7 +220,7 @@ export const ROUTES_VN: Card[] = [
     omen: 'Một triều đổi họ trong một đêm thì cũng có thể sụp trong một mùa.',
     choices: [
       { t: 'Ở lại bên em, chịu cùng cả nhà', fx: { end: 'd_bac_hanh' }, note: 'Bạn mặc áo nâu, ngồi chung xe tù với em.' },
-      { t: 'Cải trang về làng Mai Đông, sống như người hái chè', fx: { d: { duc: 4 } }, note: 'Bạn về đến đồi chè cũ. Không ai trong làng nhận ra bà già ấy là ai.', risk: { p: 0.3, fail: { end: 'd_bac_hanh' }, failNote: 'Một người làng cũ nhận ra bạn ở chợ phiên, và đi báo.' } },
+      { t: 'Cải trang về {que}, sống như một bà già thường', fx: { d: { duc: 4 } }, note: 'Bạn về đến chốn cũ. Không ai nhận ra bà già ấy là ai.', risk: { p: 0.3, fail: { end: 'd_bac_hanh' }, failNote: 'Một người quen cũ nhận ra bạn ở chợ phiên, và đi báo.' } },
       { t: 'Đưa con mình ra mặt, xin dân phù lại vua cũ', fx: { d: { duc: 10, the: -40 }, flag: ['kc_e_thai_phi'], unflag: ['kc_e_chi_vua'] }, note: 'Dân bốn trấn theo cờ vua cũ, giặc rút. Em bạn bị giải đi, con bạn trở lại ngai.', risk: { p: 0.5, fail: { end: 'd_bac_hanh' }, failNote: 'Giặc không cần một ông vua cũ. Chúng bắt cả hai.' } },
     ],
   },
@@ -270,12 +270,12 @@ export const ROUTES_VN: Card[] = [
 export const ENDINGS_VN: Ending[] = [
   { id: 'e_giam_quoc', name: 'Người giữ ấn', desc: 'Chưa từng ngồi sau rèm, chưa từng là mẹ vua. Nhưng một năm vua vắng, dân nhớ tên bà hơn nhớ tên trận thắng.' },
   { id: 'd_tran_mac', name: 'Áo giáp trên ngựa', desc: 'Phi tần ra trận, sử không biết chép vào mục nào. Người ta mang về kinh một chiếc trâm phượng dính bùn.', dead: true },
-  { id: 'e_chi_vua', name: 'Chị gái của vua', desc: 'Họ nhà chè làng Mai Đông lên ngôi. Bà sống đủ lâu để thấy triều ấy chỉ kéo dài bảy năm, rồi chết già trên đồi chè cũ.' },
-  { id: 'd_bac_hanh', name: 'Đường lên phương bắc', desc: 'Giặc giải cả nhà họ Diệp lên phương bắc. Suốt đường đi, bà chỉ nhìn về phía nam, nơi có đồi chè.', dead: true },
+  { id: 'e_chi_vua', name: 'Chị gái của vua', desc: 'Họ {ho} lên ngôi. Bà sống đủ lâu để thấy triều ấy chỉ kéo dài bảy năm, rồi chết già ở {que}.' },
+  { id: 'd_bac_hanh', name: 'Đường lên phương bắc', desc: 'Giặc giải cả nhà họ {ho} lên phương bắc. Suốt đường đi, bà chỉ nhìn về phía nam, nơi có {que}.', dead: true },
   { id: 'e_nhac_mau', name: 'Mẹ vợ triều mới', desc: 'Họ cũ mất ngôi trong một đám cưới không ai khóc. Bà sống đến bảy mươi, mỗi năm giỗ tiên đế phải xin phép một triều khác.' },
   { id: 'd_vuon_que', name: 'Án vườn Quế', desc: 'Bị kết tội giết vua, chết cùng cả họ trong một buổi sáng. Hai mươi năm sau có chiếu minh oan, khi không còn ai để nhận.', dead: true },
   { id: 'e_an_oan', name: 'Người mang án oan', desc: 'Sống qua án giết vua mà mình không làm. Ngày chiếu minh oan đọc lên, bà đã quen sống như một người không tên.' },
   { id: 'e_thuyen_ve', name: 'Thuyền về giữa biển', desc: 'Được cứu khỏi giàn hỏa, về nước mà triều đình không biết xếp vào đâu. Bà dựng một am nhỏ trên núi, nhìn ra biển phía nam.' },
   { id: 'e_hau_nuoc_nam', name: 'Hoàng hậu nước Nam', desc: 'Ở lại xứ người, nuôi con thành vua, dạy nó cả hai thứ tiếng. Hai châu đất năm ấy, sử hai nước chép hai kiểu khác nhau.' },
-  { id: 'd_gian_hoa', name: 'Giàn hỏa bên biển', desc: 'Khói bay về phía bắc ba ngày. Ở làng Mai Đông, mẹ thấy một cánh chim lạ đậu trên nương chè.', dead: true },
+  { id: 'd_gian_hoa', name: 'Giàn hỏa bên biển', desc: 'Khói bay về phía bắc ba ngày. Ở {que}, {me} thấy một cánh chim lạ đậu trên mái nhà.', dead: true },
 ];

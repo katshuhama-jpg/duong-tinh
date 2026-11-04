@@ -155,7 +155,7 @@ export const CARDS_B: Card[] = [
   {
     id: 'b_meday_xin',
     chapter: [4],
-    when: { rankMin: 3 },
+    when: { rankMin: 3, flags: ['g_dan'] },
     place: 'lang',
     time: 'ngay',
     cast: ['me', 'meday'],
@@ -312,12 +312,11 @@ export const CARDS_B: Card[] = [
     place: 'dien',
     time: 'ngay',
     cast: ['me', 'meday'],
-    who: 'meday',
-    title: 'Họ Diệp lên kinh',
-    text: ['Mẹ dẫn cả họ lên kinh, người nào cũng mặc áo lụa mới may.', '"Giờ con giữ cả nước, chẳng lẽ để họ mình làm ruộng mãi?"'],
+    title: 'Họ {ho} lên kinh',
+    text: ['Người nhà họ {ho} kéo nhau vào cung, ai cũng mặc áo lụa mới may.', '"Giờ nương nương giữ cả nước, chẳng lẽ để họ mình đứng ngoài mãi?"'],
     choices: [
       { t: 'Cài em trai vào bộ Hộ, anh họ vào cấm quân', fx: { d: { the: 15, quan: -10, duc: -8 } }, note: 'Bạn có tai mắt trong triều, và triều có thêm một cớ để dâng sớ.' },
-      { t: 'Ban ruộng và bạc, không ban chức', fx: { d: { duc: 8, tien: -150, the: 3 } }, note: 'Họ về làng giàu lên, còn mẹ dỗi không ăn cơm ba bữa.' },
+      { t: 'Ban ruộng và bạc, không ban chức', fx: { d: { duc: 8, tien: -150, the: 3 } }, note: 'Họ về nhà giàu lên, nhưng từ đó ít ai vào thăm bạn.' },
     ],
   },
   {
@@ -434,7 +433,7 @@ export const CARDS_B: Card[] = [
     cast: ['me', 'su'],
     who: 'su',
     title: 'Chuông chiều Vân Tịch',
-    text: ['Chùa Vân Tịch vẫn tiếng chuông năm nào bạn gặp vua.', '"Thí chủ còn muốn cầu gì nữa?"'],
+    text: ['Chùa Vân Tịch vẫn tiếng chuông như năm bạn mới vào cung.', '"Thí chủ còn muốn cầu gì nữa?"'],
     choices: [
       { t: 'Cúng ruộng cho chùa, cầu siêu những người đã chết', fx: { d: { duc: 8, tien: -150, the: -3 } }, note: 'Sư bà khắc mười hai cái tên lên bia, có cả tên kẻ thù.' },
       { t: 'Cầu cho dòng con cháu giữ được ngôi', fx: { d: { the: 6, duc: -2 } }, note: 'Sư bà gõ mõ, không nói gì, chỉ khẽ lắc đầu.' },
@@ -451,12 +450,13 @@ export const CARDS_B: Card[] = [
     text: ['Sử quan trẻ mang giấy bút đến, xin chép lại đời bạn vào quốc sử.', '"Những chuyện năm xưa, thái hậu muốn sử ghi thế nào?"'],
     choices: [
       { t: 'Kể thật, cả những điều xấu', fx: { d: { duc: 10, the: -6 } }, note: 'Bản thảo dày, trang nào cũng có máu, và con bạn đọc xong thì im lặng rất lâu.' },
-      { t: 'Chỉ kể chuyện hiền, giấu chuyện máu', fx: { d: { the: 6, duc: -6, muu: 3 } }, note: 'Sử chép một bà hiền như tượng, và ở làng Mai Đông có người cười khẩy.' },
+      { t: 'Chỉ kể chuyện hiền, giấu chuyện máu', fx: { d: { the: 6, duc: -6, muu: 3 } }, note: 'Sử chép một bà hiền như tượng, và ở {que} có người cười khẩy.' },
     ],
   },
   {
     id: 'b_che_lang',
     chapter: [7],
+    when: { flags: ['g_dan'] },
     place: 'lang',
     time: 'chieu',
     cast: ['me'],

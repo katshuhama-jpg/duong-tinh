@@ -22,7 +22,7 @@ export const ROUTES_CN: Card[] = [
     text: ['Thái hậu ho suốt mùa đông, thuốc thái y uống mãi không dứt.', '"Mỗi người nấu một bát. Ai được Thái hậu uống hết thì ở lại Ngự dược phòng, ai thua về giặt áo đến già."'],
     omen: 'Trong bếp thuốc, ai cũng biết vị nào giết người. Chỉ không biết ai đang cầm.',
     choices: [
-      { t: 'Nấu canh lá chè non với gừng như mẹ dạy', fx: { d: { thaihau: 12, muu: 4 }, flag: ['t_ngu_duoc'], years: 2, chapter: 3 }, note: 'Thái hậu húp hết, hỏi "con bé làng nào". Bạn được giữ lại Ngự dược phòng.', risk: { p: 0.3, fail: { d: { duc: 4 }, flag: ['bi_quen'], years: 20, chapter: 7 }, failNote: 'Thái hậu chê vị đắng, đặt bát xuống. Bạn ôm chậu áo ra giếng sau, và năm tháng cứ thế trôi.' } },
+      { t: 'Nấu canh lá chè non với gừng như {me} dạy', fx: { d: { thaihau: 12, muu: 4 }, flag: ['t_ngu_duoc'], years: 2, chapter: 3 }, note: 'Thái hậu húp hết, hỏi "con bé này ở đâu ra". Bạn được giữ lại Ngự dược phòng.', risk: { p: 0.3, fail: { d: { duc: 4 }, flag: ['bi_quen'], years: 20, chapter: 7 }, failNote: 'Thái hậu chê vị đắng, đặt bát xuống. Bạn ôm chậu áo ra giếng sau, và năm tháng cứ thế trôi.' } },
       { t: 'Nấu yến sào đúng theo sách Thái y viện', fx: { d: { duc: 8, quan: 4 }, flag: ['t_ngu_duoc'], years: 2, chapter: 3 }, note: 'Không ai chê được một bát canh đúng sách. Bạn được giữ lại, ở bậc thấp nhất.', risk: { p: 0.5, fail: { d: { duc: 4 }, flag: ['bi_quen'], years: 20, chapter: 7 }, failNote: 'Mười bát yến giống hệt nhau. Thượng cung chọn bát của cháu gái mình.' } },
       { t: 'Thấy cam thảo trong bếp bị tráo thành lá ngón, lên tiếng tố', fx: { d: { muu: 10, thaihau: 15, thucphi: -15 }, flag: ['t_ngu_duoc', 'thu_thucphi'], years: 2, chapter: 3 }, note: 'Cung nữ tráo thuốc là người bên Thục phi. Thái hậu cho bạn đứng đầu lứa nữ y mới.', risk: { p: 0.35, fail: { end: 'd_gieng' }, failNote: 'Bạn chưa kịp đến điện Thái hậu. Đêm ấy giếng sau bếp thuốc có thêm một chiếc hài.' } },
     ],
@@ -40,7 +40,7 @@ export const ROUTES_CN: Card[] = [
     text: ['Vườn thuốc của Ngự dược phòng bỏ hoang ba năm, cỏ mọc ngang gối.', 'Cô nữ y cùng lứa thở dài: "Trồng lại thì mất cả mùa, mà công thì Thượng cung nhận."'],
     choices: [
       { t: 'Xắn tay áo trồng lại từng luống', fx: { d: { muu: 6, sac: -4, duc: 4 } }, note: 'Mùa sau vườn xanh. Thượng cung nhận công, nhưng các nữ y nhỏ bắt đầu gọi bạn là "chị".' },
-      { t: 'Xin hạt giống từ làng Mai Đông, đổi bằng tiền riêng', fx: { d: { tien: -20, the: 6, muu: 4 } }, note: 'Mẹ gửi lên một bọc hạt, kèm một câu: "Thuốc tốt là thuốc người nghèo mua được."' },
+      { t: 'Nhờ {me} gửi hạt giống vào, đổi bằng tiền riêng', fx: { d: { tien: -20, the: 6, muu: 4 } }, note: 'Ít lâu sau có một bọc hạt gửi vào, kèm một câu: "Thuốc tốt là thuốc người nghèo mua được."' },
     ],
   },
   {
@@ -172,7 +172,7 @@ export const ROUTES_CN: Card[] = [
     choices: [
       { t: 'Theo Hoàng thượng bỏ kinh, đi trong đêm', fx: { d: { vua: 10, quan: -10 }, flag: ['t_chay_tay'] }, note: 'Kiệu bạn đi ngay sau xe vua. Lính đi bộ phía sau nhìn theo, không ai nói gì.' },
       { t: 'Xin ở lại, góp hết của riêng chiêu mộ dân binh', need: { num: { tien: [300, 99999] } }, lockHint: 'Cần 300 quan', fx: { d: { tien: -300, duc: 15, tuong: 15, an: -10 }, flag: ['ket_tuong'] }, note: 'Ba nghìn dân binh giữ thành bốn mươi ngày. Tướng Lê Trực về kịp, quỳ trước cửa viện bạn.' },
-      { t: 'Khuyên vua cách hết chức quan của nhà mình để yên lòng quân', fx: { d: { the: -25, duc: 12, quan: 15, an: -20 } }, note: 'Anh em bạn cởi mũ áo về làng. Quân lính bớt chửi, đi tiếp về phía Tây.', risk: { p: 0.3, fail: { d: { the: -15 }, flag: ['t_chay_tay'] }, failNote: 'Chiếu chưa kịp ban, một người em đã bỏ trốn theo giặc. Quân lính càng thêm giận.' } },
+      { t: 'Khuyên vua cách hết chức quan của nhà mình để yên lòng quân', fx: { d: { the: -25, duc: 12, quan: 15, an: -20 } }, note: 'Anh em bạn cởi mũ áo về quê. Quân lính bớt chửi, đi tiếp về phía Tây.', risk: { p: 0.3, fail: { d: { the: -15 }, flag: ['t_chay_tay'] }, failNote: 'Chiếu chưa kịp ban, một người em đã bỏ trốn theo giặc. Quân lính càng thêm giận.' } },
     ],
   },
   {
@@ -288,7 +288,7 @@ export const ROUTES_CN: Card[] = [
     text: ['Con bạn chạy qua bạn, sà vào lòng Hoàng hậu: "Mẹ ơi."', 'Hoàng hậu nhìn bạn qua vai đứa bé, không nói gì.'],
     choices: [
       { t: 'Cúi chào Đông cung đúng lễ, không gọi tên con', fx: { d: { duc: 10, hoanghau: 12, an: -4 } }, note: 'Con chào lại bạn đúng lễ, như chào một bà dì xa.' },
-      { t: 'Nhờ Hạnh lén gửi con chiếc khăn thêu tên làng Mai Đông', fx: { d: { muu: 6, hoanghau: -10 }, flag: ['t_mr_khan'] }, note: 'Con giữ chiếc khăn, không hỏi gì. Hoàng hậu thì đổi người hầu quanh con trong một tháng.' },
+      { t: 'Nhờ Hạnh lén gửi con chiếc khăn thêu chữ {ho}', fx: { d: { muu: 6, hoanghau: -10 }, flag: ['t_mr_khan'] }, note: 'Con giữ chiếc khăn, không hỏi gì. Hoàng hậu thì đổi người hầu quanh con trong một tháng.' },
     ],
   },
   {
@@ -303,12 +303,12 @@ export const ROUTES_CN: Card[] = [
     who: 'con',
     whoName: 'Hoàng thượng',
     title: 'Hộp sơn mài của Thái hậu',
-    text: ['Thái hậu họ Tôn mất. Trong hộp sơn mài của bà, vua tìm thấy lọn tóc trẻ con gói trong khăn thêu tên làng Mai Đông.', 'Đêm ấy vua đến cung bạn, đứng ở cửa rất lâu: "Dì... có phải người là mẹ con?"'],
+    text: ['Thái hậu họ Tôn mất. Trong hộp sơn mài của bà, vua tìm thấy lọn tóc trẻ con gói trong khăn thêu chữ {ho}.', 'Đêm ấy vua đến cung bạn, đứng ở cửa rất lâu: "Dì... có phải người là mẹ con?"'],
     choices: [
       { t: 'Nhận con, xin con đừng trách Thái hậu', fx: { d: { duc: 8 }, flag: ['kc_e_me_ruot'] }, note: 'Con quỳ xuống, đặt đầu lên gối bạn như hồi ba tuổi. Bạn xin đặt bài vị Thái hậu cao hơn mình một bậc.' },
-      { t: 'Lắc đầu: "Dì chỉ là người làng ấy"', fx: { d: { duc: 12, muu: 4 }, flag: ['kc_e_mo_trong'] }, note: 'Con đi rồi, bạn ngồi đến sáng, tay vẫn cầm góc khăn còn lại.' },
+      { t: 'Lắc đầu: "Dì chỉ là một người họ {ho} khác"', fx: { d: { duc: 12, muu: 4 }, flag: ['kc_e_mo_trong'] }, note: 'Con đi rồi, bạn ngồi đến sáng, tay vẫn cầm góc khăn còn lại.' },
       { t: 'Nhận con, rồi đòi lại ba mươi năm: truy tội nhà họ Tôn', fx: { d: { duc: -20, quan: -20, muu: 8 }, flag: ['kc_e_doi_lai'] }, note: 'Con nghe lời mẹ. Tháng sau, họ Tôn bị đuổi khỏi kinh, bài vị Thái hậu cũ bị dời ra chùa.' },
-      { t: 'Đưa con xem góc khăn còn lại, đúng nét thêu cây chè', need: { flags: ['t_mr_khan'] }, lockHint: 'Cần từng gửi con chiếc khăn thêu', fx: { d: { duc: 10, vua: 10 }, flag: ['kc_e_me_ruot'] }, note: 'Hai mảnh khăn khớp vào nhau. Con không hỏi thêm gì nữa, chỉ gọi một tiếng "mẹ".' },
+      { t: 'Đưa con xem góc khăn còn lại, đúng nét thêu chữ {ho}', need: { flags: ['t_mr_khan'] }, lockHint: 'Cần từng gửi con chiếc khăn thêu', fx: { d: { duc: 10, vua: 10 }, flag: ['kc_e_me_ruot'] }, note: 'Hai mảnh khăn khớp vào nhau. Con không hỏi thêm gì nữa, chỉ gọi một tiếng "mẹ".' },
     ],
   },
 
@@ -355,7 +355,7 @@ export const ROUTES_CN: Card[] = [
 
 export const ENDINGS_CN: Ending[] = [
   { id: 'e_nu_y', name: 'Nữ y ngự tiền', desc: 'Không làm phi, không có con lên ngôi, nhưng là người duy nhất vua tin đặt tay lên mạch mình. Sách thuốc bà viết được chép lại, đề tên thật chứ không đề bậc.' },
-  { id: 'e_ba_lang', name: 'Bà lang làng chè', desc: 'Mãn hạn xuất cung, bà về Mai Đông mở một gian thuốc. Người làng không biết bà từng cứu vua, chỉ biết thuốc bà rẻ và hay.' },
+  { id: 'e_ba_lang', name: 'Bà lang mãn hạn', desc: 'Mãn hạn xuất cung, bà mở một gian thuốc nhỏ ở chợ ngoài thành. Người ta không biết bà từng cứu vua, chỉ biết thuốc bà rẻ và hay.' },
   { id: 'd_thuoc_sai', name: 'Thang thuốc sai một vị', desc: 'Một nữ y dám kê thuốc cho vua. Thang ấy có người thêm vào hay tự bà sai, không ai còn muốn biết.', dead: true },
   { id: 'e_nu_quan', name: 'Thượng cung tóc ngắn', desc: 'Từ chùa về cung trong áo nữ quan, bà giữ sổ hậu cung mấy chục năm. Vua đổi mấy đời, chùm chìa khóa kho vẫn ở thắt lưng bà.' },
   { id: 'e_nu_de', name: 'Nữ đế Khánh Vân', desc: 'Từ áo nâu lên ngai vàng, người đàn bà duy nhất xưng "trẫm" trong sử Khánh Vân. Bia mộ để trống, ai muốn khắc gì thì khắc.' },
@@ -366,7 +366,7 @@ export const ENDINGS_CN: Ending[] = [
   { id: 'd_ban_thuoc', name: 'Chén thuốc ban ra', desc: 'Đứa con quỳ ngoài sân lớn lên thành người. Việc đầu tiên nó làm khi có quyền là dựng cho mẹ một ngôi miếu, nhưng không dám ghi tên.', dead: true },
   { id: 'e_lac_mai', name: 'Người ở viện Lạc Mai', desc: 'Tên bị xóa khỏi sổ phi tần, bà sống thêm hai mươi năm ở góc thành. Cung nữ mới vào không biết bà là ai, chỉ thấy bà trồng rau rất khéo.' },
   { id: 'e_me_ruot', name: 'Mẹ ruột được nhận', desc: 'Mấy chục năm làm "dì" của con mình. Ngày được gọi một tiếng mẹ, bà xin vua đặt bài vị Thái hậu cũ cao hơn bài vị của bà một bậc.' },
-  { id: 'e_mo_trong', name: 'Nhận mẹ bên mộ', desc: 'Bà giữ lời đến hơi thở cuối. Ba năm sau, vua mở nắp quan tài, thấy mẹ ôm góc khăn thêu cây chè, và quỳ ở đó đến tối.' },
+  { id: 'e_mo_trong', name: 'Nhận mẹ bên mộ', desc: 'Bà giữ lời đến hơi thở cuối. Ba năm sau, vua mở nắp quan tài, thấy mẹ ôm góc khăn thêu chữ {ho}, và quỳ ở đó đến tối.' },
   { id: 'e_doi_lai', name: 'Ba mươi năm đòi lại', desc: 'Được gọi một tiếng mẹ, bà đòi lại cả ba mươi năm. Sử khen vua hiếu, và chép kỹ ngày họ Tôn rời kinh.' },
   { id: 'e_nu_su', name: 'Người chép sử hậu cung', desc: 'Bà viết đời của ba mươi phi tần, kể cả những người không ai nhớ tên. Cuốn sổ ấy về sau là thứ duy nhất còn lại của cả hậu cung Khánh Vân.' },
   { id: 'e_sua_chieu', name: 'Một chữ đổi ngôi', desc: 'Bà sửa một chữ trong di chiếu, cả triều yên ba mươi năm. Cuốn sử bà chép sạch như nước, chỉ thiếu đúng một đêm.' },
