@@ -11,6 +11,7 @@ import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
 import { CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
+const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 const SEASON = ['một sáng đầu xuân', 'một trưa hè oi ả', 'một chiều mưa', 'một tối cuối thu', 'một sáng mùa đông', 'một ngày rằm'];
 const ageOf = (l: Life) => Math.floor(l.age);
 const yearOf = (l: Life) => ageOf(l) - 13;
@@ -170,7 +171,7 @@ export default function Play() {
           <Scene place={endPlace(e.id, !!e.dead)} time="chieu" cast={e.dead ? [] : ['me']} looks={looksOf(life)} label={`Kết cục: ${e.name}`} />
           <div className="c-end c-ink">
             <p className="c-sub">{e.dead ? 'Một cách chết' : 'Kết cục'}</p>
-            <h2 className={e.dead ? 'dead' : ''}>{e.name}</h2>
+            <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
             <p className="c-prose">{fillText(e.desc, life.origin)}</p>
             <p className="c-note">
               {rank.t} {originOf(life.origin).ho} thị ({life.name}), {ageOf(life)} tuổi · {sons(life) ? `${sons(life)} hoàng tử` : 'không có hoàng tử'}
@@ -260,8 +261,8 @@ export default function Play() {
                 <div className="c-roll" />
                 <div className="c-sheet">
                   <div className="c-tag">
-                    <span>{card.who && card.who !== 'me' ? (card.whoName ?? CAST_NAME[card.who]) : card.title}</span>
-                    {card.who && card.who !== 'me' && <small>{card.title}</small>}
+                    <span>{card.who && card.who !== 'me' ? (card.whoName ?? (card.who === 'meday' ? cap(originOf(life.origin).me) : CAST_NAME[card.who])) : fillText(card.title, life.origin)}</span>
+                    {card.who && card.who !== 'me' && <small>{fillText(card.title, life.origin)}</small>}
                   </div>
                   {card.text.map((t, i) => (
                     <p key={i} className="c-text" style={i ? { fontWeight: 500, fontSize: 15.5 } : undefined}>

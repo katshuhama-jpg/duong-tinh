@@ -99,7 +99,7 @@ export const ENDINGS: Ending[] = [
   { id: 'e_di_tu', name: 'Áo nâu chùa Vân Tịch', desc: 'Cởi áo thêu, khoác áo nâu. Tiếng chuông chiều nghe rõ hơn tiếng chiếu chỉ.' },
   { id: 'e_lay_tuong', name: 'Phu nhân tướng quân', desc: 'Được ban gả cho vị tướng từng cứu giá. Nửa sau đời ở biên ải, gió to nhưng lòng nhẹ.' },
   { id: 'e_trao_ngoi', name: 'Trao ngôi cứu nước', desc: 'Giặc ngoài biên, vua nhỏ không cầm quân được. Bà đặt chiếc áo bào vào tay vị tướng giỏi nhất.' },
-  { id: 'e_sung_phi', name: 'Sủng phi một tháng', desc: 'Từ cô gái làng lên đỉnh cao nhất, rồi mất hết trong một tháng. Lăng nhỏ ngoài thành không ghi tên.' },
+  { id: 'e_sung_phi', name: 'Sủng phi một tháng', desc: 'Từ {goc} lên đỉnh cao nhất, rồi mất hết trong một tháng. Lăng nhỏ ngoài thành không ghi tên.' },
   { id: 'd_doc', name: 'Chén chè hạt sen', desc: 'Ngọt quá. Đến lúc nhận ra thì đã muộn.', dead: true },
   { id: 'd_phe', name: 'Ba thước lụa trắng', desc: 'Bị phế, rồi được ban chết. Viện cũ niêm phong, tên bị gạch khỏi sổ.', dead: true },
   { id: 'd_san', name: 'Mất khi vượt cạn', desc: 'Đứa trẻ cất tiếng khóc thì mẹ nhắm mắt. Như bao người đàn bà trong cung và ngoài cung.', dead: true },

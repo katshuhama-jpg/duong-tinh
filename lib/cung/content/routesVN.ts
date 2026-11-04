@@ -16,7 +16,7 @@ export const ROUTES_VN: Card[] = [
     big: true,
     chapter: [2],
     before: 'b2_quen',
-    when: { num: { an: [0, 30], sac: [60, 100] } },
+    when: { flags: ['g_dan'], num: { an: [0, 30], sac: [60, 100] } },
     place: 'dien',
     time: 'ngay',
     cast: ['me', 'thaihau', 'ngoai'],
