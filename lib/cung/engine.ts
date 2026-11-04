@@ -25,7 +25,7 @@ export function newLife(name: string, seed = Math.floor(Math.random() * 1e9)): L
   const l: Life = {
     v: 'cung1',
     seed,
-    name: name.trim() || 'Diệp',
+    name: name.trim() || 'Nụ',
     age: 16,
     rank: 0,
     n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 20, thaihau: 30, hoanghau: 30, thucphi: 40, hanh: 50, phuc: 30, quan: 20, tuong: 10, tien: 30 },
@@ -194,7 +194,7 @@ export function choose(l0: Life, idx: number): Result {
   l.age = Math.round((l.age + years) * 2) / 2;
   for (let y = Math.floor(a0) + 1; y <= Math.floor(l.age); y++) {
     l.n.tien = clamp('tien', l.n.tien + rankOf(l).luong * 0.4);
-    if (l.n.an > 30) l.n.an = clamp('an', l.n.an - 3);
+    if (l.n.an > 50) l.n.an = clamp('an', l.n.an - 2);
   }
 
   if (fx.end) finish(l, fx.end);

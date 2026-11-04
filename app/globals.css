@@ -130,6 +130,13 @@ a:hover { color: #6d1a11; }
 .c-tabs button { flex: 1; min-height: 42px; background: var(--card); border: 1.5px solid var(--gold2); cursor: pointer; }
 .c-tabs button[aria-selected='true'] { background: var(--son); color: var(--card); border-color: var(--gold); }
 
+.c-names { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.c-names button { min-height: 46px; padding: 6px 10px; background: var(--card); border: 1.5px solid var(--gold2); cursor: pointer; text-align: left; font-family: var(--serif); font-size: 16px; font-weight: 600; }
+.c-names button small { display: block; font-family: var(--sans); font-size: 11px; font-weight: 400; color: var(--mute); }
+.c-names button[aria-pressed='true'] { background: var(--son); color: var(--card); border-color: var(--gold); }
+.c-names button[aria-pressed='true'] small { color: var(--line2); }
+.c-names .more { grid-column: 1 / -1; min-height: 40px; text-align: center; font-family: var(--sans); font-size: 13px; font-weight: 500; }
+
 /* ---------- chuyển động ---------- */
 @keyframes c-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes c-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }

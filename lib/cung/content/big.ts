@@ -150,7 +150,7 @@ export const BIG: Card[] = [
     choices: [
       { t: 'Gọi thái y trong cung', fx: { kid: 'trai', d: { an: 10, thaihau: 10 }, rank: 2, years: 1 }, note: 'Tiếng khóc vang lên lúc gà gáy. Một hoàng tử. Sáng ra chiếu thăng hai bậc.', risk: { p: 0.45, fail: { kid: 'gai', d: { an: 4 }, rank: 1, years: 1 }, failNote: 'Một tiểu công chúa, đôi mắt giống hệt bạn. Hoàng thượng bế con rất lâu.' } },
       { t: 'Gọi bà đỡ quê mà mẹ gửi lên', need: { num: { the: [25, 100] } }, lockHint: 'Cần Thế từ 25', fx: { kid: 'trai', d: { an: 10, the: 6 }, rank: 2, years: 1 }, note: 'Bà đỡ quê xoa bụng, đọc câu vè. Một hoàng tử khỏe mạnh.', risk: { p: 0.4, fail: { kid: 'gai', d: { the: 4 }, rank: 1, years: 1 }, failNote: 'Một tiểu công chúa, khóc to nhất viện.' } },
-      { t: 'Cắn khăn, không gọi ai, sợ có người được cài vào', fx: { kid: 'trai', d: { muu: 6, an: 8 }, rank: 2, years: 1 }, note: 'Hạnh đỡ đẻ bằng hai bàn tay run. Một hoàng tử.', risk: { p: 0.5, fail: { end: 'd_san' }, failNote: 'Máu không cầm được.' } },
+      { t: 'Cắn khăn, không gọi ai, sợ có người được cài vào', fx: { kid: 'trai', d: { muu: 6, an: 8 }, rank: 2, years: 1 }, note: 'Hạnh đỡ đẻ bằng hai bàn tay run. Một hoàng tử.', risk: { p: 0.3, fail: { end: 'd_san' }, failNote: 'Máu không cầm được.' } },
     ],
   },
   {

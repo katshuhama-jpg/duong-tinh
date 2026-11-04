@@ -35,7 +35,7 @@ export default function Home() {
         {live ? (
           <div className="c-row">
             <Link className="c-btn" href="/choi" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-              Sống tiếp: {rankOf(live).t} {live.name} thị, {Math.floor(live.age)} tuổi
+              Sống tiếp: {rankOf(live).t} Diệp thị, {Math.floor(live.age)} tuổi
             </Link>
           </div>
         ) : null}
