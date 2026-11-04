@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import MusicButton from '@/components/cung/MusicButton';
 import Scene, { lookOf, type Look } from '@/components/cung/Scene';
+import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { cardOf, choicesOf, choose, newLife, rankOf, rewind, sons, type Result } from '@/lib/cung/engine';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, NumK, PlaceK } from '@/lib/cung/types';
@@ -71,6 +73,14 @@ export default function Play() {
 
   const card = life?.card ? cardOf(life.card) : null;
   const opts = useMemo(() => (card && life ? choicesOf(card, life) : []), [card, life]);
+  // nhạc theo cảnh: chọn đường, quê nhà, thẻ đang hiện, kết cục
+  const endDead = life?.end ? !!endingOf(life.end)?.dead : null;
+  useEffect(() => {
+    if (!loaded) return;
+    if (!life) playTrack(og === 'dan' ? 8 : 1);
+    else if (life.end && !res) playTrack(endDead ? 6 : 10);
+    else playTrack(trackFor(card, life));
+  }, [loaded, life, og, card, res, endDead]);
 
   if (!loaded) return <main className="c-app" aria-busy="true" />;
 
@@ -103,6 +113,7 @@ export default function Play() {
                 </button>
               ))}
             </div>
+            <MusicButton className="c-btn ghost" />
             <Link href="/" className="c-note" style={{ textAlign: 'center' }}>
               Về trang đầu
             </Link>
@@ -210,7 +221,7 @@ export default function Play() {
     const r = choose(life, i);
     keep(r.life);
     setRes(r);
-    if (r.ranked) setEdict(rankOf(r.life).t);
+    if (r.ranked) (setEdict(rankOf(r.life).t), fanfare());
     if (r.life.end) unlock(r.life.end);
   };
 
@@ -308,6 +319,7 @@ export default function Play() {
         <Link href="/" aria-label="Về trang đầu">
           Trang đầu
         </Link>
+        <MusicButton />
         <button type="button" className="main" onClick={() => setBook(true)}>
           Sổ hậu cung
         </button>

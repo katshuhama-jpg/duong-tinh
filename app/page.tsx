@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import MusicButton from '@/components/cung/MusicButton';
 import Scene, { lookOf } from '@/components/cung/Scene';
+import { playTrack } from '@/lib/cung/music';
 import { signOut } from '@/lib/auth';
 import { rankOf } from '@/lib/cung/engine';
 import { originOf } from '@/lib/cung/origins';
@@ -15,6 +17,7 @@ export default function Home() {
   const { user, ready } = useAuth();
   const [me, setMe] = useState<{ meta: CMeta; life: Life | null } | null>(null);
   const [tab, setTab] = useState<'song' | 'chet'>('song');
+  useEffect(() => playTrack(1), []);
   useEffect(() => {
     if (!ready) return;
     loadMe().then((m) => setMe(m ? { meta: m.meta, life: m.life } : { meta: {}, life: null }));
@@ -29,6 +32,7 @@ export default function Home() {
       <div className="c-page">
         <p className="c-sub">Triều Khánh Vân · Phượng Thành</p>
         <h1 className="c-title">Chín Bậc Phượng</h1>
+        <MusicButton className="c-btn ghost" />
         <Scene place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
         <p className="c-prose">
           Bốn con đường vào cung: gái làng chè được vua để mắt, con quan bị dâng làm con tin, cung nga giặt áo, và công chúa của triều đã mất. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
