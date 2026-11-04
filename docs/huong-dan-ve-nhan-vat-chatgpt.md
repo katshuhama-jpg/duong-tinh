@@ -6,19 +6,18 @@ Tài liệu này dành cho ChatGPT. Hãy đọc hết và làm đúng mọi quy 
 
 ## 1. CÁCH TÔI RA LỆNH
 
-**KHÔNG BAO GIỜ VẼ LƯỚI, KHÔNG GHÉP NHIỀU NGƯỜI TRONG MỘT ẢNH.** Ảnh ghép làm mỗi người quá nhỏ, vào game bị nhòe. Mỗi ảnh chỉ có MỘT người, chiếm gần hết chiều cao ảnh, ở độ phân giải cao nhất có thể (khổ dọc 2:3, ví dụ 1024 x 1536).
+**MỖI ẢNH MỘT NGƯỜI, NHIỀU ẢNH MỘT LƯỢT.** Một lệnh ra 8 ảnh riêng (8 nét mặt), không ghép vào một ảnh. Người chiếm gần hết chiều cao ảnh, độ phân giải cao nhất có thể (2K).
 
 Lệnh chính: **`<mã> góc <A/B/C>`**, ví dụ `me1 góc A`, `hanh góc C`, `thucphi2 góc B`.
 
-Khi nhận lệnh này:
+Khi nhận lệnh này, trong MỘT LƯỢT trả lời, hãy tạo **8 ảnh riêng biệt** (dùng chế độ tạo nhiều ảnh từ một lệnh, giữ nhân vật đồng nhất giữa các ảnh):
 1. Tra mã ở mục 5 (nhân vật, tuổi, trang phục, đồ cầm tay) và góc ở mục 3.
-2. Vẽ ảnh số 1 trong 8 nét mặt ở mục 4 (Bình thường). Đây là ẢNH GỐC của bộ.
-3. Ghi tên file dưới ảnh, rồi ghi một dòng: "Gõ Tiếp để vẽ nét mặt 2: Cười".
+2. Ảnh 1 đến 8 là 8 nét mặt ở mục 4, đúng thứ tự. Mỗi ảnh là MỘT người, toàn thân tới bàn chân, khổ dọc 2:3, chất lượng cao nhất, độ phân giải cao nhất có thể (2K, khoảng 1365 x 2048; tối thiểu 1024 x 1536).
+3. Tám ảnh phải giống nhau tuyệt đối về thân người, tư thế, tay, trang phục, tóc, mũ, trâm, góc đầu, khung hình, cỡ người, vị trí trong ảnh. Chỉ khuôn mặt thay đổi.
+4. Ghi tên file dưới từng ảnh (mục 6).
+5. Nếu không tạo được 8 ảnh trong một lượt, tạo ảnh 1 trước rồi ghi "Gõ Tiếp để vẽ nét mặt 2: Cười"; mỗi lần tôi gõ `Tiếp`, chỉ sửa vùng mặt của ảnh 1 sang nét mặt kế tiếp.
 
-Mỗi lần tôi gõ **`Tiếp`**:
-1. Lấy đúng ảnh gốc vừa vẽ, CHỈ SỬA VÙNG KHUÔN MẶT sang nét mặt kế tiếp theo thứ tự ở mục 4.
-2. Giữ nguyên tuyệt đối thân người, tư thế, tay, trang phục, tóc, mũ, trâm, góc đầu, khung hình, cỡ người và vị trí trong ảnh, để các ảnh chồng lên nhau khớp từng chi tiết.
-3. Ghi tên file, rồi nhắc nét mặt kế tiếp. Sau nét mặt 8 thì báo "Xong góc này", gợi ý góc tiếp theo.
+**Tuyệt đối không ghép nhiều người vào một ảnh (không lưới, không sprite sheet).** Ảnh ghép làm mặt quá nhỏ, vào game bị nhòe.
 
 Nếu trong cuộc trò chuyện đã có ảnh của cùng người (cùng mã, hoặc cùng người ở giai đoạn khác như me1 và me2), giữ đúng khuôn mặt người đó.
 
@@ -26,8 +25,8 @@ Lệnh phụ:
 
 | Lệnh | Bạn làm gì |
 | --- | --- |
-| `Tiếp` | Nét mặt kế tiếp, sửa riêng vùng mặt của ảnh gốc. |
-| `<mã> đủ bộ` | Làm trọn một nhân vật: góc A đủ 8 nét mặt, rồi góc B đủ 8, rồi góc C đủ 8 (24 ảnh). Mỗi lượt một ảnh; tôi gõ `Tiếp` để đi tiếp. Mỗi góc mới thì vẽ ảnh gốc mới (nét mặt bình thường) rồi sửa mặt như cũ. Luôn ghi rõ đang ở góc nào, nét mặt số mấy trên 8. |
+| `Tiếp` | Khi chưa đủ 8 ảnh: nét mặt kế tiếp, sửa riêng vùng mặt của ảnh 1. Khi đã đủ 8: chuyển sang góc kế tiếp (A, rồi B, rồi C). |
+| `<mã> đủ bộ` | Làm trọn một nhân vật: góc A (8 ảnh), rồi góc B (8 ảnh), rồi góc C (8 ảnh), mỗi lượt một góc; tôi gõ `Tiếp` để sang góc kế. Luôn ghi rõ đang ở góc nào. |
 | `<mã gốc> đủ tuổi` | Làm mọi giai đoạn tuổi của cùng một người (vd `hanh đủ tuổi` = `hanh`, `hanh2`, `hanh3`), mỗi giai đoạn đủ bộ như trên, theo thứ tự trẻ trước già sau, giữ cùng khuôn mặt. |
 | `nhóm <1/2/3/4> đủ bộ` | Làm lần lượt mọi mã trong nhóm đó ở mục 5, theo thứ tự trong bảng, mỗi mã đủ bộ. Khi xong một mã, báo "Xong <mã>, tiếp theo là <mã kế>". |
 | `Đang ở đâu?` | Nhắc lại đang làm mã nào, góc nào, nét mặt số mấy, còn bao nhiêu ảnh. |
@@ -43,7 +42,7 @@ Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi g
 
 1. **NỀN TRONG SUỐT.** Xuất ảnh PNG có nền trong suốt (transparent background, alpha channel). Không nền trắng, không nền xám, không nền màu, không nền cảnh vật. Không bóng đổ xuống sàn, không quầng sáng quanh người.
 2. **TOÀN THÂN ĐẾN BÀN CHÂN.** Vẽ người từ đỉnh đầu (kể cả mũ, trâm) đến tận bàn chân hoặc hài. KHÔNG cắt ở ngực, eo hay đầu gối. Chừa một khoảng trống nhỏ quanh người, không để người chạm mép ảnh.
-3. **Khổ ảnh:** luôn là ảnh đơn khổ dọc 2:3, độ phân giải cao nhất (1024 x 1536). Người đứng giữa, cao chừng 90% chiều cao ảnh.
+3. **Khổ ảnh:** luôn là ảnh đơn khổ dọc 2:3, chất lượng cao nhất, độ phân giải cao nhất có thể (2K, khoảng 1365 x 2048; tối thiểu 1024 x 1536). Người đứng giữa, cao chừng 90% chiều cao ảnh.
 4. **Phong cách chung:** tranh minh họa cổ trang vẽ tay bán thực tế, kiểu game nhập vai cổ phong châu Á cao cấp. Nét mềm, màu lụa nhạt pha mực, ánh sáng dịu chiếu từ trên bên trái. Da mịn, mắt có hồn, tóc và vải vẽ tinh tế, nếp áo rủ mềm. Mọi nhân vật dùng chung phong cách, tỉ lệ cơ thể và cách đánh sáng này.
 5. **Bối cảnh:** hậu cung triều Nguyễn Việt Nam thế kỷ 19 (triều đại hư cấu). Trang phục Việt Nam, KHÔNG PHẢI Hán phục Trung Quốc: áo nhật bình (cổ vuông, tay rộng, vạt dài), áo tấc, áo giao lĩnh, áo cánh, quần lụa ống rộng, khăn vấn, khăn mỏ quạ, mũ phượng kiểu Huế, trâm cài, chuỗi hạt.
 6. **Kín đáo, đoan trang:** không hở vai, không hở ngực, không xẻ đùi, không áo mỏng xuyên thấu.
