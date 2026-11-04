@@ -273,7 +273,7 @@ export const DEEP_EVENTS: Card[] = [
     who: 'cungnu',
     whoName: 'Mận, tú nữ làng muối',
     title: 'Tuyển tú khóa sau',
-    text: ['Khóa tuyển tú mới vào cung, mấy tú nữ được đưa sang các viện tập hầu trà. Cô gái làng muối tên Mận run tay, đổ cả trà ra chiếu. Bạn nhìn cô như nhìn mình năm mười sáu.', 'Cô quỳ rạp: "Nô tỳ xin chịu phạt, xin đừng đuổi về, mẹ nô tỳ đã bán ruộng lo lễ."'],
+    text: ['Khóa tuyển tú mới vào cung, mấy tú nữ được đưa sang các viện tập hầu trà. Cô gái làng muối tên Mận run tay, đổ cả trà ra chiếu. Bạn nhìn cô như nhìn mình năm mười tám.', 'Cô quỳ rạp: "Nô tỳ xin chịu phạt, xin đừng đuổi về, mẹ nô tỳ đã bán ruộng lo lễ."'],
     choices: [
       { t: 'Đỡ cô dậy, xin cho về viện mình học lễ', fx: { d: { duc: 4, an: -3, hanh: 3 }, flag: ['ev_tu_do'] }, note: 'Đêm đầu, Mận ngủ dưới chân giường bạn. Cô nói mơ toàn chuyện muối.' },
       { t: 'Bảo ma ma dạy cô, mình không nhúng tay', fx: { d: { muu: 4, duc: -2 } }, note: 'Mận được giữ lại, ở viện xa. Lần sau gặp, cô cúi chào bạn rất kỹ, rất xa.' },
@@ -686,7 +686,7 @@ export const DEEP_EVENTS: Card[] = [
     who: 'cungnu',
     whoName: 'Mận, nay là Quý nhân',
     title: 'Mận trả ơn',
-    text: ['Nửa đêm Mận gõ cửa viện bạn, áo khoác vội. Cô nghe được bên Thục phi bàn chuyện viện bạn ngay trong yến tối.', '"Chị đỡ em năm mười sáu. Giờ đến lượt em."'],
+    text: ['Nửa đêm Mận gõ cửa viện bạn, áo khoác vội. Cô nghe được bên Thục phi bàn chuyện viện bạn ngay trong yến tối.', '"Chị đỡ em năm mười tám. Giờ đến lượt em."'],
     choices: [
       { t: 'Nghe hết, cảm ơn, rồi tự lo', fx: { d: { muu: 8, the: 4 } }, note: 'Bạn đổi người giữ cửa ngay trong đêm. Sáng ra, Mận đã về viện mình như chưa từng đến.' },
       { t: 'Bảo Mận đừng dính vào nữa, chị không muốn em liều', fx: { d: { duc: 5, muu: 3, an: 2 } }, note: 'Mận khóc, gật đầu. Nhưng từ đó tin tức bên kia vẫn đến tay bạn, qua Hạnh.' },
@@ -783,10 +783,10 @@ export const DEEP_EVENTS: Card[] = [
     cast: ['me', 'hanh'],
     mood: 'buon',
     moods: { hanh: 'binh' },
-    lead: 'Năm mười sáu, ma ma Trịnh dạy bạn đọc cuốn lịch đầu tiên.',
+    lead: 'Năm mười tám, ma ma Trịnh dạy bạn đọc cuốn lịch đầu tiên.',
     who: 'hanh',
     title: 'Cuốn lịch năm đầu',
-    text: ['Dọn rương cũ, Hạnh tìm thấy cuốn lịch Ban sóc năm bạn mười sáu. Bên ngày hái lứa chè đầu vẫn còn vết móng tay.', '"Nương nương còn nhớ mùa chè năm ấy không?"'],
+    text: ['Dọn rương cũ, Hạnh tìm thấy cuốn lịch Ban sóc năm bạn mười tám. Bên ngày hái lứa chè đầu vẫn còn vết móng tay.', '"Nương nương còn nhớ mùa chè năm ấy không?"'],
     choices: [
       { t: 'Gửi cuốn lịch về cho cháu gái ở quê giữ', fx: { d: { the: 3, duc: 3 } }, note: 'Cháu gái viết thư hỏi vết móng tay ấy là gì. Bạn kể đến nửa đêm mới xong một trang.' },
       { t: 'Giữ lại, đêm nào cũng lật đến ngày ấy', fx: { d: { muu: 2, hanh: 4 } }, note: 'Hạnh ngồi cạnh, không hỏi nữa. Ngoài kia gió đưa mùi chè từ đâu không rõ.' },

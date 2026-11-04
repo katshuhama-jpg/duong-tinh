@@ -384,7 +384,7 @@ export const CARDS_B: Card[] = [
     moods: { con: 'gian', quan: 'lo' },
     bg: 'trieu',
     lead: 'Mấy năm ngồi trước rèm, con đã cao hơn cả tấm bình phong.',
-    title: 'Lời vua mười lăm tuổi',
+    title: 'Lời vua mười tám tuổi',
     text: ['Con đứng dậy giữa buổi chầu sáng, gạt tấm rèm sang một bên.', '"Việc này để trẫm tự định, mẫu hậu nghỉ đi."'],
     choices: [
       { t: 'Kéo rèm lại, nói tiếp như chưa nghe', fx: { d: { muu: 5, quan: 3, duc: -6 } }, note: 'Buổi chầu êm, nhưng tối ấy con không đến vấn an.' },
@@ -537,7 +537,7 @@ export const CARDS_B: Card[] = [
     text: ['Được chuẩn về quê tảo mộ, bạn thấy đồi chè nhà cũ giờ đã thành của người khác.', 'Mộ mẹ ở cuối đồi, bia đá còn khắc chữ "mẹ của bà phi".'],
     choices: [
       { t: 'Mua lại đồi chè, dựng nhà thờ họ', fx: { d: { the: 8, tien: -200, duc: 2 } }, note: 'Người làng lạy bạn như lạy thánh, không ai dám ngồi ngang.' },
-      { t: 'Hái một nắm chè non mang về cung', fx: { d: { duc: 5, sac: 2 } }, note: 'Đêm ấy pha một ấm chè xanh, vị chát y như năm mười sáu tuổi.' },
+      { t: 'Hái một nắm chè non mang về cung', fx: { d: { duc: 5, sac: 2 } }, note: 'Đêm ấy pha một ấm chè xanh, vị chát y như năm mười tám tuổi.' },
     ],
   },
 ];

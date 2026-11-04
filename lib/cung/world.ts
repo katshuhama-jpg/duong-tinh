@@ -51,7 +51,7 @@ export const RIVALS: { k: import('./types').RivalK; t: string; cast: import('./t
   { k: 'tao', t: 'Tào công công', cast: 'tao', from: 1, th: 30, of: 'hoanghau', d: 'Chưởng sự thái giám cung Hoàng hậu. Mọi tin trong hậu cung đi qua tay ông trước khi tới tai bà.' },
   { k: 'xuanlan', t: 'Xuân Lan', cast: 'xuanlan', from: 1, th: 25, of: 'thucphi', d: 'Cung nữ thân tín của Thục phi, theo bà từ nhà ra. Việc bẩn nào của Thục phi cũng do đôi tay này làm.' },
   { k: 'mac', t: 'Mạc tướng quân', cast: 'mac', from: 2, th: 30, of: 'hienphi', d: 'Cha Hiền phi, giữ một nửa cấm quân. Đụng vào con gái ông là đụng vào giáo mác.' },
-  { k: 'letan', t: 'Lệ tần', cast: 'letan', from: 3, th: 35, d: 'Tân sủng mười lăm tuổi, cháu gái Thái phó Tôn, được đưa vào đúng lúc bạn mang thai.' },
+  { k: 'letan', t: 'Lệ tần', cast: 'letan', from: 3, th: 35, d: 'Tân sủng mười tám tuổi, cháu gái Thái phó Tôn, được đưa vào đúng lúc bạn mang thai.' },
   { k: 'thaipho', t: 'Thái phó Tôn', cast: 'quan', from: 4, th: 40, d: 'Quyền thần nắm nửa triều đình, muốn đặt người của mình vào Đông cung.' },
   { k: 'nghia', t: 'Hoàng tử Nghĩa', cast: 'nghia', from: 4, th: 35, d: 'Con trưởng của Thục phi, tranh ngôi Đông cung với con bạn.' },
 ];
@@ -70,7 +70,7 @@ export const CHAPTERS: { n: number; t: string; smalls: number; epi: string; hook
   { n: 4, t: 'Ngôi Đông cung', smalls: 7, epi: 'Một chiếc ghế nhỏ ở Đông cung, mà bao nhiêu người đã ngã quanh nó.', hook: 'Triều đình bắt đầu bàn chuyện lập Đông cung. Tên con bạn được nhắc tới, và cả tên người khác.' },
   { n: 5, t: 'Vua băng', smalls: 3, epi: 'Mặt trời lặn thì bóng tối chia nhau. Ai giữ được ấn, người ấy giữ được sáng mai.', hook: 'Hoàng thượng ho ra máu. Từ đêm nay, mỗi bước chân trong cung đều có người canh.' },
   { n: 6, t: 'Buông rèm', smalls: 6, epi: 'Ngồi sau rèm, nghe cả triều tâu. Một câu nói sai, cả họ nhà mình trả giá.', hook: 'Con còn nhỏ, ngai còn lạnh. Và Thái phó Tôn đã cười với bạn hơi lâu.' },
-  { n: 7, t: 'Tuổi già', smalls: 5, epi: 'Người cũ lần lượt đi. Chỉ có những món nợ là ở lại.', hook: 'Một sáng, có người gửi vào một chiếc hài thêu. Bạn nhận ra mũi kim của chính mình năm mười sáu tuổi.' },
+  { n: 7, t: 'Tuổi già', smalls: 5, epi: 'Người cũ lần lượt đi. Chỉ có những món nợ là ở lại.', hook: 'Một sáng, có người gửi vào một chiếc hài thêu. Bạn nhận ra mũi kim của chính mình năm mười tám tuổi.' },
 ];
 
 export const NUM_LABEL: Record<NumK, string> = {

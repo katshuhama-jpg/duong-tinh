@@ -103,7 +103,7 @@ function feelOf(k: NumK, v: number): string {
   return 'Thù hằn';
 }
 const ageOf = (l: Life) => Math.floor(l.age);
-const yearOf = (l: Life) => ageOf(l) - 13;
+const yearOf = (l: Life) => ageOf(l) - 15;
 const hash = (s: string) => {
   let h = 0;
   for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0;
@@ -258,7 +258,7 @@ export default function Play() {
             <p className="c-pro-line" style={{ animationDelay: '0.6s' }}>Năm {ERA} thứ ba mươi bảy.</p>
             <p className="c-pro-line" style={{ animationDelay: '1.8s' }}>Trăm quan quỳ kín sân rồng. Trên ngai là một ông vua mười tuổi. Sau tấm rèm trúc là người thật sự cầm thiên hạ: một người đàn bà đội mũ chín phượng.</p>
             <p className="c-pro-line" style={{ animationDelay: '3.2s' }}>Thục phi đã chết. Hoàng hậu đã bị phế. Thái phó Tôn đã ra pháp trường. Không còn ai dám cuốn tấm rèm này lên.</p>
-            <p className="c-pro-line" style={{ animationDelay: '4.8s' }}>Ba mươi năm trước, bà chỉ là một cô gái mười sáu tuổi, đứng run trước cổng cung.</p>
+            <p className="c-pro-line" style={{ animationDelay: '4.8s' }}>Ba mươi năm trước, bà chỉ là một cô gái mười tám tuổi, đứng run trước cổng cung.</p>
             <p className="c-pro-line strong" style={{ animationDelay: '6.2s' }}>Cô gái ấy sẽ ngồi sau tấm rèm này, hay chết trong một cái giếng sau viện. Tất cả tùy vào bạn.</p>
             <button type="button" className="c-btn c-pro-line" style={{ animationDelay: '7.2s' }} onClick={() => setPro(false)}>
               Quay về ba mươi năm trước

@@ -19,7 +19,7 @@ export const ENDING_ART: Record<string, EndArt> = {
     mood: 'buon',
     motif: 'lua',
     story:
-      'Năm mười sáu tuổi, {ho} thị đứng ra nhận tội thay người nằm chiếu bên. Thái hậu cho một dải lụa trắng và một buổi chiều để từ biệt. Bà cắt một lọn tóc, gói trong khăn tay, nhét vào tay Kiều Nga mà không nói gì. Nhiều năm sau, đến đúng ngày ấy, người ta lại nghe bài hò hái chè vọng ra từ dãy phòng cung nữ.',
+      'Năm mười tám tuổi, {ho} thị đứng ra nhận tội thay người nằm chiếu bên. Thái hậu cho một dải lụa trắng và một buổi chiều để từ biệt. Bà cắt một lọn tóc, gói trong khăn tay, nhét vào tay Kiều Nga mà không nói gì. Nhiều năm sau, đến đúng ngày ấy, người ta lại nghe bài hò hái chè vọng ra từ dãy phòng cung nữ.',
   },
   e_ar_hai_ba: {
     place: 'vuon',
@@ -129,7 +129,7 @@ export const ENDING_ART: Record<string, EndArt> = {
     mood: 'buon',
     motif: 'rem',
     story:
-      'Như phần đông phi tần, {ho} thị được hầu vua một lần năm mười bảy tuổi, rồi thôi. Rèm trúc trước viện buông suốt mấy chục năm, bụi bám thành lớp. Bà đếm mùa bằng hoa trong sân, đếm năm bằng tóc bạc trên lược. Đến khi mất, sổ cung chỉ ghi họ và một bậc thấp, không ai nhớ mặt.',
+      'Như phần đông phi tần, {ho} thị được hầu vua một lần năm mười chín tuổi, rồi thôi. Rèm trúc trước viện buông suốt mấy chục năm, bụi bám thành lớp. Bà đếm mùa bằng hoa trong sân, đếm năm bằng tóc bạc trên lược. Đến khi mất, sổ cung chỉ ghi họ và một bậc thấp, không ai nhớ mặt.',
   },
   e_cau_mua: {
     place: 'lang',

@@ -73,7 +73,7 @@ export const BRANCH_B_CHOICES: Record<string, Choice[]> = {
       need: { not: ['hanh_phan'] },
       lockHint: 'Cần Hạnh còn một lòng',
       fx: { next: 'nb_cuoi_cho' },
-      note: 'Hạnh tròn mắt, rồi bật cười như hồi mười lăm tuổi. Hai bà già mượn áo nâu của người quét sân, ra cửa Tây lúc đổi gác.',
+      note: 'Hạnh tròn mắt, rồi bật cười như hồi mười tám tuổi. Hai bà già mượn áo nâu của người quét sân, ra cửa Tây lúc đổi gác.',
     },
   ],
   cb_tu: [

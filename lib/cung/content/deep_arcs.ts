@@ -191,7 +191,7 @@ export const DEEP_ARCS: Card[] = [
     text: ['Giọng Hạnh khàn từ đêm nếm chén sâm năm ấy, nay chỉ còn thì thào.', '"Nô tỳ xin một điều: cho thằng Cún được ghi tên cha nó vào sổ làng."'],
     choices: [
       { t: 'Xin vua ban chiếu khen chồng Hạnh, người năm xưa đi phu đắp đê', fx: { d: { hanh: 15, duc: 6, tien: -50 } }, note: 'Làng dựng một tấm bia nhỏ bên đê. Hạnh khóc không ra tiếng.' },
-      { t: 'Gửi ruộng cho thằng Cún, không làm to chuyện', fx: { d: { hanh: 6, the: 4, tien: -30 } }, note: 'Hạnh gật đầu, nắm tay bạn như năm mười sáu tuổi.' },
+      { t: 'Gửi ruộng cho thằng Cún, không làm to chuyện', fx: { d: { hanh: 6, the: 4, tien: -30 } }, note: 'Hạnh gật đầu, nắm tay bạn như năm mười tám tuổi.' },
     ],
   },
 
@@ -851,7 +851,7 @@ export const DEEP_ARCS: Card[] = [
     text: ['Hôm nay giỗ Kiều Nga. Lọn tóc buộc chỉ đỏ vẫn nằm trong hộp sơn mài.', 'Hạnh hỏi khẽ: "Nương nương có thắp hương không ạ?"'],
     choices: [
       { t: 'Thắp hương, hát bài hò hái chè một mình', fx: { d: { duc: 6, muu: -2 } }, note: 'Hát đến câu thứ ba thì bạn quên lời. Không còn ai nằm chiếu bên để nhắc.' },
-      { t: 'Đốt lọn tóc', fx: { d: { muu: 4, duc: -3 } }, note: 'Tóc cháy khét. Năm mười sáu tuổi, hai lọn tóc ấy từng là một lời thề.' },
+      { t: 'Đốt lọn tóc', fx: { d: { muu: 4, duc: -3 } }, note: 'Tóc cháy khét. Năm mười tám tuổi, hai lọn tóc ấy từng là một lời thề.' },
     ],
   },
   {
@@ -925,7 +925,7 @@ export const DEEP_ARCS: Card[] = [
     lead: 'Từ ngày bạn buông rèm thay con, chuyện lớn nhỏ trong cung đều qua tay bạn.',
     who: 'con',
     title: 'Cung nữ quét sân',
-    text: ['Vua con mười lăm tuổi đem lòng thương Lụa, cung nữ quét sân con nhà phu đê.', '"Mẫu hậu, con muốn lập nàng làm phi."'],
+    text: ['Vua con hai mươi tuổi đem lòng thương Lụa, cung nữ quét sân con nhà phu đê.', '"Mẫu hậu, con muốn lập nàng làm phi."'],
     choices: [
       { t: 'Cho phép, phong Lụa làm Tài nhân', fx: { d: { duc: 3, quan: -6 }, flag: ['ar_c_lua_giu'] }, note: 'Các quan bàn tán cả tháng. Con thì lần đầu tiên ôm mẹ trước mặt người khác.' },
       { t: 'Đuổi Lụa về quê, chọn cho con một cô con nhà quan', fx: { d: { muu: 5, quan: 6 }, flag: ['ar_c_lua_duoi'] }, note: 'Lụa đi lúc trời chưa sáng. Con đứng trên lầu nhìn theo, không gọi.' },
@@ -946,7 +946,7 @@ export const DEEP_ARCS: Card[] = [
     lead: 'Mấy năm buông rèm, bạn quen chiếc ghế sau rèm hơn cả giường mình.',
     who: 'con',
     title: 'Xin mẫu hậu trả ấn',
-    text: ['Con mười bảy tuổi, đứng giữa điện gạt rèm sang một bên.', '"Xin mẫu hậu trả ấn. Trẫm đã lớn." Cả điện cúi đầu, không ai dám thở.'],
+    text: ['Con hai mươi hai tuổi, đứng giữa điện gạt rèm sang một bên.', '"Xin mẫu hậu trả ấn. Trẫm đã lớn." Cả điện cúi đầu, không ai dám thở.'],
     omen: 'Đứa trẻ năm nào nép vào lòng mẹ nay đứng ngang vai mẹ.',
     choices: [
       { t: 'Trả ấn, lui về cung', fx: { d: { duc: 10, quan: 6, muu: -4 }, flag: ['ar_c_tra', 'lui'], years: 2, chapter: 7 }, note: 'Bạn đặt ấn vào tay con. Con cầm, rồi khẽ cúi đầu: "Mẹ nghỉ đi."' },
@@ -1033,7 +1033,7 @@ export const DEEP_ARCS: Card[] = [
 
 export const ENDINGS_ARCS: Ending[] = [
   { id: 'd_ar_cua_sau', name: 'Cửa sau không cài then', desc: 'Đêm vua hấp hối, người hầu thân nhất mở cửa cho kẻ lạ. Ai cũng tưởng bạn chết vì người ngoài.', dead: true },
-  { id: 'd_ar_kieu_nga', name: 'Lọn tóc năm đầu', desc: 'Bạn nhận tội thay người nằm chiếu bên năm mười sáu tuổi. Thái hậu không tha. Mỗi năm đến ngày ấy, Kiều Nga mặc áo trắng, thắp một nén hương bên giếng cũ viện Nghi Lễ.', dead: true },
+  { id: 'd_ar_kieu_nga', name: 'Lọn tóc năm đầu', desc: 'Bạn nhận tội thay người nằm chiếu bên năm mười tám tuổi. Thái hậu không tha. Mỗi năm đến ngày ấy, Kiều Nga mặc áo trắng, thắp một nén hương bên giếng cũ viện Nghi Lễ.', dead: true },
   { id: 'e_ar_hai_ba', name: 'Hai bà già bên hồ sen', desc: 'Người đàn bà từng là kẻ thù sống cạnh bạn đến cuối đời. Hai người cãi nhau về cách pha trà, và không ai nhắc đến chiếc trâm phượng.' },
   { id: 'e_ar_nghia_mau', name: 'Chị em một chữ nhẫn', desc: 'Hoàng hậu không con dạy bạn chữ đầu tiên, rồi coi bạn như em ruột đến cuối đời. Sử chép hai bà như hai chị em, ngày nàng mất bạn để tang như tang chị.' },
   { id: 'e_ar_doi_che', name: 'Chiếu đưa mẹ về quê', desc: 'Con lớn lên giống mẹ quá. Một tờ chiếu đưa bạn về đồi chè cũ ở {que}, có lính canh cổng, có lương hưu, không có thư của con.' },

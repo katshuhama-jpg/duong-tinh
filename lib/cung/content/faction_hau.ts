@@ -1146,7 +1146,7 @@ export const FACTION_HAU: Card[] = [
     who: 'hoanghau',
     where: 'ở cung Ngọc Khuê',
     title: 'Cung không người',
-    text: ['Hoàng hậu tự rót trà, kể bà vào cung năm mười bốn tuổi, ba lần có mang đều mất, lần thứ tư thái y nói đừng mong nữa.', '"Ta không có con, nên phải làm mẹ của tất cả. Em có con rồi, em hiểu được không?"'],
+    text: ['Hoàng hậu tự rót trà, kể bà vào cung năm mười tám tuổi, ba lần có mang đều mất, lần thứ tư thái y nói đừng mong nữa.', '"Ta không có con, nên phải làm mẹ của tất cả. Em có con rồi, em hiểu được không?"'],
     choices: [
       { t: 'Hiểu. Nhưng Lương tần cũng có con', fx: { next: 'fh_qc_xet' }, note: 'Hoàng hậu đặt chén xuống, đứng dậy gọi người đi mời Thái hậu, "để chuyện này có người làm chứng cho cả hai".' },
       { t: 'Bà tự dâng biểu thoái vị, lên chùa Vân Tịch tu', fx: { next: 'fh_qc_ep' }, note: 'Hoàng hậu nhìn bạn rất lâu: "Em muốn ta sống mà không còn tên." Bà không từ chối ngay.' },

@@ -1436,7 +1436,7 @@ export const FACTION_HP: Card[] = [
     who: 'hanh',
     lead: 'Bao nhiêu năm rồi, cái tên họ Mạc vẫn chưa hết trong cung.',
     title: 'Tú nữ họ Mạc',
-    text: ['Đợt tuyển tú năm ấy có một cô gái mười lăm tuổi, cười rất hiền, khai là cháu gọi Hiền phi bằng cô.', 'Hạnh nói nhỏ: "Nương nương nhìn mắt nó. Y hệt."'],
+    text: ['Đợt tuyển tú năm ấy có một cô gái mười tám tuổi, cười rất hiền, khai là cháu gọi Hiền phi bằng cô.', 'Hạnh nói nhỏ: "Nương nương nhìn mắt nó. Y hệt."'],
     choices: [
       { t: 'Gạch tên, gửi nó về quê với một túi bạc', fx: { d: { duc: 2, tien: -20 } }, note: 'Cô gái lạy ba lạy rồi đi. Năm sau nghe tin nó lấy một ông tri huyện, sống rất bình thường.' },
       { t: 'Giữ lại hầu bên cạnh, để mắt tới', fx: { d: { muu: 2 }, next: 'fp_du_chau2' }, note: 'Cô gái hầu trà rất khéo, chưa từng đổ một giọt. Tới mùa thu, Hạnh lục được trong rương nó một bài vị nhỏ.' },

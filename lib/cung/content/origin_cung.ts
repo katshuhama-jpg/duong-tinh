@@ -1,5 +1,5 @@
 /**
- * Đường "Cung nga giặt áo" (khóa `cung`): họ Lương, bị bán vào cung năm mười hai tuổi, giặt áo ở viện Hoán Y.
+ * Đường "Cung nga giặt áo" (khóa `cung`): họ Lương, bị bán vào cung năm mười bốn tuổi, giặt áo ở viện Hoán Y.
  * Cốt truyện "Sổ áo": một tấm áo dính máu từ cung Thục phi, một trang sổ áo giữ lại, và bà Tư nhận tội thay.
  * Chặng 1-2: đời cung nga, đến lần được vua để mắt. Chặng 3-7: chen vào mạch chung bằng after/before.
  */

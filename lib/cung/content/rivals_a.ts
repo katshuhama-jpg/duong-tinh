@@ -978,7 +978,7 @@ export const RIVALS_A: Card[] = [
     moods: { thaihau: 'binh', letan: 'vui' },
     who: 'letan',
     title: 'Tân sủng chào Thái hậu',
-    text: ['Lệ tần quỳ dâng Thái hậu một bức thêu trăm chữ Thọ, mười lăm tuổi mà nói năng như đã học thuộc.', '"Thần thiếp không dám mong ngôi cao, chỉ mong được hầu Mẫu hậu mỗi sáng." Thái hậu cười, lần đầu tiên trong tháng.'],
+    text: ['Lệ tần quỳ dâng Thái hậu một bức thêu trăm chữ Thọ, mười tám tuổi mà nói năng như đã học thuộc.', '"Thần thiếp không dám mong ngôi cao, chỉ mong được hầu Mẫu hậu mỗi sáng." Thái hậu cười, lần đầu tiên trong tháng.'],
     choices: [
       {
         t: 'Thưa Thái hậu: chữ Thọ thứ chín mươi chín thêu ngược',

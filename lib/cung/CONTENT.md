@@ -4,7 +4,7 @@
 
 ## Bối cảnh
 - Triều đại hư cấu, niên hiệu **Khánh Vân**, kinh thành **Phượng Thành**. Không dùng tên người, tên cung điện, tên làng có thật (không Ỷ Lan, Thượng Dương, Thổ Lỗi, Diên Thọ, Đoan Trang, Thăng Long, Huế...).
-- Nhân vật chính: người chơi là "bạn" (ngôi thứ hai), vào cung năm 16 tuổi theo một trong bốn đường (xem mục "Bốn đường vào cung"). Mạch gốc là đường dân nữ: **Diệp**, cô gái làng Mai Đông (hư cấu), nhà làm chè, gặp vua khi vua đi lễ chùa Vân Tịch cầu tự.
+- Nhân vật chính: người chơi là "bạn" (ngôi thứ hai), vào cung năm 18 tuổi theo một trong bốn đường (xem mục "Bốn đường vào cung"). Mạch gốc là đường dân nữ: **Diệp**, cô gái làng Mai Đông (hư cấu), nhà làm chè, gặp vua khi vua đi lễ chùa Vân Tịch cầu tự.
 - Người quanh mình (khóa `CastK`):
   - `vua`: Hoàng thượng, ngoài 30, hiền nhưng nhu, sức yếu, mãi chưa có con với hoàng hậu.
   - `thaihau`: Thái hậu, mẹ vua, nghiêm, trọng lễ.

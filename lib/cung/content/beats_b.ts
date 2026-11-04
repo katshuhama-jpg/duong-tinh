@@ -387,7 +387,7 @@ export const BEATS_B: Card[] = [
     title: 'Bao chè lên kinh',
     text: ['{me} gửi lên một bao chè, kèm lá thư nhờ thầy đồ viết.', '"Giờ con ở trên cao, mẹ chẳng dặn gì, chỉ dặn: đừng tin người cười nhiều."'],
     choices: [
-      { t: 'Pha chè, ngồi uống một mình bên song cửa', fx: { d: { the: 3, duc: 2 } }, note: 'Chè đắng trước ngọt sau, y như năm mười sáu tuổi. Người mang thư kể, trên đường lên kinh đêm nào cũng gặp lính đi ngược chiều.' },
+      { t: 'Pha chè, ngồi uống một mình bên song cửa', fx: { d: { the: 3, duc: 2 } }, note: 'Chè đắng trước ngọt sau, y như năm mười tám tuổi. Người mang thư kể, trên đường lên kinh đêm nào cũng gặp lính đi ngược chiều.' },
       { t: 'Chia chè cho các quan đọc tấu đêm', fx: { d: { quan: 6, the: -2 } }, note: 'Các quan khen chè quê thơm. Thái phó Tôn uống một ngụm, cười, rồi hỏi {que} cách kinh mấy ngày đường.' },
       { t: 'Viết thư đón {me} lên kinh', fx: { d: { the: 5, tien: -40 } }, note: 'Thư đi được nửa tháng thì có tin: đường từ {que} lên kinh bị chặn, chưa rõ vì sao.' },
     ],
@@ -408,7 +408,7 @@ export const BEATS_B: Card[] = [
     moods: { cungnu: 'binh' },
     who: 'cungnu',
     title: 'Chiếc hài thêu',
-    text: ['Trong hộp gỗ mộc không đề tên là một chiếc hài thêu hoa mai đã ố vàng.', 'Mũi kim lệch đúng chỗ bạn thêu vụng năm mười sáu tuổi: chính chiếc hài bạn đánh mất đêm đầu vào cung.'],
+    text: ['Trong hộp gỗ mộc không đề tên là một chiếc hài thêu hoa mai đã ố vàng.', 'Mũi kim lệch đúng chỗ bạn thêu vụng năm mười tám tuổi: chính chiếc hài bạn đánh mất đêm đầu vào cung.'],
     omen: 'Chiếc hài mất đêm đầu vào cung không tự đi một mình.',
     choices: [
       { t: 'Hỏi ai mang hộp tới', fx: { d: { muu: 5 }, flag: ['bb_hai'] }, note: 'Cung nữ chỉ biết một bà lão quét lá ở viện cũ mang tới cổng cung bạn, dặn "trao tận tay".' },
@@ -455,7 +455,7 @@ export const BEATS_B: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ giữ sổ',
     title: 'Hai chữ mực son',
-    text: ['Cung nữ giữ sổ dâng lên sổ nhập cung năm bạn mười sáu tuổi, để chép vào sử.', 'Cạnh tên bạn có hai chữ mực son, nét lạ: "Đã uống."'],
+    text: ['Cung nữ giữ sổ dâng lên sổ nhập cung năm bạn mười tám tuổi, để chép vào sử.', 'Cạnh tên bạn có hai chữ mực son, nét lạ: "Đã uống."'],
     omen: 'Có người đã ghi chén trà đêm đầu vào sổ, từ mấy chục năm trước.',
     choices: [
       { t: 'Tìm xem nét son ấy của ai', fx: { d: { muu: 6 }, flag: ['bb_so_cu'] }, note: 'Lật hết sổ, chỉ có ba cái tên được viết thêm như thế. Hai người kia không ai sống quá hai mươi.' },

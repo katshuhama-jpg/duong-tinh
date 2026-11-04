@@ -518,7 +518,7 @@ export const FACTION_TP: Card[] = [
         fx: { d: { muu: 4 }, riv: { xuanlan: { ev: 20, th: 10 } }, flag: ['ft_thoa_moi'] },
         note: 'Ba đêm sau có kẻ lẻn vào viện lục tủ. Hạnh nấp sau bình phong, nhìn rõ đôi giày thêu hoa lan.',
       },
-      { t: 'Bỏ tiền lo hậu sự, gửi về quê cho mẹ nó', fx: { d: { tien: -30, duc: 5 }, riv: { xuanlan: { ev: 5 } } }, note: 'Bạn đặt chiếc hài vào quan tài cho đủ đôi. Thoa mười lăm tuổi, vào cung chưa được một năm.' },
+      { t: 'Bỏ tiền lo hậu sự, gửi về quê cho mẹ nó', fx: { d: { tien: -30, duc: 5 }, riv: { xuanlan: { ev: 5 } } }, note: 'Bạn đặt chiếc hài vào quan tài cho đủ đôi. Thoa mười tám tuổi, vào cung chưa được một năm.' },
     ],
   },
 

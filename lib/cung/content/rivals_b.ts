@@ -24,7 +24,7 @@ export const ENDINGS_RIVALS_B: Ending[] = [
 
 export const RIVALS_B: Card[] = [
   /* =====================================================================
-   * LỆ TẦN (chương 3-5): tân sủng mười lăm tuổi, cháu Thái phó Tôn
+   * LỆ TẦN (chương 3-5): tân sủng mười tám tuổi, cháu Thái phó Tôn
    * ===================================================================== */
   /* ---- nắm thóp ---- */
   {
@@ -208,7 +208,7 @@ export const RIVALS_B: Card[] = [
     who: 'letan',
     whoName: 'Lệ tần',
     title: 'Chén trà hai người',
-    text: ['Bạn đặt túi thơm đã tháo chỉ lên bàn. Lệ tần nhìn nó, môi trắng bệch, rồi quỳ sụp xuống.', '"Là chú bắt em làm. Em mới mười lăm, chị ơi, em không muốn chết."'],
+    text: ['Bạn đặt túi thơm đã tháo chỉ lên bàn. Lệ tần nhìn nó, môi trắng bệch, rồi quỳ sụp xuống.', '"Là chú bắt em làm. Em mới mười tám, chị ơi, em không muốn chết."'],
     choices: [
       { t: 'Bắt nàng viết tờ thú tội, từ nay nghe lời mình', fx: { d: { muu: 3 }, next: 'rb_lt_ra_tho' }, note: 'Nàng viết run tay, ký cả tên tục. Hạnh gõ cửa: cung nữ viện Lệ tần đã tìm sang, đứng đợi ngoài cổng.' },
       { t: 'Đỡ nàng dậy, rót cho nàng chén chè sen đã pha sẵn', fx: { d: { duc: -5 }, next: 'rb_lt_ra_chen' }, note: 'Lệ tần cầm chén, ngước nhìn bạn rất lâu. Nàng không uống ngay.' },

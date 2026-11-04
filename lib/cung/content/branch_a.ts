@@ -379,7 +379,7 @@ export const BRANCH_A: Card[] = [
     moods: { thucphi: 'dac', hanh: 'so' },
     who: 'thucphi',
     title: 'Bát cặn đỏ',
-    text: ['Thục phi nhìn cái bát, không gọi người, chỉ cười khan.', '"Uống thì uống. Nhưng em có muốn biết, năm ta mười bảy tuổi, bát đầu tiên ai đưa cho ta không?"'],
+    text: ['Thục phi nhìn cái bát, không gọi người, chỉ cười khan.', '"Uống thì uống. Nhưng em có muốn biết, năm ta mười chín tuổi, bát đầu tiên ai đưa cho ta không?"'],
     choices: [
       { t: 'Bóp miệng nàng, đổ cặn thuốc vào', fx: { end: 'e_na_dien_cung', years: 1 }, note: 'Thục phi nhổ hết ra, rồi cười to. Đến khi người ta lôi bạn đi, nàng vẫn còn cười.' },
       { t: 'Đặt cái bát xuống, ngồi nghe', fx: { next: 'na_tra_ke' }, note: 'Thục phi đuổi hết cung nữ ra, cả Hạnh. Nàng tự tay đóng cửa, rót hai chén trà.' },
@@ -397,7 +397,7 @@ export const BRANCH_A: Card[] = [
     moods: { thucphi: 'buon' },
     who: 'thucphi',
     title: 'Hai cái bát',
-    text: ['Thục phi kể đến canh ba: năm mười bảy tuổi, nàng cũng mất một đứa con vì một bát thuốc như thế.', '"Người đưa bát ấy giờ ngồi ở chỗ cao nhất hậu cung. Em với ta, ai cũng chỉ là cái bát trong tay người khác."'],
+    text: ['Thục phi kể đến canh ba: năm mười chín tuổi, nàng cũng mất một đứa con vì một bát thuốc như thế.', '"Người đưa bát ấy giờ ngồi ở chỗ cao nhất hậu cung. Em với ta, ai cũng chỉ là cái bát trong tay người khác."'],
     omen: 'Hai người đàn bà cùng mất con mà ngồi chung một phòng, thì cả hậu cung đều biết trước sáng.',
     choices: [
       { t: 'Cùng nàng xin lên chùa Vân Tịch, bỏ hết', fx: { end: 'e_na_hai_ni', years: 1 }, note: 'Sáng ra, hai người cùng quỳ trước cung Thái hậu, tóc đã xõa. Thục phi chỉ xin cho Hoàng tử Nghĩa ở lại với vua cha, không ai hiểu đêm qua đã có chuyện gì.' },

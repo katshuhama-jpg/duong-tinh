@@ -5,7 +5,7 @@
  *  1. cb_dau    (ch4) Con lên đậu, thái y nghi có người bỏ thứ gì vào thuốc.
  *  2. cb_dc     (ch4) Đêm vua thổ huyết, tờ di chiếu còn trống tên.
  *  3. cb_phe    (ch5) Vua hôn mê, triều thần dâng sớ đổi Đông cung.
- *  4. cb_gia    (ch6) Thái phó ép gả cháu gái làm Hoàng hậu cho vua con.
+ *  4. cb_gia    (ch6) Thái phó ép định ước cháu gái làm Hoàng hậu cho vua con.
  *  5. cb_su     (ch6) Sứ thần Sa Hải đòi cống nạp, bạn ngồi sau rèm.
  *  6. cb_kieu   (ch6) Kiêu binh vây cửa cung đòi lương.
  *  7. cb_tu     (ch7) Con đã lớn, đòi tự quyết thân chinh.
@@ -383,8 +383,8 @@ export const CHAINS_B: Card[] = [
     moods: { quan: 'dac', con: 'binh' },
     where: REM,
     who: 'quan',
-    title: 'Bức họa cô dâu',
-    text: ['Thái phó Tôn dâng lên một bức họa: cháu gái lão, mười hai tuổi, xin lập làm Hoàng hậu cho vua.', '"Nhà thần ba đời giữ nước. Thành thông gia rồi, triều mới yên."'],
+    title: 'Bức họa họ Tôn',
+    text: ['Thái phó Tôn dâng lên một bức họa: cháu gái lão, mười tám tuổi, xin định ước làm Hoàng hậu, đợi vua đủ tuổi mới thành hôn.', '"Nhà thần ba đời giữ nước. Thành thông gia rồi, triều mới yên."'],
     choices: [
       { t: 'Nhận bức họa, hẹn xem tuổi', fx: { d: { quan: 4 }, next: 'cb_gia_xem' }, note: 'Bạn giao bức họa cho viện Nghi Lễ. Thái phó lui ra, bước chân nhẹ hẳn.' },
       { t: 'Gạt đi: vua còn nhỏ, chưa bàn chuyện lập hậu', fx: { d: { quan: -6, the: -2 }, next: 'cb_gia_ep' }, note: 'Thái phó cuộn bức họa lại. Chiều ấy cửa Ngọ Môn đổi lính gác, toàn người nhà họ Tôn.' },
@@ -402,9 +402,9 @@ export const CHAINS_B: Card[] = [
     who: 'con',
     whoName: 'Vua con',
     title: 'Vua con mắt đỏ',
-    text: ['Đêm ấy vua con chạy sang cung bạn, chân không đi hài, mắt đỏ hoe.', '"Mẹ ơi, con không muốn lấy cháu ông Tôn. Ông ấy nhìn con như nhìn con ngựa."'],
+    text: ['Đêm ấy vua con chạy sang cung bạn, chân không đi hài, mắt đỏ hoe.', '"Mẹ ơi, con không muốn đính ước với cháu ông Tôn. Ông ấy nhìn con như nhìn con ngựa."'],
     choices: [
-      { t: '"Làm vua thì không được chọn vợ."', fx: { d: { duc: 3, muu: 3 }, next: 'cb_gia_le' }, note: 'Vua con khóc đến khi ngủ thiếp trên đùi bạn. Sáng ra, bạn cho xem tuổi: hợp.' },
+      { t: '"Làm vua thì không được tự chọn hôn ước."', fx: { d: { duc: 3, muu: 3 }, next: 'cb_gia_le' }, note: 'Vua con khóc đến khi ngủ thiếp trên đùi bạn. Sáng ra, bạn cho xem tuổi: hợp.' },
       { t: 'Hứa với con sẽ tìm cách', fx: { d: { the: -2 }, flag: ['cb_gia_hua'], next: 'cb_gia_ep' }, note: 'Vua con ngoắc tay bạn rồi mới chịu về điện ngủ. Lời hứa ấy nặng hơn mọi tờ chiếu.' },
     ],
   },
@@ -420,9 +420,9 @@ export const CHAINS_B: Card[] = [
     where: REM,
     who: 'quan',
     title: 'Trăm quan quỳ trước rèm',
-    text: ['Thái phó dẫn cả trăm quan quỳ trước rèm, xin lập hậu "cho yên lòng thiên hạ".', 'Ngoài sân, cấm quân họ Tôn đứng kín hai bên hành lang.'],
+    text: ['Thái phó dẫn cả trăm quan quỳ trước rèm, xin định ước lập hậu "cho yên lòng thiên hạ".', 'Ngoài sân, cấm quân họ Tôn đứng kín hai bên hành lang.'],
     choices: [
-      { t: 'Gật đầu trước trăm quan, cho lập hậu', fx: { d: { quan: 6, duc: -2 }, next: 'cb_gia_le' }, note: 'Thái phó lạy tạ. Ra khỏi điện, lão đi trước cả xe vua.' },
+      { t: 'Gật đầu trước trăm quan, cho định ước', fx: { d: { quan: 6, duc: -2 }, next: 'cb_gia_le' }, note: 'Thái phó lạy tạ. Ra khỏi điện, lão đi trước cả xe vua.' },
       { t: 'Gửi mật thư gọi tướng Lê Trực vào giữ cửa', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { d: { tuong: 8, quan: -10 }, next: 'cb_gia_doi' }, note: 'Đến trưa, quân biên đổi gác cửa Ngọ Môn. Thái phó đứng dậy, phủi gối áo.' },
       { t: 'Đưa ra lá số đã sửa: cháu họ Tôn khắc chồng', need: { num: { muu: [45, 100] } }, lockHint: 'Cần Mưu từ 45', fx: { d: { muu: 4, quan: -4 }, next: 'cb_gia_doi' }, note: 'Quan Khâm thiên giám đọc lá số, mặt tái đi. Cả điện xôn xao.' },
     ],
@@ -437,13 +437,13 @@ export const CHAINS_B: Card[] = [
     mood: 'lo',
     moods: { cungnu: 'so' },
     who: 'cungnu',
-    whoName: 'Tôn thị, Hoàng hậu mới',
-    title: 'Cô dâu mười hai tuổi',
-    text: ['Đêm động phòng, cô dâu nhỏ trốn ra sân cung bạn, áo đỏ còn nguyên nếp.', '"Ông nội dặn con phải đếm xem vua uống thuốc gì, gặp ai. Con sợ lắm."'],
+    whoName: 'Tôn thị, người được định ước làm Hoàng hậu',
+    title: 'Nữ sử họ Tôn',
+    text: ['Đêm đầu vào cung làm nữ sử, cô gái họ Tôn trốn ra sân cung bạn, áo lễ định ước còn nguyên nếp.', '"Ông nội dặn con phải đếm xem vua uống thuốc gì, gặp ai. Con sợ lắm."'],
     choices: [
-      { t: 'Ôm cô bé, nhận làm con dâu thật', fx: { d: { duc: 8, quan: 6, hanh: 4 }, flag: ['cb_gia_dau'] }, note: 'Từ đó Tôn thị gọi bạn là mẹ. Những gì ông nội dặn, cô bé đều kể bạn nghe trước.' },
-      { t: 'Dặn cô bé báo tin giả về nhà họ Tôn', fx: { d: { muu: 10, duc: -4 }, flag: ['cb_gia_kep'] }, note: 'Cô bé gật đầu, môi run run. Một đứa trẻ mười hai tuổi thành tai mắt cho cả hai nhà.' },
-      { t: 'Đưa cô bé về phủ Thái phó ngay trong đêm', fx: { d: { quan: -18, the: -6, duc: 4 }, flag: ['cb_gia_tra'] }, note: 'Kiệu đỏ quay về phủ họ Tôn lúc canh ba. Từ đêm ấy, Thái phó cáo bệnh không vào chầu.' },
+      { t: 'Nắm tay cô gái, nhận làm con dâu thật', fx: { d: { duc: 8, quan: 6, hanh: 4 }, flag: ['cb_gia_dau'] }, note: 'Từ đó Tôn thị gọi bạn là mẹ. Những gì ông nội dặn, cô đều kể bạn nghe trước.' },
+      { t: 'Dặn cô gái báo tin giả về nhà họ Tôn', fx: { d: { muu: 10, duc: -4 }, flag: ['cb_gia_kep'] }, note: 'Cô gái gật đầu, môi run run. Một nữ sử mười tám tuổi thành tai mắt cho cả hai nhà.' },
+      { t: 'Đưa cô gái về phủ Thái phó ngay trong đêm', fx: { d: { quan: -18, the: -6, duc: 4 }, flag: ['cb_gia_tra'] }, note: 'Kiệu đỏ quay về phủ họ Tôn lúc canh ba. Từ đêm ấy, Thái phó cáo bệnh không vào chầu.' },
     ],
   },
   {
@@ -461,7 +461,7 @@ export const CHAINS_B: Card[] = [
     text: ['Trăm quan đã lui, Thái phó đứng một mình giữa điện, tay cầm hốt ngà mà run.', '"Nương nương thắng ván này. Lão xin về quê, chỉ xin giữ mạng cho cả nhà."'],
     choices: [
       { t: 'Cho Thái phó về hưu, ban ruộng, để vua tự chọn hậu', fx: { d: { duc: 6, quan: -4, the: 6 }, flag: ['cb_gia_huu'] }, note: 'Thái phó về quê nuôi cá. Vua con chạy ra sau rèm, ôm chầm lấy bạn.' },
-      { t: 'Không tha: tịch biên nhà họ Tôn', fx: { d: { muu: 10, quan: -20, duc: -10, tien: 300 }, flag: ['cb_gia_tich'] }, note: 'Kho nhà họ Tôn đếm ba ngày chưa hết. Cô cháu gái mười hai tuổi bị đưa lên chùa Vân Tịch.' },
+      { t: 'Không tha: tịch biên nhà họ Tôn', fx: { d: { muu: 10, quan: -20, duc: -10, tien: 300 }, flag: ['cb_gia_tich'] }, note: 'Kho nhà họ Tôn đếm ba ngày chưa hết. Cô cháu gái họ Tôn bị đưa lên chùa Vân Tịch.' },
     ],
   },
 

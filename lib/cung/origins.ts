@@ -43,7 +43,7 @@ export const ORIGINS: Origin[] = [
     flags: ['g_dan'],
     open: true,
     intro: [
-      'Bạn là con gái nhà làm chè ở làng Mai Đông. Năm mười sáu tuổi, bạn đứng tựa gốc đại ở chùa Vân Tịch đúng lúc Hoàng thượng đi lễ cầu tự. Một tháng sau, kiệu đón vào cung.',
+      'Bạn là con gái nhà làm chè ở làng Mai Đông. Năm mười tám tuổi, bạn đứng tựa gốc đại ở chùa Vân Tịch đúng lúc Hoàng thượng đi lễ cầu tự. Một tháng sau, kiệu đón vào cung.',
       'Mẹ dúi vào tay bạn gói chè: "Trong ấy, chén nào cũng phải nhìn hai lần, con ạ."',
     ],
     place: 'lang',
@@ -70,7 +70,7 @@ export const ORIGINS: Origin[] = [
   {
     k: 'cung',
     t: 'Cung nga giặt áo',
-    pitch: 'Bị bán vào cung năm mười hai tuổi, giặt áo ở viện Hoán Y. Không tên trong sổ phi tần, không ai đứng sau, chỉ có đôi tay và cái đầu.',
+    pitch: 'Bị bán vào cung năm mười bốn tuổi, giặt áo ở viện Hoán Y. Không tên trong sổ phi tần, không ai đứng sau, chỉ có đôi tay và cái đầu.',
     ho: 'Lương',
     goc: 'cung nữ giặt áo',
     que: 'viện Hoán Y',
@@ -79,7 +79,7 @@ export const ORIGINS: Origin[] = [
     n: { the: 3, sac: 48, an: 4, muu: 42, duc: 46, hanh: 40, phuc: 10, tien: 5 },
     flags: ['g_cung', 'cung_nga'],
     intro: [
-      'Năm mười hai tuổi, nhà bạn mất mùa, cha bán bạn cho người tuyển cung nữ lấy ba thúng thóc. Bốn năm nay, bạn giặt áo ở viện Hoán Y, tay nứt nẻ vì nước tro.',
+      'Năm mười bốn tuổi, nhà bạn mất mùa, cha bán bạn cho người tuyển cung nữ lấy ba thúng thóc. Bốn năm nay, bạn giặt áo ở viện Hoán Y, tay nứt nẻ vì nước tro.',
       'Bà Tư giặt áo dặn: "Ở đây, đứa nào ngẩng đầu lên là đứa đó chết trước."',
     ],
     place: 'vien',
