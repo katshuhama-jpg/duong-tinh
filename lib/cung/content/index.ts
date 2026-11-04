@@ -4,11 +4,12 @@ import { ROUTES_CN } from './routesCN';
 import { ROUTES_VN } from './routesVN';
 import { ORIGIN_CHUA } from './origin_chua';
 import { ORIGIN_CUNG } from './origin_cung';
+import { ORIGIN_DAN } from './origin_dan';
 import { ORIGIN_QUAN } from './origin_quan';
 import { CARDS_A } from './smallA';
 import { CARDS_B } from './smallB';
 
-const ROUTES = [...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN];
+const ROUTES = [...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN];
 /** thẻ nhỏ của mọi chặng (gồm cả thẻ mồi của các tuyến phụ) */
 export const SMALL: Card[] = [...CARDS_A, ...CARDS_B, ...ROUTES.filter((c) => !c.big)];
 

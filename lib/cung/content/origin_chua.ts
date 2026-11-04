@@ -63,7 +63,7 @@ export const ORIGIN_CHUA: Card[] = [
     title: 'Bài ru cũ',
     text: ['Nhũ mẫu vừa quạt vừa hát khẽ: "Chim lạc về đầu giếng, ngọc nằm dưới chân rồng."', '"Công chúa nhớ lấy bài này. Cả Hưng Thành chỉ còn bà và người biết."'],
     choices: [
-      { t: 'Thuộc lòng từng chữ', fx: { d: { muu: 6, the: 4 }, flag: ['p_biet_an'] }, note: 'Bạn hiểu ra: "chân rồng" là bậc thềm điện Kính Thiên cũ ở Hưng Thành.' },
+      { t: 'Thuộc lòng từng chữ', fx: { d: { muu: 6, the: 4 }, flag: ['p_biet_an'] }, note: 'Bạn hiểu ra: "chân rồng" là bậc thềm điện Thừa Hưng cũ ở Hưng Thành.' },
       { t: 'Bảo nhũ mẫu đừng hát nữa', fx: { d: { duc: 5, thaihau: 3, the: -4 } }, note: 'Bà ngừng quạt. Từ đêm ấy, bà chỉ hát bài ru con nít.' },
     ],
   },

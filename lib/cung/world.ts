@@ -8,6 +8,7 @@ import { ENDINGS_CN } from './content/routesCN';
 import { ENDINGS_QUAN } from './content/origin_quan';
 import { ENDINGS_CUNG } from './content/origin_cung';
 import { ENDINGS_CHUA } from './content/origin_chua';
+import { ENDINGS_DAN } from './content/origin_dan';
 
 export const ERA = 'Khánh Vân';
 export const CAPITAL = 'Phượng Thành';
@@ -105,7 +106,7 @@ export const ENDINGS: Ending[] = [
   { id: 'd_binh_bien', name: 'Đêm binh biến', desc: 'Kẻ thua năm nào quay lại, mang theo trăm người và một mối thù đã chín.', dead: true },
   { id: 'd_gieng', name: 'Giếng sau viện', desc: 'Sáng ra người ta vớt được chiếc hài thêu. Không ai thấy gì, không ai nghe gì.', dead: true },
 ];
-export const ALL_ENDINGS: Ending[] = [...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA];
+export const ALL_ENDINGS: Ending[] = [...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN];
 export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id);
 
 /** tên con */
