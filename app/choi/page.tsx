@@ -220,7 +220,6 @@ export default function Play() {
                 cast={['me', 'quan', 'tuong']}
                 mood="dac"
                 moods={{ quan: 'so', tuong: 'so' }}
-                motif="ngai"
                 looks={{ me: { ...lookOf('me', { robe: '#d9a441', phuong: 9 }), pattern: 'rong' } }}
                 label="Người đàn bà mặc long bào ngồi trên ngai, trăm quan quỳ dưới thềm"
               />

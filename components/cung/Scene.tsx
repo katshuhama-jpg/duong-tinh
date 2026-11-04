@@ -992,7 +992,7 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
       <g clipPath="url(#c-clip)">
         {bg ? <SpecialBg bg={bg} time={time} /> : <Backdrop place={place} time={time} />}
         <SeasonFx season={season} rain={rain} indoor={!!bg || place === 'phong'} />
-        {motif && (motif === 'rem' || motif === 'trang') && <Motif m={motif} solo={!cast.length} />}
+        {motif && motif !== 'hoa' && motif !== 'den' && <Motif m={motif} solo={!cast.length} />}
         {order.slice(0, 3).map((k, i) => {
           const look = looks[k as CastK] ?? lookOf(k as CastK);
           return (
@@ -1001,7 +1001,7 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
             </g>
           );
         })}
-        {motif && motif !== 'rem' && motif !== 'trang' && <Motif m={motif} solo={!cast.length} />}
+        {motif && (motif === 'hoa' || motif === 'den') && <Motif m={motif} solo={!cast.length} />}
         {/* không khí: căng thì tối mép, giận thì ửng đỏ, buồn thì xám lạnh */}
         {(mood === 'so' || mood === 'gian' || mood === 'buon' || mood === 'lo') && (
           <rect x="0" y="0" width="390" height="312" fill={mood === 'gian' ? 'url(#c-vig-r)' : mood === 'buon' ? 'url(#c-vig-b)' : 'url(#c-vig)'} className="c-mood" pointerEvents="none" />
