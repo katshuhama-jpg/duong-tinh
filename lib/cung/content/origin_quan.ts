@@ -1,3 +1,337 @@
+/**
+ * Đường "Con quan dâng vào" (cờ g_quan): "Con tin họ Đoàn".
+ * Cha dâng bạn vào cung làm bảo chứng lòng trung. Khi cha bị buộc tội mưu phản, bạn chọn giữa cha và đứa con trong bụng;
+ * người bạn cứu hôm nay có thể là kẻ đòi ngai của con bạn ngày mai.
+ * Khung sử: con gái đại thần làm con tin (lời Gia Long), án mưu phản đại thần, Hoàng hậu Inhyeon bị phế rồi phục vị,
+ * nhà ngoại nắm quyền rồi đổi ngôi (Trần Thủ Độ, Hồ Quý Ly). Mọi tên đều hư cấu.
+ * Chặng 1-2: ngã rẽ riêng, theo thứ tự trong mảng. Chặng 3-6: chen vào mạch chung bằng after/before.
+ * Cờ riêng tiền tố q_, cờ kc_<id> chốt kết cục cuối đời.
+ */
 import type { Card, Ending } from '../types';
-export const ORIGIN_QUAN: Card[] = [];
-export const ENDINGS_QUAN: Ending[] = [];
+
+const G = 'g_quan';
+
+export const ORIGIN_QUAN: Card[] = [
+  /* ================= Chặng 1: thẻ nhỏ ================= */
+  {
+    id: 'q_s_nuti',
+    chapter: [1],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'ngay',
+    cast: ['me', 'hanh'],
+    who: 'hanh',
+    title: 'Nữ tì từ phủ',
+    text: ['Phủ Đoàn gửi vào một nữ tì tên Lụa, nói là "để tiểu thư có người nhà".', 'Hạnh đứng nép sau cột, không nói gì.'],
+    choices: [
+      { t: 'Giữ Lụa bên mình, cho Hạnh ra hầu ngoài sân', fx: { d: { muu: 5, the: 4, hanh: -12 } }, note: 'Lụa biết chữ, biết cả cách gửi thư ra phủ. Hạnh thì thôi không cười nữa.' },
+      { t: 'Trả Lụa về phủ, giữ Hạnh', fx: { d: { hanh: 10, the: -4 } }, note: 'Cha nhắn vào một câu: "Con chọn người ngoài hơn người nhà."' },
+    ],
+  },
+  {
+    id: 'q_s_chem',
+    chapter: [1],
+    when: { flags: [G] },
+    place: 'vien',
+    time: 'chieu',
+    cast: ['me', 'cungnu'],
+    who: 'cungnu',
+    title: 'Nhà quan chém người',
+    text: ['Bên giếng, hai cung nữ của Hoàng hậu nói đủ to cho bạn nghe.', '"Con gái ông quan Bộ Hình đấy. Nhà ấy chém người như chém chuối."'],
+    choices: [
+      { t: 'Dừng lại, hỏi tên từng đứa', fx: { d: { muu: 4, hoanghau: -6, duc: -2 } }, note: 'Chiều ấy hai cung nữ bị ma ma phạt quỳ. Hoàng hậu biết là vì bạn.' },
+      { t: 'Đi qua như không nghe thấy', fx: { d: { duc: 5, an: -2 } }, note: 'Câu ấy lan khắp hậu cung trong ba ngày, rồi tự tắt.' },
+    ],
+  },
+  {
+    id: 'q_s_tra_vu',
+    chapter: [1],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'chieu',
+    cast: ['me', 'thucphi'],
+    who: 'thucphi',
+    title: 'Trà bên viện Thục phi',
+    text: ['Thục phi họ Vũ mời bạn sang uống trà sen, rót tận tay.', '"Thái phó là kẻ thù của cha em, cũng là kẻ thù của ta. Hai ta nên là chị em."'],
+    choices: [
+      { t: 'Nhận chén trà, gọi một tiếng "chị"', fx: { d: { thucphi: 10, hoanghau: -8 }, flag: ['q_ban_vu'] }, note: 'Ra về, bạn thấy cung nữ của Hoàng hậu đứng chờ ở đầu ngõ.' },
+      { t: 'Uống nửa chén, nói mình còn non, chưa dám nhận', fx: { d: { thucphi: -5, duc: 4, muu: 3 } }, note: 'Thục phi cười, đặt chén xuống hơi mạnh tay.' },
+    ],
+  },
+  {
+    id: 'q_s_bac',
+    chapter: [1],
+    when: { flags: [G] },
+    place: 'vien',
+    time: 'ngay',
+    cast: ['me', 'cungnu'],
+    who: 'cungnu',
+    title: 'Bậc mua bằng gì',
+    text: ['Người cùng đợt tuyển còn ở viện Nghi Lễ, bạn đã có viện riêng.', 'Một cô tài nhân chặn bạn ở hành lang: "Bậc Mỹ nhân của chị, cha chị mua bao nhiêu?"'],
+    choices: [
+      { t: 'Mời cô ấy về viện, chia nửa số lụa cha gửi', fx: { d: { tien: -20, duc: 5, muu: 2 } }, note: 'Cô tài nhân nhận lụa, và từ đó kể bạn nghe mọi chuyện ở viện Nghi Lễ.' },
+      { t: 'Bảo cô ấy lui, đúng phép trên dưới', fx: { d: { duc: -2, the: 3, an: 2 } }, note: 'Cô ấy lui. Nhưng trong hậu cung, người dưới cũng có trí nhớ.' },
+    ],
+  },
+
+  /* ================= Chặng 1: ngã rẽ lớn ================= */
+  {
+    id: 'q1_ramat',
+    big: true,
+    chapter: [1],
+    when: { flags: [G] },
+    place: 'dien',
+    time: 'ngay',
+    cast: ['me', 'hoanghau'],
+    who: 'hoanghau',
+    title: 'Lễ ra mắt Hoàng hậu',
+    text: ['Hoàng hậu họ Tôn nhìn bạn từ trên bệ, không cho đứng dậy.', '"Tuần trước cha cô vừa dâng sớ hặc cha ta. Con gái họ Đoàn vào đây làm gì?"'],
+    choices: [
+      { t: 'Thưa: "Vào cung, thần thiếp là người của Hoàng thượng, không còn là người phủ Đoàn"', fx: { d: { duc: 6, hoanghau: 10, the: -6 }, flag: ['q_tach_cha'] }, note: 'Hoàng hậu cho bạn đứng dậy. Ba hôm sau, cha gửi vào một tờ giấy trắng, không chữ.' },
+      { t: 'Ngẩng đầu: "Cha thần thiếp hặc vì phép nước, không vì thù riêng"', fx: { d: { the: 6, hoanghau: -12, muu: 4, quan: 6 } }, note: 'Cả điện im phăng phắc. Hoàng hậu cười nhạt: "Giống cha lắm."' },
+      { t: 'Dâng hộp sơn mài 80 quan cha gửi làm lễ ra mắt', need: { num: { tien: [80, 99999] } }, lockHint: 'Cần 80 quan', fx: { d: { tien: -80, hoanghau: 14, duc: -3 } }, note: 'Hoàng hậu nhận, không mở. Đêm ấy bạn nghe tin chiếc hộp đã được mang ra phủ Thái phó.' },
+    ],
+  },
+  {
+    id: 'q1_thu',
+    big: true,
+    chapter: [1],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'dem',
+    cast: ['me', 'phuc'],
+    who: 'phuc',
+    title: 'Lá thư trong hộp phấn',
+    text: ['Thái giám Phúc đưa vào một hộp phấn "của phu nhân phủ Đoàn". Dưới lớp phấn là thư của cha.', '"Mỗi tháng ghi cho cha: Hoàng thượng đến đâu, nói gì về Thái phó. Phúc là người của ta."'],
+    choices: [
+      { t: 'Nhận lời, làm tai mắt cho cha', fx: { d: { the: 8, muu: 6, phuc: 8, duc: -4 }, flag: ['q_tai_mat'] }, note: 'Bạn viết lá thư đầu bằng nước gạo, hơ lửa mới hiện chữ. Phúc cầm đi, không cần đếm tiền.' },
+      { t: 'Đốt thư, gửi trả hộp phấn còn nguyên', fx: { d: { duc: 6, the: -8, phuc: -6 } }, note: 'Ba tháng cha không gửi gì. Rồi mẹ gửi vào một đôi hài, không kèm lời nào.' },
+      { t: 'Mang thư dâng Hoàng thượng', fx: { d: { vua: 12, an: 8, the: -14, quan: -10, phuc: -10 }, flag: ['q_dang_thu'] }, note: 'Hoàng thượng đọc xong, gấp lại, trả bạn: "Nàng giữ lấy. Trẫm nhớ hôm nay." Ngoài triều, cha bị phạt ba tháng bổng.' },
+    ],
+  },
+
+  /* ================= Chặng 2: thẻ nhỏ ================= */
+  {
+    id: 'q_s_dengia',
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'vien',
+    time: 'chieu',
+    cast: ['me', 'phuc'],
+    who: 'phuc',
+    title: 'Ngọn đèn có giá',
+    text: ['Phúc xoa tay: "Sổ đến thăm tháng này còn trống ba đêm."', '"Bốn mươi quan, nô tài viết tên tiểu chủ vào một đêm."'],
+    choices: [
+      { t: 'Đưa bốn mươi quan', need: { num: { tien: [40, 99999] } }, lockHint: 'Cần 40 quan', fx: { d: { tien: -40, an: 8, phuc: 10, duc: -3 }, flag: ['phuc_mua'] }, note: 'Mười hôm sau, đèn đỏ treo trước viện. Bạn biết nó được mua bằng gì.' },
+      { t: 'Không đưa: "Ta không mua Hoàng thượng"', fx: { d: { duc: 5, phuc: -8 } }, note: 'Phúc cười, ghi tên một tài nhân khác.' },
+    ],
+  },
+  {
+    id: 'q_s_thu2',
+    chapter: [2],
+    when: { flags: [G, 'q_tai_mat'] },
+    place: 'phong',
+    time: 'dem',
+    cast: ['me', 'phuc'],
+    who: 'phuc',
+    title: 'Lá thư thứ hai',
+    text: ['Lại một hộp phấn. Lần này cha hỏi Hoàng thượng nghĩ gì về việc biên ải.', 'Phúc chờ ở cửa, mắt nhìn nét chữ của bạn hơi lâu.'],
+    choices: [
+      { t: 'Viết đủ, cha cần biết', fx: { d: { the: 6, muu: 4 } }, note: 'Phúc cất thư vào tay áo. Bạn không biết nó qua mấy tay mới đến phủ Đoàn.' },
+      { t: 'Viết qua loa: "Hoàng thượng không nói chuyện triều với con"', fx: { d: { the: -4, duc: 3 } }, note: 'Cha gửi lại một chữ: "Lười." Nhưng lá thư ấy, ai chép lại cũng chẳng được gì.' },
+    ],
+  },
+  {
+    id: 'q_s_khan',
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'dien',
+    time: 'ngay',
+    cast: ['me', 'hoanghau'],
+    who: 'hoanghau',
+    title: 'Khăn thêu chữ Hiếu',
+    text: ['Hoàng hậu ban mỗi phi tần một chiếc khăn thêu. Khăn của bạn thêu chữ "Hiếu".', '"Hiếu với cha, hay hiếu với vua? Cô thêu thêm một chữ rồi trả ta."'],
+    choices: [
+      { t: 'Thêu thêm chữ "Trung", dâng trả', fx: { d: { hoanghau: 8, duc: 5, the: -3 } }, note: 'Hoàng hậu treo chiếc khăn trong điện, cho mọi người cùng xem.' },
+      { t: 'Trả khăn nguyên vẹn: "Thần thiếp không dám tách hai chữ"', fx: { d: { muu: 5, hoanghau: -6, the: 3 } }, note: 'Hoàng hậu gấp khăn lại: "Khôn. Khôn như cha cô."' },
+    ],
+  },
+  {
+    id: 'q_s_tien3',
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'chieu',
+    cast: ['me', 'hanh'],
+    who: 'hanh',
+    title: 'Ba quan của phủ',
+    text: ['Hạnh quỳ xuống, đặt lên bàn ba quan tiền: "Người phủ Đoàn cho nô tì, bảo mỗi tuần kể chuyện tiểu chủ."', '"Nô tì không muốn giấu."'],
+    choices: [
+      { t: 'Cho Hạnh giữ tiền, dặn chỉ kể những gì ta cho kể', fx: { d: { muu: 6, hanh: 6, the: 2 } }, note: 'Từ đó, phủ Đoàn biết đúng những gì bạn muốn cha biết.' },
+      { t: 'Gửi tiền trả phủ, kèm lời nhắn cho cha', fx: { d: { hanh: 10, the: -6, duc: 3 } }, note: 'Cha nhắn lại: "Con lớn rồi." Bạn không đoán được là khen hay chê.' },
+    ],
+  },
+  {
+    id: 'q_s_me',
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'dem',
+    cast: ['me', 'meday'],
+    who: 'meday',
+    title: 'Thư trong gấu áo',
+    text: ['Mẹ gửi thư riêng, giấu trong gấu áo bông mùa đông.', '"Cha con chọn con vì con ít khóc nhất. Mẹ thì chỉ mong con còn khóc được."'],
+    choices: [
+      { t: 'Viết thư về, kể chuyện hồ sen trong vườn ngự', fx: { d: { the: 3, duc: 3 } }, note: 'Mẹ đọc thư dưới bếp, không cho cha biết.' },
+      { t: 'Đốt thư, không để ai thấy mình yếu', fx: { d: { muu: 4, duc: -2 } }, note: 'Tro bay vào chậu lan. Đêm ấy bạn ngủ rất sâu.' },
+    ],
+  },
+
+  /* ================= Chặng 2: ngã rẽ lớn ================= */
+  {
+    id: 'q2_den',
+    big: true,
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'dem',
+    cast: ['me', 'vua'],
+    who: 'vua',
+    title: 'Đèn đỏ trước viện',
+    text: ['Chập tối, thái giám Phúc treo đèn đỏ trước viện bạn. Hoàng thượng đến, tay còn cầm tờ sớ.', '"Cha nàng và Thái phó lại cãi nhau giữa triều. Nàng nói xem, ai đúng?"'],
+    choices: [
+      { t: 'Thưa: "Đêm nay thần thiếp chỉ biết hầu Hoàng thượng"', fx: { d: { an: 12, vua: 8, duc: 6 }, rank: 1, years: 1 }, note: 'Hoàng thượng đặt tờ sớ xuống, lần đầu trong đêm thôi cau mày. Sáng ra có chiếu phong.' },
+      { t: 'Nói đỡ cho cha: "Cha thần thiếp giữ phép nước"', fx: { d: { an: 8, the: 10, vua: 3, quan: 8 }, rank: 1, years: 1 }, note: 'Hoàng thượng gật đầu, không nói gì. Sáng ra có chiếu phong, cha được ban một con ngựa.' },
+      { t: 'Kể khéo chuyện Thái phó nhận ngà voi của sứ phương nam', fx: { d: { an: 14, vua: 10, muu: 6, hoanghau: -14 }, rank: 1, years: 1 }, note: 'Hoàng thượng nghe đến khuya, hỏi thêm từng chi tiết. Sáng ra có chiếu phong.', risk: { p: 0.35, fail: { d: { an: -8, vua: -8, the: 4 }, years: 1 }, failNote: 'Hoàng thượng đứng dậy: "Nàng vào cung để làm sớ thay cha?" Đèn tắt trước canh hai.' } },
+      { t: 'Thưa: "Hoàng thượng đã đọc thư của cha thần thiếp. Người biết ai đúng."', need: { flags: ['q_dang_thu'] }, lockHint: 'Cần từng dâng thư của cha lên vua', fx: { d: { vua: 18, an: 14 }, flag: ['q_vua_tin'], rank: 1, years: 1 }, note: 'Hoàng thượng bật cười: "Cả triều chỉ có nàng dám nói thế." Sáng ra có chiếu phong, kèm một chiếc quạt ngự.' },
+    ],
+  },
+  {
+    id: 'q2_an',
+    big: true,
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'dien',
+    time: 'ngay',
+    cast: ['me', 'vua', 'quan'],
+    who: 'quan',
+    title: 'Con tin trong cung',
+    text: ['Thái phó Tôn tâu giữa điện: "Cha ở Bộ Hình, con ở hậu cung. Trong ngoài một nhà, không thể không phòng."', 'Hoàng thượng quay sang bạn: "Nàng nói đi."'],
+    choices: [
+      { t: 'Xin trả thần thiếp về phủ, cho cha khỏi mang tiếng', fx: { end: 'e_q_tra_ngoc' }, note: 'Kiệu ra cửa Bắc lúc trời chưa sáng. Cha đứng ở cổng phủ, không bước xuống bậc.', risk: { p: 0.5, fail: { d: { vua: 6, an: 4, the: -6 }, flag: ['q_con_tin'] }, failNote: 'Hoàng thượng lắc đầu: "Nàng muốn đi thì trẫm càng phải giữ." Từ hôm ấy, cả triều gọi bạn là con tin.' } },
+      { t: 'Thưa: "Nếu cha có lòng khác, xin chém thần thiếp trước"', fx: { d: { vua: 12, duc: 10, the: -4, an: 6 }, flag: ['q_con_tin'] }, note: 'Cả điện lặng đi. Hoàng thượng phẩy tay cho Thái phó lui: "Trẫm giữ con tin này."' },
+      { t: 'Hỏi lại: "Con gái Thái phó ngồi ghế Hoàng hậu. Trong ngoài ấy, ai phòng?"', fx: { d: { hoanghau: -15, quan: 10, muu: 6, an: 4 } }, note: 'Thái phó đỏ mặt, cả triều nín cười. Hoàng thượng cho bãi chầu sớm.', risk: { p: 0.4, fail: { d: { an: -12, hoanghau: -12 }, rank: -1 }, failNote: 'Hoàng hậu khóc trước Thái hậu cả đêm. Sáng ra bạn bị giáng một bậc vì "hỗn với Thái phó".' } },
+      { t: 'Dâng sổ ghi những đêm Thái phó gặp người lạ ở cửa Tây', need: { flags: ['q_tai_mat'] }, lockHint: 'Cần từng làm tai mắt cho cha', fx: { d: { muu: 10, vua: 8, hoanghau: -20 }, flag: ['q_bang_ton'] }, note: 'Hoàng thượng giữ cuốn sổ lại. Thái phó cúi đầu rất thấp, nhưng bạn thấy tay ông run.' },
+    ],
+  },
+  {
+    id: 'q2_hon',
+    big: true,
+    chapter: [2],
+    when: { flags: [G] },
+    place: 'phong',
+    time: 'chieu',
+    cast: ['me', 'thucphi'],
+    who: 'thucphi',
+    title: 'Mối hôn họ Vũ',
+    text: ['Cha muốn gả em trai bạn cho cháu gái Thục phi. Đoàn với Vũ hợp lại thì Thái phó phải lùi.', 'Thục phi xoay chén trà: "Mối này em làm, hay để ta làm?"'],
+    choices: [
+      { t: 'Đứng ra làm mối, nối hai nhà', fx: { d: { thucphi: 15, hoanghau: -12, the: 10 }, flag: ['q_lien_vu'] }, note: 'Đám cưới ngoài phủ linh đình ba ngày. Trong cung, Hoàng hậu đếm từng mâm lễ.' },
+      { t: 'Viết thư can cha: liên kết ấy là mua thù', fx: { d: { duc: 6, the: -8, thucphi: -8 } }, note: 'Cha không trả lời. Mối hôn vẫn thành, nhưng không ai cảm ơn bạn.' },
+      { t: 'Kín đáo báo cho Hoàng hậu biết trước', fx: { d: { hoanghau: 16, thucphi: -10, the: -10, muu: 4 } }, note: 'Hoàng hậu cho người mang sang một hộp trà sen. Mối hôn đổ vào phút cuối.', risk: { p: 0.3, fail: { d: { hoanghau: 8, thucphi: -20, the: -14 }, flag: ['thu_thucphi'] }, failNote: 'Thục phi biết ai đã nói. Từ đó bà ta gọi bạn là "con rắn họ Đoàn".' } },
+    ],
+  },
+
+  /* ================= Chặng 3: cha bị buộc tội lúc bạn mang thai ================= */
+  {
+    id: 'q3_an',
+    big: true,
+    chapter: [3],
+    after: 'b3_thai',
+    when: { flags: [G], not: ['say_thai'] },
+    place: 'dien',
+    time: 'dem',
+    cast: ['me', 'vua', 'quan'],
+    who: 'quan',
+    title: 'Bức thư có ấn họ Đoàn',
+    text: ['Bạn có thai bốn tháng thì Thái phó dâng lên một bức thư có ấn họ Đoàn: "Hoàng tôn ra đời thì mở cửa thành."', 'Cha bị giam ở ngục Bộ Hình, chính cái ngục ông từng coi.'],
+    omen: 'Thái phó Tôn không đánh con gái họ Đoàn. Ông chờ nó có thai, rồi đánh vào cha nó.',
+    choices: [
+      { t: 'Quỳ trước điện ba ngày, xin chết thay cha', fx: { d: { duc: 10, vua: -6, the: -20 }, flag: ['q_cha_day'] }, note: 'Ngày thứ ba, án chém đổi thành đày ra biên. Cha đi qua cửa Bắc, không ngoái lại.', risk: { p: 0.4, fail: { end: 'd_q_tru_di' }, failNote: 'Thái phó tâu: "Con quỳ xin cho cha, tức là cùng một lòng." Chiếu tru di ban xuống ngay đêm ấy.' } },
+      { t: 'Dâng những lá thư cha gửi vào cung, xin xử đúng phép', fx: { d: { vua: 15, an: 10, the: -35, duc: -8, quan: -15 }, flag: ['q_dai_nghia'] }, note: 'Cha bị ban chết trong ngục. Hôm ấy bạn không khóc, đúng như cha dạy.' },
+      { t: 'Xin tự giáng, ra viện Lạc Mai giữ đứa con trong bụng', fx: { d: { an: -20, duc: 8, the: -10 }, rank: -2, flag: ['q_phe'] }, note: 'Bạn dời ra viện Lạc Mai ngoài góc thành. Đổi lại, cha được tha chết, chỉ mất hết chức tước.' },
+      { t: 'Đưa cuốn sổ cửa Tây: thợ khắc ấn giả ra vào phủ Thái phó', need: { flags: ['q_bang_ton'] }, lockHint: 'Cần có sổ chứng cứ về Thái phó', fx: { d: { muu: 12, vua: 10, hoanghau: -15, the: 10 }, flag: ['q_thang_ton'] }, note: 'Thợ khắc ấn khai ra chủ trong một buổi sáng. Thái phó bị phạt bổng, Hoàng hậu không ra khỏi điện suốt một mùa.' },
+    ],
+  },
+
+  /* ================= Chặng 4: phục vị, rồi tranh ấn Phụ chính ================= */
+  {
+    id: 'q4_phuc',
+    big: true,
+    chapter: [4],
+    before: 'b4_lap',
+    when: { flags: [G, 'q_phe'] },
+    place: 'vien',
+    time: 'ngay',
+    cast: ['me', 'phuc'],
+    who: 'phuc',
+    title: 'Kiệu về từ Lạc Mai',
+    text: ['Ba mùa đông ở viện Lạc Mai. Một sáng, thái giám Phúc dẫn kiệu tám người đến cổng.', '"Án cũ được xét lại rồi. Hoàng thượng cho rước nương nương về."'],
+    choices: [
+      { t: 'Về, và xin cha đừng bao giờ trở lại triều', fx: { d: { an: 10, duc: 10, the: -6 }, rank: 2, flag: ['q_phuc_vi', 'kc_e_q_phuc_vi'], unflag: ['q_phe'] }, note: 'Bạn bước vào cung bằng chính con đường đã ra đi. Cha gửi lời: "Cha hiểu."' },
+      { t: 'Về, và đòi minh oan cho cha ngay giữa triều', fx: { d: { the: 15, an: 6, hoanghau: -15 }, rank: 2, flag: ['q_phuc_vi', 'kc_e_q_phuc_vi'], unflag: ['q_phe'] }, note: 'Cha được trả lại mũ áo. Hoàng hậu nghe tin, đánh rơi chén trà.', risk: { p: 0.35, fail: { d: { an: -10, vua: -8 }, rank: 1, flag: ['q_phuc_vi', 'kc_e_q_phuc_vi'], unflag: ['q_phe'] }, failNote: 'Hoàng thượng nhíu mày: "Nàng vừa về đã đòi." Bạn được về, chỉ một bậc, án cha vẫn để đó.' } },
+      { t: 'Không về. Ở lại góc thành, xuống tóc tu', fx: { end: 'e_di_tu' }, note: 'Kiệu tám người quay về không. Bạn đứng nhìn theo, tay lần tràng hạt.' },
+      { t: 'Chờ đến khi Hoàng thượng tự đến đón', need: { flags: ['q_vua_tin'] }, lockHint: 'Cần Hoàng thượng từng tin bạn', fx: { d: { an: 18, vua: 12 }, rank: 3, flag: ['q_phuc_vi', 'kc_e_q_phuc_vi'], unflag: ['q_phe'] }, note: 'Ba hôm sau, Hoàng thượng đến thật, đứng dưới gốc mai già: "Trẫm nhớ hôm ấy. Trẫm đến muộn."' },
+    ],
+  },
+  {
+    id: 'q4_dong',
+    big: true,
+    chapter: [4],
+    after: 'b4_lap',
+    when: { flags: [G, 'con_dongcung'], not: ['q_dai_nghia'] },
+    place: 'dien',
+    time: 'ngay',
+    cast: ['me', 'quan'],
+    who: 'quan',
+    whoName: 'Quan Thượng thư họ Đoàn',
+    title: 'Ấn Phụ chính',
+    text: ['Con bạn vừa được lập Đông cung. Chưa hết tháng, cha đã vào cung, mũ áo chỉnh tề như ngày còn đắc thế.', '"Cháu ngoại làm Đông cung thì ông ngoại phải giữ ấn Phụ chính. Con nói với Hoàng thượng đi."'],
+    omen: 'Ấn Phụ chính đổi tay thì phải có người chết. Thái phó đã giữ nó hai mươi năm.',
+    choices: [
+      { t: 'Xin Hoàng thượng trao ấn cho cha', fx: { d: { the: 20, quan: 8, hoanghau: -20, duc: -6 }, flag: ['q_cha_phu'] }, note: 'Ấn đổi tay trong một buổi chầu. Thái phó Tôn bước ra khỏi điện, không nhìn ai.' },
+      { t: 'Xin chia đôi: họ Đoàn giữ Bộ Hình, họ Tôn giữ ấn', fx: { d: { duc: 8, hoanghau: 10, the: -6, quan: 4 }, flag: ['q_can_bang'] }, note: 'Cha đập vỡ một chén trà. Hoàng hậu, lần đầu tiên, sai người mang quà sang cho cháu.' },
+      { t: 'Để cha dùng ngục Bộ Hình tra người nhà họ Tôn', fx: { d: { hoanghau: -30, muu: 10, duc: -14, the: 15 }, flag: ['q_cha_phu', 'q_diet_ton'] }, note: 'Mười hai người họ Tôn vào ngục, ba người không ra. Cả triều thôi gọi cha bạn là "ông Thượng thư hiền".', risk: { p: 0.4, fail: { end: 'd_q_tru_di' }, failNote: 'Thái phó ra tay trước một đêm. Bức thư có ấn họ Đoàn, lần này là thật, được đọc giữa triều.' } },
+    ],
+  },
+
+  /* ================= Chặng 6: nhà Đoàn lộng quyền khi bạn buông rèm ================= */
+  {
+    id: 'q6_long',
+    big: true,
+    chapter: [6],
+    after: 'b6_tau',
+    when: { flags: [G, 'nhiep'], not: ['q_dai_nghia'] },
+    place: 'dien',
+    time: 'dem',
+    cast: ['me', 'quan', 'con'],
+    who: 'quan',
+    whoName: 'Quốc trượng họ Đoàn',
+    title: 'Áo tía của ông ngoại',
+    text: ['Bạn buông rèm đã ba năm. Cha ngồi ghế Quốc trượng, quan các trấn đều là người nhà Đoàn.', 'Đêm qua cha tâu riêng: "Vua nhỏ, giặc mạnh. Họ Đoàn giữ nước thay một thời, có sao đâu."'],
+    omen: 'Người bạn cứu khỏi ngục năm ấy chưa bao giờ quên mình từng suýt mất tất cả.',
+    choices: [
+      { t: 'Gật đầu, để cha "giữ nước thay một thời"', fx: { d: { the: 30, duc: -20, quan: -10 }, flag: ['kc_e_q_ngoai_thich'], unflag: ['nhiep', 'kc_e_q_phuc_vi'], chapter: 7, years: 3 }, note: 'Chiếu nhường ngôi đọc giữa sân rồng. Con bạn được phong vương, cha khoác áo vàng.' },
+      { t: 'Tước ấn của cha, đưa cha về quê dưỡng già', fx: { d: { the: -25, duc: 12, quan: 10 }, flag: ['q_tuoc_cha'], unflag: ['kc_e_q_phuc_vi'] }, note: 'Cha ra khỏi kinh bằng một chiếc kiệu không cờ. Con bạn đứng trên lầu nhìn theo ông ngoại.', risk: { p: 0.35, fail: { end: 'd_binh_bien' }, failNote: 'Cha không về quê. Canh ba, quân phủ Đoàn vây cung, gọi tên bạn như gọi một đứa con hư.' } },
+      { t: 'Xử cha tội lộng quyền bằng chính luật Bộ Hình', fx: { d: { the: -40, duc: -15, muu: 12, quan: 6 }, flag: ['diet_dich', 'q_dai_nghia'], unflag: ['kc_e_q_phuc_vi'] }, note: 'Cha nghe đọc án, chỉ hỏi một câu: "Con viết, hay người khác viết?" Bạn không trả lời.' },
+      { t: 'Gọi Lê Trực về kinh giữ cửa, rồi mới mời cha lui', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { d: { the: -12, tuong: 10, duc: 8 }, flag: ['q_tuoc_cha'], unflag: ['kc_e_q_phuc_vi'] }, note: 'Cha nhìn quân biên ải đứng kín cửa ngọ môn, rồi tự tay tháo ấn: "Con giống cha hơn cha tưởng."' },
+    ],
+  },
+];
+
+export const ENDINGS_QUAN: Ending[] = [
+  { id: 'e_q_tra_ngoc', name: 'Ngọc về phủ cũ', desc: 'Ra khỏi cung trước khi kịp thành con tin. Cha không nhìn mặt bà ba năm, rồi gả bà cho một tri phủ hiền ở miền núi.' },
+  { id: 'd_q_tru_di', name: 'Án tru di', desc: 'Ấn trên bức thư có thể giả, nhưng lưỡi đao thì thật. Phủ Thượng thư thành bãi cỏ, tên bạn bị gạch cùng ngày với tên cha.', dead: true },
+  { id: 'e_q_phuc_vi', name: 'Phế rồi phục vị', desc: 'Bị đẩy ra viện Lạc Mai, rồi được rước về bằng kiệu tám người. Bà sống đến già, không bao giờ nhắc lại những mùa đông ở góc thành.' },
+  { id: 'e_q_ngoai_thich', name: 'Nhà ngoại đổi ngôi', desc: 'Cha khoác áo tía, rồi áo vàng. Sử đời sau chép bà là người mẹ đã trao ngai của con cho nhà mình.' },
+];
