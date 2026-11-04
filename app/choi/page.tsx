@@ -137,6 +137,7 @@ function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
   if ((l.origin ?? 'dan') === 'dan' && !l.flags.includes('cung_nga')) m.me = { dir: `/nv/${meStage(l)}`, face: 'r' };
   m.hanh = { dir: `/nv/${l.age >= 55 ? 'hanh3' : l.age >= 35 ? 'hanh2' : 'hanh'}`, face: 'l' };
   const tp = l.riv?.thucphi?.st;
+  m.phuc = { dir: `/nv/${l.age >= 42 || l.chapter >= 5 ? 'phuc2' : 'phuc'}`, face: 'l' };
   const hh = l.riv?.hoanghau?.st;
   m.hoanghau = { dir: `/nv/${hh === 'giang' || hh === 'phuc' || l.flags.includes('hoang_hau') || l.age >= 56 ? 'hoanghau3' : l.age >= 40 || l.chapter >= 4 ? 'hoanghau2' : 'hoanghau'}`, face: 'l' };
   m.thucphi = { dir: `/nv/${tp === 'giang' || tp === 'phuc' || l.age >= 52 ? 'thucphi3' : l.age >= 34 || l.chapter >= 4 ? 'thucphi2' : 'thucphi'}`, face: 'l' };
