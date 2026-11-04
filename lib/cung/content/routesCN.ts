@@ -269,7 +269,7 @@ export const ROUTES_CN: Card[] = [
     lead: 'Từ ngày thành thù với Thục phi, bạn ngủ không yên giấc.',
     who: 'hanh',
     title: 'Hình nhân dưới gốc khế',
-    text: ['Hạnh run tay đưa bạn một hình nhân rơm, ngực cắm bảy cây kim, sau lưng viết tên Hoàng hậu.', '"Nô tì đào được dưới gốc khế sau viện. Sáng mai thái giám đi soát các viện."'],
+    text: ['Hạnh run tay đưa bạn một hình nhân rơm, ngực cắm bảy cây kim, sau lưng viết tên Hoàng hậu.', '"Nô tỳ đào được dưới gốc khế sau viện. Sáng mai thái giám đi soát các viện."'],
     omen: 'Kẻ thù không đội trời chung thì không cần tự tay giết, chỉ cần chôn một thứ đúng chỗ.',
     choices: [
       { t: 'Đốt ngay trong đêm', fx: { d: { muu: 8 } }, note: 'Rơm cháy nhanh hơn bạn tưởng. Sáng ra, gốc khế chỉ còn một vệt tro.', risk: { p: 0.3, fail: { flag: ['t_bi_to'] }, failNote: 'Có người bên kia tường thấy khói lúc canh ba.' } },

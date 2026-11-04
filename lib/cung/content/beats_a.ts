@@ -72,7 +72,7 @@ export const BEATS_A: Card[] = [
     choices: [
       { t: 'Dúi ma ma 20 quan, hỏi ai chấm', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, muu: 5 }, flag: ['ba_cham_son'] }, note: 'Ma ma cất tiền, chỉ nói: "Mực son ấy pha hương trầm, cả hậu cung chỉ một viện dùng."' },
       { t: 'Cúi đầu cảm tạ, không hỏi thêm', fx: { d: { duc: 5 } }, note: 'Ma ma gật gù: "Biết im là biết sống." Rồi gập sổ lại rất nhanh.' },
-      { t: 'Nhờ Hạnh đi dò bên các viện khác', fx: { d: { hanh: 5, muu: 3, thucphi: -3 } }, note: 'Hạnh về lúc chạng vạng, tay áo dính hương trầm, mặt tái đi: "Nô tì chưa dám nói."' },
+      { t: 'Nhờ Hạnh đi dò bên các viện khác', fx: { d: { hanh: 5, muu: 3, thucphi: -3 } }, note: 'Hạnh về lúc chạng vạng, tay áo dính hương trầm, mặt tái đi: "Nô tỳ chưa dám nói."' },
     ],
   },
   // lặng: trước "Chén trà đầu tiên" và "Đêm hội hoa đăng"
@@ -88,7 +88,7 @@ export const BEATS_A: Card[] = [
     mood: 'vui',
     who: 'hanh',
     title: 'Trăng trên bậc thềm',
-    text: ['Trăng rằm sáng đến mức thấy rõ từng viên ngói. Hạnh ngồi bậc thềm, bó gối cạnh bạn.', '"Ở quê nô tì, đêm nay người ta ra đình xem hát. Cô có nhớ nhà không?"'],
+    text: ['Trăng rằm sáng đến mức thấy rõ từng viên ngói. Hạnh ngồi bậc thềm, bó gối cạnh bạn.', '"Ở quê nô tỳ, đêm nay người ta ra đình xem hát. Cô có nhớ nhà không?"'],
     choices: [
       { t: 'Kể Hạnh nghe chuyện ở {que}, chuyện của {me}', fx: { d: { hanh: 10, the: 2 } }, note: 'Hạnh cười khúc khích suốt. Đến khi đứng dậy, bạn mới thấy bóng một người đứng sau cửa ngách từ lúc nào.' },
       { t: 'Cầm tay Hạnh, dạy nó viết tên mình lên đất', fx: { d: { hanh: 8, duc: 3 } }, note: 'Hạnh viết đi viết lại chữ "Hạnh" đến khi nét thẳng. Gió thổi, cánh cổng viện kẽo kẹt mở hé một chút.' },
@@ -171,7 +171,7 @@ export const BEATS_A: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Khăn gấp ngược',
-    text: ['Bạn mở hộp đồ, chiếc khăn thêu nằm trên cùng bị gấp ngược chiều. Bạn chưa bao giờ gấp như thế.', 'Hạnh lắc đầu lia lịa: "Hôm nay nô tì không đụng vào."'],
+    text: ['Bạn mở hộp đồ, chiếc khăn thêu nằm trên cùng bị gấp ngược chiều. Bạn chưa bao giờ gấp như thế.', 'Hạnh lắc đầu lia lịa: "Hôm nay nô tỳ không đụng vào."'],
     omen: 'Hộp đồ của bạn đã có người mở, từ trước ngày người ta tìm thấy thứ không phải của bạn trong đó.',
     choices: [
       { t: 'Sắm khóa đồng mới cho hộp, giữ chìa trong người', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, muu: 3 }, flag: ['ba_khoa_hop'] }, note: 'Khóa mới kêu tách một tiếng rất gọn. Bạn ngủ với chiếc chìa trong lòng bàn tay.' },
@@ -319,7 +319,7 @@ export const BEATS_A: Card[] = [
     moods: { hanh: 'vui' },
     who: 'hanh',
     title: 'Đôi tất bằng ngón tay',
-    text: ['Thái y còn chưa dám nói chắc, Hạnh đã lén khâu một đôi tất nhỏ bằng ngón tay dưới đèn.', 'Bị bạn bắt gặp, nó đỏ mặt: "Nô tì khâu trước, lỡ sau không kịp."'],
+    text: ['Thái y còn chưa dám nói chắc, Hạnh đã lén khâu một đôi tất nhỏ bằng ngón tay dưới đèn.', 'Bị bạn bắt gặp, nó đỏ mặt: "Nô tỳ khâu trước, lỡ sau không kịp."'],
     choices: [
       { t: 'Ngồi xuống khâu cùng, thêu một chữ "An" lên mũi tất', fx: { d: { hanh: 8, duc: 2 } }, note: 'Hai chữ "An" lệch nhau một chút, ai nhìn cũng biết hai người thêu. Ngoài cửa sổ có tiếng mèo kêu, rồi im bặt.' },
       { t: 'Cầm tay Hạnh đặt lên bụng mình', fx: { d: { hanh: 12, sac: 2 } }, note: 'Hạnh khóc mà không dám thành tiếng. Gió lùa làm ngọn đèn chao, bóng ai đó trên vách giấy vụt qua.' },

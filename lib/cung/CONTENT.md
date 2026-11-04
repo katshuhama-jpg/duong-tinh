@@ -76,7 +76,7 @@ Tuyến sử Trung - Hàn (`routesCN.ts`, tiền tố `t_`):
 - Có thẻ êm (thêu thùa, Tết, nhớ nhà, mẹ gửi thư, cung nữ già kể chuyện), có thẻ căng (tin đồn, quà tặng có ý đồ, sổ thị tẩm bị sửa, thị nữ bị mua chuộc). Khoảng 1/3 êm, 2/3 căng.
 - Đúng thời: không áo dài, không "lật thẻ bài", không "lãnh cung" (gọi là "viện Lạc Mai ngoài góc thành"), không đồ Tây. Đồ vật hợp: trầu cau, trà sen, hộp sơn mài, quạt giấy, khăn lụa, trâm cài, đèn lồng, sổ đến thăm, chiếu chỉ, hương trầm, đàn nguyệt, cờ tướng, bánh phu thê, chè hạt sen.
 - Giọng văn: ngôi thứ hai "bạn", câu ngắn, kịch tính kiểu phim ngắn cung đấu nhưng chữ Việt tự nhiên. Dùng "-" không dùng "—". Không emoji, không icon.
-- Lời thoại trong ngoặc kép, xưng hô cung đình: "Hoàng thượng", "thần thiếp", "nương nương", "bản cung", "nô tì", "cô" (người trên gọi người dưới).
+- Lời thoại trong ngoặc kép, xưng hô cung đình: "Hoàng thượng", "thần thiếp", "nương nương", "bản cung", "nô tỳ", "cô" (người trên gọi người dưới).
 
 ## Định dạng file
 Một file TypeScript xuất mảng:

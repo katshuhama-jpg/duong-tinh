@@ -72,7 +72,7 @@ export const FEUD: Card[] = [
     who: 'cungnu',
     lead: 'Mấy tin giả bạn thả sang viện Thục phi, bên ấy đã nghi.',
     title: 'Con bé bị lật bài',
-    text: ['Con bé đưa tin quỳ trước giường bạn, má sưng một bên.', '"Nương nương bên ấy biết nô tì bị cô dùng rồi. Bà bảo nếu nô tì không mang về được một thứ thật, nô tì sẽ ra giếng."'],
+    text: ['Con bé đưa tin quỳ trước giường bạn, má sưng một bên.', '"Nương nương bên ấy biết nô tỳ bị cô dùng rồi. Bà bảo nếu nô tỳ không mang về được một thứ thật, nô tỳ sẽ ra giếng."'],
     choices: [
       { t: 'Cho nó một tin thật mà vô hại, để nó sống', fx: { d: { duc: 5, muu: 3, thucphi: -4 }, flag: ['fd_tp_lo'] }, note: 'Nó mang về tin bạn thích hoa sen trắng. Thục phi không tin, nhưng con bé còn sống.' },
       { t: 'Xin Phúc chuyển nó đi viện khác ngay đêm nay', fx: { d: { tien: -20, phuc: 4, thucphi: -8 }, flag: ['fd_tp_lo'] }, note: 'Con bé được đưa sang viện Hoán Y giặt áo. Thục phi mất một con mắt, và biết là do ai.' },
@@ -640,7 +640,7 @@ export const FEUD: Card[] = [
     who: 'hanh',
     lead: 'Có những người hầu đem cả thân mình ra trả ơn chủ.',
     title: 'Hạnh bước lên trước',
-    text: ['Ngọc như ý ngự ban trong viện bạn vỡ làm đôi, Phúc mang lệnh tra đến tận cửa.', 'Bạn chưa kịp mở miệng, Hạnh đã quỳ xuống: "Là nô tì lau rơi. Cô không biết gì cả."'],
+    text: ['Ngọc như ý ngự ban trong viện bạn vỡ làm đôi, Phúc mang lệnh tra đến tận cửa.', 'Bạn chưa kịp mở miệng, Hạnh đã quỳ xuống: "Là nô tỳ lau rơi. Cô không biết gì cả."'],
     choices: [
       { t: 'Để Hạnh nhận, đêm đến lén mang thuốc cho nó', fx: { d: { duc: -3, hanh: 4, an: 2 }, flag: ['fd_hanh_do'] }, note: 'Hạnh bị đánh hai mươi trượng. Nó nằm sấp nửa tháng, vẫn cười khi bạn bôi thuốc.' },
       { t: 'Kéo nó đứng dậy, tự nhận là mình', fx: { d: { duc: 6, an: -6, tien: -30, hanh: 10 }, flag: ['fd_hanh_do'] }, note: 'Bạn bị phạt nửa năm lương. Hạnh nói: "Lần sau cô đừng thế nữa." Rồi nó khóc.' },

@@ -85,7 +85,7 @@ export const ORIGIN_CHUA: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ già',
     title: 'Người cũ nhận mặt',
-    text: ['Một cung nữ già đang quét sân bỗng buông chổi, quỳ sụp xuống.', '"Công chúa! Nô tì hầu trà cho tiên hoàng nhà Hưng mười năm."'],
+    text: ['Một cung nữ già đang quét sân bỗng buông chổi, quỳ sụp xuống.', '"Công chúa! Nô tỳ hầu trà cho tiên hoàng nhà Hưng mười năm."'],
     choices: [
       { t: 'Đỡ bà dậy, gọi đúng tên bà', fx: { d: { the: 8, thaihau: -6 }, flag: ['p_nguoi_cu'] }, note: 'Ba hôm sau, cả viện quét dọn biết bạn còn nhớ tên từng người.' },
       { t: 'Quay đi: "Bà nhận nhầm người rồi."', fx: { d: { duc: 4, muu: 3, the: -5 } }, note: 'Bà già ngồi lại giữa sân rất lâu, chổi vẫn nằm dưới đất.' },

@@ -186,7 +186,7 @@ export const BIG: Card[] = [
     lead: 'Bát thuốc an thai của Thục phi hôm ấy, bạn đã uống.',
     who: 'hanh',
     title: 'Sau cơn sảy thai',
-    text: ['Viện bạn im như tờ. Người ta bảo thai yếu, trời không cho.', 'Hạnh đặt trước mặt bạn cái bát thuốc hôm ấy, đáy còn cặn đỏ: "Nô tì giữ lại."'],
+    text: ['Viện bạn im như tờ. Người ta bảo thai yếu, trời không cho.', 'Hạnh đặt trước mặt bạn cái bát thuốc hôm ấy, đáy còn cặn đỏ: "Nô tỳ giữ lại."'],
     choices: [
       { t: 'Mang bát thuốc đến trước Thái hậu', fx: { d: { thucphi: -25, thaihau: 6, muu: 6 }, flag: ['thu_thucphi', 'thang_thucphi'], years: 1 }, note: 'Thái hậu cấm túc Thục phi nửa năm. Nhưng Hoàng tử Nghĩa vẫn là con trưởng.', risk: { p: 0.5, fail: { d: { an: -10, thaihau: -6 }, flag: ['thu_thucphi'], years: 1 }, failNote: 'Thái y nói cặn ấy chỉ là táo đỏ. Bạn bị cho là đau quá hóa điên.' } },
       { t: 'Giấu bát thuốc đi, chờ một ngày', fx: { d: { muu: 10, duc: -4 }, flag: ['biet_doc_thucphi', 'thu_thucphi'], years: 1 }, note: 'Bạn chôn cái bát dưới gốc khế, chờ ngày đem ra.' },

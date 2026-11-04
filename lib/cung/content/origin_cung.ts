@@ -233,10 +233,10 @@ export const ORIGIN_CUNG: Card[] = [
     title: 'Ai vá vạt áo này',
     text: ['Hoàng thượng cho gọi cả viện Hoán Y lên điện. Ngài cầm vạt long bào, lật mặt trong ra.', '"Đường kim này không phải tay thợ thêu. Ai vá, ngẩng đầu lên."'],
     choices: [
-      { t: 'Ngẩng đầu: "Nô tì họ {ho}, ở viện Hoán Y."', fx: { d: { an: 14, vua: 12, thucphi: -10 }, rank: 1, years: 1 }, note: 'Hoàng thượng nhìn bạn rất lâu. Sáng hôm sau có chiếu nâng bạn lên Tài nhân. Viện Hoán Y không ai dám nói gì.', risk: { p: 0.25, fail: { d: { an: 4, duc: -4 }, years: 1 }, failNote: 'Thượng cung bước lên trước, nhận là tay mình vá. Hoàng thượng gật đầu, ban thưởng cho bà ta.' } },
+      { t: 'Ngẩng đầu: "Nô tỳ họ {ho}, ở viện Hoán Y."', fx: { d: { an: 14, vua: 12, thucphi: -10 }, rank: 1, years: 1 }, note: 'Hoàng thượng nhìn bạn rất lâu. Sáng hôm sau có chiếu nâng bạn lên Tài nhân. Viện Hoán Y không ai dám nói gì.', risk: { p: 0.25, fail: { d: { an: 4, duc: -4 }, years: 1 }, failNote: 'Thượng cung bước lên trước, nhận là tay mình vá. Hoàng thượng gật đầu, ban thưởng cho bà ta.' } },
       { t: 'Cúi đầu thấp hơn, để Thượng cung nhận thay', fx: { d: { duc: 8, an: -4, thucphi: 4 }, years: 1 }, note: 'Thượng cung được ban một đôi vòng bạc. Bà Tư huých bạn: "Ngu. Nhưng sống lâu."' },
       { t: 'Đêm trước đã xin Thục phi tiến cử, đổi lại làm tai mắt', fx: { d: { an: 10, thucphi: 14, duc: -6, muu: 4 }, flag: ['n_taimat'], rank: 1, years: 1 }, note: 'Thục phi đứng sau rèm khẽ ho. Hoàng thượng phẩy tay: "Đưa nó lên viện Nghi Lễ." Bạn biết mình vừa bán mình lần thứ hai.' },
-      { t: 'Đưa hai bàn tay nứt nẻ lên: "Nô tì vá suốt đêm."', need: { flags: ['n_aovua'] }, lockHint: 'Cần đã thức đêm vá long bào', fx: { d: { an: 20, vua: 18, duc: 4, thucphi: -12 }, flag: ['vua_thuong'], rank: 1, years: 1 }, note: 'Hoàng thượng cầm lấy tay bạn, xoay ra chỗ sáng. "Bàn tay này vá được áo trẫm, thì đừng đi giặt nữa."' },
+      { t: 'Đưa hai bàn tay nứt nẻ lên: "Nô tỳ vá suốt đêm."', need: { flags: ['n_aovua'] }, lockHint: 'Cần đã thức đêm vá long bào', fx: { d: { an: 20, vua: 18, duc: 4, thucphi: -12 }, flag: ['vua_thuong'], rank: 1, years: 1 }, note: 'Hoàng thượng cầm lấy tay bạn, xoay ra chỗ sáng. "Bàn tay này vá được áo trẫm, thì đừng đi giặt nữa."' },
     ],
   },
   {
@@ -360,7 +360,7 @@ export const ORIGIN_CUNG: Card[] = [
     where: 'ở bãi mộ cung nữ sau thành',
     who: 'hanh',
     title: 'Nấm mộ không tên',
-    text: ['Kiệu dừng ở bãi đất sau thành, lính đứng giãn ra hai bên. Bà Tư nằm đâu đó giữa trăm nấm mộ cung nữ, không bia, không ai thờ.', '"Nô tì hỏi mãi, không ai nhớ bà nằm chỗ nào."'],
+    text: ['Kiệu dừng ở bãi đất sau thành, lính đứng giãn ra hai bên. Bà Tư nằm đâu đó giữa trăm nấm mộ cung nữ, không bia, không ai thờ.', '"Nô tỳ hỏi mãi, không ai nhớ bà nằm chỗ nào."'],
     choices: [
       { t: 'Lập một ngôi miếu thờ chung mọi cung nữ không con cháu', fx: { d: { duc: 12, tien: -100 }, flag: ['kc_e_mieu_cung_nu'] }, note: 'Miếu nhỏ, mái ngói âm dương. Bạn tự tay viết bài vị đầu tiên: "Bà Tư, viện Hoán Y."' },
       { t: 'Xin cho cung nữ già được về quê dưỡng già', fx: { d: { duc: 10, quan: -4 } }, note: 'Năm ấy ba chục bà lão ra cổng thành. Có bà không còn nhớ đường về làng.' },

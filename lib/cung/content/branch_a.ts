@@ -303,7 +303,7 @@ export const BRANCH_A: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Cửa Tây canh tư',
-    text: ['Cửa Tây đổi gác lúc canh tư, khe cửa vừa đủ một người lách qua.', 'Hạnh nắm tay bạn: "Nương nương đi trước. Lính quay lại thì nô tì kéo chúng đi chỗ khác."'],
+    text: ['Cửa Tây đổi gác lúc canh tư, khe cửa vừa đủ một người lách qua.', 'Hạnh nắm tay bạn: "Nương nương đi trước. Lính quay lại thì nô tỳ kéo chúng đi chỗ khác."'],
     choices: [
       { t: 'Kéo Hạnh đi cùng, sống chết có nhau', fx: { next: 'na_bung_lang', flag: ['na_bung_hanh'] }, note: 'Hai người chạy dọc bờ sông đến sáng, giày rách cả hai đôi.' },
       { t: 'Để Hạnh ở lại đánh lạc hướng', fx: { next: 'na_bung_lang', d: { hanh: -10 } }, note: 'Sau lưng bạn có tiếng Hạnh hét lên rồi tắt. Bạn không ngoảnh lại, vì không dám.' },

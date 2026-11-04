@@ -123,7 +123,7 @@ export const CHAINS_B: Card[] = [
     moods: { hanh: 'lo', con: 'buon' },
     who: 'hanh',
     title: 'Đêm thứ bảy',
-    text: ['Thái y kê đơn rồi không dám vào nữa vì sợ lây, còn con thì mê sảng gọi cha, tay cào lên mặt.', 'Hạnh quỳ bên giường: "Ở quê nô tì, người ta buộc tay trẻ lại và đắp lá chè xanh."'],
+    text: ['Thái y kê đơn rồi không dám vào nữa vì sợ lây, còn con thì mê sảng gọi cha, tay cào lên mặt.', 'Hạnh quỳ bên giường: "Ở quê nô tỳ, người ta buộc tay trẻ lại và đắp lá chè xanh."'],
     choices: [
       { t: 'Nghe Hạnh, buộc tay con, đắp lá chè', need: { num: { hanh: [30, 100] } }, lockHint: 'Cần Hạnh từ 30', fx: { d: { hanh: 6 }, flag: ['cb_dau_hanh'], next: 'cb_dau_sang' }, note: 'Hạnh hát một bài vè cũ suốt đêm. Gần sáng, con thôi cào mặt.' },
       { t: 'Tự thức canh, sai người lên chùa Vân Tịch xin bùa', fx: { d: { duc: 3, tien: -20 }, next: 'cb_dau_sang' }, note: 'Lá bùa về lúc gà gáy. Bạn dán lên đầu giường mà tay vẫn run.' },
@@ -841,7 +841,7 @@ export const CHAINS_B: Card[] = [
     moods: { hanh: 'buon' },
     who: 'hanh',
     title: 'Hạnh quỳ',
-    text: ['Hạnh quỳ trước bạn, đầu gối già run run.', '"Năm ấy nô tì nhận bạc Thục phi để đổi chén chè có độc của người khác. Nô tì giấu nương nương ba mươi năm."'],
+    text: ['Hạnh quỳ trước bạn, đầu gối già run run.', '"Năm ấy nô tỳ nhận bạc Thục phi để đổi chén chè có độc của người khác. Nô tỳ giấu nương nương ba mươi năm."'],
     choices: [
       { t: 'Đỡ Hạnh dậy, tha hết', fx: { d: { hanh: 10 }, next: 'cb_no_nguc' }, note: 'Hạnh khóc như đứa trẻ. Bạn mới biết mình nợ hai người, không phải một.' },
       { t: 'Bảo Hạnh ra khỏi phòng', fx: { d: { hanh: -20 }, next: 'cb_no_nguc' }, note: 'Hạnh lạy ba lạy rồi đi. Đêm ấy chỗ Hạnh vẫn nằm ngoài hiên bỏ trống.' },

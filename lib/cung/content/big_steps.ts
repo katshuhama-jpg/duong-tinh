@@ -55,7 +55,7 @@ export const BIG_STEPS: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Canh ba',
-    text: ['Canh ba, bụng bạn quặn lên từng cơn, mồ hôi ướt gối.', 'Hạnh ôm đèn ngồi cạnh giường: "Hay để nô tì chạy đi gọi thái y?"'],
+    text: ['Canh ba, bụng bạn quặn lên từng cơn, mồ hôi ướt gối.', 'Hạnh ôm đèn ngồi cạnh giường: "Hay để nô tỳ chạy đi gọi thái y?"'],
     choices: [
       { t: 'Cắn răng chịu, sáng ra sang tạ ơn Thục phi', fx: { d: { duc: 6, thucphi: 6, sac: -3 } }, note: 'Trà đắng chát. Đêm ấy bạn đau bụng, nhưng sáng ra Thục phi khen "biết điều".' },
       { t: 'Bảo Hạnh gọi thái y, cho cả viện biết chén trà có vấn đề', fx: { d: { muu: 4, duc: 2, thucphi: -8 } }, note: 'Thái y bắt mạch, chỉ nói "ăn phải đồ lạ". Từ đêm ấy, Thục phi biết người mới không dễ bảo.' },
@@ -200,7 +200,7 @@ export const BIG_STEPS: Card[] = [
     moods: { hanh: 'so', cungnu: 'dac' },
     who: 'hanh',
     title: 'Mùi xạ',
-    text: ['Hạnh bưng khay mứt vào, ghé tai bạn: "Thuốc có mùi xạ, nô tì ngửi thấy."', 'Cung nữ bên Thục phi vẫn đứng ở cửa, chưa chịu về.'],
+    text: ['Hạnh bưng khay mứt vào, ghé tai bạn: "Thuốc có mùi xạ, nô tỳ ngửi thấy."', 'Cung nữ bên Thục phi vẫn đứng ở cửa, chưa chịu về.'],
     choices: [
       { t: 'Gạt lời Hạnh, uống cho cung nữ kia về', fx: { next: 'bs_thai_dem', d: { hanh: -4 } }, note: 'Bạn uống một hơi. Cung nữ nhún chân rồi đi, bước chân nhẹ hẳn.' },
       { t: 'Đợi nó về, bảo Hạnh lén đổ cho con mèo hoang thử trước', fx: { next: 'bs_thai_meo', d: { hanh: 4 } }, note: 'Bạn giả nhấp môi cho cung nữ yên tâm về. Hạnh ôm bát thuốc lẻn ra sau bếp.' },
@@ -236,7 +236,7 @@ export const BIG_STEPS: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Cơn đau canh hai',
-    text: ['Canh hai, bạn giật mình vì bụng dưới nặng trĩu, nhói lên từng hồi.', 'Hạnh run tay thắp đèn: "Nương nương, nô tì đi gọi người nhé?"'],
+    text: ['Canh hai, bạn giật mình vì bụng dưới nặng trĩu, nhói lên từng hồi.', 'Hạnh run tay thắp đèn: "Nương nương, nô tỳ đi gọi người nhé?"'],
     choices: [
       { t: 'Nằm im, niệm Phật đến sáng', fx: { d: { thucphi: 6 } }, note: 'Cơn đau qua đi lúc gà gáy. Sáng ra thái y bắt mạch, thai vẫn yên.', risk: { p: 0.5, fail: { d: { an: -10, sac: -6 }, flag: ['say_thai'], years: 1 }, failNote: 'Nửa đêm bụng quặn đau. Sáng ra, thái y chỉ lắc đầu.' } },
       { t: 'Sai Hạnh chạy đến tẩm điện, nhờ thái giám hầu đêm báo Hoàng thượng', need: { flags: ['ba_bao_vua'] }, lockHint: 'Cần đã báo tin cho Hoàng thượng trước', fx: { d: { vua: 8, an: 6, thucphi: -8, hanh: 4 } }, note: 'Ngài đã biết tin từ đêm ấy, nên không hỏi một câu, chỉ khoác áo đi cùng ba thái y. Đến gà gáy, thai vẫn yên.', risk: { p: 0.1, fail: { d: { an: -6, sac: -6, vua: 6 }, flag: ['say_thai'], years: 1 }, failNote: 'Ngài đến kịp, nhưng thuốc đã ngấm. Ngài ngồi bên giường đến sáng, không nói gì.' } },
@@ -273,7 +273,7 @@ export const BIG_STEPS: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ bên Thục phi',
     title: 'Đường lên chùa xa',
-    text: ['Cung nữ bên Thục phi quỳ, nước mắt ròng ròng: "Chùa xa, đường xóc, nương nương bên nô tì sợ động thai."', 'Thái hậu nhấp chén trà, chờ bạn nói.'],
+    text: ['Cung nữ bên Thục phi quỳ, nước mắt ròng ròng: "Chùa xa, đường xóc, nương nương bên nô tỳ sợ động thai."', 'Thái hậu nhấp chén trà, chờ bạn nói.'],
     choices: [
       { t: 'Vẫn xin đi, nói muốn chép kinh cầu cho hoàng tự', fx: { d: { duc: 8, thaihau: 10, an: -6 }, flag: ['duong_chua'] }, note: 'Thái hậu gật đầu, cử bà đỡ của chính bà đi theo.' },
       { t: 'Hỏi lại: "Đến nhà đẻ ta còn chưa được báo, sao chủ ngươi đã lo động thai?"', need: { flags: ['ba_de_danh'] }, lockHint: 'Cần đã giữ kín tin, chưa báo cả nhà đẻ', fx: { d: { muu: 8, thaihau: 10, thucphi: -12, duc: 2 }, flag: ['ba_lo_lot'] }, note: 'Cung nữ há miệng, không đáp được. Thái hậu đặt chén trà xuống rất nhẹ, rồi cho bà đỡ của chính bà dọn sang gian bên.' },

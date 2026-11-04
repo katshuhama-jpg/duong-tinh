@@ -284,7 +284,7 @@ export const CHAINS_A: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ viện Thục phi',
     title: 'Trâm ngọc mất',
-    text: ['Cung nữ viện Thục phi cầm lệnh bài của chủ, dẫn sáu thái giám ập vào sân: trâm ngọc ngự ban của Thục phi mất từ chiều qua.', '"Có người thấy tiểu chủ đi qua hành lang bên ấy. Nô tì xin phép lục soát."'],
+    text: ['Cung nữ viện Thục phi cầm lệnh bài của chủ, dẫn sáu thái giám ập vào sân: trâm ngọc ngự ban của Thục phi mất từ chiều qua.', '"Có người thấy tiểu chủ đi qua hành lang bên ấy. Nô tỳ xin phép lục soát."'],
     choices: [
       { t: 'Mở cửa cho lục, đứng ra sân chờ', fx: { d: { duc: 3 }, next: 'ca_tram_luc' }, note: 'Bọn thái giám lật tung rương hòm. Hạnh đứng sau bạn, thở không ra hơi.' },
       { t: 'Chặn cửa: muốn lục phải có lệnh Hoàng hậu', fx: { d: { muu: 3, thucphi: -5 }, next: 'ca_tram_hau' }, note: 'Cung nữ kia cười nhạt rồi đi. Chưa tới trưa, bạn bị gọi sang cung Hoàng hậu.' },
@@ -349,7 +349,7 @@ export const CHAINS_A: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ đưa than',
     title: 'Người đưa than',
-    text: ['Đêm ấy Hạnh lôi cung nữ đưa than vào phòng, đóng chặt cửa.', 'Con bé run cầm cập: "Nô tì chỉ làm theo lời ma ma bên viện Thục phi."'],
+    text: ['Đêm ấy Hạnh lôi cung nữ đưa than vào phòng, đóng chặt cửa.', 'Con bé run cầm cập: "Nô tỳ chỉ làm theo lời ma ma bên viện Thục phi."'],
     choices: [
       { t: 'Dắt nó sang cung Hoàng hậu ngay trong đêm', fx: { d: { hoanghau: 8, thucphi: -15, duc: 4 }, flag: ['ca_tram_sach'] }, note: 'Hoàng hậu nghe xong chỉ nói: "Về đi." Sáng ra ma ma bên viện Thục phi bị đuổi khỏi cung.' },
       { t: 'Tha cho nó, bắt nó làm tai mắt bên ấy', fx: { d: { muu: 8, hanh: 4, an: -3 }, flag: ['ca_tram_tai'] }, note: 'Chuyện trâm bạn chịu tiếng, xin bồi tiền cho xong. Nhưng từ nay mỗi lần Thục phi trở mình, bạn đều biết.' },
@@ -460,7 +460,7 @@ export const CHAINS_A: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Giữ được',
-    text: ['Thái y châm cứu tới canh năm, cái thai giữ được, nhưng từ nay bạn phải tránh xa mọi thứ hương lạ.', 'Hạnh ôm chiếc gối đứng ở cửa: "Nô tì đem đốt, hay đem đi tố?"'],
+    text: ['Thái y châm cứu tới canh năm, cái thai giữ được, nhưng từ nay bạn phải tránh xa mọi thứ hương lạ.', 'Hạnh ôm chiếc gối đứng ở cửa: "Nô tỳ đem đốt, hay đem đi tố?"'],
     choices: [
       { t: 'Đem đốt, coi như chưa có chuyện gì', fx: { d: { duc: 5, muu: -2, thucphi: 4, an: -3 }, flag: ['ca_huong_dot'] }, note: 'Khói xạ hương bay qua tường. Thục phi sang thăm lần nữa, thấy bạn còn nằm đó, mặt nàng tái đi.' },
       { t: 'Trời sáng thì đem sang cung Thái hậu', fx: { d: { hanh: 3 }, next: 'ca_huong_thaihau' }, note: 'Hạnh ôm gối đi trước, bạn ngồi kiệu kín theo sau. Thái hậu cho gọi cả Thục phi sang.' },
@@ -624,7 +624,7 @@ export const CHAINS_A: Card[] = [
     who: 'cungnu',
     whoName: 'Cung nữ viện Thục phi',
     title: 'Hộp ngọc đêm khuya',
-    text: ['Cung nữ thân của Thục phi lén sang, đặt lên bàn một hộp ngọc.', '"Chủ nhân nô tì nhắn: chuyện sáng nay, xin tiểu chủ quên giùm."'],
+    text: ['Cung nữ thân của Thục phi lén sang, đặt lên bàn một hộp ngọc.', '"Chủ nhân nô tỳ nhắn: chuyện sáng nay, xin tiểu chủ quên giùm."'],
     choices: [
       { t: 'Nhận hộp ngọc, hứa không nhắc lại', fx: { d: { tien: 40, thucphi: 8, duc: -3 }, flag: ['ca_khoc_mua'] }, note: 'Hộp ngọc nặng tay. Từ nay giữa bạn và Thục phi có một lời hứa, và một món nợ.' },
       { t: 'Trả hộp, bảo về thưa: lễ là lễ', fx: { d: { duc: 5, thucphi: -15, thaihau: 3 }, flag: ['ca_khoc_thang'] }, note: 'Nó ôm hộp về, bước rất nhanh. Cả hậu cung biết người mới không dễ bắt nạt, cũng không dễ mua.' },

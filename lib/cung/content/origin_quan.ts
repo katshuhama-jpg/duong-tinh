@@ -190,7 +190,7 @@ export const ORIGIN_QUAN: Card[] = [
     moods: { hanh: 'so' },
     who: 'hanh',
     title: 'Ba quan của phủ',
-    text: ['Hạnh quỳ xuống, đặt lên bàn ba quan tiền: "Phủ Đoàn gửi qua tay Phúc cho nô tì, bảo mỗi tuần kể chuyện tiểu chủ."', '"Nô tì không muốn giấu."'],
+    text: ['Hạnh quỳ xuống, đặt lên bàn ba quan tiền: "Phủ Đoàn gửi qua tay Phúc cho nô tỳ, bảo mỗi tuần kể chuyện tiểu chủ."', '"Nô tỳ không muốn giấu."'],
     choices: [
       { t: 'Cho Hạnh giữ tiền, dặn chỉ kể những gì ta cho kể', fx: { d: { muu: 6, hanh: 6, the: 2 } }, note: 'Từ đó, phủ Đoàn biết đúng những gì bạn muốn cha biết.' },
       { t: 'Gửi tiền trả phủ, kèm lời nhắn cho cha', fx: { d: { hanh: 10, the: -6, duc: 3 } }, note: 'Cha nhắn lại: "Con lớn rồi." Bạn không đoán được là khen hay chê.' },
