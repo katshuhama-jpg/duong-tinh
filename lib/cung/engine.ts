@@ -5,10 +5,10 @@
 import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, type Rank } from './world';
 import { CRISIS } from './content/big';
-import { ALL_BIG, SMALL, bigsOf } from './content/index';
+import { ALL_BIG, BRANCH_CARDS, SMALL, bigsOf } from './content/index';
 import { fillText, originOf } from './origins';
 
-const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL];
+const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL, ...BRANCH_CARDS];
 export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
 
 /* ---------- ngẫu nhiên có hạt giống: cùng một đời, cùng một bước thì ra cùng một kết quả ---------- */

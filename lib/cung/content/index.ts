@@ -33,3 +33,13 @@ export function bigsOf(ch: number): Card[] {
   return list;
 }
 export const ALL_BIG: Card[] = [...BIG, ...ROUTES.filter((c) => c.big)];
+
+/** lựa chọn rẽ nhánh gắn thêm vào thẻ có sẵn (các file nhánh rẽ khai báo, khỏi sửa file gốc) */
+import { BRANCH_A, BRANCH_A_CHOICES } from './branch_a';
+import { BRANCH_B, BRANCH_B_CHOICES } from './branch_b';
+export const BRANCH_CARDS: Card[] = [...BRANCH_A, ...BRANCH_B];
+const ALL_FOR_BRANCH: Card[] = [...BIG, ...ROUTES, ...CARDS_A, ...CARDS_B];
+for (const [id, extra] of Object.entries({ ...BRANCH_A_CHOICES, ...BRANCH_B_CHOICES })) {
+  const c = ALL_FOR_BRANCH.find((x) => x.id === id);
+  if (c) for (const ch of extra) if (!c.choices.some((o) => o.t === ch.t)) c.choices.push(ch);
+}

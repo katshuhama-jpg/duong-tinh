@@ -344,7 +344,7 @@ export default function Play() {
         <div className="c-band" aria-hidden="true" />
         <div className="c-page">
           <div className={`c-unlock ${e.dead ? 'dead' : ''}`} key={e.id}>
-            <p className="c-unlock-seal">{fresh ? 'Mở khóa kết cục' : 'Kết cục'}</p>
+            <p className="c-unlock-seal">{e.branch ? (fresh ? 'Mở khóa nhánh rẽ' : 'Nhánh rẽ') : fresh ? 'Mở khóa kết cục' : 'Kết cục'}</p>
             <div className="c-unlock-art">
               <Scene
                 place={art?.place ?? endPlace(e.id, !!e.dead)}
@@ -358,7 +358,8 @@ export default function Play() {
               />
             </div>
             <p className="c-sub">
-              {e.dead ? 'Một cách chết' : 'Một đời người'} · uy lực hạng {[...ALL_ENDINGS].sort((a, b) => (b.tier ?? ENDING_TIER[b.id] ?? 40) - (a.tier ?? ENDING_TIER[a.id] ?? 40)).findIndex((x) => x.id === e.id) + 1}/{ALL_ENDINGS.length} · {got.size} kết cục đã mở
+              {e.dead ? 'Một cách chết' : e.tone === 'buon' ? 'Một kết buồn' : e.tone === 'vien' ? 'Một kết viên mãn' : 'Một đời người'}
+              {e.branch ? ' · ngõ cụt' : ''} · uy lực hạng {[...ALL_ENDINGS].sort((a, b) => (b.tier ?? ENDING_TIER[b.id] ?? 40) - (a.tier ?? ENDING_TIER[a.id] ?? 40)).findIndex((x) => x.id === e.id) + 1}/{ALL_ENDINGS.length} · {got.size} kết cục đã mở
             </p>
             <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
             <p className="c-unlock-desc">{fillText(e.desc, life.origin)}</p>
@@ -374,10 +375,19 @@ export default function Play() {
               {life.omen}
             </p>
           )}
+          {e.branch && (
+            <p className="c-note" style={{ textAlign: 'center', margin: 0 }}>
+              Đây là một nhánh rẽ khỏi đường chính. Quay lại ngã rẽ để chọn đường khác và đi tiếp câu chuyện.
+            </p>
+          )}
           <div className="c-row">
             {(life.marks?.length || life.back) && (
               <button type="button" className="c-btn" onClick={() => (setFresh(false), keep(rewind(life)))}>
-                Quay lại ngã rẽ gần nhất
+                {(() => {
+                  const m = life.marks?.[life.marks.length - 1];
+                  const c = m ? cardOf(m.card) : null;
+                  return c ? `Quay lại ngã rẽ: ${fillText(c.title, life.origin)}` : 'Quay lại ngã rẽ gần nhất';
+                })()}
               </button>
             )}
           </div>

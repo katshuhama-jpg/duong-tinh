@@ -176,6 +176,10 @@ export interface Ending {
   id: string;
   /** độ uy lực 0-100: sổ kết cục xếp cái uy lực nhất lên đầu */
   tier?: number;
+  /** kết cục của nhánh rẽ (ngõ cụt): người chơi quay lại ngã rẽ để đi tiếp đường chính */
+  branch?: boolean;
+  /** sắc thái: viên mãn hay buồn (chết thì dùng dead) */
+  tone?: 'vien' | 'buon';
   name: string;
   desc: string;
   /** chết hay sống */
