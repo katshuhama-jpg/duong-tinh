@@ -290,6 +290,7 @@ export const BIG_STEPS: Card[] = [
       { t: '"Đứng sau một bước. Ta chỉ lo cho con ăn học."', fx: { next: 'bs_bang_hoc', d: { duc: 2 } }, note: 'Thái phó cúi đầu rất thấp rồi lui đi. Con bạn đã ngủ gục trên vai.' },
       { t: '"Sau rèm, ngồi cạnh Hoàng hậu."', fx: { next: 'bs_bang_rem', d: { quan: -2 } }, note: 'Thái phó nhíu mày, không đáp. Sáng hôm sau, sau rèm chính điện có thêm một chiếc ghế.' },
       { t: 'Ghé tai Thái phó: ngày mai cho con hạ chỉ giam Hoàng hậu', need: { num: { quan: [20, 100] } }, lockHint: 'Cần phe quan văn từ 20', fx: { next: 'bs_bang_giam', d: { muu: 2 } }, note: 'Thái phó im rất lâu, rồi lấy ra một tờ giấy vàng đã viết sẵn.' },
+      { t: '"Ta muốn hỏi tướng Lê Trực trước đã."', need: { flags: ['ket_tuong', 'giac'] }, lockHint: 'Cần kết giao tướng Lê Trực và có giặc ngoài biên', fx: { next: 'bs_bang_tuong' }, note: 'Thái phó biến sắc. Gần sáng, ngựa trạm báo giặc vượt ải, tướng Lê Trực đã về tới cửa thành.' },
     ],
   },
   {
