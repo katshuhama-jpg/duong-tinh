@@ -9,6 +9,7 @@ import { ALL_BIG, BRANCH_CARDS, SMALL, bigsOf } from './content/index';
 import { fillText, originOf } from './origins';
 
 const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL, ...BRANCH_CARDS];
+const URGENT = SMALL.filter((c) => c.urgent);
 export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
 
 /* ---------- ngẫu nhiên có hạt giống: cùng một đời, cùng một bước thì ra cùng một kết quả ---------- */
@@ -185,8 +186,11 @@ export function nextCard(l: Life): string | null {
   // về già thì vào chặng cuối
   if (l.age >= 68 && l.chapter < 7) moveTo(l, 7);
   const ch = l.chapter;
+  // bước ngoặt: đủ điều kiện là hiện ngay
+  const turn = URGENT.find((c) => c.chapter.includes(ch) && !l.seen.includes(c.id) && ok(c.when, l));
+  if (turn) return turn.id;
   if (l.smalls < chap(ch).smalls) {
-    const pool = SMALL.filter((c) => !c.step && c.chapter.includes(ch) && ok(c.when, l) && (c.repeat || !l.seen.includes(c.id)));
+    const pool = SMALL.filter((c) => !c.step && !c.urgent && c.chapter.includes(ch) && ok(c.when, l) && (c.repeat || !l.seen.includes(c.id)));
     if (pool.length) {
       // thẻ hệ quả của lựa chọn vừa rồi (cần cờ mới đặt) được ưu tiên, để chuyện nối tiếp chuyện
       const fresh = (l.fresh ?? []).map((x) => x.slice(x.indexOf(':') + 1));
@@ -195,7 +199,7 @@ export function nextCard(l: Life): string | null {
       const lastBefore = l.smalls === chap(ch).smalls - 1;
       const beatW = (c: Card) => (c.beat === 'hook' ? (first ? 8 : 0.4) : c.beat === 'lang' ? (lastBefore ? 8 : 0.5) : 1);
       const focus = l.focus ?? [];
-      const focusW = (c: Card) => (c.when?.riv && Object.keys(c.when.riv).some((k) => focus.includes(k as RivalK)) ? 4 : c.when?.riv ? 2 : 1);
+      const focusW = (c: Card) => (c.when?.riv && Object.keys(c.when.riv).some((k) => focus.includes(k as RivalK)) ? 6 : c.when?.riv ? 3 : 1);
       const w = (c: Card) => (c.weight ?? 1) * beatW(c) * focusW(c) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
       const total = pool.reduce((a, c) => a + w(c), 0);
       let r = rand(l.seed, step(l)) * total;

@@ -149,6 +149,8 @@ export interface Card {
   choices: Choice[];
   /** câu "điềm báo": hiện khi chết, để người chơi biết đáng lẽ đã thấy ở đâu */
   omen?: string;
+  /** thẻ bước ngoặt: đủ điều kiện là hiện ngay ở lượt sau (vd lập hậu khi ngôi hậu bỏ trống) */
+  urgent?: boolean;
   /** thẻ là một hồi giữa sự kiện nhiều hồi: không rút ngẫu nhiên, chỉ tới bằng fx.next */
   step?: boolean;
   /** được lặp lại trong một đời (mặc định không) */
