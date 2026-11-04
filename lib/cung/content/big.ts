@@ -25,6 +25,7 @@ export const BIG: Card[] = [
     choices: [
       { t: 'Nâng chén lên, nhấp một ngụm', fx: { next: 'bs_tra_cung', d: { thucphi: 2 } }, note: 'Trà đắng chát, đầu lưỡi tê đi. Ngoài cửa có tiếng guốc, cung nữ của Thục phi bước vào.' },
       { t: 'Đặt chén xuống, xin để trà nguội bớt', fx: { next: 'bs_tra_hanh', d: { muu: 2 } }, note: 'Ma ma nhướng mày, không nói gì. Đúng lúc ấy Hạnh bưng chậu nước rửa mặt vào.' },
+      { t: 'Lấy cánh sen khô đêm trước, đặt cạnh chén: "Cùng một loại sen, ma ma ạ."', need: { flags: ['ba_canh_sen'] }, lockHint: 'Cần đã giữ cánh sen khô đêm đầu', fx: { d: { muu: 8, duc: 3, thucphi: -8 }, flag: ['ba_lat_tra'] }, note: 'Ma ma nhìn cánh sen rất lâu, rồi tự tay đổ chén trà đi: "Cô gái quê này không cần ta dạy cách nhìn chén hai lần."' },
     ],
   },
   {
@@ -105,6 +106,7 @@ export const BIG: Card[] = [
     choices: [
       { t: 'Quỳ xuống, xin Thái hậu cho tra sổ ra vào', fx: { next: 'bs_vu_phuc', d: { duc: 2 } }, note: 'Thái hậu cho một nén nhang. Thái giám Phúc ôm cuốn sổ ra vào, cúi đầu bước vào điện.' },
       { t: 'Nhìn thẳng Thục phi: "Ai bỏ trâm vào, người ấy biết."', fx: { next: 'bs_vu_doi', d: { thucphi: -4, muu: 2 } }, note: 'Thục phi khóc nấc lên. Thái hậu đập tay xuống án, sai lôi thị nữ của bạn vào hỏi.' },
+      { t: 'Rút chìa khóa đồng trong người: "Hộp khóa từ tháng trước, chìa chỉ thần thiếp giữ."', need: { flags: ['ba_khoa_hop'] }, lockHint: 'Cần đã thay khóa hộp đồ', fx: { next: 'bs_vu_phuc', d: { muu: 4, thaihau: 4, thucphi: -4 } }, note: 'Thái hậu cầm chiếc khóa, xoay một vòng: khóa không có vết cạy. "Vậy trâm chui vào bằng đường nào? Phúc, đem sổ ra vào đây."' },
     ],
   },
   {
@@ -125,6 +127,7 @@ export const BIG: Card[] = [
       { t: 'Cho Phúc 50 quan, bảo ghi bớt đi cho đỡ chướng mắt', need: { num: { tien: [50, 99999] } }, lockHint: 'Cần 50 quan', fx: { d: { tien: -50, phuc: 15, an: -4, thucphi: 4 }, flag: ['phuc_mua'] }, note: 'Sổ ghi ba lần. Thục phi bớt để ý đến bạn.' },
       { t: 'Bảo ghi đúng sự thật, không giấu gì', fx: { d: { duc: 6, an: 6, thucphi: -10 } }, note: 'Sổ đến thăm đến tay Thục phi trước khi đến tay Thái hậu.' },
       { t: 'Xin Hoàng thượng tháng sau sang viện Thục phi nhiều hơn', fx: { d: { duc: 10, an: -6, thucphi: 8, vua: 4 } }, note: 'Hoàng thượng nhìn bạn rất lạ: "Nàng không giống những người khác."' },
+      { t: 'Bảo Phúc ghi đúng, rồi gửi sang viện Thục phi một gói sen khô', need: { flags: ['ba_biet_sen'] }, lockHint: 'Cần nhận ra mùi sen của kẻ đếm đêm', fx: { d: { muu: 8, an: 4, thucphi: -6, phuc: 6 }, flag: ['ba_canh_bao'] }, note: 'Không kèm một chữ. Từ hôm ấy, gốc đại đối diện viện bạn không còn ai ngồi đếm nữa.' },
     ],
   },
 
@@ -146,6 +149,7 @@ export const BIG: Card[] = [
     choices: [
       { t: 'Nhận bát thuốc, bảo để nguội rồi uống', fx: { next: 'bs_thai_nguoi' }, note: 'Cung nữ không chịu về, đứng chờ ở cửa. Hạnh bưng khay mứt vào, mắt liếc bát thuốc.' },
       { t: 'Nói phải sang báo tin cho Thái hậu trước đã', fx: { next: 'bs_thai_hau', d: { thaihau: 2 } }, note: 'Chưa kịp thay áo thì Thái hậu đã nghe tin, đến tận viện. Cung nữ bên Thục phi tái mặt.' },
+      { t: 'Hỏi cung nữ: "Hôm trước Thái y Lục rẽ vào cửa ngách bên ấy, kê đơn này phải không?"', need: { flags: ['ba_theo_thai_y'] }, lockHint: 'Cần đã cho Hạnh theo dấu thái y', fx: { d: { muu: 8, thucphi: -10, hanh: 4 }, flag: ['ba_tra_bat', 'biet_doc_thucphi'] }, note: 'Cung nữ tái mặt, bưng bát thuốc lùi ra cửa, suýt vấp ngưỡng. Hạnh chạy theo, giữ lại được một ngụm cặn trong chén con.' },
     ],
   },
   {

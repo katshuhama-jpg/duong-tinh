@@ -23,6 +23,7 @@ export const BIG_STEPS: Card[] = [
     text: ['Cung nữ của Thục phi đứng tựa cửa, mắt không rời chén trà trên tay bạn.', '"Nương nương bên ấy dặn: uống cạn mới là nể."'],
     choices: [
       { t: 'Uống cạn, cúi đầu tạ ơn Thục phi', fx: { next: 'bs_tra_dem', d: { thucphi: 2 } }, note: 'Bạn uống đến giọt cuối. Cung nữ cười, nhún chân rồi đi. Ma ma Trịnh thở dài một tiếng rất khẽ.' },
+      { t: 'Hỏi cung nữ: "Mực son pha trầm bên ấy chấm tên ta, còn trà này pha gì?"', need: { flags: ['ba_cham_son'] }, lockHint: 'Cần biết ai chấm son tên mình', fx: { d: { muu: 8, duc: 2, thucphi: -6 }, flag: ['ba_lat_tra'] }, note: 'Cung nữ biến sắc, giật lại chén trà mang về. Ma ma Trịnh nhìn bạn như nhìn một người khác hẳn.' },
       { t: 'Ôm bụng kêu đau, bưng chén vào sau rèm', fx: { next: 'bs_tra_lan', d: { muu: 2 } }, note: 'Cung nữ bĩu môi. Ma ma cho bạn lui vào trong, chén trà vẫn còn nửa trong tay.' },
     ],
   },
@@ -111,6 +112,7 @@ export const BIG_STEPS: Card[] = [
     choices: [
       { t: 'Bảo Phúc đọc to, không bỏ dòng nào', fx: { next: 'bs_vu_so', d: { phuc: -2 } }, note: 'Phúc nuốt nước bọt, bắt đầu đọc. Thục phi thôi khóc, ngẩng lên nghe.' },
       { t: 'Thôi, không làm khó Phúc, quỳ xuống nhận lỗi', fx: { next: 'bs_vu_nhan', d: { phuc: 4 } }, note: 'Phúc gập sổ lại, thở ra. Thục phi bước tới, chìa tay đỡ bạn.' },
+      { t: 'Nhìn Phúc, khẽ nhắc chén chè đậu hôm nào', need: { flags: ['ba_phuc_canh'] }, lockHint: 'Cần Phúc đã kể chuyện người chỉ làm việc đếm', fx: { d: { muu: 6, phuc: 8, thucphi: -16, thaihau: 8 }, flag: ['thang_thucphi', 'ba_phuc_cuu'] }, note: 'Phúc rút từ ngực áo ra trang sổ thật, chép tay, có tên cung nữ bên Thục phi ra vào viện bạn đúng chiều ấy. Thái hậu chỉ nói: "Lui cả đi."' },
     ],
   },
   {
@@ -129,6 +131,7 @@ export const BIG_STEPS: Card[] = [
     choices: [
       { t: 'Đứng chắn trước Hạnh, tố Thục phi tự giấu trâm', fx: { next: 'bs_vu_to', d: { hanh: 4 } }, note: 'Cả điện im phăng phắc. Thục phi buông khăn, nước mắt khô lại rất nhanh.' },
       { t: 'Để Hạnh khỏi bị đánh, quỳ xuống nhận lỗi thay nó', fx: { next: 'bs_vu_nhan', d: { hanh: 6 } }, note: 'Hạnh khóc nấc. Thục phi bước tới, chìa tay đỡ bạn.' },
+      { t: 'Bảo Hạnh kể chuyện đêm nó theo cung nữ lạ vào cửa sau viện Thục phi', need: { flags: ['ba_theo_dau'] }, lockHint: 'Cần Hạnh đã theo dấu kẻ đếm đêm', fx: { next: 'bs_vu_so', d: { hanh: 8, muu: 4 } }, note: 'Hạnh run mà nói rành rọt từng canh, từng cửa. Thục phi thôi lau nước mắt. Thái hậu sai Phúc đem sổ ra vào.' },
     ],
   },
   {
@@ -146,6 +149,7 @@ export const BIG_STEPS: Card[] = [
     choices: [
       { t: 'Xin tra đủ sổ của thái giám Phúc, đối chất cung nữ ấy', fx: { d: { muu: 8, thucphi: -14, thaihau: 6 }, flag: ['thang_thucphi'] }, note: 'Sổ ghi: chiều hôm qua, cung nữ của Thục phi vào viện bạn "đưa chè". Thái hậu phẩy tay cho lui.', risk: { p: 0.4, fail: { d: { an: -15, thaihau: -10 }, rank: -1 }, failNote: 'Trang sổ hôm ấy bị xé mất. Bạn bị giáng một bậc, cấm túc ba tháng.' } },
       { t: 'Đưa ra chiếc khăn thêu tìm thấy bên giếng sau viện', need: { flags: ['biet_bimat_thucphi'] }, lockHint: 'Cần biết một bí mật của Thục phi', fx: { d: { thucphi: -25, thaihau: 10, muu: 10, an: 8 }, flag: ['thang_thucphi', 'thu_thucphi'] }, note: 'Thục phi tái mặt. Thái hậu cầm chiếc khăn, chỉ nói một câu: "Lui cả đi." Không ai nhắc đến trâm nữa.' },
+      { t: 'Dâng que tre mười bảy vạch, đối với số đêm trong sổ', need: { flags: ['ba_que_khac'] }, lockHint: 'Cần đã nhặt được que tre khắc vạch', fx: { d: { muu: 10, thucphi: -18, thaihau: 8 }, flag: ['thang_thucphi'] }, note: 'Mười bảy vạch, khớp từng đêm trong sổ. Thái hậu hỏi Thục phi: "Ai rảnh đến mức đếm đèn nhà người khác?" Thục phi không đáp được.' },
     ],
   },
   {
@@ -161,6 +165,7 @@ export const BIG_STEPS: Card[] = [
     title: 'Bằng chứng đâu',
     text: ['Thục phi đứng dậy, không quỳ nữa. Thái hậu gõ ngón tay lên tay ghế.', '"Tố người thì phải có bằng chứng. Con có không?"'],
     choices: [
+      { t: 'Chỉ dấu ngón tay móng dài còn trên lớp phấn trước hộp đồ', need: { flags: ['ba_phan_hop'] }, lockHint: 'Cần đã rắc phấn trước hộp đồ', fx: { d: { muu: 10, thucphi: -20, thaihau: 10, an: 6 }, flag: ['thang_thucphi', 'thu_thucphi'] }, note: 'Thái hậu sai người ướm tay từng cung nữ. Đến cung nữ thân cận của Thục phi thì vừa khít. Không ai nhắc đến trâm nữa.' },
       { t: 'Nói tiếp: Thục phi tự giấu trâm để vu oan', fx: { d: { thucphi: -20, an: 6, muu: 6 }, flag: ['thu_thucphi'] }, note: 'Thái hậu không xử ai. Nhưng từ hôm đó, Thục phi không cười với bạn nữa.', risk: { p: 0.55, fail: { d: { duc: -14, an: -18, thaihau: -14 }, rank: -1, flag: ['thu_thucphi'] }, failNote: 'Không có bằng chứng. Bạn bị giáng bậc, Thục phi thì được ban thêm một đôi vòng.' } },
       { t: 'Đưa ra chiếc khăn thêu tìm thấy bên giếng sau viện', need: { flags: ['biet_bimat_thucphi'] }, lockHint: 'Cần biết một bí mật của Thục phi', fx: { d: { thucphi: -25, thaihau: 10, muu: 10, an: 8 }, flag: ['thang_thucphi', 'thu_thucphi'] }, note: 'Thục phi tái mặt. Thái hậu cầm chiếc khăn, chỉ nói một câu: "Lui cả đi." Không ai nhắc đến trâm nữa.' },
     ],
@@ -199,6 +204,7 @@ export const BIG_STEPS: Card[] = [
     choices: [
       { t: 'Gạt lời Hạnh, uống cho cung nữ kia về', fx: { next: 'bs_thai_dem', d: { hanh: -4 } }, note: 'Bạn uống một hơi. Cung nữ nhún chân rồi đi, bước chân nhẹ hẳn.' },
       { t: 'Đợi nó về, bảo Hạnh lén đổ cho con mèo hoang thử trước', fx: { next: 'bs_thai_meo', d: { hanh: 4 } }, note: 'Bạn giả nhấp môi cho cung nữ yên tâm về. Hạnh ôm bát thuốc lẻn ra sau bếp.' },
+      { t: 'Đặt đôi hài giấy cháy dở cạnh bát thuốc, bảo nó mang cả hai về', need: { flags: ['ba_hai_giay'] }, lockHint: 'Cần đã giữ đôi hài giấy cháy dở', fx: { d: { muu: 8, thucphi: -10, hanh: 4 }, flag: ['ba_tra_bat'] }, note: 'Cung nữ nhìn đôi hài, mặt cắt không còn hột máu. Nó bưng cả khay đi, không dám ngoảnh lại. Thai của bạn yên.' },
     ],
   },
   {
@@ -216,6 +222,7 @@ export const BIG_STEPS: Card[] = [
     choices: [
       { t: 'Bưng bát thuốc lên, uống trước mặt Thái hậu cho tròn lễ', fx: { next: 'bs_thai_dem', d: { thaihau: 2 } }, note: 'Thái hậu không cản. Bà ngồi thêm một lúc rồi về, cung nữ kia lủi theo.' },
       { t: 'Xin Thái hậu cho lên chùa Vân Tịch dưỡng thai', fx: { next: 'bs_thai_chua' }, note: 'Thái hậu chưa nói gì. Cung nữ bên Thục phi bỗng quỳ sụp xuống.' },
+      { t: 'Dâng Thái hậu que tre và đôi hài giấy, cùng buộc một loại chỉ tím', need: { flags: ['ba_biet_nguoi'] }, lockHint: 'Cần biết kẻ đếm đêm và kẻ gửi hài giấy là một', fx: { d: { muu: 10, thaihau: 10, thucphi: -18 }, flag: ['thang_thucphi', 'biet_doc_thucphi'] }, note: 'Thái hậu cầm sợi chỉ tím, đổ bát thuốc xuống đất trước mặt cung nữ: "Về nói với chủ ngươi, cháu ta mà sứt một sợi tóc, ta không hỏi ai khác."' },
     ],
   },
   {
@@ -232,6 +239,7 @@ export const BIG_STEPS: Card[] = [
     text: ['Canh hai, bạn giật mình vì bụng dưới nặng trĩu, nhói lên từng hồi.', 'Hạnh run tay thắp đèn: "Nương nương, nô tì đi gọi người nhé?"'],
     choices: [
       { t: 'Nằm im, niệm Phật đến sáng', fx: { d: { thucphi: 6 } }, note: 'Cơn đau qua đi lúc gà gáy. Sáng ra thái y bắt mạch, thai vẫn yên.', risk: { p: 0.5, fail: { d: { an: -10, sac: -6 }, flag: ['say_thai'], years: 1 }, failNote: 'Nửa đêm bụng quặn đau. Sáng ra, thái y chỉ lắc đầu.' } },
+      { t: 'Sai Hạnh chạy thẳng đến tẩm điện báo Hoàng thượng', need: { flags: ['ba_bao_vua'] }, lockHint: 'Cần đã báo tin cho Hoàng thượng trước', fx: { d: { vua: 8, an: 6, thucphi: -8, hanh: 4 } }, note: 'Ngài đã biết tin từ đêm ấy, nên không hỏi một câu, chỉ khoác áo đi cùng ba thái y. Đến gà gáy, thai vẫn yên.', risk: { p: 0.1, fail: { d: { an: -6, sac: -6, vua: 6 }, flag: ['say_thai'], years: 1 }, failNote: 'Ngài đến kịp, nhưng thuốc đã ngấm. Ngài ngồi bên giường đến sáng, không nói gì.' } },
       { t: 'Sai Hạnh chạy đi gọi thái y ngay trong đêm', fx: { d: { thucphi: -4, muu: 2, hanh: 4 } }, note: 'Thái y châm ba mũi kim, bắt bạn nằm yên ba ngày. Cả hậu cung biết chuyện bát thuốc.', risk: { p: 0.3, fail: { d: { an: -10, sac: -6 }, flag: ['say_thai'], years: 1 }, failNote: 'Thái y đến muộn nửa canh giờ. Ông chỉ lắc đầu.' } },
     ],
   },
@@ -249,6 +257,7 @@ export const BIG_STEPS: Card[] = [
     text: ['Nửa đêm, con mèo hoang nằm im dưới gốc khế, cái bát vỡ lăn bên cạnh.', 'Hạnh run cầm cập: "Nương nương, giờ làm sao?"'],
     choices: [
       { t: 'Chôn con mèo cùng mảnh bát, giữ làm bằng', fx: { d: { muu: 8, hanh: 6, thucphi: -8 }, flag: ['biet_doc_thucphi'] }, note: 'Con mèo nằm im dưới gốc khế đến sáng. Hạnh run, bạn thì không.' },
+      { t: 'Gọi Thái y Lục, người đã nhận tiền giữ kín, đến xem xác mèo', need: { flags: ['ba_giu_kin'] }, lockHint: 'Cần đã nhờ thái y giữ kín tin', fx: { d: { muu: 8, thucphi: -10, hanh: 4 }, flag: ['biet_doc_thucphi', 'ba_giay_chung'] }, note: 'Thái y Lục run tay viết một tờ chứng: trong thuốc có xạ hương. Ông điểm chỉ, rồi xin bạn đừng bao giờ gọi tên ông.' },
       { t: 'Ôm xác mèo sang cung Thái hậu ngay trong đêm', fx: { d: { thucphi: -14, thaihau: 4, muu: 4 } }, note: 'Thái hậu nhìn xác mèo, chỉ bảo: "Chôn đi." Thục phi bị phạt chép kinh, bạn có thêm một kẻ thù.' },
     ],
   },
@@ -267,6 +276,7 @@ export const BIG_STEPS: Card[] = [
     text: ['Cung nữ bên Thục phi quỳ, nước mắt ròng ròng: "Chùa xa, đường xóc, nương nương bên nô tì sợ động thai."', 'Thái hậu nhấp chén trà, chờ bạn nói.'],
     choices: [
       { t: 'Vẫn xin đi, nói muốn chép kinh cầu cho hoàng tự', fx: { d: { duc: 8, thaihau: 10, an: -6 }, flag: ['duong_chua'] }, note: 'Thái hậu gật đầu, cử bà đỡ của chính bà đi theo.' },
+      { t: 'Hỏi lại: "Đến nhà đẻ ta còn chưa được báo, sao chủ ngươi đã lo động thai?"', need: { flags: ['ba_de_danh'] }, lockHint: 'Cần đã giữ kín tin, chưa báo cả nhà đẻ', fx: { d: { muu: 8, thaihau: 10, thucphi: -12, duc: 2 }, flag: ['ba_lo_lot'] }, note: 'Cung nữ há miệng, không đáp được. Thái hậu đặt chén trà xuống rất nhẹ, rồi cho bà đỡ của chính bà dọn sang gian bên.' },
       { t: 'Ở lại, chỉ xin Thái hậu cho bà đỡ của người sang viện', fx: { d: { duc: 4, thaihau: 6, thucphi: -4 } }, note: 'Bà đỡ già của Thái hậu dọn sang gian bên. Từ đó không bát thuốc nào qua được cửa.' },
     ],
   },
