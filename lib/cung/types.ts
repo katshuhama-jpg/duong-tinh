@@ -137,6 +137,20 @@ export interface Kid {
   name: string;
 }
 
+/** vật làm nổi tranh kết cục */
+export type MotifK = 'lua' | 'gieng' | 'chen' | 'thuyen' | 'chuong' | 'ngai' | 'rem' | 'aonau' | 'mo' | 'den' | 'kiem' | 'hoa' | 'sach' | 'co' | 'trang' | 'lua_chay' | 'chieu' | 'noi';
+/** tranh và lời dẫn riêng của một kết cục */
+export interface EndArt {
+  place: PlaceK;
+  time: TimeK;
+  cast: CastK[];
+  mood?: MoodK;
+  moods?: Partial<Record<CastK, MoodK>>;
+  motif?: MotifK;
+  /** đoạn dẫn truyện 3-5 câu, kể đời người ấy khép lại ra sao */
+  story: string;
+}
+
 export interface Ending {
   id: string;
   name: string;
@@ -144,6 +158,16 @@ export interface Ending {
   /** chết hay sống */
   dead?: boolean;
   /** bia ghi "tẩm" (bậc cao) hay "mộ" */
+}
+
+/** một ngã rẽ đã chọn: bản đời ngay trước lúc chọn (không kèm nhật ký) */
+export interface Mark {
+  card: string;
+  pick: number;
+  age: number;
+  chapter: number;
+  logLen: number;
+  snap: Omit<Life, 'log' | 'marks' | 'back'>;
 }
 
 export interface LogLine {
@@ -184,6 +208,8 @@ export interface Life {
   relV?: number;
   /** cờ vừa đặt ở mấy lượt gần đây: thẻ hệ quả của chúng được ưu tiên rút */
   fresh?: string[];
+  /** các ngã rẽ đã đi qua, mỗi cái giữ một bản để quay lại chọn lại */
+  marks?: Mark[];
   /** tuổi và chỗ của thẻ trước, để viết câu nối cảnh */
   prev?: { age: number; place: string; card: string };
   /** đang ở giữa sự kiện nhiều hồi: thẻ mở đầu là ngã rẽ lớn, khủng hoảng hay thẻ nhỏ, và đang ở hồi thứ mấy */

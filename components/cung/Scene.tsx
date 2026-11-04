@@ -3,7 +3,7 @@
  * Cảnh nền theo chỗ (viện, phòng, vườn, điện, chùa, làng, lăng) và giờ (ngày, chiều, đêm);
  * nhân vật dựng từ một khung người chung, đổi áo, mũ, tóc theo vai.
  */
-import type { CastK, MoodK, PlaceK, TimeK } from '@/lib/cung/types';
+import type { CastK, MoodK, MotifK, PlaceK, TimeK } from '@/lib/cung/types';
 
 const INK = '#2a1d14';
 const GOLD = '#d9a441';
@@ -634,10 +634,176 @@ function Backdrop({ place, time }: { place: PlaceK; time: TimeK }) {
   );
 }
 
+
+/** vật nổi bật trong tranh kết cục, đặt ở tiền cảnh */
+function Motif({ m, solo }: { m: MotifK; solo: boolean }) {
+  const x = solo ? 195 : 318;
+  const k = solo ? 1.25 : 0.9;
+  const t = `translate(${x} 262) scale(${k})`;
+  switch (m) {
+    case 'lua':
+      return (
+        <g className="c-sway" style={{ transformOrigin: `${x}px 20px` }}>
+          <path d={`M${x - 70} 20 Q${x} 34 ${x + 70} 20`} stroke="#5a3a22" strokeWidth="5" fill="none" />
+          <path d={`M${x - 8} 26 Q${x - 18} 120 ${x - 4} 210 L${x + 12} 210 Q${x + 2} 120 ${x + 10} 26 Z`} fill="#f7f2e6" stroke={INK} strokeWidth="1" />
+        </g>
+      );
+    case 'gieng':
+      return (
+        <g transform={t}>
+          <ellipse cx="0" cy="-30" rx="46" ry="12" fill="#1a120c" stroke={INK} strokeWidth="1.2" />
+          <path d="M-46 -30 V8 Q0 22 46 8 V-30" fill="url(#c-stone)" stroke={INK} strokeWidth="1.2" />
+          <path d="M-40 -70 V-30 M40 -70 V-30 M-48 -72 H48" stroke="#5a3a22" strokeWidth="5" />
+          <path d="M14 -28 Q22 -34 30 -28 L26 -22 Z" fill={SON} stroke={INK} strokeWidth="0.8" />
+        </g>
+      );
+    case 'chen':
+      return (
+        <g transform={t}>
+          <ellipse cx="0" cy="10" rx="52" ry="8" fill="#8a5a2a" opacity="0.35" />
+          <path d="M-20 -6 Q-22 10 0 12 Q22 10 20 -6 Z" fill="#f1ead8" stroke={INK} strokeWidth="1" transform="rotate(70 0 4)" />
+          <path d="M14 8 Q40 6 58 14 Q34 20 10 14 Z" fill="#5a2a1a" opacity="0.8" />
+          <circle cx="-30" cy="6" r="4" fill="#f1ead8" stroke={INK} strokeWidth="0.6" />
+        </g>
+      );
+    case 'thuyen':
+      return (
+        <g className="c-sway2" style={{ transformOrigin: `${x}px 260px` }}>
+          <g transform={t}>
+            <path d="M-70 -10 Q0 26 70 -10 L58 4 Q0 30 -58 4 Z" fill="#6a4a36" stroke={INK} strokeWidth="1.2" />
+            <path d="M0 -10 V-110" stroke="#4a3022" strokeWidth="3" />
+            <path d="M2 -106 Q50 -70 4 -24 Z" fill="#e8dcc0" stroke={INK} strokeWidth="1" />
+          </g>
+        </g>
+      );
+    case 'chuong':
+      return (
+        <g transform={t}>
+          <path d="M-50 -120 H50 M-40 -120 V-10 M40 -120 V-10" stroke="#5a3a22" strokeWidth="5" />
+          <g className="c-sway" style={{ transformOrigin: `0px -110px` }}>
+            <path d="M0 -112 V-100 M-18 -100 Q-22 -40 -26 -30 H26 Q22 -40 18 -100 Z" fill="#8a6a2a" stroke={INK} strokeWidth="1.2" />
+            <path d="M-24 -40 H24 M-20 -70 H20" stroke={GOLD} strokeWidth="1.4" />
+          </g>
+        </g>
+      );
+    case 'ngai':
+      return (
+        <g transform={t}>
+          <path d="M-46 0 V-90 Q0 -120 46 -90 V0 Z" fill={SON} stroke={INK} strokeWidth="1.2" />
+          <path d="M-38 -20 H38 V0 H-38 Z" fill={GOLD} stroke={INK} strokeWidth="1" />
+          <path d="M-30 -84 Q0 -104 30 -84" fill="none" stroke={GOLD} strokeWidth="2.4" />
+          <circle cx="0" cy="-70" r="9" fill="none" stroke={GOLD} strokeWidth="2" />
+        </g>
+      );
+    case 'rem':
+      return (
+        <g>
+          <rect x="20" y="16" width="350" height="8" fill="#5a3a22" />
+          {Array.from({ length: 34 }).map((_, i) => (
+            <rect key={i} x={24 + i * 10} y="24" width="7" height="170" fill="#c9a56a" opacity="0.72" />
+          ))}
+          <path d="M20 194 H370" stroke={SON} strokeWidth="3" />
+        </g>
+      );
+    case 'aonau':
+      return (
+        <g transform={t}>
+          <rect x="-44" y="-30" width="88" height="34" rx="4" fill="#7a5a3a" stroke={INK} strokeWidth="1.2" />
+          <path d="M-44 -18 H44 M-44 -6 H44" stroke="#5a3a22" strokeWidth="1" />
+          <g fill="#3a2a20">{[-30, -20, -10, 0, 10, 20, 30].map((d) => <circle key={d} cx={d} cy="-38" r="3" />)}</g>
+        </g>
+      );
+    case 'mo':
+      return (
+        <g transform={t}>
+          <path d="M-60 6 Q0 -70 60 6 Z" fill="#8a9a6a" stroke={INK} strokeWidth="1.2" />
+          <rect x="-12" y="-58" width="24" height="40" fill="#b3a27f" stroke={INK} strokeWidth="1" />
+          <path d="M30 -10 V-40 M36 -10 V-44 M42 -10 V-38" stroke={SON} strokeWidth="1.6" />
+          <path className="c-smoke" d="M36 -46 Q30 -60 38 -72 Q46 -84 38 -98" fill="none" stroke="#cfc6b8" strokeWidth="1.4" />
+        </g>
+      );
+    case 'den':
+      return (
+        <g>
+          {[60, 130, 210, 280, 340].map((dx, i) => (
+            <g key={dx} className={i % 2 ? 'c-sway' : 'c-sway2'} transform={`translate(${dx} ${250 + (i % 3) * 12})`}>
+              <path d="M-12 0 L0 -18 L12 0 Z" fill="#f0c27a" stroke={SON} strokeWidth="1" />
+              <circle cx="0" cy="-6" r="3" fill="#fff3c8" />
+            </g>
+          ))}
+        </g>
+      );
+    case 'kiem':
+      return (
+        <g transform={`${t} rotate(-30)`}>
+          <rect x="-3" y="-120" width="6" height="110" fill="#c8ccd0" stroke={INK} strokeWidth="1" />
+          <rect x="-16" y="-12" width="32" height="7" fill={GOLD2} stroke={INK} strokeWidth="0.8" />
+          <rect x="-4" y="-5" width="8" height="26" fill="#4a3022" />
+        </g>
+      );
+    case 'hoa':
+      return (
+        <g fill="#f2b8c2" stroke="#c46a7a" strokeWidth="0.5">
+          {Array.from({ length: 26 }).map((_, i) => (
+            <circle key={i} className="c-petal" style={{ animationDelay: `${(i % 9) * 0.6}s` }} cx={(i * 53) % 380 + 6} cy={(i * 37) % 120 + 20} r={3 + (i % 3)} />
+          ))}
+        </g>
+      );
+    case 'sach':
+      return (
+        <g transform={t}>
+          <rect x="-48" y="-14" width="96" height="16" fill="#2f4f6c" stroke={INK} strokeWidth="1" />
+          <rect x="-42" y="-30" width="84" height="16" fill={SON} stroke={INK} strokeWidth="1" />
+          <rect x="-36" y="-46" width="72" height="16" fill="#6a4a36" stroke={INK} strokeWidth="1" />
+          <path d="M-10 -46 V2" stroke={GOLD} strokeWidth="1.4" />
+        </g>
+      );
+    case 'co':
+      return (
+        <g transform={t}>
+          <path d="M0 10 V-150" stroke="#4a3022" strokeWidth="4" />
+          <path className="c-sway" style={{ transformOrigin: '0px -150px' }} d="M2 -148 Q50 -140 70 -150 Q60 -120 70 -96 Q40 -104 2 -100 Z" fill={SON} stroke={INK} strokeWidth="1" />
+        </g>
+      );
+    case 'trang':
+      return (
+        <g>
+          <circle cx="195" cy="90" r="58" fill="#f3e6c0" opacity="0.92" />
+          <circle className="c-halo" cx="195" cy="90" r="70" fill="none" stroke="#f3e6c0" strokeWidth="1" opacity="0.6" />
+        </g>
+      );
+    case 'lua_chay':
+      return (
+        <g transform={t}>
+          <path className="c-flame" d="M-60 10 Q-50 -60 -20 -40 Q-10 -110 20 -60 Q40 -90 50 -40 Q70 -50 60 10 Z" fill="#d9601e" opacity="0.9" />
+          <path className="c-flame" d="M-30 10 Q-24 -30 -4 -20 Q6 -60 24 -24 Q40 -30 34 10 Z" fill="#f0c27a" />
+        </g>
+      );
+    case 'chieu':
+      return (
+        <g transform={t}>
+          <rect x="-56" y="-40" width="112" height="44" fill="#f0d880" stroke={INK} strokeWidth="1" />
+          <rect x="-64" y="-44" width="10" height="52" rx="4" fill={SON} stroke={INK} strokeWidth="0.8" />
+          <rect x="54" y="-44" width="10" height="52" rx="4" fill={SON} stroke={INK} strokeWidth="0.8" />
+          <path d="M-40 -28 H40 M-40 -18 H30 M-40 -8 H36" stroke={INK} strokeWidth="1.4" opacity="0.6" />
+          <rect x="20" y="-16" width="16" height="16" fill="none" stroke={SON} strokeWidth="2" />
+        </g>
+      );
+    case 'noi':
+      return (
+        <g transform={t} className="c-sway2" style={{ transformOrigin: `0px -40px` }}>
+          <path d="M-50 -10 Q0 20 50 -10 Q40 6 0 12 Q-40 6 -50 -10 Z" fill="#c9a56a" stroke={INK} strokeWidth="1.2" />
+          <path d="M-40 -8 Q0 -50 40 -8" fill="none" stroke="#8a6a3a" strokeWidth="2" />
+          <path d="M-30 -10 Q0 -22 30 -10" fill="#e8dcc0" stroke={INK} strokeWidth="0.8" />
+        </g>
+      );
+  }
+}
+
 const SLOTS = [180, 296, 76];
 
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {} }: { place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
+export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif }: { motif?: MotifK; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -654,6 +820,7 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
       </defs>
       <g clipPath="url(#c-clip)">
         <Backdrop place={place} time={time} />
+        {motif && (motif === 'rem' || motif === 'trang') && <Motif m={motif} solo={!cast.length} />}
         {order.slice(0, 3).map((k, i) => {
           const look = looks[k as CastK] ?? lookOf(k as CastK);
           return (
@@ -662,6 +829,7 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
             </g>
           );
         })}
+        {motif && motif !== 'rem' && motif !== 'trang' && <Motif m={motif} solo={!cast.length} />}
         {/* không khí: căng thì tối mép, giận thì ửng đỏ, buồn thì xám lạnh */}
         {(mood === 'so' || mood === 'gian' || mood === 'buon' || mood === 'lo') && (
           <rect x="0" y="0" width="390" height="312" fill={mood === 'gian' ? 'url(#c-vig-r)' : mood === 'buon' ? 'url(#c-vig-b)' : 'url(#c-vig)'} className="c-mood" pointerEvents="none" />

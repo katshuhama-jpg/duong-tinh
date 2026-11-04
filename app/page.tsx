@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
+import { FateTree, type TreePath } from '@/components/cung/Tree';
 import Scene, { lookOf } from '@/components/cung/Scene';
 import { playTrack } from '@/lib/cung/music';
 import { signOut } from '@/lib/auth';
@@ -16,7 +17,7 @@ import { useAuth } from '@/lib/useAuth';
 export default function Home() {
   const { user, ready } = useAuth();
   const [me, setMe] = useState<{ meta: CMeta; life: Life | null } | null>(null);
-  const [tab, setTab] = useState<'song' | 'chet'>('song');
+  const [tab, setTab] = useState<'song' | 'chet' | 'cay'>('song');
   useEffect(() => playTrack(1), []);
   useEffect(() => {
     if (!ready) return;
@@ -72,7 +73,16 @@ export default function Home() {
             <button type="button" role="tab" aria-selected={tab === 'chet'} onClick={() => setTab('chet')}>
               Những cách chết
             </button>
+            <button type="button" role="tab" aria-selected={tab === 'cay'} onClick={() => setTab('cay')}>
+              Cây số phận
+            </button>
           </div>
+          {tab === 'cay' ? (
+            <div className="c-treebox">
+              <p className="c-note" style={{ margin: 0 }}>Mỗi nhánh là một chuỗi ngã rẽ bạn đã chọn, cuối nhánh là kết cục nó dẫn tới. Trong lúc chơi, mở Sổ hậu cung để quay lại một ngã rẽ và chọn khác.</p>
+              <FateTree paths={((me?.meta.tree as TreePath[] | undefined) ?? []).filter((x) => (x.o ?? 'dan') === 'dan')} life={null} />
+            </div>
+          ) : (
           <ul className="c-ends" style={{ margin: 0, padding: 0 }}>
             {list.map((e) => (
               <li key={e.id} className={got.has(e.id) ? '' : 'locked'}>
@@ -81,6 +91,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          )}
         </section>
         <p className="c-note" style={{ textAlign: 'center' }}>
           Triều đại, nhân vật, tên cung điện đều hư cấu. Khung chín bậc, lương bổng, lễ nghi mô phỏng hậu cung nhà Nguyễn.

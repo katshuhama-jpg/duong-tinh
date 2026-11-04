@@ -5,12 +5,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
 import Scene, { lookOf, type Look } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { cardOf, choicesOf, choose, newLife, rankOf, rewind, sons, type Result } from '@/lib/cung/engine';
+import { cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
+import { ENDING_ART } from '@/lib/cung/ending_art';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, NumK, PlaceK } from '@/lib/cung/types';
 import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
 import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
-import { CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world';
+import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
@@ -132,6 +134,8 @@ export default function Play() {
   const [edict, setEdict] = useState<string | null>(null);
   const [book, setBook] = useState(false);
   const [roll, setRoll] = useState(0);
+  const [fresh, setFresh] = useState(false);
+  const [tree, setTree] = useState(false);
   const sugg = useMemo(() => suggestNames(og ?? 'dan', roll * 977 + 3, 4), [og, roll]);
 
   useEffect(() => {
@@ -149,9 +153,14 @@ export default function Play() {
   }, []);
 
   const unlock = useCallback(
-    (id: string) => {
+    (id: string, l: Life) => {
+      setFresh(!(meta.cung ?? []).includes(id));
       const cung = Array.from(new Set([...(meta.cung ?? []), id]));
-      const m = { ...meta, cung, cungLives: (meta.cungLives ?? 0) + 1 };
+      // ghi nhánh vào cây số phận: chuỗi ngã rẽ đã chọn dẫn tới kết cục này
+      const p = (l.marks ?? []).map((x) => `${x.card}.${x.pick}`);
+      const old = ((meta.tree as TreePath[] | undefined) ?? []).filter((x) => !(x.e === id && x.p.join('|') === p.join('|')));
+      const tree = [...old, { p, e: id, o: l.origin ?? 'dan' }].slice(-120);
+      const m = { ...meta, cung, tree, cungLives: (meta.cungLives ?? 0) + 1 };
       setMeta(m);
       void saveMeta(m);
     },
@@ -261,19 +270,41 @@ export default function Play() {
   const rank = rankOf(life);
   const chapter = CHAPTERS.find((c) => c.n === life.chapter)!;
 
-  /* ---------- hết đời ---------- */
+  /* ---------- hết đời: màn mở khóa kết cục ---------- */
   if (life.end && !res) {
     const e = endingOf(life.end)!;
+    const art = ENDING_ART[e.id];
     const tomb = life.rank >= 5 || life.flags.includes('thai_phi') || life.flags.includes('thai_hau') ? 'tẩm' : 'mộ';
+    const got = new Set(meta.cung ?? []);
+    const back = (i: number) => {
+      setTree(false);
+      setFresh(false);
+      keep(rewindTo(life, i));
+    };
     return (
       <main className="c-app">
         <div className="c-band" aria-hidden="true" />
         <div className="c-page">
-          <Scene place={endPlace(e.id, !!e.dead)} time="chieu" cast={e.dead ? [] : ['me']} looks={looksOf(life)} label={`Kết cục: ${e.name}`} />
-          <div className="c-end c-ink">
-            <p className="c-sub">{e.dead ? 'Một cách chết' : 'Kết cục'}</p>
+          <div className={`c-unlock ${e.dead ? 'dead' : ''}`} key={e.id}>
+            <p className="c-unlock-seal">{fresh ? 'Mở khóa kết cục' : 'Kết cục'}</p>
+            <div className="c-unlock-art">
+              <Scene
+                place={art?.place ?? endPlace(e.id, !!e.dead)}
+                time={art?.time ?? 'chieu'}
+                cast={art?.cast ?? (e.dead ? [] : ['me'])}
+                mood={art?.mood ?? (e.dead ? 'buon' : 'binh')}
+                moods={art?.moods}
+                motif={art?.motif ?? (e.dead ? 'mo' : undefined)}
+                looks={looksOf(life)}
+                label={`Kết cục: ${e.name}`}
+              />
+            </div>
+            <p className="c-sub">
+              {e.dead ? 'Một cách chết' : 'Một đời người'} · {got.size}/{ALL_ENDINGS.length} kết cục đã mở
+            </p>
             <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
-            <p className="c-prose">{fillText(e.desc, life.origin)}</p>
+            <p className="c-unlock-desc">{fillText(e.desc, life.origin)}</p>
+            {art?.story && <p className="c-prose c-unlock-story">{fillText(art.story, life.origin)}</p>}
             <p className="c-note">
               {rank.t} {originOf(life.origin).ho} thị ({life.name}), {ageOf(life)} tuổi · {sons(life) ? `${sons(life)} hoàng tử` : 'không có hoàng tử'}
               {life.kids.length - sons(life) ? `, ${life.kids.length - sons(life)} công chúa` : ''} · Bia ghi chữ &quot;{tomb}&quot;
@@ -286,12 +317,27 @@ export default function Play() {
             </p>
           )}
           <div className="c-row">
-            {e.dead && life.back && (
-              <button type="button" className="c-btn" onClick={() => keep(rewind(life))}>
+            {(life.marks?.length || life.back) && (
+              <button type="button" className="c-btn" onClick={() => (setFresh(false), keep(rewind(life)))}>
                 Quay lại ngã rẽ gần nhất
               </button>
             )}
-            <button type="button" className={e.dead && life.back ? 'c-btn ghost' : 'c-btn'} onClick={() => keep(null)}>
+          </div>
+          <div className="c-row">
+            <button type="button" className="c-btn ghost" onClick={() => setTree((v) => !v)} aria-expanded={tree}>
+              {tree ? 'Đóng cây số phận' : 'Cây số phận: chọn lại từ ngã rẽ khác'}
+            </button>
+          </div>
+          {tree && (
+            <section className="c-treebox" aria-label="Cây số phận">
+              <h3>Ngã rẽ của đời này</h3>
+              <LifeMarks life={life} onRewind={back} />
+              <h3>Cây kết cục của mọi đời</h3>
+              <FateTree paths={(meta.tree as TreePath[] | undefined) ?? []} life={life} />
+            </section>
+          )}
+          <div className="c-row">
+            <button type="button" className="c-btn ghost" onClick={() => (setFresh(false), keep(null))}>
               Sống một đời khác
             </button>
           </div>
@@ -309,7 +355,7 @@ export default function Play() {
     keep(r.life);
     setRes(r);
     if (r.ranked) (setEdict(rankOf(r.life).t), fanfare());
-    if (r.life.end) unlock(r.life.end);
+    if (r.life.end) unlock(r.life.end, r.life);
   };
 
   const stat = (k: NumK) => {
@@ -456,6 +502,14 @@ export default function Play() {
                   <FragmentRow key={k} label={k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]} v={life.n[k]} feel={feelOf(k, life.n[k])} />
                 ))}
               </div>
+            </section>
+            <section>
+              <h3>Cây số phận</h3>
+              <LifeMarks life={life} onRewind={(i) => (setBook(false), setRes(null), keep(rewindTo(life, i)))} />
+              <details className="c-treefold">
+                <summary>Cây kết cục của mọi đời</summary>
+                <FateTree paths={(meta.tree as TreePath[] | undefined) ?? []} life={life} />
+              </details>
             </section>
             <section>
               <h3>Nhật ký</h3>

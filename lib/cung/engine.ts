@@ -195,8 +195,16 @@ export function choose(l0: Life, idx: number): Result {
   const ch: Choice = card.choices[idx];
   const l: Life = JSON.parse(JSON.stringify({ ...l0, back: null }));
   // trước mỗi ngã rẽ lớn: giữ một bản để chết thì quay lại
-  l.back = card.big ? (JSON.parse(JSON.stringify({ ...l0, back: null })) as Omit<Life, 'back'>) : l0.back;
+  l.back = card.big ? (JSON.parse(JSON.stringify({ ...l0, back: null, marks: undefined })) as Omit<Life, 'back'>) : l0.back;
   if (!ok(ch.need, l)) return { life: l0, note: '', delta: '', ranked: false };
+  // ngã rẽ lớn hoặc mở đầu sự kiện nhiều hồi: ghi lại để quay về chọn lại
+  if (card.big || (!l0.chain && card.choices.some((c) => c.fx.next))) {
+    const { log: _log, marks: _marks, back: _back, ...snap } = JSON.parse(JSON.stringify(l0)) as Life;
+    void _log;
+    void _marks;
+    void _back;
+    l.marks = [...(l0.marks ?? []), { card: card.id, pick: idx, age: l0.age, chapter: l0.chapter, logLen: l0.log.length, snap }].slice(-40);
+  }
   let fx: Fx = ch.fx;
   let note = ch.note ?? '';
   if (ch.risk && rand(l.seed, `risk|${card.id}|${idx}|${l.age}`) < ch.risk.p) {
@@ -263,8 +271,23 @@ export function choose(l0: Life, idx: number): Result {
   return { life: l, note: fillText(note, l.origin), delta: parts.slice(0, 4).join(' · '), ranked: l.rank > rank0 || (l0.flags.includes('cung_nga') && !l.flags.includes('cung_nga')) };
 }
 
+/** quay lại ngã rẽ thứ i trong cây số phận của đời này (chọn lại từ đó) */
+export function rewindTo(l: Life, i: number): Life | null {
+  const m = l.marks?.[i];
+  if (!m) return null;
+  const b = JSON.parse(JSON.stringify(m.snap)) as Life;
+  b.log = l.log.slice(0, m.logLen);
+  b.marks = (l.marks ?? []).slice(0, i);
+  b.back = null;
+  b.end = null;
+  b.omen = undefined;
+  b.log.push({ age: Math.floor(b.age), t: 'Quay lại ngã rẽ, chọn lại một lần nữa.', k: 'note' });
+  return b;
+}
+
 /** chết rồi: quay lại ngã rẽ lớn gần nhất */
 export function rewind(l: Life): Life | null {
+  if (l.marks?.length) return rewindTo(l, l.marks.length - 1);
   if (!l.back) return null;
   const b = JSON.parse(JSON.stringify(l.back)) as Life;
   b.back = null;
