@@ -133,9 +133,10 @@ import { ENDINGS_EVENTS } from './content/deep_events';
 import { ENDINGS_BRANCH_A } from './content/branch_a';
 import { ENDINGS_RIVALS_A } from './content/rivals_a';
 import { ENDINGS_RIVALS_B } from './content/rivals_b';
+import { ENDINGS_RIVALS_C } from './content/rivals_c';
 import { ENDINGS_BRANCH_B } from './content/branch_b';
 import { ENDINGS_FEUD } from './content/feud';
-export const ALL_ENDINGS: Ending[] = [...ENDINGS_RIVALS_A, ...ENDINGS_RIVALS_B, ...ENDINGS_BRANCH_A, ...ENDINGS_BRANCH_B, ...ENDINGS_ARCS, ...ENDINGS_EVENTS, ...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN, ...ENDINGS_FEUD];
+export const ALL_ENDINGS: Ending[] = [...ENDINGS_RIVALS_A, ...ENDINGS_RIVALS_B, ...ENDINGS_RIVALS_C, ...ENDINGS_BRANCH_A, ...ENDINGS_BRANCH_B, ...ENDINGS_ARCS, ...ENDINGS_EVENTS, ...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN, ...ENDINGS_FEUD];
 export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id);
 
 /** tên con */
