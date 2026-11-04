@@ -4,6 +4,47 @@ Tài liệu này dành cho ChatGPT. Hãy đọc hết và làm đúng mọi quy 
 
 ---
 
+## 0. DANH SÁCH CẦN LÀM (BẢN RÚT GỌN, ƯU TIÊN SỐ 1)
+
+Chỉ làm các ảnh trong bảng này. Chỉ một góc (góc A). Mỗi người chỉ làm đúng các nét mặt ghi trong cột "Nét mặt". Game tự lật gương ra góc B, tự cắt chân dung từ góc A, tự làm hiệu ứng nét mặt còn lại (rung, tối mép, giọt lệ). Các mã tuổi khác ở mục 5 KHÔNG làm, trừ khi tôi gõ riêng.
+
+| Thứ tự | Mã | Nét mặt | Số ảnh |
+| --- | --- | --- | --- |
+| 1 | `me1` | binh, vui, lo, gian, buon, so | 6 |
+| 2 | `me3` | binh, vui, gian, dac | 4 |
+| 3 | `me5` | binh, buon | 2 |
+| 4 | `hanh` | binh, vui, lo, buon | 4 |
+| 5 | `thucphi` | binh, dac, gian | 3 |
+| 6 | `hoanghau` | binh, dac, gian | 3 |
+| 7 | `vua` | binh, vui, lo | 3 |
+| 8 | `phuc` | binh, dac, lo | 3 |
+| 9 | `thaihau` | binh, gian | 2 |
+| 10 | `mama` | binh, gian | 2 |
+| 11 | `tao` | binh, dac | 2 |
+| 12 | `xuanlan` | binh, dac | 2 |
+| 13 | `ninh` | binh, dac | 2 |
+| 14 | `hienphi` | binh, dac | 2 |
+| 15 | `uyentan` | binh, dac | 2 |
+| 16 | `letan` | binh, dac | 2 |
+| 17 | `quan` | binh, dac | 2 |
+| 18 | `nghia` | binh, gian | 2 |
+| 19 | `con` | binh, vui | 2 |
+| 20 | `con_vua` | binh | 1 |
+| 21 | `tuong` | binh | 1 |
+| 22 | `mac` | binh | 1 |
+| 23 | `su` | binh | 1 |
+| 24 | `meday` | binh | 1 |
+| 25 | `cungnu` | binh | 1 |
+| 26 | `thaiy` | binh | 1 |
+| 27 | `ngoai` | binh | 1 |
+| | | **Tổng** | **58** |
+
+**Lệnh nhanh nhất:** gõ `làm tiếp danh sách`. Bạn tự làm mã kế tiếp chưa xong trong bảng trên, đủ các nét mặt của mã đó trong một lượt (nhiều ảnh riêng, mỗi ảnh một người). Xong thì báo "Xong <mã> (<số ảnh>). Gõ làm tiếp danh sách để sang <mã kế>".
+
+Gõ `<mã>` (vd `hanh`) cũng được: làm đủ các nét mặt của mã đó theo bảng trên, góc A.
+
+---
+
 ## 1. CÁCH TÔI RA LỆNH
 
 **MỖI ẢNH MỘT NGƯỜI, NHIỀU ẢNH MỘT LƯỢT.** Một lệnh ra 8 ảnh riêng (8 nét mặt), không ghép vào một ảnh. Người chiếm gần hết chiều cao ảnh, độ phân giải cao nhất có thể (2K).
