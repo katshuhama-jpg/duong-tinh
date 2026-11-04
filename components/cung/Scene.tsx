@@ -10,10 +10,11 @@ const GOLD = '#d9a441';
 const GOLD2 = '#b8892d';
 const SON = '#a8281d';
 
+export type Prop = 'thuoc' | 'quat' | 'khay' | 'phattran' | 'hot' | 'kiem' | 'chuoi' | 'gio' | 'thu' | 'non';
 export interface Look {
   robe: string;
   collar?: string;
-  hat: 'bun' | 'phuong' | 'khanvan' | 'xungthien' | 'canhchuon' | 'mutuong' | 'troc' | 'khanmo' | 'khantg' | 'tre';
+  hat: 'bun' | 'phuong' | 'khanvan' | 'xungthien' | 'canhchuon' | 'mutuong' | 'troc' | 'khanmo' | 'khantg' | 'tre' | 'nonsu' | 'khanden';
   phuong?: number;
   grey?: boolean;
   beard?: boolean;
@@ -21,65 +22,202 @@ export interface Look {
   scale?: number;
   skin?: string;
   pants?: string;
+  /** đàn ông (kể cả thái giám): mặt vuông hơn, không son má */
+  male?: boolean;
+  /** già: nếp nhăn, lưng hơi còng */
+  old?: boolean;
+  /** dáng: vai rộng (tướng, vua), tròn (thái giám), mảnh (cung nữ) */
+  build?: 'broad' | 'plump' | 'slim';
+  /** đồ cầm tay để nhận ra vai */
+  prop?: Prop;
+  /** hoa văn áo: rồng (vua), giáp (tướng), bổ tử (quan) */
+  pattern?: 'rong' | 'giap' | 'botu' | 'phuong';
+  /** phấn mắt tím (Thục phi) */
+  paint?: boolean;
 }
 
 /** dáng mặc định của từng vai */
-export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: boolean; king?: boolean } = {}): Look {
+export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: boolean; king?: boolean; father?: boolean } = {}): Look {
   switch (k) {
     case 'me':
-      return { robe: o.robe ?? '#4f7f8a', collar: GOLD2, hat: o.phuong ? 'phuong' : 'bun', phuong: o.phuong, grey: o.old };
+      return { robe: o.robe ?? '#4f7f8a', collar: GOLD2, hat: o.phuong ? 'phuong' : 'bun', phuong: o.phuong, grey: o.old, old: o.old, build: 'slim' };
     case 'thucphi':
-      return { robe: '#6b4a92', collar: GOLD, hat: 'phuong', phuong: 5, sly: true, grey: o.old };
+      return { robe: '#6b4a92', collar: GOLD, hat: 'phuong', phuong: 5, sly: true, paint: true, grey: o.old, old: o.old, prop: 'quat', pattern: 'phuong', build: 'slim' };
     case 'hoanghau':
-      return { robe: '#c49a3a', collar: SON, hat: 'phuong', phuong: 9, grey: o.old };
+      return { robe: '#c49a3a', collar: SON, hat: 'phuong', phuong: 9, grey: o.old, old: o.old, pattern: 'phuong' };
     case 'thaihau':
-      return { robe: '#b8892d', collar: SON, hat: 'phuong', phuong: 9, grey: true };
+      return { robe: '#8a5a2a', collar: SON, hat: 'phuong', phuong: 9, grey: true, old: true, prop: 'chuoi', pattern: 'phuong' };
     case 'mama':
-      return { robe: '#6a4a36', collar: '#3e281a', hat: 'khanvan', grey: true, scale: 0.92 };
+      return { robe: '#6a4a36', collar: '#3e281a', hat: 'khanvan', grey: true, old: true, scale: 0.92, prop: 'thuoc' };
     case 'hanh':
-      return { robe: '#7fa3b0', collar: '#e8dcc0', hat: 'bun', scale: 0.86, grey: o.old };
+      return { robe: '#7fa3b0', collar: '#e8dcc0', hat: 'bun', scale: 0.86, grey: o.old, old: o.old, prop: 'khay', build: 'slim' };
     case 'cungnu':
-      return { robe: '#9db08a', collar: '#e8dcc0', hat: 'bun', scale: 0.86 };
+      return { robe: '#9db08a', collar: '#e8dcc0', hat: 'bun', scale: 0.86, prop: 'gio', build: 'slim' };
     case 'vua':
-      return { robe: '#d9a441', collar: SON, hat: 'xungthien', beard: true };
+      return { robe: '#d9a441', collar: SON, hat: 'xungthien', beard: true, male: true, build: 'broad', pattern: 'rong' };
     case 'quan':
-      return { robe: '#2f4f6c', collar: GOLD2, hat: 'canhchuon', beard: true, grey: true };
+      return { robe: '#2f4f6c', collar: GOLD2, hat: 'canhchuon', beard: true, grey: true, old: true, male: true, prop: 'hot', pattern: 'botu' };
     case 'tuong':
-      return { robe: '#7a2016', collar: '#4a3022', hat: 'mutuong', beard: true };
+      return { robe: '#7a2016', collar: '#4a3022', hat: 'mutuong', beard: true, male: true, build: 'broad', prop: 'kiem', pattern: 'giap', skin: '#e2b48e' };
     case 'phuc':
-      return { robe: '#4a6fa5', collar: '#f1ead8', hat: 'khantg', scale: 0.9, pants: '#f1ead8' };
+      return { robe: '#4a6fa5', collar: '#f1ead8', hat: 'khantg', scale: 0.9, pants: '#f1ead8', male: true, build: 'plump', prop: 'phattran' };
     case 'su':
-      return { robe: '#7a5a3a', collar: '#5a3a22', hat: 'troc', grey: true, scale: 0.92 };
+      return { robe: '#7a5a3a', collar: '#5a3a22', hat: 'troc', grey: true, old: true, scale: 0.92, prop: 'chuoi' };
     case 'meday':
-      return { robe: '#6e5a3e', collar: '#3a2a20', hat: 'khanmo', grey: true, scale: 0.92 };
+      return o.father
+        ? { robe: '#3a4a5c', collar: GOLD2, hat: 'khanden', beard: true, grey: true, old: true, male: true, prop: 'hot' }
+        : { robe: '#6e5a3e', collar: '#3a2a20', hat: 'khanmo', grey: true, old: true, scale: 0.92, prop: 'non' };
     case 'ngoai':
-      return { robe: '#3a5a4a', collar: '#c49a3a', hat: 'mutuong', beard: true };
+      return { robe: '#3a5a4a', collar: '#c49a3a', hat: 'nonsu', beard: true, male: true, prop: 'thu', skin: '#e6bf98' };
     case 'con':
-      return { robe: o.king ? '#d9a441' : '#c84a35', collar: GOLD2, hat: 'tre', scale: 0.62 };
+      return { robe: o.king ? '#d9a441' : '#c84a35', collar: GOLD2, hat: 'tre', scale: 0.62, pattern: o.king ? 'rong' : undefined };
+  }
+}
+
+/** đồ cầm tay, vẽ quanh tay phải (x dương), gốc tọa độ là tay */
+function PropArt({ p }: { p: Prop }) {
+  switch (p) {
+    case 'thuoc':
+      return <rect x="-3" y="-46" width="6" height="56" rx="1.5" fill="#8a5a2a" stroke={INK} strokeWidth="0.8" transform="rotate(18)" />;
+    case 'quat':
+      return (
+        <g transform="translate(4 -6) rotate(-20)">
+          <path d="M0 0 L-26 -30 Q0 -44 26 -30 Z" fill="#e8c8d8" stroke={INK} strokeWidth="0.8" />
+          <path d="M0 0 L-13 -38 M0 0 L0 -42 M0 0 L13 -38" stroke="#a8708a" strokeWidth="0.6" />
+        </g>
+      );
+    case 'khay':
+      return (
+        <g transform="translate(-10 -4)">
+          <rect x="-22" y="-2" width="44" height="6" rx="2" fill={SON} stroke={INK} strokeWidth="0.8" />
+          <path d="M-12 -2 Q-12 -14 -4 -14 Q4 -14 4 -2 Z M4 -9 Q10 -10 10 -5" fill="#e8dcc0" stroke={INK} strokeWidth="0.8" />
+          <ellipse cx="13" cy="-4" rx="5" ry="3" fill="#e8dcc0" stroke={INK} strokeWidth="0.6" />
+        </g>
+      );
+    case 'phattran':
+      return (
+        <g transform="rotate(-25)">
+          <rect x="-2" y="-34" width="4" height="36" fill="#8a5a2a" stroke={INK} strokeWidth="0.6" />
+          <path d="M0 2 Q-10 22 -6 40 M0 2 Q-2 24 0 42 M0 2 Q8 22 6 40 M0 2 Q-6 22 -10 36 M0 2 Q6 22 10 36" fill="none" stroke="#f1ead8" strokeWidth="2.2" />
+        </g>
+      );
+    case 'hot':
+      return <rect x="-4" y="-40" width="8" height="44" rx="3" fill="#e8dcc0" stroke={INK} strokeWidth="0.8" />;
+    case 'kiem':
+      return (
+        <g transform="rotate(8)">
+          <rect x="-1.8" y="-62" width="3.6" height="58" fill="#c8ccd0" stroke={INK} strokeWidth="0.7" />
+          <rect x="-9" y="-6" width="18" height="4" fill={GOLD2} stroke={INK} strokeWidth="0.6" />
+          <rect x="-2.5" y="-2" width="5" height="14" fill="#4a3022" />
+        </g>
+      );
+    case 'chuoi':
+      return (
+        <g fill="#5a3a22">
+          {Array.from({ length: 11 }).map((_, i) => {
+            const t = (i / 10) * Math.PI;
+            return <circle key={i} cx={Math.cos(t) * 8} cy={Math.sin(t) * 14} r="2.2" />;
+          })}
+        </g>
+      );
+    case 'gio':
+      return (
+        <g transform="translate(0 8)">
+          <path d="M-14 -10 L14 -10 L10 8 L-10 8 Z" fill="#c9a56a" stroke={INK} strokeWidth="0.8" />
+          <path d="M-12 -4 H12 M-11 2 H11" stroke="#8a6a3a" strokeWidth="0.7" />
+          <path d="M-12 -10 Q0 -26 12 -10" fill="none" stroke="#8a6a3a" strokeWidth="1.6" />
+        </g>
+      );
+    case 'thu':
+      return (
+        <g transform="rotate(-10)">
+          <rect x="-4" y="-30" width="8" height="34" fill="#f1ead8" stroke={INK} strokeWidth="0.7" />
+          <rect x="-6" y="-32" width="12" height="4" rx="2" fill={SON} />
+          <rect x="-6" y="2" width="12" height="4" rx="2" fill={SON} />
+        </g>
+      );
+    case 'non':
+      return (
+        <g transform="translate(6 10) rotate(-12)">
+          <path d="M-22 6 L0 -16 L22 6 Q0 12 -22 6 Z" fill="#d9c08a" stroke={INK} strokeWidth="0.8" />
+          <path d="M-14 0 Q0 4 14 0 M-7 -7 Q0 -5 7 -7" fill="none" stroke="#a8884e" strokeWidth="0.6" />
+        </g>
+      );
   }
 }
 
 /** một người, đứng ở hoành độ x, chân chạm đáy tranh */
-export function Person({ x, look, flip = false, blink = false, mood = 'binh' }: { x: number; look: Look; flip?: boolean; blink?: boolean; mood?: MoodK }) {
+export function Person({ x, look, flip = false, blink = false, mood = 'binh', name }: { x: number; look: Look; flip?: boolean; blink?: boolean; mood?: MoodK; name?: string }) {
   const s = look.scale ?? 1;
-  const skin = look.skin ?? '#f1d2b3';
+  const skin = look.skin ?? (look.male ? '#ecc6a2' : '#f1d2b3');
   const hair = look.grey ? '#cfc6b8' : '#1d1410';
+  const sh = look.build === 'broad' ? 82 : look.build === 'plump' ? 76 : look.build === 'slim' ? 62 : 70;
+  const neckTop = look.old ? -96 : -98;
   return (
     <g transform={`translate(${x} 304) scale(${flip ? -s : s} ${s})`}>
+      <g transform={look.old ? 'translate(0 4) rotate(-2)' : undefined}>
       {/* thân áo */}
-      <path d="M-70 0 Q-68 -60 0 -74 Q68 -60 70 0 Z" fill={look.robe} stroke={INK} strokeWidth="1.2" />
-      <path d="M-62 0 Q-56 -40 -32 -58 M62 0 Q56 -40 32 -58" fill="none" stroke={INK} strokeWidth="1" opacity="0.5" />
+      <path d={look.build === 'plump' ? `M${-sh} 0 Q${-sh - 6} -50 0 -74 Q${sh + 6} -50 ${sh} 0 Z` : `M${-sh} 0 Q${-sh + 2} -60 0 -74 Q${sh - 2} -60 ${sh} 0 Z`} fill={look.robe} stroke={INK} strokeWidth="1.2" />
+      <path d={`M${-sh + 8} 0 Q${-sh + 14} -40 -32 -58 M${sh - 8} 0 Q${sh - 14} -40 32 -58`} fill="none" stroke={INK} strokeWidth="1" opacity="0.5" />
+      {look.pattern === 'rong' && (
+        <g fill="none" stroke={SON} strokeWidth="1.6" opacity="0.85">
+          <circle cx="0" cy="-22" r="13" />
+          <path d="M-8 -22 Q-4 -32 2 -26 Q8 -20 4 -14 Q-2 -10 -6 -16" />
+          <path d="M-44 -10 Q-38 -20 -30 -14 M30 -14 Q38 -20 44 -10" />
+        </g>
+      )}
+      {look.pattern === 'giap' && (
+        <g fill="none" stroke={GOLD2} strokeWidth="1.2">
+          {[-46, -36, -26, -16].map((y) => <path key={y} d={`M${-sh + 18} ${y + 10} Q0 ${y - 2} ${sh - 18} ${y + 10}`} />)}
+          <circle cx="0" cy="-30" r="7" fill={GOLD2} stroke={INK} strokeWidth="0.8" />
+          <path d={`M${-sh} -6 Q${-sh - 8} -40 -46 -62 M${sh} -6 Q${sh + 8} -40 46 -62`} stroke="#4a3022" strokeWidth="5" />
+        </g>
+      )}
+      {look.pattern === 'botu' && (
+        <g>
+          <rect x="-15" y="-38" width="30" height="26" fill="#d9c08a" stroke={GOLD2} strokeWidth="1.2" />
+          <path d="M-8 -20 Q-2 -34 6 -28 Q10 -24 6 -18 M-6 -16 L8 -16" fill="none" stroke={INK} strokeWidth="1" />
+        </g>
+      )}
+      {look.pattern === 'phuong' && (
+        <g fill="none" stroke={GOLD} strokeWidth="1.3" opacity="0.8">
+          <path d="M-40 -14 Q-30 -30 -20 -20 Q-14 -14 -22 -8 M40 -14 Q30 -30 20 -20 Q14 -14 22 -8" />
+        </g>
+      )}
       {look.pants && <path d="M-22 0 L-18 -12 L18 -12 L22 0 Z" fill={look.pants} stroke={INK} strokeWidth="0.8" />}
       {/* cổ áo */}
       <path d="M-34 -70 L0 -28 L34 -70 Q18 -77 0 -77 Q-18 -77 -34 -70 Z" fill={look.collar ?? GOLD2} stroke={INK} strokeWidth="1" />
       <path d="M-26 -68 L0 -38 L26 -68" fill="none" stroke={INK} strokeWidth="1.4" opacity="0.7" />
       {look.hat === 'xungthien' && <circle cx="0" cy="-20" r="9" fill="none" stroke={SON} strokeWidth="2" />}
-      {look.hat === 'mutuong' && <path d="M-50 -46 L50 -46 M-46 -30 L46 -30" stroke={GOLD2} strokeWidth="2" />}
+      {/* tay áo khép trước ngực, hai bàn tay */}
+      <path d={`M${-sh + 18} -8 Q-30 -30 -4 -24 M${sh - 18} -8 Q30 -30 4 -24`} fill="none" stroke={INK} strokeWidth="1" opacity="0.6" />
+      <ellipse cx="-8" cy="-24" rx="7" ry="5" fill={skin} stroke={INK} strokeWidth="0.8" />
+      <ellipse cx="8" cy="-24" rx="7" ry="5" fill={skin} stroke={INK} strokeWidth="0.8" />
+      {look.prop && (
+        <g transform={look.prop === 'khay' || look.prop === 'gio' ? 'translate(0 -30)' : 'translate(12 -26)'}>
+          <PropArt p={look.prop} />
+        </g>
+      )}
       {/* cổ và mặt */}
-      <rect x="-9" y="-98" width="18" height="24" fill={skin} stroke={INK} strokeWidth="0.8" />
-      <ellipse cx="0" cy="-118" rx="25" ry="29" fill={skin} stroke={INK} strokeWidth="1.1" />
-      {/* tóc hai bên */}
-      {look.hat !== 'troc' && <path d="M-26 -114 Q-28 -150 0 -152 Q28 -150 26 -114 Q22 -138 0 -141 Q-22 -138 -26 -114 Z" fill={hair} stroke={INK} strokeWidth="0.8" />}
+      <rect x="-9" y={neckTop} width="18" height="24" fill={skin} stroke={INK} strokeWidth="0.8" />
+      {look.male && <g fill={skin} stroke={INK} strokeWidth="0.8"><ellipse cx="-27" cy="-117" rx="4" ry="7" /><ellipse cx="27" cy="-117" rx="4" ry="7" /></g>}
+      {look.male ? (
+        <path d="M-26 -132 Q-27 -100 -12 -92 Q0 -88 12 -92 Q27 -100 26 -132 Q24 -148 0 -149 Q-24 -148 -26 -132 Z" fill={skin} stroke={INK} strokeWidth="1.1" />
+      ) : (
+        <ellipse cx="0" cy="-118" rx={look.build === 'plump' ? 27 : 24} ry="29" fill={skin} stroke={INK} strokeWidth="1.1" />
+      )}
+      {look.build === 'plump' && <path d="M-22 -100 Q-12 -90 0 -90 Q12 -90 22 -100" fill="none" stroke={INK} strokeWidth="0.8" opacity="0.6" />}
+      {/* tóc hai bên (đàn bà), tóc mai ngắn (đàn ông) */}
+      {look.hat !== 'troc' && !look.male && <path d="M-26 -114 Q-28 -150 0 -152 Q28 -150 26 -114 Q22 -138 0 -141 Q-22 -138 -26 -114 Z" fill={hair} stroke={INK} strokeWidth="0.8" />}
+      {look.male && look.hat !== 'troc' && <path d="M-25 -128 Q-24 -146 0 -148 Q24 -146 25 -128 Q20 -140 0 -141 Q-20 -140 -25 -128 Z" fill={hair} stroke={INK} strokeWidth="0.8" />}
+      {look.old && (
+        <g fill="none" stroke="#a8826a" strokeWidth="0.9" opacity="0.8">
+          <path d="M-12 -134 Q0 -137 12 -134 M-9 -130 Q0 -132 9 -130" />
+          <path d="M-12 -108 Q-14 -100 -10 -94 M12 -108 Q14 -100 10 -94" />
+          <path d="M-20 -114 L-17 -112 M20 -114 L17 -112" />
+        </g>
+      )}
+      {look.paint && <g fill="#9a6ab8" opacity="0.45"><ellipse cx="-10" cy="-121" rx="7" ry="3" /><ellipse cx="10" cy="-121" rx="7" ry="3" /></g>}
       <Face look={look} mood={mood} blink={blink} />
       {look.beard && <path d="M-6 -92 Q0 -80 6 -92 M-12 -99 Q-16 -94 -14 -90 M12 -99 Q16 -94 14 -90" fill="none" stroke={look.grey ? '#9a9088' : INK} strokeWidth="1.2" />}
       {/* mũ, khăn, búi */}
@@ -140,8 +278,24 @@ export function Person({ x, look, flip = false, blink = false, mood = 'binh' }: 
         </g>
       )}
       {look.hat === 'troc' && <ellipse cx="0" cy="-138" rx="25" ry="16" fill={skin} stroke={INK} strokeWidth="1" />}
+      {look.hat === 'nonsu' && (
+        <g>
+          <ellipse cx="0" cy="-146" rx="48" ry="9" fill="#2a1d14" stroke={INK} strokeWidth="1" />
+          <path d="M-22 -148 Q-22 -176 0 -178 Q22 -176 22 -148 Z" fill="#3a2a20" stroke={INK} strokeWidth="1" />
+          <path d="M-22 -152 Q0 -146 22 -152" stroke={SON} strokeWidth="3" fill="none" />
+          <path d="M0 -178 L0 -190" stroke={GOLD} strokeWidth="2.4" />
+        </g>
+      )}
+      {look.hat === 'khanden' && <path d="M-26 -134 Q-26 -164 0 -166 Q26 -164 26 -134 Q0 -146 -26 -134 Z M-8 -164 Q0 -172 8 -164" fill="#1d1410" stroke={INK} strokeWidth="0.8" />}
       {look.hat === 'tre' && <g><circle cx="-14" cy="-150" r="7" fill={hair} /><circle cx="14" cy="-150" r="7" fill={hair} /></g>}
       {look.hat === 'troc' && <g fill="#3a2a20">{[-30, -20, -10, 0, 10, 20, 30].map((d) => <circle key={d} cx={d} cy={-60 + Math.abs(d) * 0.3} r="2.6" />)}</g>}
+      </g>
+      {name && (
+        <g transform={`scale(${flip ? -1 : 1} 1)`}>
+          <rect x={-name.length * 3.4 - 6} y="-17" width={name.length * 6.8 + 12} height="16" rx="2" fill={SON} stroke={GOLD} strokeWidth="1" opacity="0.92" />
+          <text x="0" y="-5" textAnchor="middle" fontSize="11.5" fontFamily="'Be Vietnam Pro', sans-serif" fontWeight="600" fill="#f7eedb">{name}</text>
+        </g>
+      )}
     </g>
   );
 }
@@ -150,8 +304,8 @@ export function Person({ x, look, flip = false, blink = false, mood = 'binh' }: 
 /** mắt, mày, mũi, miệng theo nét mặt */
 function Face({ look, mood, blink }: { look: Look; mood: MoodK; blink: boolean }) {
   const w = { fill: 'none', stroke: INK, strokeLinecap: 'round' as const };
-  const lip = look.beard ? INK : SON;
-  const lw = look.beard ? 1.3 : 2.2;
+  const lip = look.male ? '#8a5a4a' : SON;
+  const lw = look.male ? 1.5 : 2.2;
   // mắt
   let eyes;
   if (mood === 'vui') eyes = <path d="M-16 -116 Q-10 -121 -4 -116 M4 -116 Q10 -121 16 -116" {...w} strokeWidth="2" />;
@@ -196,16 +350,16 @@ function Face({ look, mood, blink }: { look: Look; mood: MoodK; blink: boolean }
   return (
     <g>
       <g className={blink && mood !== 'vui' && mood !== 'buon' ? 'c-blink' : undefined}>{eyes}</g>
-      <path d={brow} {...w} strokeWidth={mood === 'gian' ? 1.8 : 1.1} />
+      <path d={brow} {...w} strokeWidth={look.male ? 2.4 : mood === 'gian' ? 1.8 : 1.1} />
       <path d="M0 -112 L-2 -104 L1 -103" fill="none" stroke="#c99a7a" strokeWidth="1" />
       {mood === 'so' ? <ellipse cx="0" cy="-97" rx="3" ry="3.6" fill="#7a2a22" stroke={INK} strokeWidth="0.8" /> : <path d={mouth} {...w} stroke={lip} strokeWidth={lw} />}
-      {!look.beard && (mood === 'vui' || mood === 'dac') && (
+      {!look.male && (mood === 'vui' || mood === 'dac') && (
         <g fill="#e9a6a0" opacity="0.5">
           <circle cx="-15" cy="-106" r="4" />
           <circle cx="15" cy="-106" r="4" />
         </g>
       )}
-      {mood === 'gian' && !look.beard && (
+      {mood === 'gian' && !look.male && (
         <g fill="#d9735e" opacity="0.35">
           <circle cx="-15" cy="-107" r="5" />
           <circle cx="15" cy="-107" r="5" />
@@ -483,7 +637,7 @@ function Backdrop({ place, time }: { place: PlaceK; time: TimeK }) {
 const SLOTS = [180, 296, 76];
 
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {} }: { place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>> }) {
+export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {} }: { place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -504,7 +658,7 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
           const look = looks[k as CastK] ?? lookOf(k as CastK);
           return (
             <g key={k} className="c-enter" style={{ animationDelay: `${0.15 + i * 0.12}s` }}>
-              <Person x={SLOTS[i]} look={i === 0 ? look : { ...look, scale: (look.scale ?? 1) * 0.82 }} flip={i === 2} blink={k === 'me'} mood={moods[k as CastK] ?? mood} />
+              <Person x={SLOTS[i]} look={i === 0 ? look : { ...look, scale: (look.scale ?? 1) * 0.82 }} flip={i === 2} blink={k === 'me'} mood={moods[k as CastK] ?? mood} name={names[k as CastK]} />
             </g>
           );
         })}

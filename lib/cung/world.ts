@@ -108,7 +108,8 @@ export const ENDINGS: Ending[] = [
 ];
 import { ENDINGS_ARCS } from './content/deep_arcs';
 import { ENDINGS_EVENTS } from './content/deep_events';
-export const ALL_ENDINGS: Ending[] = [...ENDINGS_ARCS, ...ENDINGS_EVENTS, ...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN];
+import { ENDINGS_FEUD } from './content/feud';
+export const ALL_ENDINGS: Ending[] = [...ENDINGS_ARCS, ...ENDINGS_EVENTS, ...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN, ...ENDINGS_FEUD];
 export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id);
 
 /** tên con */

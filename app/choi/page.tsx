@@ -91,7 +91,32 @@ function looksOf(l: Life): Partial<Record<CastK, Look>> {
     hanh: lookOf('hanh', { old }),
     thucphi: lookOf('thucphi', { old: l.age >= 45 }),
     hoanghau: lookOf('hoanghau', { old: l.age >= 45 }),
+    meday: lookOf('meday', { father: l.origin === 'quan' }),
   };
+}
+
+/** bảng tên nhỏ dưới mỗi người trong tranh */
+const SHORT: Partial<Record<CastK, string>> = {
+  mama: 'Ma ma Trịnh',
+  vua: 'Hoàng thượng',
+  thaihau: 'Thái hậu',
+  hoanghau: 'Hoàng hậu',
+  thucphi: 'Thục phi',
+  hanh: 'Hạnh',
+  phuc: 'Thái giám Phúc',
+  quan: 'Thái phó',
+  tuong: 'Tướng quân',
+  su: 'Sư bà',
+  cungnu: 'Cung nữ',
+  ngoai: 'Sứ thần',
+};
+function namesOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): Partial<Record<CastK, string>> {
+  const n: Partial<Record<CastK, string>> = { ...SHORT, meday: cap(originOf(l.origin).me) };
+  const con = l.kids[l.kids.length - 1];
+  n.con = con ? `${con.sex === 'trai' ? 'Hoàng tử' : 'Công chúa'} ${con.name}` : 'Hoàng tử';
+  if (l.chapter >= 6 && l.flags.includes('con_dongcung')) n.con = 'Vua con';
+  if (card.who && card.whoName) n[card.who] = card.whoName;
+  return n;
 }
 
 export default function Play() {
@@ -326,7 +351,7 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>
