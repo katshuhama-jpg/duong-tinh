@@ -6,25 +6,30 @@ Tài liệu này dành cho ChatGPT. Hãy đọc hết và làm đúng mọi quy 
 
 ## 1. CÁCH TÔI RA LỆNH
 
-Lệnh chính chỉ có dạng: **`<mã> góc <A/B/C>`**, ví dụ `me1 góc A`, `hanh góc C`, `thucphi2 góc B`.
+**KHÔNG BAO GIỜ VẼ LƯỚI, KHÔNG GHÉP NHIỀU NGƯỜI TRONG MỘT ẢNH.** Ảnh ghép làm mỗi người quá nhỏ, vào game bị nhòe. Mỗi ảnh chỉ có MỘT người, chiếm gần hết chiều cao ảnh, ở độ phân giải cao nhất có thể (khổ dọc 2:3, ví dụ 1024 x 1536).
 
-Khi nhận lệnh này, bạn tự làm trọn bộ, không hỏi lại:
-1. Tra mã ở mục 5 để biết nhân vật, tuổi, trang phục, đồ cầm tay.
-2. Tra góc ở mục 3.
-3. Vẽ **bộ lưới biểu cảm** của nhân vật đó ở góc đó theo mục 4: LƯỚI 1 và LƯỚI 2, mỗi lưới 4 nét mặt, toàn thân, nền trong suốt.
-4. Nếu được phép xuất nhiều ảnh trong một lượt, xuất cả LƯỚI 1 và LƯỚI 2. Nếu mỗi lượt chỉ được một ảnh, xuất LƯỚI 1 rồi ghi một dòng: "Gõ Tiếp để vẽ lưới 2".
-5. Nếu trong cuộc trò chuyện đã có ảnh của cùng nhân vật (cùng mã, hoặc cùng người ở giai đoạn khác như me1 và me2), giữ đúng khuôn mặt người đó.
-6. Ghi tên file đề xuất dưới mỗi ảnh (mục 6).
+Lệnh chính: **`<mã> góc <A/B/C>`**, ví dụ `me1 góc A`, `hanh góc C`, `thucphi2 góc B`.
+
+Khi nhận lệnh này:
+1. Tra mã ở mục 5 (nhân vật, tuổi, trang phục, đồ cầm tay) và góc ở mục 3.
+2. Vẽ ảnh số 1 trong 8 nét mặt ở mục 4 (Bình thường). Đây là ẢNH GỐC của bộ.
+3. Ghi tên file dưới ảnh, rồi ghi một dòng: "Gõ Tiếp để vẽ nét mặt 2: Cười".
+
+Mỗi lần tôi gõ **`Tiếp`**:
+1. Lấy đúng ảnh gốc vừa vẽ, CHỈ SỬA VÙNG KHUÔN MẶT sang nét mặt kế tiếp theo thứ tự ở mục 4.
+2. Giữ nguyên tuyệt đối thân người, tư thế, tay, trang phục, tóc, mũ, trâm, góc đầu, khung hình, cỡ người và vị trí trong ảnh, để các ảnh chồng lên nhau khớp từng chi tiết.
+3. Ghi tên file, rồi nhắc nét mặt kế tiếp. Sau nét mặt 8 thì báo "Xong góc này", gợi ý góc tiếp theo.
+
+Nếu trong cuộc trò chuyện đã có ảnh của cùng người (cùng mã, hoặc cùng người ở giai đoạn khác như me1 và me2), giữ đúng khuôn mặt người đó.
 
 Lệnh phụ:
 
 | Lệnh | Bạn làm gì |
 | --- | --- |
-| `Tiếp` | Vẽ lưới còn thiếu của nhân vật và góc vừa làm. Nếu đã đủ 2 lưới thì chuyển sang góc kế tiếp (A, rồi B, rồi C) của cùng nhân vật. |
-| `<mã> gốc góc <A/B/C>` | Chỉ vẽ một ảnh đơn khổ dọc 2:3, nét mặt bình thường, để làm ảnh gốc. |
-| `<mã> đủ bộ` | Lần lượt làm góc A, B, C (mỗi góc 2 lưới), mỗi lượt một ảnh, tôi gõ Tiếp để đi tiếp. |
-| `Sửa mặt <nét mặt>` | Khi tôi đã chọn vùng mặt trên ảnh: chỉ đổi nét mặt trong vùng chọn, giữ nguyên mọi thứ khác. |
-| `Làm lại` | Vẽ lại lần vừa rồi, sửa cho đúng quy tắc hơn (nhất là nền trong suốt và toàn thân). |
+| `Tiếp` | Nét mặt kế tiếp, sửa riêng vùng mặt của ảnh gốc. |
+| `<mã> góc <A/B/C> <nét mặt>` | Vẽ thẳng một nét mặt cụ thể, vd `hanh góc A giận`. |
+| `Sửa mặt <nét mặt>` | Khi tôi đã tô chọn vùng mặt: chỉ đổi nét mặt trong vùng chọn, giữ nguyên mọi thứ khác. |
+| `Làm lại` | Vẽ lại lần vừa rồi, sửa cho đúng quy tắc hơn (nhất là nền trong suốt, toàn thân, một người). |
 
 Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi gõ tên tiếng Việt (vd "Thục phi lúc già góc A"), tự tìm mã phù hợp.
 
@@ -33,13 +38,13 @@ Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi g
 ## 2. QUY TẮC BẮT BUỘC CHO MỌI ẢNH
 
 1. **NỀN TRONG SUỐT.** Xuất ảnh PNG có nền trong suốt (transparent background, alpha channel). Không nền trắng, không nền xám, không nền màu, không nền cảnh vật. Không bóng đổ xuống sàn, không quầng sáng quanh người.
-2. **TOÀN THÂN.** Vẽ người từ đỉnh đầu (kể cả mũ, trâm) đến gấu áo hoặc bàn chân. KHÔNG cắt cúp ở ngực, eo hay đầu gối. Chừa một khoảng trống nhỏ quanh người, không để người chạm mép ảnh.
-3. **Khổ ảnh:** ảnh đơn khổ dọc 2:3. Ảnh lưới khổ ngang 1:1 hoặc 3:2 theo mục 4.
+2. **TOÀN THÂN ĐẾN BÀN CHÂN.** Vẽ người từ đỉnh đầu (kể cả mũ, trâm) đến tận bàn chân hoặc hài. KHÔNG cắt ở ngực, eo hay đầu gối. Chừa một khoảng trống nhỏ quanh người, không để người chạm mép ảnh.
+3. **Khổ ảnh:** luôn là ảnh đơn khổ dọc 2:3, độ phân giải cao nhất (1024 x 1536). Người đứng giữa, cao chừng 90% chiều cao ảnh.
 4. **Phong cách chung:** tranh minh họa cổ trang vẽ tay bán thực tế, kiểu game nhập vai cổ phong châu Á cao cấp. Nét mềm, màu lụa nhạt pha mực, ánh sáng dịu chiếu từ trên bên trái. Da mịn, mắt có hồn, tóc và vải vẽ tinh tế, nếp áo rủ mềm. Mọi nhân vật dùng chung phong cách, tỉ lệ cơ thể và cách đánh sáng này.
 5. **Bối cảnh:** hậu cung triều Nguyễn Việt Nam thế kỷ 19 (triều đại hư cấu). Trang phục Việt Nam, KHÔNG PHẢI Hán phục Trung Quốc: áo nhật bình (cổ vuông, tay rộng, vạt dài), áo tấc, áo giao lĩnh, áo cánh, quần lụa ống rộng, khăn vấn, khăn mỏ quạ, mũ phượng kiểu Huế, trâm cài, chuỗi hạt.
 6. **Kín đáo, đoan trang:** không hở vai, không hở ngực, không xẻ đùi, không áo mỏng xuyên thấu.
 7. **Không chữ, không số, không khung viền, không logo, không chữ ký, không đường kẻ chia ô.**
-8. **Một ảnh chỉ một nhân vật** (lưới là cùng một nhân vật lặp lại).
+8. **Một ảnh chỉ một nhân vật** .
 9. **Giữ giống nhau:** trong cùng cuộc trò chuyện, cùng một mã nhân vật thì phải cùng khuôn mặt, kiểu tóc, trang phục, màu sắc, đồ cầm tay. Chỉ đổi những gì lệnh yêu cầu.
 
 ---
@@ -56,25 +61,22 @@ Hai tay để phía trước bụng hoặc cầm đồ vật theo mô tả nhân
 
 ---
 
-## 4. LƯỚI BIỂU CẢM
+## 4. TÁM NÉT MẶT (mỗi nét mặt một ảnh riêng)
 
-Mỗi nhân vật, mỗi góc cần 8 nét mặt, chia làm 2 lưới. Mỗi lưới là MỘT ảnh PNG nền trong suốt, khổ ngang 1:1, chia 2 cột x 2 hàng = 4 ô bằng nhau. Trong mỗi ô là cùng một người, TOÀN THÂN từ đỉnh đầu đến gấu áo, cùng góc, cùng tư thế, cùng cỡ, đầu ở cùng một độ cao, chỉ đổi nét mặt (và một chút dáng tay nếu cần). Các ô cách nhau bằng khoảng trống trong suốt, không đường kẻ, không chữ.
+Thứ tự khi tôi gõ `Tiếp`:
 
-**LƯỚI 1** (thứ tự trái sang phải, trên xuống dưới):
-1. Bình thường: mặt tĩnh, môi khép.
-2. Cười: cười dịu, mắt hơi cong.
-3. Lo lắng: mày nhíu nhẹ, môi mím, mắt nhìn xuống.
-4. Giận: mày chau, mắt sắc, môi mím chặt.
+| Số | Nét mặt | Tên file | Mô tả |
+| --- | --- | --- | --- |
+| 1 | Bình thường | `binh` | mặt tĩnh, môi khép |
+| 2 | Cười | `vui` | cười dịu, mắt hơi cong |
+| 3 | Lo lắng | `lo` | mày nhíu nhẹ, môi mím, mắt nhìn xuống |
+| 4 | Giận | `gian` | mày chau, mắt sắc, môi mím chặt |
+| 5 | Buồn | `buon` | mắt ướt, một giọt lệ lăn trên má, khóe môi trễ xuống |
+| 6 | Sợ hãi | `so` | mắt mở to, miệng hé mở |
+| 7 | Cười nhạt đắc ý | `dac` | khóe môi nhếch một bên, mắt liếc, vẻ mưu mô |
+| 8 | Nhắm mắt | `nham` | mắt nhắm, mặt bình thường (để làm hiệu ứng chớp mắt) |
 
-**LƯỚI 2**:
-5. Buồn: mắt ướt, một giọt lệ lăn trên má, khóe môi trễ xuống.
-6. Sợ hãi: mắt mở to, miệng hé mở, vai hơi co.
-7. Cười nhạt đắc ý: khóe môi nhếch một bên, mắt liếc, vẻ mưu mô.
-8. Nhắm mắt: mắt nhắm, mặt bình thường (để làm hiệu ứng chớp mắt).
-
-Nếu lưới làm nhân vật bị nhỏ hoặc bị cắt mất chân, hãy ưu tiên giữ TOÀN THÂN và vẽ to nhân vật trong ô, thu hẹp khoảng trống giữa các ô.
-
-**Khi tôi chọn vùng mặt và gõ `Sửa mặt <tên>`:** chỉ sửa trong vùng chọn, đổi nét mặt theo đúng mô tả ở danh sách trên; giữ nguyên khuôn mặt (cùng một người), góc đầu, tóc, ánh sáng; không đổi bất kỳ phần nào khác; nền vẫn trong suốt.
+Chỉ khuôn mặt thay đổi giữa 8 ảnh. Thân, tay, áo, tóc, mũ, khung hình phải y hệt ảnh số 1.
 
 ---
 
@@ -158,11 +160,9 @@ Với 3 nhân vật này, các giai đoạn sau dùng mô tả của `me2` đế
 
 ## 6. TÊN FILE KHI XUẤT
 
-Đặt tên ảnh theo mẫu `<mã>_<góc>_<lưới hoặc nét mặt>.png`, chữ thường, không dấu:
+Đặt tên ảnh theo mẫu `<mã>_<góc>_<nét mặt>.png`, chữ thường, không dấu:
 
-- Ảnh gốc: `me1_a_goc.png`
-- Lưới: `me1_a_luoi1.png`, `me1_a_luoi2.png`
-- Ảnh từng nét mặt: `me1_a_binh.png`, `me1_a_vui.png`, `me1_a_lo.png`, `me1_a_gian.png`, `me1_a_buon.png`, `me1_a_so.png`, `me1_a_dac.png`, `me1_a_nham.png`
+- `me1_a_binh.png`, `me1_a_vui.png`, `me1_a_lo.png`, `me1_a_gian.png`, `me1_a_buon.png`, `me1_a_so.png`, `me1_a_dac.png`, `me1_a_nham.png`
 
 Mỗi lần xuất ảnh, ghi tên file đề xuất ngay dưới ảnh.
 
@@ -170,4 +170,4 @@ Mỗi lần xuất ảnh, ghi tên file đề xuất ngay dưới ảnh.
 
 ## 7. NHẮC LẠI NGẮN
 
-Mỗi ảnh đều phải: PNG nền trong suốt, toàn thân không cắt cúp, trang phục Việt kín đáo, không chữ, cùng phong cách tranh lụa vẽ tay, cùng một khuôn mặt cho cùng một mã nhân vật.
+Mỗi ảnh đều phải: MỘT người, không lưới, độ phân giải cao, PNG nền trong suốt, toàn thân đến bàn chân, trang phục Việt kín đáo, không chữ, cùng phong cách tranh lụa vẽ tay, cùng một khuôn mặt cho cùng một mã nhân vật.
