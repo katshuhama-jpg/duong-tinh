@@ -43,13 +43,13 @@ export const THAI_HAU: Rank = { t: 'Hoàng thái hậu', giai: 'Mẫu nghi', luo
 
 /** các chặng đời */
 export const CHAPTERS: { n: number; t: string; smalls: number }[] = [
-  { n: 1, t: 'Nhập cung', smalls: 2 },
-  { n: 2, t: 'Được gọi', smalls: 4 },
-  { n: 3, t: 'Mang thai', smalls: 3 },
-  { n: 4, t: 'Ngôi Đông cung', smalls: 4 },
-  { n: 5, t: 'Vua băng', smalls: 1 },
-  { n: 6, t: 'Buông rèm', smalls: 4 },
-  { n: 7, t: 'Tuổi già', smalls: 3 },
+  { n: 1, t: 'Nhập cung', smalls: 3 },
+  { n: 2, t: 'Được gọi', smalls: 5 },
+  { n: 3, t: 'Mang thai', smalls: 4 },
+  { n: 4, t: 'Ngôi Đông cung', smalls: 5 },
+  { n: 5, t: 'Vua băng', smalls: 2 },
+  { n: 6, t: 'Buông rèm', smalls: 5 },
+  { n: 7, t: 'Tuổi già', smalls: 4 },
 ];
 
 export const NUM_LABEL: Record<NumK, string> = {
@@ -106,7 +106,9 @@ export const ENDINGS: Ending[] = [
   { id: 'd_binh_bien', name: 'Đêm binh biến', desc: 'Kẻ thua năm nào quay lại, mang theo trăm người và một mối thù đã chín.', dead: true },
   { id: 'd_gieng', name: 'Giếng sau viện', desc: 'Sáng ra người ta vớt được chiếc hài thêu. Không ai thấy gì, không ai nghe gì.', dead: true },
 ];
-export const ALL_ENDINGS: Ending[] = [...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN];
+import { ENDINGS_ARCS } from './content/deep_arcs';
+import { ENDINGS_EVENTS } from './content/deep_events';
+export const ALL_ENDINGS: Ending[] = [...ENDINGS_ARCS, ...ENDINGS_EVENTS, ...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN];
 export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id);
 
 /** tên con */
