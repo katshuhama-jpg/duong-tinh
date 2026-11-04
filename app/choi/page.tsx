@@ -8,6 +8,7 @@ import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { ENDING_ART } from '@/lib/cung/ending_art';
+import { ENDING_TIER } from '@/lib/cung/ending_tier';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
 import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
@@ -357,7 +358,7 @@ export default function Play() {
               />
             </div>
             <p className="c-sub">
-              {e.dead ? 'Một cách chết' : 'Một đời người'} · {got.size}/{ALL_ENDINGS.length} kết cục đã mở
+              {e.dead ? 'Một cách chết' : 'Một đời người'} · uy lực hạng {[...ALL_ENDINGS].sort((a, b) => (b.tier ?? ENDING_TIER[b.id] ?? 40) - (a.tier ?? ENDING_TIER[a.id] ?? 40)).findIndex((x) => x.id === e.id) + 1}/{ALL_ENDINGS.length} · {got.size} kết cục đã mở
             </p>
             <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
             <p className="c-unlock-desc">{fillText(e.desc, life.origin)}</p>

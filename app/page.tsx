@@ -12,6 +12,9 @@ import { originOf } from '@/lib/cung/origins';
 import { loadMe, type CMeta } from '@/lib/cung/save';
 import type { Life } from '@/lib/cung/types';
 import { ALL_ENDINGS as ENDINGS } from '@/lib/cung/world';
+import { ENDING_TIER } from '@/lib/cung/ending_tier';
+
+const tierOf = (e: { id: string; tier?: number }) => e.tier ?? ENDING_TIER[e.id] ?? 40;
 import { useAuth } from '@/lib/useAuth';
 
 export default function Home() {
@@ -25,7 +28,7 @@ export default function Home() {
   }, [ready, user]);
   const got = new Set(me?.meta.cung ?? []);
   const live = me?.life && !me.life.end ? me.life : null;
-  const list = ENDINGS.filter((e) => (tab === 'chet' ? e.dead : !e.dead));
+  const list = ENDINGS.filter((e) => (tab === 'chet' ? e.dead : !e.dead)).sort((a, b) => tierOf(b) - tierOf(a));
 
   return (
     <main className="c-app">
