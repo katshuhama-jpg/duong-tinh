@@ -337,6 +337,7 @@ export const BIG: Card[] = [
     id: 'b6_phan',
     big: true,
     chapter: [6],
+    when: { riv: { nghia: { st: ['an', 'manh', 'yeu'] } } },
     place: 'dien',
     time: 'dem',
     cast: ['me', 'con'],

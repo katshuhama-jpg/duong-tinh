@@ -7,7 +7,7 @@ import Scene, { Person, lookOf, type BgK, type Look, type SeasonK } from '@/comp
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
-import { ENDING_ART } from '@/lib/cung/ending_art';
+import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
@@ -334,7 +334,7 @@ export default function Play() {
   /* ---------- hết đời: màn mở khóa kết cục ---------- */
   if (life.end && !res) {
     const e = endingOf(life.end)!;
-    const art = ENDING_ART[e.id];
+    const art = artOf(e.id);
     const tomb = life.rank >= 5 || life.flags.includes('thai_phi') || life.flags.includes('thai_hau') ? 'tẩm' : 'mộ';
     const got = new Set(meta.cung ?? []);
     const back = (i: number) => {

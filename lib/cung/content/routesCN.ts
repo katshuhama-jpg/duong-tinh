@@ -412,7 +412,7 @@ export const ENDINGS_CN: Ending[] = [
   { id: 'e_ba_lang', name: 'Bà lang mãn hạn', desc: 'Mãn hạn xuất cung, bà mở một gian thuốc nhỏ ở chợ ngoài thành. Người ta không biết bà từng cứu vua, chỉ biết thuốc bà rẻ và hay.' },
   { id: 'd_thuoc_sai', name: 'Thang thuốc sai một vị', desc: 'Một nữ y dám kê thuốc cho vua. Thang ấy có người thêm vào hay tự bà sai, không ai còn muốn biết.', dead: true },
   { id: 'e_nu_quan', name: 'Thượng cung tóc ngắn', desc: 'Từ chùa về cung trong áo nữ quan, bà giữ sổ hậu cung mấy chục năm. Vua đổi mấy đời, chùm chìa khóa kho vẫn ở thắt lưng bà.' },
-  { id: 'e_nu_de', name: 'Nữ đế Khánh Vân', desc: 'Từ áo nâu lên ngai vàng, người đàn bà duy nhất xưng "trẫm" trong sử Khánh Vân. Bia mộ để trống, ai muốn khắc gì thì khắc.' },
+  { id: 'e_nu_de', name: 'Nữ đế Khánh Vân', desc: 'Từ {goc} lên ngai vàng, người đàn bà duy nhất xưng "trẫm" trong sử Khánh Vân. Bia mộ để trống, ai muốn khắc gì thì khắc.' },
   { id: 'd_thoai_vi', name: 'Đêm cấm quân vây điện', desc: 'Ngồi ngai được mười lăm năm. Sáng ra, đứa trẻ năm nào đứng trước cửa xin bà trả ấn, và chén rượu tiễn đã rót sẵn.', dead: true },
   { id: 'd_tram_ngua', name: 'Gốc gạo đầu trạm', desc: 'Hoàng thượng quay mặt đi khi dải lụa thắt lại. Mùa sau gốc gạo ra hoa đỏ như chưa từng có chuyện gì.', dead: true },
   { id: 'e_vuot_bien', name: 'Người bên kia biển', desc: 'Sử chép bà chết ở trạm Ngựa Trắng. Ở một thương cảng nước Sa Hải, có bà chủ hàng chè nói giọng kinh, không bao giờ kể chuyện cũ.' },
