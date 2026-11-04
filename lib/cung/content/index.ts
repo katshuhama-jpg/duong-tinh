@@ -10,9 +10,11 @@ import { DEEP_ARCS } from './deep_arcs';
 import { DEEP_EVENTS } from './deep_events';
 import { CARDS_A } from './smallA';
 import { CARDS_B } from './smallB';
+import { CHAINS_A } from './chains_a';
 import { FEUD } from './feud';
+import { BIG_STEPS } from './big_steps';
 
-const ROUTES = [...DEEP_ARCS, ...DEEP_EVENTS, ...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN, ...FEUD];
+const ROUTES = [...CHAINS_A, ...DEEP_ARCS, ...DEEP_EVENTS, ...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN, ...FEUD, ...BIG_STEPS];
 /** thẻ nhỏ của mọi chặng (gồm cả thẻ mồi của các tuyến phụ) */
 export const SMALL: Card[] = [...CARDS_A, ...CARDS_B, ...ROUTES.filter((c) => !c.big)];
 
