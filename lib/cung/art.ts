@@ -3,6 +3,7 @@ import type { EndArt } from './types';
 import { ENDING_ART } from './ending_art';
 import { ART_RIVALS_A } from './content/rivals_a';
 import { BRANCH_A_ART } from './content/branch_a_art';
+import { BRANCH_B_ART } from './content/branch_b_art';
 
-export const ALL_ART: Record<string, EndArt> = { ...ENDING_ART, ...ART_RIVALS_A, ...BRANCH_A_ART };
+export const ALL_ART: Record<string, EndArt> = { ...ENDING_ART, ...ART_RIVALS_A, ...BRANCH_A_ART, ...BRANCH_B_ART };
 export const artOf = (id: string): EndArt | undefined => ALL_ART[id];
