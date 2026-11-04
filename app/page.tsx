@@ -1,113 +1,85 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
-import Sprite from '@/components/Sprite';
-import ThemeToggle from '@/components/ThemeToggle';
-import { defaultCharacter, type Look } from '@/lib/character';
-import { lpcLayers } from '@/lib/look';
-import { loadMe, type Meta } from '@/lib/save';
+import { useEffect, useState } from 'react';
+import Scene, { lookOf } from '@/components/cung/Scene';
+import { signOut } from '@/lib/auth';
+import { rankOf } from '@/lib/cung/engine';
+import { loadMe, type CMeta } from '@/lib/cung/save';
+import type { Life } from '@/lib/cung/types';
+import { ENDINGS } from '@/lib/cung/world';
 import { useAuth } from '@/lib/useAuth';
-
-const base = { f: defaultCharacter('f').look, m: defaultCharacter('m').look };
-const L = (g: 'f' | 'm', p: Partial<Look>): Look => ({ ...base[g], ...p });
-
-// mỗi lần đổi là một lối rẽ khác: cùng một cô gái, gặp người khác thì ra chuyện khác
-const DEMO: { me: Look; them: Look; cap: string }[] = [
-  { cap: '...cưới cậu bạn nhà bên', me: L('f', { hair: 'ponytail', style: 'nhenhang' }), them: L('m', { hair: 'unkempt', style: 'nangdong', color: '#7fb3d9' }) },
-  { cap: '...yêu boy phố', me: L('f', { hair: 'ponytail', style: 'nangdong' }), them: L('m', { hair: 'long_messy', style: 'catinh', color: '#c4573a', extra: 'earrings' }) },
-  { cap: '...lỡ hẹn với học bá', me: L('f', { hair: 'ponytail', style: 'thanhlich', color: '#b48ad9' }), them: L('m', { hair: 'buzzcut', style: 'thanhlich' }) },
-  { cap: '...hẹn hò ngôi sao', me: L('f', { hair: 'ponytail', style: 'catinh', color: '#e8789f' }), them: L('m', { hair: 'curtains_long', style: 'nhenhang', color: '#e0b54a', hairColor: '#d9b26a' }) },
-];
 
 export default function Home() {
   const { user, ready } = useAuth();
-  const [meta, setMeta] = useState<Meta>({});
-  const [i, setI] = useState(0);
-
+  const [me, setMe] = useState<{ meta: CMeta; life: Life | null } | null>(null);
+  const [tab, setTab] = useState<'song' | 'chet'>('song');
   useEffect(() => {
-    // chơi thử cũng có Sổ Tình, lưu trên máy
-    if (ready) loadMe().then((m) => m && setMeta(m.meta));
+    if (!ready) return;
+    loadMe().then((m) => setMe(m ? { meta: m.meta, life: m.life } : { meta: {}, life: null }));
   }, [ready, user]);
-
-  useEffect(() => {
-    const t = setInterval(() => setI((n) => (n + 1) % DEMO.length), 2800);
-    return () => clearInterval(t);
-  }, []);
-
-  const demo = DEMO[i];
-  const me = useMemo(() => lpcLayers(demo.me, 'f', 'adult'), [demo]);
-  const them = useMemo(() => lpcLayers(demo.them, 'm', 'adult'), [demo]);
+  const got = new Set(me?.meta.cung ?? []);
+  const live = me?.life && !me.life.end ? me.life : null;
+  const list = ENDINGS.filter((e) => (tab === 'chet' ? e.dead : !e.dead));
 
   return (
-    <main className="app dither home">
-      <div className="topbar">
-        {ready && user ? <span className="mute">@{user.username}</span> : <span className="mute">Đang chơi thử</span>}
-        <ThemeToggle />
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 10 }}>
-        <div className="eyebrow">LIFE&apos;S ALTERED LINES</div>
-        <h1 className="logo">
-          ĐƯỜNG ĐỜI
-          <br />
-          RẼ LỐI
-        </h1>
-        <p className="mute" style={{ marginTop: 8, fontSize: 22 }}>
-          Không day dứt, chỉ tò mò: Nếu rẽ lối khác, đời mình sẽ ra sao?
+    <main className="c-app">
+      <div className="c-band" aria-hidden="true" />
+      <div className="c-page">
+        <p className="c-sub">Triều Khánh Vân · Phượng Thành</p>
+        <h1 className="c-title">Chín Bậc Phượng</h1>
+        <Scene place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
+        <p className="c-prose">
+          Cô gái làng chè Mai Đông đứng tựa gốc đại ở chùa Vân Tịch, đúng lúc Hoàng thượng đi lễ cầu tự. Một tháng sau, kiệu đón vào cung. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
         </p>
-      </div>
-
-      <div className="scene px">
-        <span className="stars" aria-hidden="true" />
-        <div className="scene-cap" aria-live="polite">
-          {demo.cap}
-        </div>
-        <span className="heart" aria-hidden="true">
-          ♥
-        </span>
-        <div className="couple">
-          <Sprite layers={me} scale={2} anim="idle" dir={3} label="Nhân vật chính" />
-          <Sprite layers={them} scale={2} anim="idle" dir={1} label={`Người ấy: ${demo.cap.replace('...', '')}`} />
-        </div>
-        <span className="ground" aria-hidden="true" />
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 18, marginTop: 'auto', padding: '0 4px 8px' }}>
-        {ready && user ? (
-          <Link href="/tao-nhan-vat" className="btn-main">
-            ▶ BẮT ĐẦU
-          </Link>
-        ) : (
-          <>
-            {/* chưa có tài khoản: chơi thử ngay, đời lưu trên máy; đăng ký sau vẫn mang theo được */}
-            <Link href="/tao-nhan-vat" className="btn-main">
-              ▶ CHƠI THỬ
+        {live ? (
+          <div className="c-row">
+            <Link className="c-btn" href="/choi" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
+              Sống tiếp: {rankOf(live).t} {live.name} thị, {Math.floor(live.age)} tuổi
             </Link>
-            <Link href="/dang-nhap" className="btn-sub px">
-              Đăng ký / Đăng nhập
+          </div>
+        ) : null}
+        <div className="c-row">
+          <Link className={live ? 'c-btn ghost' : 'c-btn'} href="/choi?moi=1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
+            {live ? 'Bỏ đời này, vào cung lại từ đầu' : 'Vào cung'}
+          </Link>
+        </div>
+        <div className="c-row">
+          {user ? (
+            <button type="button" className="c-btn ghost" onClick={() => signOut().then(() => setMe(null))}>
+              {user.username} · Đăng xuất
+            </button>
+          ) : (
+            <Link className="c-btn ghost" href="/dang-nhap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
+              Đăng nhập để lưu đời đang sống
             </Link>
-            <p className="mute" style={{ fontSize: 17, textAlign: 'center', marginTop: -6 }}>
-              Chơi thử lưu trên máy này. Đăng ký để chơi tiếp ở máy khác.
-            </p>
-          </>
-        )}
-        <div className="grid3">
-          <Link href="/so-tinh" className="tile px">
-            Sổ Tình
-            <small>{meta.endings?.length ?? 0} kết cục</small>
-          </Link>
-          <Link href="/so-tinh#tuong-niem" className="tile px">
-            Tưởng niệm
-            <small>{meta.memorials?.length ?? 0} đời</small>
-          </Link>
-          <Link href="/choi" className="tile px">
-            Chơi tiếp
-          </Link>
+          )}
         </div>
-        <div style={{ textAlign: 'center', fontSize: 18 }} className="mute">
-          Sổ Tình {meta.endings?.length ?? 0} kết cục · <Link href="/tac-gia">Ghi nguồn hình ảnh</Link>
-        </div>
+
+        <section aria-labelledby="ket-cuc" style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
+          <h2 id="ket-cuc" style={{ margin: 0, fontFamily: 'var(--serif)', color: 'var(--son)', fontSize: 22 }}>
+            Sổ kết cục · {got.size}/{ENDINGS.length}
+          </h2>
+          <div className="c-tabs" role="tablist">
+            <button type="button" role="tab" aria-selected={tab === 'song'} onClick={() => setTab('song')}>
+              Những đời sống
+            </button>
+            <button type="button" role="tab" aria-selected={tab === 'chet'} onClick={() => setTab('chet')}>
+              Những cách chết
+            </button>
+          </div>
+          <ul className="c-ends" style={{ margin: 0, padding: 0 }}>
+            {list.map((e) => (
+              <li key={e.id} className={got.has(e.id) ? '' : 'locked'}>
+                <b>{got.has(e.id) ? e.name : '???'}</b>
+                {got.has(e.id) ? e.desc : 'Chưa mở. Thử một đời khác.'}
+              </li>
+            ))}
+          </ul>
+        </section>
+        <p className="c-note" style={{ textAlign: 'center' }}>
+          Triều đại, nhân vật, tên cung điện đều hư cấu. Khung chín bậc, lương bổng, lễ nghi mô phỏng hậu cung nhà Nguyễn.
+        </p>
       </div>
     </main>
   );
