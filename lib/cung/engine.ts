@@ -6,6 +6,7 @@ import type { Card, Choice, Cond, Fx, Life, NumK } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, RANKS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, type Rank } from './world';
 import { CRISIS } from './content/big';
 import { ALL_BIG, SMALL, bigsOf } from './content/index';
+import { fillText, originOf } from './origins';
 
 const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL];
 export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
@@ -21,21 +22,23 @@ function rand(seed: number, salt: string) {
 }
 const step = (l: Life) => `${l.seen.length}|${l.log.length}|${Math.round(l.age * 2)}`;
 
-export function newLife(name: string, seed = Math.floor(Math.random() * 1e9)): Life {
+export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.random() * 1e9)): Life {
+  const o = originOf(origin);
   const l: Life = {
     v: 'cung1',
     seed,
+    origin: o.k,
     name: name.trim() || 'Nụ',
     age: 16,
-    rank: 0,
-    n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 20, thaihau: 30, hoanghau: 30, thucphi: 40, hanh: 50, phuc: 30, quan: 20, tuong: 10, tien: 30 },
-    flags: [],
+    rank: o.rank,
+    n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 20, thaihau: 30, hoanghau: 30, thucphi: 40, hanh: 50, phuc: 30, quan: 20, tuong: 10, tien: 30, ...o.n },
+    flags: [...o.flags],
     kids: [],
     chapter: 1,
     smalls: 0,
     bigAt: 0,
     seen: [],
-    log: [{ age: 16, t: 'Năm Khánh Vân thứ ba, bạn bước qua cổng thành Phượng Thành, vào viện Nghi Lễ học phép cung.', k: 'year' }],
+    log: [{ age: 16, t: `Năm Khánh Vân thứ ba. ${o.t}: ${o.intro[0]}`, k: 'year' }],
     card: null,
     end: null,
     back: null,
@@ -62,8 +65,10 @@ export function ok(c: Cond | undefined, l: Life) {
 }
 
 /** bậc đang giữ (khi con lên ngôi thì thành thái phi / thái hậu) */
+export const CUNG_NGA: Rank = { t: 'Cung nga', giai: 'Không phẩm', luong: 30, gao: 12, o: 'viện Hoán Y', phuong: 0, ao: '#8a8f7a', vien: '#5a5f4a' };
 export function rankOf(l: Life): Rank {
   if (l.flags.includes('thai_hau')) return THAI_HAU;
+  if (l.flags.includes('cung_nga')) return CUNG_NGA;
   if (l.flags.includes('thai_phi') || (l.flags.includes('con_dongcung') && l.chapter >= 6)) return THAI_PHI;
   return RANKS[Math.max(0, Math.min(RANKS.length - 1, l.rank))];
 }
@@ -119,6 +124,13 @@ function moveTo(l: Life, ch: number) {
 }
 
 function promote(l: Life, d: number) {
+  // cung nga được nâng: thành Tài nhân chưa nhập giai trước đã
+  if (d > 0 && l.flags.includes('cung_nga')) {
+    l.flags = l.flags.filter((f) => f !== 'cung_nga');
+    l.log.push({ age: Math.floor(l.age), t: `Có chiếu nâng ${originOf(l.origin).ho} thị từ cung nga lên Tài nhân, dời về viện Nghi Lễ.`, k: 'rank' });
+    d -= 1;
+    if (!d) return;
+  }
   const r0 = l.rank;
   l.rank = Math.max(0, Math.min(RANKS.length - 1, l.rank + d));
   if (l.rank > r0) l.log.push({ age: Math.floor(l.age), t: `Chiếu phong ${RANKS[l.rank].t} (${RANKS[l.rank].giai}), dời về ${RANKS[l.rank].o}.`, k: 'rank' });
@@ -184,8 +196,8 @@ export function choose(l0: Life, idx: number): Result {
     l.log.push({ age: Math.floor(l.age), t: fx.kid === 'trai' ? `Hoàng tử ${name} chào đời.` : `Công chúa ${name} chào đời.`, k: 'note' });
   }
   l.seen.push(card.id);
-  l.log.push({ age: Math.floor(l.age), t: `${card.title}: ${ch.t}`, k: 'pick' });
-  if (note) l.log.push({ age: Math.floor(l.age), t: note, k: 'note' });
+  l.log.push({ age: Math.floor(l.age), t: fillText(`${card.title}: ${ch.t}`, l.origin), k: 'pick' });
+  if (note) l.log.push({ age: Math.floor(l.age), t: fillText(note, l.origin), k: 'note' });
   if (CRISIS.some((c) => c.id === card.id)) l.log.push({ age: Math.floor(l.age), t: `#${card.id}`, k: 'note' });
 
   // năm tháng trôi: lương theo bậc, ân sủng nguội dần
@@ -213,7 +225,7 @@ export function choose(l0: Life, idx: number): Result {
     const d = Math.round(l.n[k] - before[k]);
     if (k === 'tien' ? Math.abs(d) >= 10 && fx.d?.tien : Math.abs(d) >= 3 && fx.d?.[k] != null) parts.push(`${LBL[k]} ${d > 0 ? '+' : ''}${d}${k === 'tien' ? ' quan' : ''}`);
   }
-  return { life: l, note, delta: parts.slice(0, 4).join(' · '), ranked: l.rank > rank0 };
+  return { life: l, note: fillText(note, l.origin), delta: parts.slice(0, 4).join(' · '), ranked: l.rank > rank0 || (l0.flags.includes('cung_nga') && !l.flags.includes('cung_nga')) };
 }
 
 /** chết rồi: quay lại ngã rẽ lớn gần nhất */

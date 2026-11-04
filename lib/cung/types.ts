@@ -141,6 +141,8 @@ export interface LogLine {
 export interface Life {
   v: 'cung1';
   seed: number;
+  /** đường vào cung: dan, quan, cung, chua */
+  origin?: string;
   name: string;
   /** năm thứ mấy của niên hiệu lúc vào cung */
   age: number;

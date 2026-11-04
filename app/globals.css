@@ -137,6 +137,13 @@ a:hover { color: #6d1a11; }
 .c-names button[aria-pressed='true'] small { color: var(--line2); }
 .c-names .more { grid-column: 1 / -1; min-height: 40px; text-align: center; font-family: var(--sans); font-size: 13px; font-weight: 500; }
 
+.c-paths { display: flex; flex-direction: column; gap: 10px; }
+.c-path { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 12px 14px; background: var(--card); border: 1.5px solid var(--gold2); outline: 1px solid var(--line2); outline-offset: -5px; cursor: pointer; }
+.c-path:hover { background: #fff6e2; border-color: var(--son); }
+.c-path b { font-family: var(--serif); font-size: 19px; color: var(--son); }
+.c-path span { font-size: 13.5px; line-height: 1.45; }
+.c-path small { font-size: 11.5px; color: var(--mute); }
+
 /* ---------- chuyển động ---------- */
 @keyframes c-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes c-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }

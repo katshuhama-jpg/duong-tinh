@@ -2,7 +2,8 @@
 import { newLife, choose, cardOf, choicesOf, rewind } from '../lib/cung/engine';
 const ends: Record<string, number> = {}; let taps = 0, errs = 0, ages: number[] = []; const N = Number(process.argv[2] ?? 2000);
 for (let i = 0; i < N; i++) {
-  let l = newLife('Diệp', i * 7919 + 1); let t = 0; let deaths = 0;
+  const og = process.env.ORIGIN ?? ['dan', 'quan', 'cung', 'chua'][i % 4];
+  let l = newLife('Nụ', og, i * 7919 + 1); let t = 0; let deaths = 0;
   try {
     while (!l.end && t < 400) {
       const c = cardOf(l.card!); if (!c) throw new Error('no card ' + l.card);

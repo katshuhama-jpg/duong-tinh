@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Scene, { lookOf } from '@/components/cung/Scene';
 import { signOut } from '@/lib/auth';
 import { rankOf } from '@/lib/cung/engine';
+import { originOf } from '@/lib/cung/origins';
 import { loadMe, type CMeta } from '@/lib/cung/save';
 import type { Life } from '@/lib/cung/types';
 import { ALL_ENDINGS as ENDINGS } from '@/lib/cung/world';
@@ -30,12 +31,12 @@ export default function Home() {
         <h1 className="c-title">Chín Bậc Phượng</h1>
         <Scene place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
         <p className="c-prose">
-          Cô gái làng chè Mai Đông đứng tựa gốc đại ở chùa Vân Tịch, đúng lúc Hoàng thượng đi lễ cầu tự. Một tháng sau, kiệu đón vào cung. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
+          Bốn con đường vào cung: gái làng chè được vua để mắt, con quan bị dâng làm con tin, cung nga giặt áo, và công chúa của triều đã mất. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
         </p>
         {live ? (
           <div className="c-row">
             <Link className="c-btn" href="/choi" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-              Sống tiếp: {rankOf(live).t} Diệp thị, {Math.floor(live.age)} tuổi
+              Sống tiếp: {rankOf(live).t} {originOf(live.origin).ho} thị, {Math.floor(live.age)} tuổi
             </Link>
           </div>
         ) : null}

@@ -6,7 +6,8 @@ import Scene, { lookOf, type Look } from '@/components/cung/Scene';
 import { cardOf, choicesOf, choose, newLife, rankOf, rewind, sons, type Result } from '@/lib/cung/engine';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, NumK, PlaceK } from '@/lib/cung/types';
-import { NAME_NOTE, suggestNames } from '@/lib/cung/names';
+import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
+import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
 import { CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
@@ -35,12 +36,13 @@ export default function Play() {
   const [life, setLife] = useState<Life | null>(null);
   const [meta, setMeta] = useState<CMeta>({});
   const [loaded, setLoaded] = useState(false);
-  const [name, setName] = useState('Nụ');
+  const [name, setName] = useState('Diệu Liên');
+  const [og, setOg] = useState<OriginK | null>(null);
   const [res, setRes] = useState<Result | null>(null);
   const [edict, setEdict] = useState<string | null>(null);
   const [book, setBook] = useState(false);
   const [roll, setRoll] = useState(0);
-  const sugg = useMemo(() => suggestNames(roll * 977 + 3, 4), [roll]);
+  const sugg = useMemo(() => suggestNames(og ?? 'dan', roll * 977 + 3, 4), [og, roll]);
 
   useEffect(() => {
     const fresh = new URLSearchParams(window.location.search).get('moi') === '1';
@@ -73,43 +75,82 @@ export default function Play() {
 
   /* ---------- mở đầu: đặt tên ---------- */
   if (!life) {
+    /* bước 1: chọn đường vào cung */
+    if (!og) {
+      return (
+        <main className="c-app">
+          <div className="c-band" aria-hidden="true" />
+          <div className="c-page">
+            <p className="c-sub">Năm {ERA} thứ ba</p>
+            <h1 className="c-title" style={{ fontSize: 28 }}>
+              Bạn vào cung bằng đường nào?
+            </h1>
+            <p className="c-note" style={{ textAlign: 'center' }}>
+              Bốn đường, bốn bộ phim. Xuất phát khác, chỗ dựa khác, kẻ thù khác.
+            </p>
+            <div className="c-paths">
+              {ORIGINS.map((o) => (
+                <button key={o.k} type="button" className="c-path" onClick={() => (setOg(o.k), setName(DEFAULT_NAME[o.k]), setRoll(0))}>
+                  <b>{o.t}</b>
+                  <span>{o.pitch}</span>
+                  <small>
+                    Họ {o.ho} · vào cung làm {o.k === 'cung' ? 'cung nga' : o.rank === 0 ? 'Tài nhân' : o.rank === 2 ? 'Mỹ nhân' : 'Tiệp dư'}
+                  </small>
+                </button>
+              ))}
+            </div>
+            <Link href="/" className="c-note" style={{ textAlign: 'center' }}>
+              Về trang đầu
+            </Link>
+          </div>
+        </main>
+      );
+    }
+    /* bước 2: đặt tên */
+    const o = originOf(og);
     return (
       <main className="c-app">
         <div className="c-band" aria-hidden="true" />
         <div className="c-page">
-          <p className="c-sub">Năm {ERA} thứ ba</p>
+          <p className="c-sub">{o.t}</p>
           <h1 className="c-title" style={{ fontSize: 28 }}>
-            Kiệu hoa qua cổng thành
+            {o.k === 'dan' ? 'Kiệu hoa qua cổng thành' : o.k === 'quan' ? 'Con tin của nhà họ Đoàn' : o.k === 'cung' ? 'Ba thúng thóc' : 'Công chúa của triều đã mất'}
           </h1>
-          <Scene place="lang" time="chieu" cast={['me', 'meday']} looks={{ me: lookOf('me') }} label="Đồi chè làng Mai Đông lúc chiều, cô gái từ biệt mẹ" />
-          <p className="c-prose">
-            Bạn là con gái nhà làm chè ở làng Mai Đông. Năm mười sáu tuổi, bạn đứng tựa gốc đại ở chùa Vân Tịch đúng lúc Hoàng thượng đi lễ cầu tự. Một tháng sau, kiệu đón vào cung.
-          </p>
+          <Scene
+            place={o.place}
+            time={o.k === 'quan' || o.k === 'chua' ? 'dem' : 'chieu'}
+            cast={o.k === 'dan' ? ['me', 'meday'] : o.k === 'quan' ? ['me', 'quan'] : o.k === 'cung' ? ['me', 'mama'] : ['me', 'su']}
+            looks={{ me: lookOf('me', { robe: o.k === 'cung' ? '#8a8f7a' : o.k === 'chua' ? '#c46a4a' : o.k === 'quan' ? '#6a9a6e' : undefined }) }}
+            label={o.intro[0]}
+          />
+          <p className="c-prose">{o.intro[0]}</p>
           <p className="c-prose" style={{ fontSize: 14.5, color: 'var(--mute)' }}>
-            Mẹ dúi vào tay bạn gói chè: &quot;Trong ấy, chén nào cũng phải nhìn hai lần, con ạ.&quot;
+            {o.intro[1]}
           </p>
           <label className="c-field">
-            Tên của bạn (nhà họ Diệp)
-            <input value={name} maxLength={12} onChange={(e) => setName(e.target.value)} />
+            Tên của bạn (họ {o.ho})
+            <input value={name} maxLength={14} onChange={(e) => setName(e.target.value)} />
           </label>
-          <div className="c-names" role="group" aria-label="Gợi ý tên con gái làng">
+          <div className="c-names" role="group" aria-label="Gợi ý tên theo lối thời Lý - Trần">
             {sugg.map((n) => (
-              <button key={n} type="button" aria-pressed={name === n} onClick={() => setName(n)} title={NAME_NOTE[n]}>
-                {n}
-                {NAME_NOTE[n] && <small>{NAME_NOTE[n]}</small>}
+              <button key={n.n} type="button" aria-pressed={name === n.n} onClick={() => setName(n.n)}>
+                {n.n}
+                <small>{n.y}</small>
               </button>
             ))}
             <button type="button" className="more" onClick={() => setRoll((r) => r + 1)}>
               Tên khác
             </button>
           </div>
-          <p className="c-note">Thời xưa gần như con gái nào cũng mang chữ đệm &quot;Thị&quot;, trong cung không ai gọi tên thật, chỉ gọi theo họ: &quot;Diệp thị&quot;. Ở nhà, mẹ vẫn gọi bạn là {name || 'con'}.</p>
-          <button type="button" className="c-btn" onClick={() => keep(newLife(name))}>
+          <p className="c-note">
+            Tên đặt theo lối thời Lý - Trần (như công chúa Phật Kim, Ngọc Kiều, Kiều Oanh). Trong cung không ai gọi tên thật, chỉ gọi theo họ: &quot;{o.ho} thị&quot;.
+          </p>
+          <button type="button" className="c-btn" onClick={() => keep(newLife(name, o.k))}>
             Bước qua cổng thành
           </button>
-          <Link href="/" className="c-note" style={{ textAlign: 'center' }}>
-            Về trang đầu
-          </Link>
+          <button type="button" className="c-btn ghost" onClick={() => setOg(null)}>
+            Chọn đường khác
+          </button>
         </div>
       </main>
     );
@@ -130,9 +171,9 @@ export default function Play() {
           <div className="c-end c-ink">
             <p className="c-sub">{e.dead ? 'Một cách chết' : 'Kết cục'}</p>
             <h2 className={e.dead ? 'dead' : ''}>{e.name}</h2>
-            <p className="c-prose">{e.desc}</p>
+            <p className="c-prose">{fillText(e.desc, life.origin)}</p>
             <p className="c-note">
-              {rank.t} Diệp thị ({life.name}), {ageOf(life)} tuổi · {sons(life) ? `${sons(life)} hoàng tử` : 'không có hoàng tử'}
+              {rank.t} {originOf(life.origin).ho} thị ({life.name}), {ageOf(life)} tuổi · {sons(life) ? `${sons(life)} hoàng tử` : 'không có hoàng tử'}
               {life.kids.length - sons(life) ? `, ${life.kids.length - sons(life)} công chúa` : ''} · Bia ghi chữ &quot;{tomb}&quot;
             </p>
           </div>
@@ -192,7 +233,7 @@ export default function Play() {
         </div>
         <div className="c-who">
           <strong>
-            {rank.t} Diệp thị
+            {rank.t} {originOf(life.origin).ho} thị
           </strong>
           <small>
             {rank.o} · {rank.luong} quan, {rank.gao} phương gạo mỗi năm
@@ -211,7 +252,7 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} label={`${card.title}. ${card.text.join(' ')}`} />
+            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>
@@ -224,7 +265,7 @@ export default function Play() {
                   </div>
                   {card.text.map((t, i) => (
                     <p key={i} className="c-text" style={i ? { fontWeight: 500, fontSize: 15.5 } : undefined}>
-                      {t}
+                      {fillText(t, life.origin)}
                     </p>
                   ))}
                   {card.big && <div className="c-seal c-in">Ngã<br />rẽ</div>}
@@ -239,7 +280,7 @@ export default function Play() {
                   <button key={i} type="button" className="c-opt" disabled={!open} onClick={() => pick(i)}>
                     <b>{ROMAN[i]}</b>
                     <span>
-                      {c.t}
+                      {fillText(c.t, life.origin)}
                       {!open && c.lockHint && <small>Khóa: {c.lockHint}</small>}
                     </span>
                   </button>
@@ -274,7 +315,7 @@ export default function Play() {
             <small>CHIẾU PHONG</small>
             <h2>{edict}</h2>
             <p>
-              Diệp thị được phong {edict}, dời về {rank.o}.
+              {originOf(life.origin).ho} thị được phong {edict}, dời về {rank.o}.
             </p>
             <button type="button" className="c-btn" onClick={() => setEdict(null)}>
               Tạ ơn
