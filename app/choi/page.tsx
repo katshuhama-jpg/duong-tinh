@@ -19,6 +19,8 @@ const SEASONS = [
   ['cuối thu', 'giữa đông'],
 ];
 const TIME_OF = { ngay: 'Một sáng', chieu: 'Một chiều', dem: 'Một đêm' } as const;
+const NUM_HOI = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu'];
+const TIME_AT = { ngay: 'ngay lúc ấy', chieu: 'chiều hôm ấy', dem: 'đêm ấy' } as const;
 const NUM_VI = ['', 'Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười'];
 
 /** chỗ diễn ra cảnh, nói thành chữ */
@@ -54,6 +56,7 @@ function bridgeOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string
   const season = SEASONS[half][hash(card.id) % 2];
   const when = `${TIME_OF[card.time ?? 'ngay']} ${season}`;
   const p = l.prev;
+  if (l.chain) return `Hồi ${NUM_HOI[l.chain.hoi] ?? l.chain.hoi}. ${cap(TIME_AT[card.time ?? 'ngay'])}, ${p && p.place === card.place ? 'vẫn ' : ''}${whereOf(card, l)}.`;
   let gap = '';
   if (!p) gap = 'Những ngày đầu trong cung.';
   else {
@@ -369,7 +372,7 @@ export default function Play() {
                       {fillText(t, life.origin)}
                     </p>
                   ))}
-                  {card.big && <div className="c-seal c-in">Ngã<br />rẽ</div>}
+                  {(card.big || life.chain?.kind === 'big') && <div className="c-seal c-in">Ngã<br />rẽ</div>}
                 </div>
                 <div className="c-roll" />
               </div>

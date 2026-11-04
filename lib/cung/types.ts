@@ -76,6 +76,8 @@ export interface Fx {
   years?: number;
   /** nhảy sang chặng (chapter) khác */
   chapter?: number;
+  /** sự kiện nhiều hồi: hiện ngay thẻ hồi tiếp theo (id thẻ có step: true), thời gian không trôi trừ khi đặt years */
+  next?: string;
 }
 
 export interface Choice {
@@ -120,6 +122,8 @@ export interface Card {
   choices: Choice[];
   /** câu "điềm báo": hiện khi chết, để người chơi biết đáng lẽ đã thấy ở đâu */
   omen?: string;
+  /** thẻ là một hồi giữa sự kiện nhiều hồi: không rút ngẫu nhiên, chỉ tới bằng fx.next */
+  step?: boolean;
   /** được lặp lại trong một đời (mặc định không) */
   repeat?: boolean;
   /** ngã rẽ lớn của tuyến phụ: xếp ngay sau (hoặc trước) ngã rẽ có id này trong cùng chặng */
@@ -182,4 +186,6 @@ export interface Life {
   fresh?: string[];
   /** tuổi và chỗ của thẻ trước, để viết câu nối cảnh */
   prev?: { age: number; place: string; card: string };
+  /** đang ở giữa sự kiện nhiều hồi: thẻ mở đầu là ngã rẽ lớn, khủng hoảng hay thẻ nhỏ, và đang ở hồi thứ mấy */
+  chain?: { kind: 'big' | 'crisis' | 'small'; hoi: number };
 }

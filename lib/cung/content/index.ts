@@ -18,8 +18,8 @@ export const SMALL: Card[] = [...CARDS_A, ...CARDS_B, ...ROUTES.filter((c) => !c
 
 /** ngã rẽ lớn theo đúng thứ tự trong từng chặng: tuyến phụ chen sau/trước ngã rẽ gốc được chỉ định */
 export function bigsOf(ch: number): Card[] {
-  const list = BIG.filter((c) => c.chapter.includes(ch));
-  for (const r of ROUTES.filter((c) => c.big && c.chapter.includes(ch))) {
+  const list = BIG.filter((c) => !c.step && c.chapter.includes(ch));
+  for (const r of ROUTES.filter((c) => c.big && !c.step && c.chapter.includes(ch))) {
     const ref = r.after ?? r.before;
     const i = ref ? list.findIndex((c) => c.id === ref) : -1;
     if (i < 0) list.push(r);

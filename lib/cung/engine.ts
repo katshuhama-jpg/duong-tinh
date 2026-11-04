@@ -101,7 +101,7 @@ export function nextCard(l: Life): string | null {
   if (l.age >= 68 && l.chapter < 7) moveTo(l, 7);
   const ch = l.chapter;
   if (l.smalls < chap(ch).smalls) {
-    const pool = SMALL.filter((c) => c.chapter.includes(ch) && ok(c.when, l) && (c.repeat || !l.seen.includes(c.id)));
+    const pool = SMALL.filter((c) => !c.step && c.chapter.includes(ch) && ok(c.when, l) && (c.repeat || !l.seen.includes(c.id)));
     if (pool.length) {
       // thẻ hệ quả của lựa chọn vừa rồi (cần cờ mới đặt) được ưu tiên, để chuyện nối tiếp chuyện
       const fresh = (l.fresh ?? []).map((x) => x.slice(x.indexOf(':') + 1));
@@ -225,8 +225,11 @@ export function choose(l0: Life, idx: number): Result {
   if (note) l.log.push({ age: Math.floor(l.age), t: fillText(note, l.origin), k: 'note' });
   if (CRISIS.some((c) => c.id === card.id)) l.log.push({ age: Math.floor(l.age), t: `#${card.id}`, k: 'note' });
 
-  // năm tháng trôi: lương theo bậc, ân sủng nguội dần
-  const years = fx.years ?? (card.big ? 1 : 0.5);
+  // sự kiện nhiều hồi: giữa chừng thì thời gian không trôi, hết sự kiện mới tính như một thẻ
+  const isCrisis = CRISIS.some((c) => c.id === card.id);
+  const kind: 'big' | 'crisis' | 'small' = l.chain?.kind ?? (card.big ? 'big' : isCrisis ? 'crisis' : 'small');
+  const nextStep = fx.next && !fx.end ? cardOf(fx.next) : null;
+  const years = fx.years ?? (nextStep ? 0 : kind === 'big' ? 1 : 0.5);
   const a0 = l.age;
   l.age = Math.round((l.age + years) * 2) / 2;
   for (let y = Math.floor(a0) + 1; y <= Math.floor(l.age); y++) {
@@ -234,11 +237,18 @@ export function choose(l0: Life, idx: number): Result {
     if (l.n.an > 50) l.n.an = clamp('an', l.n.an - 2);
   }
 
-  if (fx.end) finish(l, fx.end);
-  else {
+  if (fx.end) {
+    l.chain = undefined;
+    finish(l, fx.end);
+  } else if (nextStep) {
+    l.chain = { kind, hoi: (l.chain?.hoi ?? 1) + 1 };
     if (fx.chapter) moveTo(l, fx.chapter);
-    else if (card.big) l.bigAt += 1;
-    else if (!CRISIS.some((c) => c.id === card.id)) l.smalls += 1;
+    l.card = nextStep.id;
+  } else {
+    l.chain = undefined;
+    if (fx.chapter) moveTo(l, fx.chapter);
+    else if (kind === 'big') l.bigAt += 1;
+    else if (kind === 'small') l.smalls += 1;
     l.card = nextCard(l);
   }
   if (l.end && endingOf(l.end)?.dead) l.omen = card.omen ?? 'Có những điềm báo chỉ nhìn lại mới thấy.';
