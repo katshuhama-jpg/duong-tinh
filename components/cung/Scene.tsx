@@ -69,6 +69,10 @@ export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: bool
         : { robe: '#6e5a3e', collar: '#3a2a20', hat: 'khanmo', grey: true, old: true, scale: 0.92, prop: 'non' };
     case 'ngoai':
       return { robe: '#3a5a4a', collar: '#c49a3a', hat: 'nonsu', beard: true, male: true, prop: 'thu', skin: '#e6bf98' };
+    case 'letan':
+      return { robe: '#d46a8a', collar: GOLD, hat: 'phuong', phuong: 1, sly: true, paint: true, prop: 'quat', build: 'slim', scale: 0.94 };
+    case 'nghia':
+      return { robe: '#8a3a2a', collar: GOLD2, hat: 'tre', male: true, build: 'broad', pattern: 'rong', prop: 'kiem' };
     case 'con':
       return { robe: o.king ? '#d9a441' : '#c84a35', collar: GOLD2, hat: 'tre', scale: 0.62, pattern: o.king ? 'rong' : undefined };
   }

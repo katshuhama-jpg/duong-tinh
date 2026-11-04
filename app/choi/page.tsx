@@ -9,10 +9,10 @@ import { cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, typ
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { ENDING_ART } from '@/lib/cung/ending_art';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
-import type { CastK, Life, NumK, PlaceK } from '@/lib/cung/types';
+import type { CastK, Life, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
 import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
 import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
-import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world';
+import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone } from '@/lib/cung/world';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
@@ -135,6 +135,8 @@ const SHORT: Partial<Record<CastK, string>> = {
   su: 'Sư bà',
   cungnu: 'Cung nữ',
   ngoai: 'Sứ thần',
+  letan: 'Lệ tần',
+  nghia: 'Hoàng tử Nghĩa',
 };
 function namesOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): Partial<Record<CastK, string>> {
   const n: Partial<Record<CastK, string>> = { ...SHORT, meday: cap(originOf(l.origin).me) };
@@ -157,6 +159,7 @@ export default function Play() {
   const [roll, setRoll] = useState(0);
   const [fresh, setFresh] = useState(false);
   const [tree, setTree] = useState(false);
+  const [pro, setPro] = useState(true);
   const sugg = useMemo(() => suggestNames(og ?? 'dan', roll * 977 + 3, 4), [og, roll]);
 
   useEffect(() => {
@@ -203,6 +206,40 @@ export default function Play() {
 
   /* ---------- mở đầu: đặt tên ---------- */
   if (!life) {
+    /* mở màn: cảnh cuối uy lực nhất, rồi quay về ba mươi năm trước */
+    if (!og && pro) {
+      return (
+        <main className="c-app c-pro">
+          <div className="c-band" aria-hidden="true" />
+          <div className="c-page">
+            <div className="c-pro-art">
+              <Scene
+                place="dien"
+                time="chieu"
+                bg="trieu"
+                cast={['me', 'quan', 'tuong']}
+                mood="dac"
+                moods={{ quan: 'so', tuong: 'so' }}
+                motif="ngai"
+                looks={{ me: { ...lookOf('me', { robe: '#d9a441', phuong: 9 }), pattern: 'rong' } }}
+                label="Người đàn bà mặc long bào ngồi trên ngai, trăm quan quỳ dưới thềm"
+              />
+            </div>
+            <p className="c-pro-line" style={{ animationDelay: '0.6s' }}>Năm {ERA} thứ ba mươi bảy.</p>
+            <p className="c-pro-line" style={{ animationDelay: '1.8s' }}>Trăm quan quỳ kín sân rồng. Trên ngai không phải vua, mà là một người đàn bà mặc long bào.</p>
+            <p className="c-pro-line" style={{ animationDelay: '3.2s' }}>Thục phi đã chết. Hoàng hậu đã bị phế. Thái phó Tôn đã ra pháp trường. Không còn ai đứng giữa bà và chiếc ngai này.</p>
+            <p className="c-pro-line" style={{ animationDelay: '4.8s' }}>Ba mươi năm trước, bà chỉ là một cô gái mười sáu tuổi, đứng run trước cổng cung.</p>
+            <p className="c-pro-line strong" style={{ animationDelay: '6.2s' }}>Cô gái ấy sẽ ngồi lên ngai, hay chết trong một cái giếng sau viện. Tất cả tùy vào bạn.</p>
+            <button type="button" className="c-btn c-pro-line" style={{ animationDelay: '7.2s' }} onClick={() => setPro(false)}>
+              Quay về ba mươi năm trước
+            </button>
+            <button type="button" className="c-pro-skip" onClick={() => setPro(false)}>
+              Bỏ qua
+            </button>
+          </div>
+        </main>
+      );
+    }
     /* bước 1: chọn đường vào cung */
     if (!og) {
       return (
@@ -402,6 +439,38 @@ export default function Play() {
                   );
                 })}
               </div>
+              {sc.end.riv && (
+                <>
+                  <h3>Mối nguy</h3>
+                  <div className="c-recap-riv">
+                    {RIVALS.filter((x) => sc.end!.riv![x.k] && sc.end!.riv![x.k].st !== 'an').map((x) => {
+                      const a = sc.from?.riv?.[x.k];
+                      const b = sc.end!.riv![x.k];
+                      const changed = a && a.st !== b.st;
+                      return (
+                        <div key={x.k} className={changed ? 'big' : ''}>
+                          <RivalFace k={x.k} r={b} />
+                          <b>{x.t}</b>
+                          <small>
+                            {changed ? (
+                              <>
+                                {RIV_ST[a!.st]}, nay <i className={gone(b.st) ? 'up' : 'down'}>{RIV_ST[b.st]}</i>
+                              </>
+                            ) : gone(b.st) ? (
+                              RIV_ST[b.st]
+                            ) : (
+                              <>
+                                Uy hiếp {b.th}
+                                {a && a.st !== 'an' && b.th !== a.th ? <i className={b.th < a.th ? 'up' : 'down'}> ({b.th > a.th ? '+' : ''}{b.th - a.th})</i> : null}
+                              </>
+                            )}
+                          </small>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
               <h3>Lòng người đổi thay</h3>
               <div className="c-recap-rel">
                 {REL.map((k) => {
@@ -503,6 +572,7 @@ export default function Play() {
         </div>
       </div>
       <div className="c-stats">{(['duc', 'sac', 'the', 'an', 'muu'] as NumK[]).map(stat)}</div>
+      <ThreatStrip life={life} onOpen={() => setBook(true)} />
 
       {card && (
         <>
@@ -603,6 +673,10 @@ export default function Play() {
               </p>
             </section>
             <section>
+              <h3>Bàn cờ mối nguy</h3>
+              <ThreatBoard life={life} />
+            </section>
+            <section>
               <h3>Lòng người</h3>
               <div className="c-rel">
                 {(['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as NumK[]).map((k) => (
@@ -664,5 +738,79 @@ function FragmentRow({ label, v, feel }: { label: string; v: number; feel: strin
         {feel} <small>{v > 0 ? '+' : ''}{v}</small>
       </b>
     </>
+  );
+}
+
+/** chân dung nhỏ một mối nguy, mờ đi khi đã bị diệt */
+function RivalFace({ k, r, size = 44 }: { k: RivalK; r: RivalState; size?: number }) {
+  const def = RIVALS.find((x) => x.k === k)!;
+  const out = gone(r.st);
+  return (
+    <svg viewBox="-48 128 96 92" width={size} height={size * 0.96} aria-hidden="true" className={`c-rface ${out ? 'out' : ''} ${r.st}`}>
+      <Person x={0} look={lookOf(def.cast)} mood={out ? (r.st === 'phuc' ? 'lo' : 'buon') : r.th >= 70 ? 'dac' : r.th >= 40 ? 'gian' : 'lo'} />
+      {r.st === 'chet' && <path d="M-40 140 L40 214 M40 140 L-40 214" stroke="#a8281d" strokeWidth="5" opacity="0.8" />}
+    </svg>
+  );
+}
+
+/** dải mối nguy dưới chỉ số: ai còn chắn đường, ai đã ngã */
+function ThreatStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
+  const rv = life.riv;
+  if (!rv) return null;
+  const shown = RIVALS.filter((x) => rv[x.k] && rv[x.k].st !== 'an');
+  const hau = rv.hoanghau;
+  const crowned = life.flags.includes('hoang_hau');
+  return (
+    <button type="button" className="c-threats" onClick={onOpen} aria-label="Bàn cờ mối nguy">
+      <span className="c-threats-goal">{crowned ? 'Bạn đã là Hoàng hậu' : gone(hau.st) ? 'Ngôi hậu đang bỏ trống' : 'Đường lên ngôi hậu'}</span>
+      <span className="c-threats-row">
+        {shown.map((x) => {
+          const r = rv[x.k];
+          return (
+            <span key={x.k} className={`c-threat ${gone(r.st) ? 'out' : ''}`}>
+              <RivalFace k={x.k} r={r} size={34} />
+              <i>
+                <em style={{ width: `${gone(r.st) ? 0 : r.th}%` }} />
+              </i>
+            </span>
+          );
+        })}
+      </span>
+    </button>
+  );
+}
+
+/** bàn cờ mối nguy đầy đủ (trong Sổ hậu cung) */
+function ThreatBoard({ life }: { life: Life }) {
+  const rv = life.riv;
+  if (!rv) return null;
+  return (
+    <div className="c-board">
+      {RIVALS.map((x) => {
+        const r = rv[x.k];
+        if (!r) return null;
+        return (
+          <div key={x.k} className={`c-board-row ${gone(r.st) ? 'out' : ''} ${r.st === 'an' ? 'hide' : ''}`}>
+            {r.st === 'an' ? <span className="c-board-q">?</span> : <RivalFace k={x.k} r={r} />}
+            <div>
+              <b>
+                {r.st === 'an' ? 'Chưa lộ mặt' : x.t} <small>{r.st === 'an' ? `từ chương ${x.from}` : RIV_ST[r.st]}</small>
+              </b>
+              {r.st !== 'an' && <span className="c-note">{x.d}</span>}
+              {r.st !== 'an' && !gone(r.st) && (
+                <span className="c-board-bars">
+                  <span>
+                    Uy hiếp <i className="th"><em style={{ width: `${r.th}%` }} /></i>
+                  </span>
+                  <span>
+                    Thóp nắm được <i className="ev"><em style={{ width: `${r.ev}%` }} /></i>
+                  </span>
+                </span>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }

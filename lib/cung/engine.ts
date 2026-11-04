@@ -2,8 +2,8 @@
  * Bộ máy một đời trong cung: rút thẻ, áp hệ quả, đếm năm, lương, chặng, kết cục.
  * Thuần dữ liệu (không đụng tới giao diện) để chạy thử hàng loạt bằng script.
  */
-import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK } from './types';
-import { CHAPTERS, DAUGHTER_NAMES, RANKS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, type Rank } from './world';
+import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
+import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, type Rank } from './world';
 import { CRISIS } from './content/big';
 import { ALL_BIG, SMALL, bigsOf } from './content/index';
 import { fillText, originOf } from './origins';
@@ -45,6 +45,7 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
     startedAt: Date.now(),
     relV: 2,
     fresh: [],
+    riv: rivInit(1),
   };
   l.chStart = snapOf(l);
   l.showCh = { to: 1 };
@@ -52,7 +53,47 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
   return l;
 }
 
-export const snapOf = (l: Life): ChapterSnap => ({ ch: l.chapter, age: l.age, rank: rankOf(l).t, n: { ...l.n }, logLen: l.log.length, kids: l.kids.length });
+export const snapOf = (l: Life): ChapterSnap => ({ ch: l.chapter, age: l.age, rank: rankOf(l).t, n: { ...l.n }, logLen: l.log.length, kids: l.kids.length, riv: l.riv ? JSON.parse(JSON.stringify(l.riv)) : undefined });
+
+/* ---------- bàn cờ mối nguy ---------- */
+export function rivInit(ch: number): Record<RivalK, RivalState> {
+  const r = {} as Record<RivalK, RivalState>;
+  for (const x of RIVALS) r[x.k] = { th: ch >= x.from ? x.th : 0, ev: 0, st: ch >= x.from ? 'manh' : 'an' };
+  return r;
+}
+const clamp100 = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
+/** cờ cũ trong nội dung cũng đổi bàn cờ (để các tuyến viết trước vẫn ăn khớp) */
+const FLAG_RIV: Record<string, Partial<Record<RivalK, { th?: number; ev?: number; st?: RivalState['st'] }>>> = {
+  thang_thucphi: { thucphi: { th: -25, st: 'yeu' } },
+  duoi_thucphi: { thucphi: { st: 'giang' } },
+  thu_thucphi: { thucphi: { th: 15 } },
+  biet_doc_thucphi: { thucphi: { ev: 30 } },
+  biet_bimat_thucphi: { thucphi: { ev: 25 } },
+  diet_dich: { hoanghau: { st: 'chet' } },
+  ban_hau: { hoanghau: { st: 'phuc' } },
+  q_thang_ton: { thaipho: { th: -25, st: 'yeu' } },
+  q_diet_ton: { thaipho: { st: 'chet' } },
+  q_bang_ton: { thaipho: { st: 'giang' } },
+  thang_phan: { nghia: { st: 'giang' } },
+};
+export function applyRiv(l: Life, d: Fx['riv']) {
+  if (!d) return;
+  l.riv = l.riv ?? rivInit(l.chapter);
+  for (const [k, v] of Object.entries(d) as [RivalK, { th?: number; ev?: number; st?: RivalState['st'] }][]) {
+    const r = l.riv[k];
+    if (!r || !v) continue;
+    if (gone(r.st) && !v.st) continue;
+    if (v.st) r.st = v.st;
+    else if (r.st === 'an' && (v.th || v.ev)) r.st = 'manh';
+    if (v.th) r.th = clamp100(r.th + v.th);
+    if (v.ev) r.ev = clamp100(r.ev + v.ev);
+    if (gone(r.st)) r.th = 0;
+    else if (r.th <= 10 && r.st === 'manh') r.st = 'yeu';
+    else if (r.th >= 30 && r.st === 'yeu') r.st = 'manh';
+  }
+}
+const RIV_NAME: Record<RivalK, string> = { thucphi: 'Thục phi', hoanghau: 'Hoàng hậu', letan: 'Lệ tần', thaipho: 'Thái phó Tôn', nghia: 'Hoàng tử Nghĩa' };
+const ST_LOG: Partial<Record<RivalState['st'], string>> = { giang: 'bị giáng, rời khỏi cuộc chơi', chet: 'đã chết', phuc: 'đã quy phục bạn', yeu: 'thất thế' };
 
 /** bản lưu cũ (quan hệ 0-100): dời về thang -100..100 */
 export const REL_KEYS = ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as const;
@@ -65,6 +106,7 @@ export function migrate(l: Life): Life {
   };
   fix(l);
   if (l.back) fix(l.back);
+  if (!l.riv) l.riv = rivInit(l.chapter);
   return l;
 }
 
@@ -81,6 +123,16 @@ export function ok(c: Cond | undefined, l: Life) {
   if (c.sons != null && (c.sons === 0 ? sons(l) !== 0 : sons(l) < c.sons)) return false;
   if (c.kids != null && l.kids.length < c.kids) return false;
   if (c.num) for (const [k, [a, b]] of Object.entries(c.num) as [NumK, [number, number]][]) if (l.n[k] < a || l.n[k] > b) return false;
+  if (c.riv) {
+    const rv = l.riv ?? rivInit(l.chapter);
+    for (const [k, q] of Object.entries(c.riv) as [RivalK, { st?: RivalState['st'][]; th?: [number, number]; ev?: [number, number] }][]) {
+      const r = rv[k];
+      if (!r || !q) continue;
+      if (q.st && !q.st.includes(r.st)) return false;
+      if (q.th && (r.th < q.th[0] || r.th > q.th[1])) return false;
+      if (q.ev && (r.ev < q.ev[0] || r.ev > q.ev[1])) return false;
+    }
+  }
   return true;
 }
 
@@ -88,6 +140,7 @@ export function ok(c: Cond | undefined, l: Life) {
 export const CUNG_NGA: Rank = { t: 'Cung nga', giai: 'Không phẩm', luong: 30, gao: 12, o: 'viện Hoán Y', phuong: 0, ao: '#8a8f7a', vien: '#5a5f4a' };
 export function rankOf(l: Life): Rank {
   if (l.flags.includes('thai_hau')) return THAI_HAU;
+  if (l.flags.includes('hoang_hau') && !(l.flags.includes('con_dongcung') && l.chapter >= 6)) return HOANG_HAU_RANK;
   if (l.flags.includes('cung_nga')) return CUNG_NGA;
   if (l.flags.includes('thai_phi') || (l.flags.includes('con_dongcung') && l.chapter >= 6)) return THAI_PHI;
   return RANKS[Math.max(0, Math.min(RANKS.length - 1, l.rank))];
@@ -152,6 +205,16 @@ function moveTo(l: Life, ch: number) {
   // sang chặng mới mà đang được sủng thì được thăng một bậc
   if (ch <= 5 && l.n.an >= 50 && l.rank < 9) promote(l, 1);
   l.log.push({ age: Math.floor(l.age), t: `Chương mới: ${chap(ch).t}.`, k: 'year' });
+  // mối nguy mới lộ mặt khi sang chương của nó
+  l.riv = l.riv ?? rivInit(ch);
+  for (const x of RIVALS) {
+    const r = l.riv[x.k];
+    if (r.st === 'an' && ch >= x.from) {
+      r.st = 'manh';
+      r.th = Math.max(r.th, x.th);
+      l.log.push({ age: Math.floor(l.age), t: `Mối nguy mới: ${x.t}. ${x.d}`, k: 'note' });
+    }
+  }
   l.showCh = { to: ch, from, end, picks };
   l.chStart = snapOf(l);
 }
@@ -177,6 +240,7 @@ export function autoEnding(l: Life) {
   const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
   if (kc && endingOf(kc.slice(3))) return kc.slice(3);
   if (f('bi_quen')) return 'e_lang_le';
+  if (f('hoang_hau') && !f('nhiep')) return 'e_hoang_hau';
   if (f('nhiep') && f('diet_dich')) return 'e_nhiep_mau';
   if (f('nhiep')) return 'e_mau_nghi';
   if (f('lui') || f('thai_phi')) return 'e_thai_phi';
@@ -236,6 +300,9 @@ export function choose(l0: Life, idx: number): Result {
   l.prev = { age: l0.age, place: card.place, card: card.id };
   if (fx.unflag) l.flags = l.flags.filter((f) => !fx.unflag!.includes(f));
   if (fx.rank) promote(l, fx.rank);
+  const riv0 = JSON.stringify(l.riv ?? null);
+  applyRiv(l, fx.riv);
+  for (const f of added) applyRiv(l, FLAG_RIV[f]);
   if (fx.kid) {
     const names = fx.kid === 'trai' ? SON_NAMES : DAUGHTER_NAMES;
     const name = names[l.kids.filter((k) => k.sex === fx.kid).length % names.length];
@@ -257,6 +324,16 @@ export function choose(l0: Life, idx: number): Result {
   for (let y = Math.floor(a0) + 1; y <= Math.floor(l.age); y++) {
     l.n.tien = clamp('tien', l.n.tien + rankOf(l).luong * 0.4);
     if (l.n.an > 50) l.n.an = clamp('an', l.n.an - 2);
+    // kẻ đang lộng hành mạnh dần theo năm tháng
+    for (const r of Object.values(l.riv ?? {})) if (r.st === 'manh') r.th = clamp100(r.th + 2);
+  }
+  // ghi vào nhật ký khi một mối nguy đổi trạng thái
+  if (riv0 !== JSON.stringify(l.riv ?? null) && l.riv) {
+    const was = JSON.parse(riv0 || 'null') as Record<RivalK, RivalState> | null;
+    for (const k of Object.keys(l.riv) as RivalK[]) {
+      const st = l.riv[k].st;
+      if (was && was[k] && was[k].st !== st && ST_LOG[st]) l.log.push({ age: Math.floor(l.age), t: `${RIV_NAME[k]} ${ST_LOG[st]}.`, k: 'rank' });
+    }
   }
 
   if (fx.end) {
@@ -282,7 +359,20 @@ export function choose(l0: Life, idx: number): Result {
     const d = Math.round(l.n[k] - before[k]);
     if (k === 'tien' ? Math.abs(d) >= 10 && fx.d?.tien : Math.abs(d) >= 3 && fx.d?.[k] != null) parts.push(`${LBL[k]} ${d > 0 ? '+' : ''}${d}${k === 'tien' ? ' quan' : ''}`);
   }
-  return { life: l, note: fillText(note, l.origin), delta: parts.slice(0, 4).join(' · '), ranked: l.rank > rank0 || (l0.flags.includes('cung_nga') && !l.flags.includes('cung_nga')) };
+  if (l.riv && riv0) {
+    const was = JSON.parse(riv0) as Record<RivalK, RivalState> | null;
+    for (const k of Object.keys(l.riv) as RivalK[]) {
+      if (!was?.[k]) continue;
+      const dt = l.riv[k].th - was[k].th;
+      const de = l.riv[k].ev - was[k].ev;
+      if (l.riv[k].st !== was[k].st && ST_LOG[l.riv[k].st]) parts.unshift(`${RIV_NAME[k]} ${ST_LOG[l.riv[k].st]}`);
+      else {
+        if (Math.abs(dt) >= 5) parts.push(`${RIV_NAME[k]}: uy hiếp ${dt > 0 ? '+' : ''}${dt}`);
+        if (de >= 5) parts.push(`Thóp ${RIV_NAME[k]} +${de}`);
+      }
+    }
+  }
+  return { life: l, note: fillText(note, l.origin), delta: parts.slice(0, 5).join(' · '), ranked: l.rank > rank0 || (l0.flags.includes('cung_nga') && !l.flags.includes('cung_nga')) };
 }
 
 /** quay lại ngã rẽ thứ i trong cây số phận của đời này (chọn lại từ đó) */

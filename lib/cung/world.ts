@@ -41,6 +41,18 @@ export const RANKS: Rank[] = [
 export const THAI_PHI: Rank = { t: 'Hoàng thái phi', giai: 'Mẹ vua', luong: 1200, gao: 400, o: 'cung Trường Lạc', phuong: 7, ao: '#c49a3a', vien: '#8f2419' };
 export const THAI_HAU: Rank = { t: 'Hoàng thái hậu', giai: 'Mẫu nghi', luong: 1500, gao: 500, o: 'cung Tĩnh Hòa', phuong: 9, ao: '#d9a441', vien: '#8f2419' };
 
+/** mối nguy: tên, vai trong tranh, chương bắt đầu lộ mặt, uy hiếp ban đầu, một dòng giới thiệu */
+export const RIVALS: { k: import('./types').RivalK; t: string; cast: import('./types').CastK; from: number; th: number; d: string; goal?: boolean }[] = [
+  { k: 'thucphi', t: 'Thục phi', cast: 'thucphi', from: 1, th: 45, d: 'Sủng phi lâu năm, mẹ của Hoàng tử Nghĩa. Ai được vua để mắt, bà đều nhớ tên.' },
+  { k: 'hoanghau', t: 'Hoàng hậu', cast: 'hoanghau', from: 1, th: 25, d: 'Người đang ngồi ở cung Ngọc Khuê. Bà còn đó, ngôi hậu không bao giờ là của bạn.', goal: true },
+  { k: 'letan', t: 'Lệ tần', cast: 'letan', from: 3, th: 35, d: 'Tân sủng mười lăm tuổi, cháu gái Thái phó Tôn, được đưa vào đúng lúc bạn mang thai.' },
+  { k: 'thaipho', t: 'Thái phó Tôn', cast: 'quan', from: 4, th: 40, d: 'Quyền thần nắm nửa triều đình, muốn đặt người của mình vào Đông cung.' },
+  { k: 'nghia', t: 'Hoàng tử Nghĩa', cast: 'nghia', from: 4, th: 35, d: 'Con trưởng của Thục phi, tranh ngôi Đông cung với con bạn.' },
+];
+export const RIV_ST: Record<import('./types').RivalSt, string> = { an: 'Chưa lộ mặt', manh: 'Đang lộng hành', yeu: 'Thất thế', giang: 'Bị giáng, bị đày', chet: 'Đã chết', phuc: 'Đã quy phục' };
+export const gone = (st: import('./types').RivalSt) => st === 'giang' || st === 'chet' || st === 'phuc';
+export const HOANG_HAU_RANK: Rank = { t: 'Hoàng hậu', giai: 'Chính cung', luong: 1400, gao: 400, o: 'cung Ngọc Khuê', phuong: 9, ao: '#c49a3a', vien: '#8f2419' };
+
 /** các chặng đời */
 /** mỗi chặng là một chương phim: câu đề (epigraph) và câu móc (hook) mở màn */
 export const CHAPTERS: { n: number; t: string; smalls: number; epi: string; hook: string }[] = [
@@ -90,6 +102,7 @@ export const CAST_NAME: Record<string, string> = {
 
 /** kết cục: sống thì có tên theo kiểu người, chết thì có điềm báo */
 export const ENDINGS: Ending[] = [
+  { id: 'e_hoang_hau', tier: 95, name: 'Chính cung Hoàng hậu', desc: 'Từ {goc} lên cung Ngọc Khuê. Những kẻ chắn đường đều đã ngã, và sử chép tên bà ngay dưới tên vua.' },
   { id: 'e_mau_nghi', name: 'Mẫu nghi thiên hạ', desc: 'Con trị vì, bà buông rèm mà không vấy máu ai. Sử chép một dòng: hiền và tỉnh.' },
   { id: 'e_nhiep_mau', name: 'Nhiếp chính mang tiếng', desc: 'Thắng cả hậu cung lẫn triều đình. Đời sau khen tài trị nước, và không quên những người đã chết.' },
   { id: 'e_thai_phi', name: 'Hoàng thái phi', desc: 'Con lên ngôi, đích mẫu giữ quyền. Bà chọn đứng sau một bước, và sống lâu nhất.' },

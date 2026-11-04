@@ -18,6 +18,17 @@ export type RelK =
   | 'quan' // phe quan văn
   | 'tuong'; // phe võ tướng
 export type NumK = StatK | RelK | 'tien';
+/** mối nguy trên đường lên ngôi: Thục phi, Hoàng hậu (chắn ngôi hậu), Lệ tần (tân sủng), Thái phó Tôn (quyền thần), Hoàng tử Nghĩa (tranh ngôi Đông cung) */
+export type RivalK = 'thucphi' | 'hoanghau' | 'letan' | 'thaipho' | 'nghia';
+/** an: chưa lộ mặt; manh: đang lộng hành; yeu: thất thế; giang: bị giáng, bị đày; chet: đã chết; phuc: đã quy phục */
+export type RivalSt = 'an' | 'manh' | 'yeu' | 'giang' | 'chet' | 'phuc';
+export interface RivalState {
+  /** uy hiếp 0-100 */
+  th: number;
+  /** chứng cứ, thóp nắm được 0-100 */
+  ev: number;
+  st: RivalSt;
+}
 
 export type PlaceK = 'vien' | 'phong' | 'vuon' | 'dien' | 'chua' | 'lang' | 'lang_mo' | 'bien' | 'nui';
 export type TimeK = 'ngay' | 'chieu' | 'dem';
@@ -39,7 +50,9 @@ export type CastK =
   | 'su' // nhà sư, ni cô
   | 'meday' // mẹ đẻ ở quê
   | 'cungnu' // một cung nữ khác
-  | 'ngoai'; // người nước ngoài: sứ thần, vua nước láng giềng
+  | 'ngoai' // người nước ngoài: sứ thần, vua nước láng giềng
+  | 'letan' // Lệ tần, tân sủng trẻ đẹp
+  | 'nghia'; // Hoàng tử Nghĩa đã lớn, con Thục phi
 
 /** điều kiện để thẻ hoặc lựa chọn xuất hiện */
 export interface Cond {
@@ -58,6 +71,8 @@ export interface Cond {
   kids?: number;
   /** khoảng giá trị [min, max] */
   num?: Partial<Record<NumK, [number, number]>>;
+  /** điều kiện về mối nguy: trạng thái thuộc danh sách, uy hiếp/chứng cứ trong khoảng */
+  riv?: Partial<Record<RivalK, { st?: RivalSt[]; th?: [number, number]; ev?: [number, number] }>>;
 }
 
 /** hệ quả của một lựa chọn */
@@ -76,6 +91,8 @@ export interface Fx {
   years?: number;
   /** nhảy sang chặng (chapter) khác */
   chapter?: number;
+  /** đổi mối nguy: cộng uy hiếp/chứng cứ, hoặc đặt trạng thái (giang, chet, phuc...) */
+  riv?: Partial<Record<RivalK, { th?: number; ev?: number; st?: RivalSt }>>;
   /** sự kiện nhiều hồi: hiện ngay thẻ hồi tiếp theo (id thẻ có step: true), thời gian không trôi trừ khi đặt years */
   next?: string;
 }
@@ -157,6 +174,8 @@ export interface EndArt {
 
 export interface Ending {
   id: string;
+  /** độ uy lực 0-100: sổ kết cục xếp cái uy lực nhất lên đầu */
+  tier?: number;
   name: string;
   desc: string;
   /** chết hay sống */
@@ -172,6 +191,7 @@ export interface ChapterSnap {
   n: Record<NumK, number>;
   logLen: number;
   kids: number;
+  riv?: Record<RivalK, RivalState>;
 }
 
 /** một ngã rẽ đã chọn: bản đời ngay trước lúc chọn (không kèm nhật ký) */
@@ -226,6 +246,8 @@ export interface Life {
   chStart?: ChapterSnap;
   /** màn chương đang chờ hiện: tổng kết chương vừa xong (nếu có) và mở màn chương mới */
   showCh?: { to: number; from?: ChapterSnap; end?: ChapterSnap; picks?: string[] };
+  /** bàn cờ mối nguy */
+  riv?: Record<RivalK, RivalState>;
   /** các ngã rẽ đã đi qua, mỗi cái giữ một bản để quay lại chọn lại */
   marks?: Mark[];
   /** tuổi và chỗ của thẻ trước, để viết câu nối cảnh */
