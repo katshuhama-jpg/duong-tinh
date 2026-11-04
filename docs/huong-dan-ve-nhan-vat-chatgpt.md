@@ -6,24 +6,27 @@ Tài liệu này dành cho ChatGPT. Hãy đọc hết và làm đúng mọi quy 
 
 ## 1. CÁCH TÔI RA LỆNH
 
-Tôi sẽ chỉ gõ một câu ngắn, ví dụ:
+Lệnh chính chỉ có dạng: **`<mã> góc <A/B/C>`**, ví dụ `me1 góc A`, `hanh góc C`, `thucphi2 góc B`.
 
-- `Tạo ảnh me1 theo lưới biểu cảm góc A`
-- `Tạo ảnh hanh theo lưới biểu cảm góc C`
-- `Tạo ảnh gốc thucphi góc B`
-- `Tiếp`
+Khi nhận lệnh này, bạn tự làm trọn bộ, không hỏi lại:
+1. Tra mã ở mục 5 để biết nhân vật, tuổi, trang phục, đồ cầm tay.
+2. Tra góc ở mục 3.
+3. Vẽ **bộ lưới biểu cảm** của nhân vật đó ở góc đó theo mục 4: LƯỚI 1 và LƯỚI 2, mỗi lưới 4 nét mặt, toàn thân, nền trong suốt.
+4. Nếu được phép xuất nhiều ảnh trong một lượt, xuất cả LƯỚI 1 và LƯỚI 2. Nếu mỗi lượt chỉ được một ảnh, xuất LƯỚI 1 rồi ghi một dòng: "Gõ Tiếp để vẽ lưới 2".
+5. Nếu trong cuộc trò chuyện đã có ảnh của cùng nhân vật (cùng mã, hoặc cùng người ở giai đoạn khác như me1 và me2), giữ đúng khuôn mặt người đó.
+6. Ghi tên file đề xuất dưới mỗi ảnh (mục 6).
 
-Ý nghĩa:
+Lệnh phụ:
 
 | Lệnh | Bạn làm gì |
 | --- | --- |
-| `Tạo ảnh gốc <mã> góc <A/B/C>` | Vẽ MỘT ảnh: nhân vật có mã đó (mục 5), ở góc đó (mục 3), nét mặt bình thường. |
-| `Tạo ảnh <mã> theo lưới biểu cảm góc <A/B/C>` | Vẽ LƯỚI 1 (mục 4) của nhân vật đó ở góc đó. Nếu trong cuộc trò chuyện đã có ảnh gốc của nhân vật này thì phải giữ đúng mặt, tóc, áo của ảnh gốc. |
-| `Tiếp` | Vẽ lưới kế tiếp (LƯỚI 2) của đúng nhân vật và góc vừa làm. |
-| `Sửa mặt <tên nét mặt>` | Khi tôi đã chọn vùng mặt trên ảnh: chỉ đổi nét mặt trong vùng chọn, giữ nguyên mọi thứ khác. |
-| `Làm lại` | Vẽ lại lần vừa rồi, sửa cho đúng các quy tắc hơn. |
+| `Tiếp` | Vẽ lưới còn thiếu của nhân vật và góc vừa làm. Nếu đã đủ 2 lưới thì chuyển sang góc kế tiếp (A, rồi B, rồi C) của cùng nhân vật. |
+| `<mã> gốc góc <A/B/C>` | Chỉ vẽ một ảnh đơn khổ dọc 2:3, nét mặt bình thường, để làm ảnh gốc. |
+| `<mã> đủ bộ` | Lần lượt làm góc A, B, C (mỗi góc 2 lưới), mỗi lượt một ảnh, tôi gõ Tiếp để đi tiếp. |
+| `Sửa mặt <nét mặt>` | Khi tôi đã chọn vùng mặt trên ảnh: chỉ đổi nét mặt trong vùng chọn, giữ nguyên mọi thứ khác. |
+| `Làm lại` | Vẽ lại lần vừa rồi, sửa cho đúng quy tắc hơn (nhất là nền trong suốt và toàn thân). |
 
-Mã nhân vật viết thường, không dấu, đúng như bảng ở mục 5.
+Mã viết thường, không dấu, đúng như bảng ở mục 5. Nếu tôi gõ tên tiếng Việt (vd "Thục phi lúc già góc A"), tự tìm mã phù hợp.
 
 ---
 
@@ -119,6 +122,37 @@ Nếu lưới làm nhân vật bị nhỏ hoặc bị cắt mất chân, hãy ư
 | `mac` | Mạc tướng quân, cha Hiền phi, giữ cấm quân, đàn ông 55 tuổi. Vạm vỡ, râu tóc muối tiêu, mắt dữ. Mũ trận đen, giáp xanh rêu sẫm, tay đặt trên chuôi đao. |
 | `quan` | Thái phó Tôn, quan đại thần 60 tuổi. Gầy, râu dê bạc dài, mắt hẹp đầy mưu tính. Mũ cánh chuồn đen, áo thụng xanh đậm có bổ tử thêu hạc trước ngực, tay cầm hốt ngà. |
 | `nghia` | Hoàng tử Nghĩa đã lớn, chàng trai 20 tuổi, con Thục phi. Đẹp trai giống mẹ, mắt sắc kiêu ngạo. Khăn vấn vàng, áo bào đỏ thẫm thêu rồng bốn móng, kiếm đeo bên hông. |
+
+---
+
+### Các nhân vật ở tuổi khác (game đổi ảnh theo năm tháng)
+
+Cùng khuôn mặt với mã gốc, chỉ đổi tuổi và trang phục như mô tả.
+
+| Mã | Gốc | Mô tả | Game dùng khi |
+| --- | --- | --- | --- |
+| `hanh2` | `hanh` | Hạnh 45 tuổi: tóc điểm bạc, khăn vấn nâu, áo tấc xanh lam sẫm, nét mặt điềm đạm, vẫn bưng khay trà. | nhân vật chính từ 40 tuổi |
+| `hanh3` | `hanh` | Hạnh 62 tuổi: tóc bạc trắng búi thấp, lưng còng, áo nâu, tay chống gậy. | chương Tuổi già |
+| `thucphi2` | `thucphi` | Thục phi 45 tuổi: vẫn đẹp nhưng sắc lạnh hơn, vài nếp nhăn đuôi mắt, mũ năm phượng, áo nhật bình tím than. | chương 4 trở đi |
+| `thucphi3` | `thucphi` | Thục phi 60 tuổi sau khi mất thế: tóc bạc, áo nâu tu hành hoặc áo vải xám, chống gậy, ánh mắt vẫn kiêu. | chương Tuổi già |
+| `hoanghau2` | `hoanghau` | Hoàng hậu 48 tuổi: đầy đặn hơn, nét mặt mệt mỏi, mũ phượng chín đuôi, áo nhật bình vàng sẫm. | chương 4-5 |
+| `vua2` | `vua` | Hoàng thượng 42 tuổi ốm nặng: gầy, má hóp, mặt tái, áo long bào vàng khoác ngoài áo lụa trắng, tay cầm khăn tay. | chương 4-5 lúc vua bệnh |
+| `con2` | `con` | Hoàng tử 14 tuổi: thiếu niên, tóc vấn khăn vàng nhỏ, áo bào đỏ viền vàng, cầm quyển sách. | chương Ngôi Đông cung |
+| `con3` | `con` | Con lên làm vua, 22 tuổi: long bào vàng, mũ xung thiên, giống mẹ ở đôi mắt. | chương Buông rèm và Tuổi già |
+| `nghia0` | `nghia` | Hoàng tử Nghĩa lúc 8 tuổi: cậu bé kiêu kỳ, áo đỏ thẫm, tóc để chỏm, cầm kiếm gỗ. | chương 2-3 |
+| `phuc2` | `phuc` | Phúc 55 tuổi: béo hơn, mặt nhiều nếp nhăn, mũ thái giám có hạt ngọc (đã lên chưởng sự), vẫn phất trần. | chương 5 trở đi |
+| `tuong2` | `tuong` | Lê Trực 55 tuổi: râu tóc bạc, giáp cũ sờn, vẫn vạm vỡ. | chương 6-7 |
+| `meday2` | `meday` | Mẹ ở quê 65 tuổi: tóc bạc, lưng còng, khăn mỏ quạ, chống gậy tre. | chương 4 trở đi |
+
+### Nhân vật chính của 3 đường vào cung khác (làm sau)
+
+| Mã | Mô tả |
+| --- | --- |
+| `quan1` | Con gái quan Thượng thư họ Đoàn, 16 tuổi. Tiểu thư đài các, da trắng, mặt thanh tú, ánh mắt kiêu hãnh mà buồn. Tóc vấn cao cài trâm ngọc, áo giao lĩnh gấm hồng nhạt viền bạc, tay cầm quạt lụa. |
+| `cung1` | Cung nga giặt áo họ Lương, 16 tuổi. Gầy, da xanh, tay đỏ nứt vì nước tro, mắt to lanh lợi. Tóc buộc khăn vải nâu, áo cánh vải nâu bạc màu, tay áo xắn, ôm chậu gỗ có áo. |
+| `chua1` | Công chúa triều trước họ Lạc, 18 tuổi. Cao quý, buồn, mặt trái xoan nhợt nhạt. Tóc vấn cao cài trâm rồng nhỏ đã cũ, áo nhật bình trắng ngà thêu rồng nhỏ đã bạc màu, tay cầm chuỗi hạt. |
+
+Với 3 nhân vật này, các giai đoạn sau dùng mô tả của `me2` đến `me5` nhưng giữ khuôn mặt riêng: gõ `quan1 giai đoạn me3 góc A` nghĩa là con quan lúc làm Hoàng hậu.
 
 ---
 
