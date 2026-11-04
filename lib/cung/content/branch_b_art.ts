@@ -18,6 +18,8 @@ export const BRANCH_B_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'buon',
     motif: 'den',
+    bg: 'lanh',
+    where: 'trong lãnh cung',
     story:
       'Người ta tin bà khi bà nói con đã chết đuối, vì không ai nghĩ một người mẹ lại nói dối như thế. Lãnh cung lạnh, cửa sổ chỉ nhìn được một góc trời. Mỗi năm đến rằm tháng Bảy, bà thắp một ngọn đèn đặt trên bậu cửa. Ở làng chài xa kia, có một người đánh cá cũng thả một ngọn đèn ra biển, không biết vì sao mình làm thế.',
   },
@@ -57,6 +59,8 @@ export const BRANCH_B_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'buon',
     motif: 'rem',
+    bg: 'cong',
+    where: 'trước cửa Ngọ Môn',
     story:
       'Lính gác cửa Ngọ Môn chưa từng thấy mặt vua, chỉ thấy một ông lão gầy và một người đàn bà áo vải. Triều đình đã có vua mới, không ai muốn nhận một người đã có bài vị. Ông bị giải đi trong đêm, không ai nói đi đâu. Bà bị nhốt vào lãnh cung, sống đến già, đến chết vẫn gọi ông là "chàng".',
   },
@@ -197,6 +201,6 @@ export const BRANCH_B_ART: Record<string, EndArt> = {
     mood: 'buon',
     motif: 'kiem',
     story:
-      'Bà phi lên trước con, mũi tên dành cho vua cắm vào ngực bà. Con bà thoát khỏi khe núi, quay lại đánh tan quân Sa Hải ngay chiều ấy. Nó tự tay khâm liệm mẹ trong bộ giáp cũ, không cho ai chạm vào. Cả đời sau, vua không thân chinh thêm lần nào, và năm nào cũng lên khe núi ấy thắp nhang.',
+      'Bà phi lên trước con, mũi tên dành cho vua cắm vào người bà. Con bà thoát khỏi khe núi, quay lại đánh tan quân Sa Hải ngay chiều ấy. Nó tự tay khâm liệm mẹ trong bộ giáp cũ, không cho ai chạm vào. Cả đời sau, vua không thân chinh thêm lần nào, và năm nào cũng lên khe núi ấy thắp nhang.',
   },
 };

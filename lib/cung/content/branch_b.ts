@@ -20,10 +20,10 @@ const REM_HINT = 'Cần đang buông rèm';
 
 export const BRANCH_B_CHOICES: Record<string, Choice[]> = {
   b4_lap: [
-    { t: 'Đêm nay bế con trốn khỏi cung, để ngôi lại cho Nghĩa', fx: { next: 'nb_lap_tron' }, note: 'Bạn mặc áo vải của Hạnh, bế con qua cửa Tây lúc đổi gác. Không ai ngờ có người tự bỏ ngôi Đông cung.' },
+    { t: 'Đêm nay bế con trốn khỏi cung, để ngôi lại cho Nghĩa, kẻo con chết vì cái ngôi ấy', fx: { next: 'nb_lap_tron' }, note: 'Bạn mặc áo vải cung nữ, bế con qua cửa Tây lúc đổi gác. Không ai ngờ có người tự bỏ ngôi Đông cung.' },
   ],
   b4_bien: [
-    { t: 'Cắt tóc, mặc áo lính, theo tướng quân ra biên ải', fx: { next: 'nb_bien_ai', d: { tuong: 6 } }, note: 'Lê Trực sững người, rồi tháo thanh đoản kiếm trao cho bạn. Sổ cung chép bạn ốm nặng, đóng cửa viện không tiếp ai.' },
+    { t: 'Cắt tóc, mặc áo lính, theo tướng quân ra biên ải', fx: { next: 'nb_bien_ai', d: { tuong: 6 } }, note: 'Lê Trực sững người, rồi tháo thanh đoản kiếm trao cho bạn. Sáng ra bạn lẫn vào đoàn thân binh của ông ra cửa Bắc, còn Phúc chép vào sổ cung là bạn ốm nặng, đóng cửa viện không tiếp ai.' },
   ],
   cb_dc: [
     { t: 'Thuốc thái y càng uống càng nặng: lén đưa Hoàng thượng ra ngoài thành chữa', fx: { next: 'nb_dc_cong', d: { vua: 6 } }, note: 'Bạn kể ra ba thang thuốc đổi màu, và tên thái y nào cũng từng ra vào phủ Thái phó. Hoàng thượng nhìn bạn rất lâu, rồi gật đầu. Phúc lấy hai bộ áo thái giám trùm lên vai vua.' },
@@ -42,7 +42,7 @@ export const BRANCH_B_CHOICES: Record<string, Choice[]> = {
   ],
   b6_tau: [
     {
-      t: 'Cởi áo bào, tự mình theo xe thóc về phương nam',
+      t: 'Sợ thóc bị bớt dọc đường: cởi áo bào, tự mình theo xe thóc về phương nam',
       need: { flags: ['nhiep'] },
       lockHint: REM_HINT,
       fx: { next: 'nb_tau_nam', d: { duc: 4, quan: -4 } },
@@ -77,7 +77,7 @@ export const BRANCH_B_CHOICES: Record<string, Choice[]> = {
     },
   ],
   cb_tu: [
-    { t: 'Mặc giáp, theo con ra trận', fx: { next: 'nb_tu_giap', d: { the: 4 } }, note: 'Con bạn sững người, rồi bật cười: "Mẹ còn cầm nổi giáo không?" Ba hôm sau, đoàn quân ra cửa Bắc có thêm một người đàn bà tóc bạc.' },
+    { t: 'Không cản được thì đi cùng: mặc giáp, theo con ra trận', fx: { next: 'nb_tu_giap', d: { the: 4 } }, note: 'Con bạn sững người, rồi bật cười: "Mẹ còn cầm nổi giáo không?" Ba hôm sau, đoàn quân ra cửa Bắc có thêm một người đàn bà tóc bạc.' },
   ],
 };
 
@@ -92,12 +92,12 @@ export const BRANCH_B: Card[] = [
     cast: ['me', 'con'],
     mood: 'lo',
     moods: { con: 'so' },
-    where: 'ở bến sông ngoài cửa Tây',
+    where: 'ở bến sông ngoài thành',
     who: 'con',
     title: 'Con đò cuối',
     text: ['Bến sông chỉ còn một con đò, ông lái nhìn đôi hài thêu dưới vạt áo bạn rất lâu.', 'Con bạn kéo tay áo: "Mẹ ơi, mình đi đâu, có về nữa không?"'],
     choices: [
-      { t: 'Xuôi về phương nam, nơi không ai biết mặt', fx: { next: 'nb_lap_cho', years: 3, d: { muu: 2 } }, note: 'Đò đi ba ngày ba đêm. Bạn thả đôi hài thêu xuống sông, đi chân đất lên một làng chài.' },
+      { t: 'Thả đôi hài thêu trôi sông, cho người ta tưởng hai mẹ con chết đuối', fx: { next: 'nb_lap_cho', years: 3, d: { muu: 2 } }, note: 'Đò xuôi về phương nam ba ngày ba đêm. Bạn đi chân đất lên một làng chài, nơi không ai biết mặt.' },
       { t: 'Tháo đôi hoa tai vàng trả tiền đò, dặn ông quên mặt mình', fx: { next: 'nb_lap_cho', years: 3, d: { duc: 2 } }, note: 'Ông lái cầm đôi hoa tai, gật đầu không nói. Ở làng chài phương nam, ba năm không ai hỏi bạn từ đâu tới.' },
     ],
   },
@@ -156,7 +156,7 @@ export const BRANCH_B: Card[] = [
     omen: 'Người mặc áo lính thì chết như lính, không ai hỏi là phi tần.',
     choices: [
       { t: 'Không xuống, giữ lá cờ trên vọng lâu', fx: { end: 'd_nb_vong_lau' }, note: 'Lá cờ đứng đến sáng. Người ta gỡ được nó khỏi tay bạn khi giặc đã rút qua sông.' },
-      { t: 'Xuống mở cổng sau, dẫn dân làng chạy vào núi', fx: { end: 'e_nb_me_linh', years: 1 }, note: 'Bạn dắt hơn trăm người già trẻ lên khe núi. Lê Trực giữ đồn đến sáng, giặc không qua được.' },
+      { t: 'Xuống mở cổng sau, dẫn dân làng chạy vào núi', fx: { end: 'e_nb_me_linh', years: 1 }, note: 'Bạn dắt hơn trăm người già trẻ trú trong đồn lên khe núi. Lê Trực giữ đồn đến sáng, giặc không qua được.' },
     ],
   },
 
@@ -174,10 +174,10 @@ export const BRANCH_B: Card[] = [
     bg: 'hanh',
     who: 'vua',
     title: 'Cửa sau tẩm điện',
-    text: ['Bạn dìu Hoàng thượng qua cửa sau, bỏ lại bát thuốc thái y vừa dâng còn bốc khói.', 'Hoàng thượng lại cười: "Hai mươi năm làm vua, đây là lần đầu trẫm đi bộ qua cửa này."'],
+    text: ['Bạn dìu Hoàng thượng qua cửa sau, bỏ lại bát thuốc thái y vừa dâng còn bốc khói.', 'Hoàng thượng thở dốc mà vẫn cười: "Bao nhiêu năm làm vua, đây là lần đầu trẫm đi bộ qua cửa này."'],
     choices: [
-      { t: 'Trốn lên xe chở rau, ra thẳng ngoài thành', fx: { next: 'nb_dc_lang', years: 0.5 }, note: 'Xe rau xóc qua cổng thành lúc gà gáy. Phúc ở lại, đốt tờ di chiếu còn trống tên.' },
-      { t: 'Rẽ qua chùa Vân Tịch, xin sư bà một bài thuốc', fx: { next: 'nb_dc_lang', years: 0.5, d: { duc: 2 } }, note: 'Sư bà bắt mạch, lắc đầu, rồi chỉ đường đến nhà một ông lang ở làng ven sông.' },
+      { t: 'Nấp lên xe chở rau, ra thẳng làng ven sông tìm ông lang Phúc quen', fx: { next: 'nb_dc_lang', years: 0.5 }, note: 'Xe rau xóc qua cổng thành lúc gà gáy, lính chỉ xốc qua mấy bó rau. Phúc ở lại, đốt tờ di chiếu còn trống tên.' },
+      { t: 'Cầm lệnh bài của Phúc ra cửa Tây, lên chùa Vân Tịch xin sư bà bắt mạch', fx: { next: 'nb_dc_lang', years: 0.5, d: { duc: 2 } }, note: 'Lính cửa Tây nhìn lệnh bài, không nhìn mặt. Sư bà bắt mạch, lắc đầu, rồi chỉ đường đến nhà một ông lang ở làng ven sông.' },
     ],
   },
   {
@@ -212,7 +212,7 @@ export const BRANCH_B: Card[] = [
     where: 'ở chân tường phía bắc',
     who: 'hanh',
     title: 'Lỗ hổng chân tường',
-    text: ['Hạnh đã đục sẵn một lỗ dưới chân tường phía bắc, vừa lọt một người.', '"Nhanh lên chị, mõ tuần canh đến góc kia rồi."'],
+    text: ['Hạnh dẫn bạn tới miệng cống dưới chân tường phía bắc, song sắt gỉ mục đã bị bẻ một thanh, vừa lọt một người.', '"Nhanh lên nương nương, mõ tuần canh đến góc kia rồi."'],
     omen: 'Tường cung có lỗ hổng thì lính tuần cũng biết đường đi qua.',
     choices: [
       { t: 'Chui qua trước, rồi kéo Hạnh theo', fx: { next: 'nb_tron_ben', years: 1 }, note: 'Đất cào rách áo, bạn kéo Hạnh qua đúng lúc ánh đuốc rọi tới. Hai người chạy một mạch ra bến chợ.' },
@@ -233,7 +233,7 @@ export const BRANCH_B: Card[] = [
     text: ['Hai người bán đôi hoa tai cuối cùng, thuê được một gian lều sát bến chợ.', 'Hạnh hỏi: "Mình bán chè hay bán bánh, chị?" Lần đầu tiên nó không gọi bạn là nương nương.'],
     choices: [
       { t: '"Bán chè sen. Chị nấu, em rao."', fx: { end: 'e_nb_quan_che' }, note: 'Nồi chè đầu tiên khê đáy, hai người ngồi ăn hết rồi cười đến chảy nước mắt.' },
-      { t: '"Bán bánh trôi, ngọt cho người ta quên."', fx: { end: 'e_nb_quan_che' }, note: 'Bánh nặn méo, khách vẫn mua. Hạnh rao to đến mức cả bến chợ nhớ giọng.' },
+      { t: '"Chè trôi nước. Em nấu, chị rao."', fx: { end: 'e_nb_quan_che' }, note: 'Viên chè Hạnh nặn tròn đều, còn bạn rao đến khản giọng. Mãi nửa tháng sau cả bến chợ mới quen giọng bà chủ mới.' },
     ],
   },
 
@@ -253,7 +253,7 @@ export const BRANCH_B: Card[] = [
     text: ['Cả điện lặng đi. Con bạn rời hàng đầu, bước tới nắm vạt áo bạn.', '"Mẹ không cần con làm vua nữa ạ?"'],
     choices: [
       { t: '"Mẹ cần con sống." Xin đất phong ven biển, càng xa càng tốt', fx: { next: 'nb_phe_dat', years: 10 }, note: 'Thái phó Tôn chuẩn ngay trong buổi. Hai mẹ con ra khỏi kinh với ba xe đồ và một lá cờ thân vương.' },
-      { t: 'Không đáp, bế con đi thẳng ra cửa điện', fx: { next: 'nb_phe_dat', years: 10, d: { muu: 2 } }, note: 'Không ai cản. Chiếu phế và chiếu phong đất đến cùng một ngày.' },
+      { t: 'Không đáp, dắt tay con đi thẳng ra cửa điện', fx: { next: 'nb_phe_dat', years: 10, d: { muu: 2 } }, note: 'Không ai cản. Chiếu phế và chiếu phong đất đến cùng một ngày.' },
     ],
   },
   {
@@ -347,6 +347,7 @@ export const BRANCH_B: Card[] = [
     mood: 'lo',
     moods: { ngoai: 'vui' },
     where: 'ở triều đình nước Sa Hải',
+    bg: 'trieu',
     who: 'ngoai',
     whoName: 'Vua nước Sa Hải',
     title: 'Tấm bản đồ hai nước',
@@ -429,7 +430,7 @@ export const BRANCH_B: Card[] = [
     title: 'Chuyến đò cuối',
     text: ['Bến chỉ còn một chuyến đò. Phía sau, chuông thành gõ báo đóng cổng.', '"Sang sông rồi, mình đi đâu hả chị?"'],
     choices: [
-      { t: '"Đi đến đâu thì ở đó."', fx: { end: 'e_nb_sang_song' }, note: 'Đò rời bến, tiếng chuông thành nhỏ dần rồi tắt hẳn.' },
+      { t: '"Đi đến đâu thì ở đó."', fx: { end: 'e_nb_sang_song' }, note: 'Đò rời bến, tiếng chuông thành nhỏ dần rồi tắt hẳn. Ba tháng sau, hai người dừng chân ở một ngôi chùa nhỏ bên kia núi.' },
       { t: '"Đi tìm một ngôi chùa nhỏ có cây đại."', fx: { end: 'e_nb_sang_song' }, note: 'Ông lái đò bảo bên kia núi có một ngôi như thế. Hai bà già nhìn nhau cười.' },
     ],
   },
@@ -492,7 +493,7 @@ export const ENDINGS_BRANCH_B: Ending[] = [
   { id: 'e_nb_ve_kinh', branch: true, tier: 24, tone: 'buon', name: 'Ông vua đã phát tang', desc: 'Về đến cửa Ngọ Môn, người ta bảo ông là kẻ mạo danh. Ông bị giải đi đâu không ai rõ, bà bị nhốt vào lãnh cung đến già.' },
   // 4. b5_bang2
   { id: 'd_nb_tuan_canh', branch: true, tier: 42, dead: true, name: 'Tiếng mõ canh tư', desc: 'Bà cầm đèn đi về phía lính tuần để người kia kịp ra ngoài. Sáng ra, sổ cung chép một phi tần trẫm mình dưới giếng.' },
-  { id: 'e_nb_quan_che', branch: true, tier: 36, tone: 'vien', name: 'Quán chè hai chị em', desc: 'Ở bến chợ ven sông có quán chè của hai bà góa không rõ quê. Bà chủ nấu, cô em rao, khách nói chè ấy ngọt như chưa từng có ai khóc.' },
+  { id: 'e_nb_quan_che', branch: true, tier: 36, tone: 'vien', name: 'Quán chè hai chị em', desc: 'Ở bến chợ ven sông có quán chè của hai bà góa không rõ quê. Một người nấu, một người rao, khách nói chè ấy ngọt như chưa từng có ai khóc.' },
   // 5. cb_phe
   { id: 'e_nb_vua_muoi', branch: true, tier: 54, tone: 'vien', name: 'Ông hoàng ruộng muối', desc: 'Bà đổi ngôi Đông cung lấy mấy làng muối ven biển. Con bà sống đến tám mươi, cả vùng gọi ông là "ông hoàng muối".' },
   { id: 'd_nb_don_duong', branch: true, tier: 48, dead: true, name: 'Vò rượu đón đường', desc: 'Triều đình mời con bà về làm vua, rồi cho người chờ ở trạm thứ ba. Hai mẹ con chết cùng một đêm, sử chép "bệnh dịch dọc đường".' },

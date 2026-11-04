@@ -6,9 +6,9 @@
  *  2. b1_hoi    Xin đi hòa thân sang nước Vân Đảo
  *  3. b2_den    Rủ Hoàng thượng vi hành chợ đêm
  *  4. b2_vu     Bẻ gãy trâm phượng, vào lãnh cung
- *  5. b2_sung   Xóa tên khỏi sổ, xin làm nữ sử giữ kho sách
+ *  5. b2_sung   Xin Thái hậu cho làm nữ sử giữ kho sách
  *  6. b3_thai   Hất bát thuốc, trốn khỏi cung giữ thai
- *  7. b3_sinh   Tráo hoàng tử với con gái cung nữ
+ *  7. b3_sinh   Tráo hoàng tử với con gái vú nuôi
  *  8. b3_mat    Bưng bát cặn sang bắt Thục phi uống
  *  9. ca_gieng  Đưa tro Lựu về quê
  * 10. ca_thu    Nhận lá thư, nói nốt câu thứ hai với Hoàng hậu
@@ -34,7 +34,7 @@ export const BRANCH_A_CHOICES: Record<string, Choice[]> = {
     {
       t: 'Xin ngài đêm nay cởi áo rồng, cùng mình ra chợ đêm ngoài thành',
       fx: { next: 'na_vi_pho', d: { vua: 4 } },
-      note: 'Hoàng thượng nhìn bạn rất lâu rồi bật cười. Canh một, hai người mặc áo vải lách qua cửa Tây, chỉ có Phúc theo sau.',
+      note: 'Hoàng thượng nhìn bạn rất lâu rồi bật cười. Canh một, hai người mặc áo vải ra cửa Tây. Phúc giơ lệnh bài cho lính mở cổng ngách, rồi lặng lẽ theo sau.',
     },
   ],
   b2_vu: [
@@ -46,14 +46,14 @@ export const BRANCH_A_CHOICES: Record<string, Choice[]> = {
   ],
   b2_sung: [
     {
-      t: 'Bảo Phúc xóa hẳn tên mình khỏi sổ, rồi xin sang làm nữ sử giữ kho sách',
+      t: 'Bảo Phúc khỏi sửa sổ: mình sẽ xin Thái hậu cho sang làm nữ sử giữ kho sách, khỏi ai phải ghen',
       fx: { next: 'na_kho_xin' },
       note: 'Phúc đánh rơi cây bút. Ba hôm sau, bạn quỳ trước cung Thái hậu với một tờ đơn tự tay viết.',
     },
   ],
   b3_thai: [
     {
-      t: 'Hất đổ bát thuốc, đêm nay cùng Hạnh trốn khỏi cung giữ lấy giọt máu này',
+      t: 'Hất đổ bát thuốc, đêm nay cùng Hạnh trốn khỏi cung: thái y cũng là người bên ấy, ở lại không giữ nổi giọt máu này',
       need: { num: { hanh: [30, 100] } },
       lockHint: 'Cần Hạnh từ 30',
       fx: { next: 'na_bung_cong' },
@@ -62,25 +62,27 @@ export const BRANCH_A_CHOICES: Record<string, Choice[]> = {
   ],
   b3_sinh: [
     {
-      t: 'Dặn Hạnh: nếu là con trai, đem tráo ngay với bé gái cung nữ Mận vừa sinh',
-      need: { num: { hanh: [30, 100] } },
-      lockHint: 'Cần Hạnh từ 30',
+      t: 'Dặn Hạnh: nếu là con trai, tráo ngay với bé gái vú nuôi Mận vừa sinh, kẻo Thục phi không để nó lớn',
+      need: { num: { hanh: [30, 100] }, riv: { thucphi: { st: ['an', 'manh', 'yeu', 'phuc'] } } },
+      lockHint: 'Cần Hạnh từ 30, Thục phi còn trong cung',
       fx: { next: 'na_doi_trao' },
-      note: 'Gà gáy, một hoàng tử chào đời. Hạnh bọc nó trong khăn cũ lẻn ra dãy phòng cung nữ, lúc về ôm theo một bé gái đỏ hỏn.',
+      note: 'Gà gáy, một hoàng tử chào đời. Hạnh bọc nó trong khăn cũ lẻn sang dãy nhà vú nuôi, lúc về ôm theo một bé gái đỏ hỏn.',
     },
   ],
   b3_mat: [
     {
       t: 'Bưng bát thuốc sang thẳng viện Thục phi, bắt nàng uống phần cặn còn lại',
+      need: { riv: { thucphi: { st: ['an', 'manh', 'yeu', 'phuc'] } } },
+      lockHint: 'Cần Thục phi còn trong cung',
       fx: { next: 'na_tra_vien' },
       note: 'Hạnh không cản được. Bạn đi chân trần qua ba dãy hành lang, cửa viện Thục phi không ai dám chặn.',
     },
   ],
   ca_gieng: [
     {
-      t: 'Xin ma ma cho mình đưa tro cốt Lựu về quê nó, đi ngay hôm nay',
+      t: 'Xin ma ma: hỏa táng Lựu xong, cho mình mang tro về quê nó',
       fx: { next: 'na_tro_duong', d: { duc: -2 } },
-      note: 'Cả sân sững sờ. Ma ma Trịnh nhìn bạn rất lâu: "Được. Nhưng đi rồi thì khỏi về."',
+      note: 'Cả sân sững sờ. Ma ma Trịnh nhìn bạn rất lâu: "Được. Ta ghi tên ngươi vào sổ bệnh, trả về quê. Nhưng đi rồi thì khỏi về."',
     },
   ],
   ca_thu: [
@@ -139,7 +141,7 @@ export const BRANCH_A: Card[] = [
     time: 'dem',
     cast: ['me', 'vua', 'ngoai'],
     mood: 'lo',
-    moods: { vua: 'gian', ngoai: 'dac' },
+    moods: { vua: 'lo', ngoai: 'dac' },
     who: 'vua',
     title: 'Ba tháng đường biển',
     text: ['Hoàng thượng đứng lặng, đèn hoa trôi dạt cả vào chân cầu.', '"Nàng có biết Vân Đảo cách đây ba tháng đường biển, đi rồi không có ngày về không?"'],
@@ -161,7 +163,7 @@ export const BRANCH_A: Card[] = [
     who: 'ngoai',
     whoName: 'Sứ thần nước Vân Đảo',
     title: 'Đêm thứ bốn mươi',
-    text: ['Đêm thứ bốn mươi, bão nổi, cột buồm gãy làm đôi.', 'Sứ thần ướt sũng: "Công chúa, thuyền con chỉ chở được mười người. Vào đảo hoang, hay ở lại chờ bão tan?"'],
+    text: ['Đêm thứ bốn mươi, bão nổi, mưa to như trút, cột buồm gãy làm đôi.', 'Sứ thần ướt sũng: "Công chúa, thuyền con chỉ chở được mười người. Vào đảo hoang, hay ở lại chờ bão tan?"'],
     omen: 'Ba tháng đường biển, và đó là một lời cảnh báo.',
     choices: [
       { t: 'Ở lại thuyền lớn cùng các thị nữ', fx: { end: 'd_na_bien_bao' }, note: 'Bạn nhường chỗ trên thuyền con. Gần sáng, con sóng thứ chín đến.' },
@@ -205,7 +207,7 @@ export const BRANCH_A: Card[] = [
     text: ['Ba kẻ kia lướt qua không thấy. Hoàng thượng thở ra, nắm lấy tay bạn.', '"Giá trẫm chỉ là anh hàng chiếu ngoài chợ này, nàng có ở lại với trẫm không?"'],
     choices: [
       { t: 'Thưa có. Rồi kéo ngài xuống đò, xuôi về phía biển', fx: { end: 'e_na_hang_chieu', years: 1 }, note: 'Ngài cười, cởi ngọc bội ném xuống sông. Phúc đứng trên bến, nhìn con đò đi mất trong sương.' },
-      { t: 'Đưa ngài về đến cửa Tây, còn mình ở lại ngoài này', fx: { end: 'e_na_quan_che', years: 1 }, note: 'Ngài quay lại ba lần mới chịu đi. Bạn đứng ngoài cổng thành đến lúc đèn lồng tắt hết.' },
+      { t: 'Đưa ngài về đến cửa Tây, còn mình ở lại ngoài này', fx: { end: 'e_na_quan_che', years: 1 }, note: 'Ngài quay lại ba lần mới chịu đi, dặn Phúc chép vào sổ cung là bạn mắc bạo bệnh. Bạn đứng ngoài cổng thành đến lúc đèn lồng tắt hết.' },
     ],
   },
 
@@ -244,7 +246,7 @@ export const BRANCH_A: Card[] = [
     who: 'cungnu',
     whoName: 'Hiền phi đời trước',
     title: 'Chiếc chìa khóa gỉ',
-    text: ['Mùa rét, bà Hiền phi ho ra máu, dúi vào tay bạn một chiếc chìa khóa gỉ.', '"Cửa sau lãnh cung thông ra đường lên chùa Vân Tịch. Ta giữ bốn mươi năm mà không dám đi."'],
+    text: ['Một đêm trời mưa, bà Hiền phi ho ra máu, dúi vào tay bạn một chiếc chìa khóa gỉ.', '"Cửa sau lãnh cung thông ra đường lên chùa Vân Tịch. Ta giữ bốn mươi năm mà không dám đi."'],
     choices: [
       { t: 'Ở lại chăm bà đến hơi thở cuối', fx: { end: 'e_na_tuong_vang', years: 2 }, note: 'Bà mất vào một đêm mưa phùn, tay vẫn nắm tay bạn. Chiếc chìa khóa nằm dưới gối đến mục.' },
       { t: 'Cõng bà ra cửa sau, đi ngay trong đêm mưa rét', fx: { end: 'e_na_chua_mua', years: 1 }, note: 'Ổ khóa kêu một tiếng rồi bung. Hai người đi đến gà gáy thì nghe tiếng chuông chùa.' },
@@ -265,7 +267,7 @@ export const BRANCH_A: Card[] = [
     title: 'Tờ đơn xin vào kho sách',
     text: ['Thái hậu đọc tờ đơn hai lần: "Được vua thương mà xin vào kho sách, ta mới thấy lần đầu."', '"Vào đó rồi thì không có đường ra hậu cung nữa. Con nghĩ kỹ chưa?"'],
     choices: [
-      { t: 'Thưa đã nghĩ kỹ, chỉ xin được giữ sách', fx: { next: 'na_kho_so', d: { duc: 4 } }, note: 'Thái hậu đóng ấn. Đêm ấy đèn đỏ treo trước viện bạn lần cuối, rồi Phúc tháo xuống.' },
+      { t: 'Thưa đã nghĩ kỹ, chỉ xin được giữ sách', fx: { next: 'na_kho_so', d: { duc: 4 } }, note: 'Thái hậu đóng ấn ngay, không đợi hỏi Hoàng thượng. Đêm ấy Phúc tháo ngọn đèn đỏ trước viện bạn xuống, cất vào kho.' },
       { t: 'Xin được chép sử, không chỉ giữ kho', fx: { next: 'na_kho_so', d: { muu: 4 } }, note: 'Thái hậu nhíu mày, rồi gật: "Chép thì chép. Nhưng chép gì, ta sẽ đọc."' },
     ],
   },
@@ -276,7 +278,7 @@ export const BRANCH_A: Card[] = [
     place: 'phong',
     time: 'dem',
     bg: 'thu',
-    where: 'trong kho sách Quốc sử viện',
+    where: 'trong kho sách nội cung',
     cast: ['me'],
     mood: 'so',
     title: 'Cuốn sổ đóng đinh',
@@ -318,7 +320,7 @@ export const BRANCH_A: Card[] = [
     mood: 'lo',
     moods: { con: 'binh' },
     title: 'Làng chài ven sông',
-    text: ['Bạn sinh con trong một túp lều làng chài, đứa bé khóc to át cả tiếng sóng.', 'Ba tháng sau, lính đi dọc sông hỏi về "một người đàn bà trốn khỏi kinh, bụng mang dạ chửa".'],
+    text: ['Bạn sinh một bé trai trong túp lều làng chài, nó khóc to át cả tiếng sóng.', 'Ba tháng sau, lính đi dọc sông hỏi về "một người đàn bà trốn khỏi kinh, bụng mang dạ chửa".'],
     omen: 'Giọt máu này là của Hoàng thượng, và Hoàng thượng không bao giờ bỏ quên thứ gì của mình.',
     choices: [
       { t: 'Ở lại, nhận làm vợ góa của người chài vừa chết đuối', fx: { end: 'e_na_lang_chai', years: 1 }, note: 'Cả làng chài cùng nói dối một lời. Lính đi qua, chỉ thấy một mẹ góa ngồi vá lưới.' },
@@ -338,7 +340,7 @@ export const BRANCH_A: Card[] = [
     moods: { hanh: 'so', con: 'binh' },
     who: 'hanh',
     title: 'Bé gái trong tay',
-    text: ['Bé gái trong tay bạn ngủ ngoan, không biết mình vừa thành công chúa.', 'Hạnh quỳ bên giường: "Mận xin đưa hoàng tử về quê, nuôi như con đẻ. Nương nương có muốn gặp lần cuối không?"'],
+    text: ['Bé gái trong tay bạn ngủ ngoan, không biết mình vừa thành công chúa.', 'Hạnh quỳ bên giường: "Mận xin thôi việc vú nuôi, đưa hoàng tử về quê, nuôi như con đẻ. Nương nương có muốn gặp lần cuối không?"'],
     choices: [
       { t: 'Không gặp, chỉ dặn Mận đừng bao giờ cho nó biết', fx: { next: 'na_doi_hat', years: 1 }, note: 'Hạnh đi rồi, bạn mới khóc. Bé gái trong tay cũng khóc theo, như biết.' },
       { t: 'Gặp, cởi chuỗi hạt gỗ của {me} đeo vào cổ con', fx: { next: 'na_doi_hat', years: 1 }, note: 'Đứa bé nắm lấy ngón tay bạn rất chặt. Bạn gỡ ra từng ngón một.' },
@@ -356,7 +358,7 @@ export const BRANCH_A: Card[] = [
     mood: 'so',
     moods: { quan: 'binh', thucphi: 'dac' },
     title: 'Ngày xướng danh',
-    text: ['Mười tám năm sau, tân khoa trạng nguyên quỳ giữa sân điện, sau gáy có nốt ruồi son giống hệt bạn.', 'Thục phi đứng sau rèm, cũng đang nhìn cái nốt ruồi ấy.'],
+    text: ['Mười tám năm sau, bạn đứng sau rèm xem lễ xướng danh. Tân khoa trạng nguyên quỳ giữa sân điện, sau gáy có nốt ruồi son giống hệt bạn.', 'Cách một tấm rèm, Thục phi cũng đang nhìn cái nốt ruồi ấy.'],
     omen: 'Thục phi không cần biết thật giả, chỉ cần thấy bạn nhìn ai lâu hơn một nhịp.',
     choices: [
       { t: 'Bước ra trước sân điện nhận con', fx: { end: 'd_na_nhan_con', years: 18 }, note: 'Cả triều lặng đi. Trạng nguyên ngẩng lên nhìn bạn, không hiểu gì cả.' },
@@ -398,7 +400,7 @@ export const BRANCH_A: Card[] = [
     text: ['Thục phi kể đến canh ba: năm mười bảy tuổi, nàng cũng mất một đứa con vì một bát thuốc như thế.', '"Người đưa bát ấy giờ ngồi ở chỗ cao nhất hậu cung. Em với ta, ai cũng chỉ là cái bát trong tay người khác."'],
     omen: 'Hai người đàn bà cùng mất con mà ngồi chung một phòng, thì cả hậu cung đều biết trước sáng.',
     choices: [
-      { t: 'Cùng nàng xin lên chùa Vân Tịch, bỏ hết', fx: { end: 'e_na_hai_ni', years: 1 }, note: 'Sáng ra, hai người cùng quỳ trước cung Thái hậu, tóc đã xõa. Không ai hiểu chuyện gì đã xảy ra trong đêm.' },
+      { t: 'Cùng nàng xin lên chùa Vân Tịch, bỏ hết', fx: { end: 'e_na_hai_ni', years: 1 }, note: 'Sáng ra, hai người cùng quỳ trước cung Thái hậu, tóc đã xõa. Thục phi chỉ xin cho Hoàng tử Nghĩa ở lại với vua cha, không ai hiểu đêm qua đã có chuyện gì.' },
       { t: 'Nắm tay nàng: "Vậy thì cùng nhau đòi món nợ ấy."', fx: { end: 'd_na_hai_bat', years: 1 }, note: 'Hai người bàn đến sáng, rồi chờ thêm ba tháng. Người kia không chờ.' },
     ],
   },
@@ -415,7 +417,7 @@ export const BRANCH_A: Card[] = [
     title: 'Ngã ba đèo',
     text: ['Ba ngày đường núi, hũ tro Lựu buộc trước ngực, bạn mới biết mình không còn là người trong cung.', 'Đến ngã ba đèo, có hai người đàn ông bịt mặt đứng chờ, hỏi đúng tên Lựu.'],
     choices: [
-      { t: 'Mở hũ tro cho họ xem: "Nó chỉ còn chừng này thôi."', fx: { next: 'na_tro_lang' }, note: 'Một người kéo khăn bịt mặt xuống, mắt đỏ hoe. Đó là anh trai Lựu, đã chờ ở đèo ba tháng.' },
+      { t: 'Mở hũ tro cho họ xem: "Nó chỉ còn chừng này thôi."', fx: { next: 'na_tro_lang' }, note: 'Một người kéo khăn bịt mặt xuống, mắt đỏ hoe. Đó là anh trai Lựu, nhận được thư em kêu cứu nên đang lên kinh tìm.' },
       { t: 'Ôm hũ tro chạy tắt vào rừng', fx: { next: 'na_tro_lang', d: { muu: 2 } }, note: 'Bạn chạy đến tối, lạc ra đúng một con suối có bến tre. Bên kia suối là làng của Lựu.' },
     ],
   },
@@ -474,7 +476,7 @@ export const BRANCH_A: Card[] = [
     omen: 'Thư không gửi thì không ai đọc được, trừ khi có người mang nó đi.',
     choices: [
       { t: 'Viết, rồi xin ở lại bên người làm nữ quan suốt đời', fx: { end: 'e_na_but_hau', years: 2 }, note: 'Hoàng hậu không đáp, chỉ đẩy nghiên mực sang phía bạn. Từ đó, nghiên mực ấy không về lại chỗ cũ.' },
-      { t: 'Viết, rồi lén đưa lá thư ấy cho Hoàng thượng đọc', fx: { end: 'd_na_thu_yem', years: 1 }, note: 'Lá thư đi qua tay ba người trước khi tới thư phòng. Đến nơi, trong phong bì là một hình nhân bằng giấy.' },
+      { t: 'Viết, rồi lén nhờ người đưa lá thư ấy cho Hoàng thượng, để ngài hiểu lòng Hoàng hậu', fx: { end: 'd_na_thu_yem', years: 1 }, note: 'Lá thư đi qua tay ba người trước khi tới thư phòng. Đến nơi, trong phong bì là một hình nhân bằng giấy.' },
     ],
   },
 ];
@@ -484,7 +486,7 @@ export const ENDINGS_BRANCH_A: Ending[] = [
   { id: 'e_na_ve_lang', branch: true, tier: 25, tone: 'vien', name: 'Đêm đầu đã về', desc: 'Bà rời cung ngay đêm đầu, trên một chiếc đò muối. Về {que} lấy tên khác, hái chè đến bạc đầu, không ai biết bà từng có tên trong sổ cung.' },
   { id: 'd_na_song_dem', branch: true, tier: 8, dead: true, name: 'Nước sông ngoài thành', desc: 'Trèo được qua tường cung mà không qua được một con sông. Sổ cung ghi: tú nữ mới vào, mất tích đêm đầu.' },
   // 2. Vân Đảo
-  { id: 'e_na_hau_dao', branch: true, tier: 80, tone: 'vien', name: 'Hoàng hậu Vân Đảo', desc: 'Bà dạt vào một hòn đảo xa trên chiếc thuyền con, rồi thành hoàng hậu của nó. Đến giờ dân Vân Đảo vẫn trồng chè trên đồi, gọi là "chè bà Nam".' },
+  { id: 'e_na_hau_dao', branch: true, tier: 80, tone: 'vien', name: 'Hoàng hậu Vân Đảo', desc: 'Bà dạt vào một hòn đảo xa sau một đêm bão, rồi thành hoàng hậu của nó. Đến giờ dân Vân Đảo vẫn trồng chè trên đồi, gọi là "chè bà Nam".' },
   { id: 'd_na_bien_bao', branch: true, tier: 25, dead: true, name: 'Con sóng thứ chín', desc: 'Công chúa hòa thân chưa đến được nơi gả. Bà nhường chỗ trên thuyền con cho mười thị nữ, rồi ở lại với chiếc thuyền rồng.' },
   // 3. vi hành
   { id: 'd_na_do_dao', branch: true, tier: 60, dead: true, name: 'Chợ đêm bến sông', desc: 'Một đêm ra chợ cùng vua, bà đỡ lưỡi dao thay ngài giữa hàng bánh đúc. Ngài truy phong bà làm phi, và cấm hẳn chợ đêm ấy.' },
@@ -504,7 +506,7 @@ export const ENDINGS_BRANCH_A: Ending[] = [
   { id: 'e_na_chen_trang', branch: true, tier: 45, tone: 'buon', name: 'Chén chè cho trạng nguyên', desc: 'Con trai bà làm quan to, được dân thương, và không bao giờ biết mẹ mình là ai. Mỗi năm, vào ngày xướng danh, bà lại sai người mang sang một chén chè.' },
   // 8. Thục phi
   { id: 'e_na_dien_cung', branch: true, tier: 8, tone: 'buon', name: 'Người điên viện Tây', desc: 'Người ta bảo bà đau quá hóa điên. Bà bị nhốt ở viện Tây, ngày nào cũng rửa một cái bát không.' },
-  { id: 'e_na_hai_ni', branch: true, tier: 30, tone: 'vien', name: 'Hai ni cô không con', desc: 'Hai người đàn bà từng muốn giết nhau cùng xuống tóc một ngày. Ở chùa Vân Tịch, họ chăm vườn cho trẻ mồ côi, không ai nhắc chuyện cái bát.' },
+  { id: 'e_na_hai_ni', branch: true, tier: 30, tone: 'vien', name: 'Hai ni cô chùa Vân Tịch', desc: 'Hai người đàn bà từng muốn giết nhau cùng xuống tóc một ngày. Ở chùa Vân Tịch, họ chăm vườn cho trẻ mồ côi, không ai nhắc chuyện cái bát.' },
   { id: 'd_na_hai_bat', branch: true, tier: 30, dead: true, name: 'Hai cái bát', desc: 'Chưa kịp đòi nợ thì người kia đã ra tay trước. Sáng ấy, hai viện cách nhau ba dãy hành lang cùng treo đèn trắng.' },
   // 9. tro Lựu
   { id: 'e_na_con_luu', branch: true, tier: 25, tone: 'vien', name: 'Thay Lựu làm con', desc: 'Bà đưa tro bạn về quê, rồi ở lại làm con của mẹ bạn. Cả làng gọi bà bằng tên Lựu, bà cũng thưa.' },

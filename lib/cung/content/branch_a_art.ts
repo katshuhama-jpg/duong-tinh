@@ -29,7 +29,7 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     moods: { ngoai: 'vui' },
     motif: 'thuyen',
     story:
-      'Hộp ấn hòa thân dạt vào bờ cùng bà, ướt sũng mà còn nguyên niêm. Vua Vân Đảo chân trần lội ra đón, cười bảo chưa thấy công chúa nào bơi giỏi thế. Bà mang hạt chè giấu trong áo gieo lên đồi đảo, dạy dân hái và sao. Nhiều đời sau, thuyền buôn ghé Vân Đảo vẫn được mời một chén "chè bà Nam".',
+      'Sau đêm bão, bà dạt vào bờ Vân Đảo, tay vẫn ôm hộp ấn hòa thân ướt sũng mà còn nguyên niêm. Vua Vân Đảo chân trần lội ra đón, cười bảo chưa thấy công chúa nào về nhà chồng ướt như thế. Bà mang hạt chè giấu trong áo gieo lên đồi đảo, dạy dân hái và sao. Nhiều đời sau, thuyền buôn ghé Vân Đảo vẫn được mời một chén "chè bà Nam".',
   },
   d_na_bien_bao: {
     place: 'bien',
@@ -65,6 +65,8 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'buon',
     motif: 'chen',
+    bg: 'cong',
+    where: 'ở quán chè ngoài cửa Tây',
     story:
       'Bà mở một quán chè ngay ngoài cổng thành, đối diện cửa Tây. Năm đầu có người mặc áo vải ghé ba lần, ngồi rất lâu, uống rất ít. Năm sau thì một lần, rồi không thấy nữa. Bà vẫn bày sẵn một chén úp ở góc bàn, đến khi tóc bạc trắng.',
   },
@@ -74,6 +76,8 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'buon',
     motif: 'den',
+    bg: 'lanh',
+    where: 'trong lãnh cung',
     story:
       'Bà Hiền phi mất trong một đêm mưa phùn, tay còn nắm tay bà. Chiếc chìa khóa gỉ nằm dưới gối, mãi không ai dùng đến. Năm này qua năm khác, bà ngồi đúng chỗ người cũ từng ngồi, chải tóc cho con búp bê rơm. Người mới bị đưa vào lãnh cung đều tưởng bà là Hiền phi đời trước.',
   },
@@ -93,6 +97,7 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'so',
     motif: 'sach',
+    bg: 'thu',
     story:
       'Bà chép trang sử ấy trong ba đêm, nét chữ không run một nét. Đêm thứ tư, có người vào kho sách, cầm theo dải lụa trắng của Thái hậu. Trang sử bị xé, cuốn sổ bị đốt. Nhưng người học trò mài mực cho bà đã thuộc lòng từng chữ, và về già đọc lại cho cháu chắt nghe.',
   },
@@ -102,6 +107,7 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'buon',
     motif: 'sach',
+    bg: 'thu',
     story:
       'Bà giữ kho sách bốn mươi năm, đến khi trong cung không ai còn nhớ bà từng có đèn đỏ treo trước cửa. Chính sử bà chép cẩn thận, không sai một ngày. Trăm năm sau, thợ sửa kho đục một mảng vách vôi trộn nước chè. Cuốn sổ rơi ra, mở đúng trang đầu, nét chữ một người đàn bà.',
   },
@@ -130,15 +136,16 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     mood: 'buon',
     moods: { quan: 'so', thucphi: 'dac' },
     motif: 'ngai',
+    bg: 'trieu',
     story:
       'Bà bước ra giữa sân điện, chỉ vào nốt ruồi son sau gáy trạng nguyên. Thục phi từ sau rèm nói đúng hai chữ: "Khi quân." Trạng nguyên được tha vì không biết gì, còn bà thì không. Về già, ông quan ấy vẫn thắp hương cho một bà phi lạ mặt, mà không hiểu vì sao lòng mình nặng thế.',
   },
   e_na_chen_trang: {
-    place: 'dien',
+    place: 'phong',
     time: 'chieu',
-    cast: ['me', 'quan'],
-    mood: 'buon',
-    moods: { quan: 'binh' },
+    cast: ['quan'],
+    mood: 'binh',
+    where: 'trong dinh quan Thượng thư',
     motif: 'chen',
     story:
       'Con trai bà làm đến Thượng thư, xử án thanh liêm, dân trong kinh gọi là quan Mận. Cả đời ông không biết mình sinh ra trong cung. Năm nào cũng vào ngày xướng danh, có một thái giám mang sang dinh ông một chén chè, bảo là của một bà phi già. Ông uống cạn, cúi đầu tạ ơn về phía hậu cung.',
@@ -149,6 +156,8 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     cast: ['me'],
     mood: 'buon',
     motif: 'chen',
+    bg: 'lanh',
+    where: 'trong viện Tây',
     story:
       'Người ta bảo bà mất con nên hóa điên, rồi nhốt bà ở viện Tây. Ngày nào bà cũng lấy nước giếng rửa một cái bát không, rửa đến khi trắng bệch. Thục phi thỉnh thoảng đi qua cửa, đứng nhìn một lúc. Có lần nàng dừng lại rất lâu, nhưng rồi vẫn đi.',
   },
@@ -179,11 +188,11 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     moods: { meday: 'vui' },
     motif: 'aonau',
     story:
-      'Chiếc áo nâu của Lựu hơi rộng, mẹ Lựu sửa lại trong một buổi tối. Bà ở lại làng ấy, cấy lúa, nuôi tằm, cả làng gọi bằng tên Lựu, bà cũng thưa. Mộ Lựu đắp sau vườn, mùa nào cũng có hoa bí vàng. Về sau người anh trai Lựu đi lính về, ở rể ngay nhà mình.',
+      'Chiếc áo nâu của Lựu hơi rộng, mẹ Lựu sửa lại trong một buổi tối. Bà ở lại làng ấy, cấy lúa, nuôi tằm, cả làng gọi bằng tên Lựu, bà cũng thưa. Mộ Lựu đắp sau vườn, mùa nào cũng có hoa bí vàng. Anh trai Lựu dựng thêm một gian bếp, từ đó nhà ba người ăn chung một mâm.',
   },
   e_na_trong_oan: {
     place: 'bien',
-    time: 'ngay',
+    time: 'dem',
     cast: ['me'],
     mood: 'buon',
     motif: 'trang',
@@ -197,6 +206,8 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     mood: 'binh',
     moods: { hoanghau: 'vui' },
     motif: 'sach',
+    bg: 'thu',
+    where: 'trong thư phòng Hoàng hậu',
     story:
       'Đèn đỏ không bao giờ treo trước cửa viện bà, mà bà cũng không chờ. Đêm nào bà cũng ngồi trong thư phòng Hoàng hậu, viết những lá thư không gửi. Ba mươi năm, bà là người duy nhất Hoàng hậu nói thật. Năm Hoàng hậu mất, trong quan tài có một xấp thư, toàn nét chữ của bà.',
   },
@@ -207,6 +218,7 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     mood: 'so',
     moods: { hoanghau: 'buon' },
     motif: 'den',
+    bg: 'thu',
     story:
       'Lá thư đi qua tay ba người trước khi đến thư phòng Hoàng thượng. Lúc mở ra, trong phong bì là một hình nhân giấy viết ngày sinh của ngài. Bà bị xử tội trù yểm ngay trong tháng. Hoàng hậu không cứu được, chỉ giữ lại bản nháp lá thư thật, đến chết vẫn cất trong ngực áo.',
   },

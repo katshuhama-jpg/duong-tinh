@@ -86,7 +86,7 @@ export const CARDS_A: Card[] = [
     moods: { hoanghau: 'binh' },
     who: 'hoanghau',
     title: 'Cá bên hồ sen',
-    text: ['Hoàng hậu đứng một mình rắc bánh cho cá, không quay lại.', '"Cô gái làng chè đấy à. Ở quê cô sen nở tháng mấy?"'],
+    text: ['Hoàng hậu cho cung nữ lui ra xa, đứng rắc bánh cho cá, không quay lại.', '"Cô gái làng chè đấy à. Ở quê cô sen nở tháng mấy?"'],
     choices: [
       { t: 'Hành lễ, trả lời một câu rồi lui', fx: { d: { duc: 4, hoanghau: -3 } }, note: 'Hoàng hậu khẽ "ừ". Người kiêu thường ghét kẻ sợ mình.' },
       { t: 'Kể chuyện hái sen ướp trà ở quê', fx: { d: { hoanghau: 8, thucphi: -6 } }, note: 'Hoàng hậu bật cười lần đầu. Tối ấy cả hậu cung đồn bạn là người của trung cung.' },
@@ -111,13 +111,13 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_tet_tui_gam',
     chapter: [1, 2],
-    when: { not: ['cung_nga'] },
+    when: { not: ['cung_nga', 'hanh_phan'] },
     place: 'phong',
     time: 'dem',
     cast: ['me', 'hanh'],
     who: 'hanh',
-    title: 'Túi gấm ngày Tết',
-    text: ['Tết đến, mỗi tài nhân phải thêu một túi gấm dâng lên Hoàng thượng.', '"Cô thêu phượng thì nổi, thêu mai thì yên."'],
+    title: 'Túi gấm mừng thọ',
+    text: ['Sắp đến lễ vạn thọ, phi tần bậc dưới mỗi người phải thêu một túi gấm dâng lên Hoàng thượng.', '"Cô thêu phượng thì nổi, thêu mai thì yên."'],
     choices: [
       { t: 'Thêu đôi phượng chỉ vàng', fx: { d: { sac: 6, an: 3, hoanghau: -6 } }, note: 'Hoàng thượng cầm túi của bạn lên ngắm. Hoàng hậu thì nhìn đôi phượng.' },
       { t: 'Thêu cành mai trắng', fx: { d: { duc: 5, an: -3 } }, note: 'Túi của bạn nằm lẫn giữa trăm cái túi khác. Không ai chê, không ai nhớ.' },
@@ -126,7 +126,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_ao_bi_cat',
     chapter: [1],
-    when: { not: ['cung_nga'] },
+    when: { not: ['cung_nga', 'hanh_phan'] },
     place: 'phong',
     time: 'dem',
     cast: ['me', 'hanh'],
@@ -174,10 +174,10 @@ export const CARDS_A: Card[] = [
     moods: { hanh: 'lo' },
     who: 'hanh',
     title: 'Đèn bị tháo',
-    when: { not: ['hanh_phan', 'cung_nga'] },
-    text: ['Chập tối đèn đỏ treo trước cửa, canh hai đã có người lặng lẽ tháo xuống.', '"Nô tì thấy bóng áo tím đi về phía Đông viện."'],
+    when: { not: ['hanh_phan', 'cung_nga'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
+    text: ['Chập tối đèn đỏ treo trước cửa, canh hai đã có người lặng lẽ tháo xuống.', '"Nô tỳ thấy bóng áo tím đi về phía Đông viện."'],
     choices: [
-      { t: 'Chạy ra sân giữ người lại hỏi', fx: { d: { muu: 6, phuc: -5, thucphi: -6 } }, note: 'Kẻ tháo đèn quỳ xin, khai là lệnh trên. Từ đây Thục phi biết bạn không dễ bắt nạt.' },
+      { t: 'Sai Hạnh gọi thái giám gác cổng đuổi theo bóng áo tím', fx: { d: { muu: 6, phuc: -5, thucphi: -6 } }, note: 'Kẻ tháo đèn bị giữ lại ở đầu ngõ, quỳ xin, khai là lệnh trên. Từ đây Thục phi biết bạn không dễ bắt nạt.' },
       { t: 'Đóng cửa, coi như không biết', fx: { d: { duc: 4, an: -6 } }, note: 'Đêm ấy Hoàng thượng sang viện khác. Sáng ra không ai nhắc đến chiếc đèn.' },
     ],
   },
@@ -191,8 +191,8 @@ export const CARDS_A: Card[] = [
     moods: { cungnu: 'binh' },
     who: 'hanh',
     title: 'Bã thuốc nửa đêm',
-    when: { not: ['biet_bimat_thucphi', 'hanh_phan', 'cung_nga'] },
-    text: ['Nửa đêm, cung nữ bên Thục phi lén đổ một bọc bã thuốc xuống gốc cây gạo.', '"Ngày nào cũng đổ, mà Thục phi đâu có ốm."'],
+    when: { not: ['biet_bimat_thucphi', 'hanh_phan', 'cung_nga'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
+    text: ['Nửa đêm, cung nữ bên Thục phi lén đổ một bọc bã thuốc xuống gốc cây gạo sát tường viện bạn.', '"Ngày nào cũng đổ, mà Thục phi đâu có ốm."'],
     choices: [
       {
         t: 'Sai Hạnh nhặt bã thuốc, mang đi hỏi người biết',
@@ -211,8 +211,8 @@ export const CARDS_A: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Lá thư đánh rơi',
-    when: { not: ['biet_bimat_thucphi'] },
-    text: ['Dưới gốc liễu có lá thư gấp, nét chữ của Thục phi gửi anh trai ngoài thành.', 'Trong thư nhắc tên một thái y và một khoản bạc lớn.'],
+    when: { not: ['biet_bimat_thucphi'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
+    text: ['Dưới gốc liễu có lá thư gấp nhỏ, nét chữ Thục phi gửi anh trai ngoài thành, chắc kẻ lén mang thư qua cổng đánh rơi.', 'Trong thư nhắc tên một thái y và một khoản bạc lớn.'],
     choices: [
       { t: 'Giấu thư vào tay áo', fx: { d: { muu: 7, duc: -3 }, flag: ['biet_bimat_thucphi'] }, note: 'Bạn chép lại từng chữ rồi đốt bản gốc. Cái tên thái y ấy bạn sẽ không quên.' },
       { t: 'Gói lại, sai người trả về viện Thục phi', fx: { d: { thucphi: 8, duc: 3, muu: -3 } }, note: 'Thục phi gửi lại một hộp bánh cảm ơn. Bạn không biết thư viết gì, và nàng biết bạn không biết.' },
@@ -245,7 +245,7 @@ export const CARDS_A: Card[] = [
     mood: 'vui',
     who: 'vua',
     title: 'Xin một điều',
-    text: ['Hoàng thượng vui, bẻ một cành sen đưa bạn.', '"Nàng muốn gì, cứ nói."'],
+    text: ['Hoàng thượng vui, bẻ một cành hoa đưa bạn.', '"Nàng muốn gì, cứ nói."'],
     choices: [
       { t: 'Xin một ân điển cho nhà {ho}', fx: { d: { the: 10, quan: -5, vua: -2 } }, note: 'Chiếu chỉ ban về {que}, {me} quỳ tạ ơn trên. Trên triều có quan văn tâu "đàn bà xin ân cho nhà mình".' },
       { t: 'Xin một bộ sách để học chữ', fx: { d: { muu: 6, vua: 5 } }, note: 'Ngài thấy bạn lạ. Còn {me} thì vẫn chờ một tin vui.' },
@@ -254,7 +254,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_hoanghau_hoi',
     chapter: [2],
-    when: { not: ['cung_nga'] },
+    when: { not: ['cung_nga'], riv: { hoanghau: { st: ['manh', 'yeu', 'phuc'] } } },
     place: 'dien',
     time: 'ngay',
     cast: ['me', 'hoanghau'],
@@ -271,7 +271,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_tram_ngoc',
     chapter: [2],
-    when: { not: ['cung_nga'] },
+    when: { not: ['cung_nga'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
     place: 'phong',
     time: 'chieu',
     cast: ['me', 'cungnu'],
@@ -297,14 +297,14 @@ export const CARDS_A: Card[] = [
     when: { not: ['hanh_phan', 'cung_nga'] },
     text: ['Gạo lương tháng này mốc xanh, tiền lại thiếu một phần ba.', '"Các viện khác đủ cả, chỉ viện mình bị thế."'],
     choices: [
-      { t: 'Đem bao gạo lên trình Hoàng hậu', fx: { d: { tien: 30, hoanghau: -4, duc: -3 } }, note: 'Kẻ ăn bớt bị phạt, lương trả đủ. Cả hậu cung bảo bạn mới được gọi đã lắm chuyện.' },
+      { t: 'Sai Hạnh vác bao gạo theo, lên trình Hoàng hậu', fx: { d: { tien: 30, hoanghau: -4, duc: -3 } }, note: 'Kẻ ăn bớt bị phạt, lương trả đủ. Cả hậu cung bảo bạn mới được gọi đã lắm chuyện.' },
       { t: 'Bỏ tiền riêng mua gạo, im lặng', fx: { d: { tien: -20, hanh: 5, duc: 3 } }, note: 'Viện bạn vẫn ăn no. Tháng sau gạo lại mốc.' },
     ],
   },
   {
     id: 'a_cungnu_quet_san',
     chapter: [2],
-    when: { not: ['cung_nga'] },
+    when: { not: ['cung_nga'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
     place: 'vien',
     time: 'chieu',
     cast: ['me', 'cungnu'],
@@ -325,7 +325,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_rot_ruou',
     chapter: [2],
-    when: { not: ['cung_nga'] },
+    when: { not: ['cung_nga'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
     place: 'dien',
     time: 'dem',
     cast: ['me', 'vua', 'thucphi'],
@@ -336,7 +336,7 @@ export const CARDS_A: Card[] = [
     text: ['Giữa tiệc, Hoàng thượng chỉ bạn: "Hậu cung này, nàng cười đẹp nhất."', 'Thục phi phe phẩy quạt, nụ cười không tới mắt.'],
     choices: [
       { t: 'Rót rượu mời Thục phi, nói mình không dám', fx: { d: { duc: 5, thucphi: 4, an: -4 } }, note: 'Thục phi uống cạn. Hoàng thượng thấy bạn hiểu chuyện, nhưng tối ấy gọi người khác.' },
-      { t: 'Cúi đầu cảm tạ, ngồi lại gần ngài', fx: { d: { an: 8, sac: 3, thucphi: -10 } }, note: 'Cả tiệc ngài chỉ nói với bạn. Lúc về, chiếc quạt Thục phi gãy một nan.' },
+      { t: 'Cúi đầu tạ ơn, nhận chén rượu ngài ban', fx: { d: { an: 8, sac: 3, thucphi: -10 } }, note: 'Cả tiệc ngài chỉ nói với bạn. Lúc về, chiếc quạt Thục phi gãy một nan.' },
     ],
   },
   {
@@ -348,16 +348,18 @@ export const CARDS_A: Card[] = [
     cast: ['me', 'vua'],
     mood: 'lo',
     who: 'vua',
+    where: 'trong tẩm điện Hoàng thượng',
+    bg: 'tam',
     title: 'Tiếng ho canh ba',
-    text: ['Hoàng thượng ho không ngủ được, thuốc thái y uống đã mười ngày.', 'Bạn nhớ ngày còn ở {que}, {me} hay sắc lá hẹ với mật ong mỗi khi có người ho.'],
+    text: ['Hoàng thượng ho không ngủ được, cho gọi bạn sang tẩm điện hầu đêm, thuốc thái y uống đã mười ngày.', 'Bạn nhớ ngày còn ở {que}, {me} hay sắc lá hẹ với mật ong mỗi khi có người ho.'],
     choices: [
       {
-        t: 'Tự tay sắc bài thuốc dân gian dâng lên',
+        t: 'Xin ngự thiện ít lá hẹ, tự tay sắc với mật ong dâng lên',
         fx: { d: { vua: 10, an: 4 } },
         note: 'Sáng ra ngài ngủ được một giấc dài, nắm tay bạn không buông.',
         risk: { p: 0.3, fail: { d: { thaihau: -10, duc: -5 } }, failNote: 'Thái hậu biết chuyện, quát: "Long thể mà để người ngoài Thái y viện cho uống thuốc lá?"' },
       },
-      { t: 'Thức hầu, sắc đúng thuốc thái y kê', fx: { d: { vua: 4, duc: 3, sac: -4 } }, note: 'Bạn thức trắng bảy đêm, mặt xanh như tàu lá. Bệnh ngài khỏi chậm.' },
+      { t: 'Ở lại hầu bệnh, canh đúng thuốc thái y kê', fx: { d: { vua: 4, duc: 3, sac: -4 } }, note: 'Bạn thức trắng bảy đêm, mặt xanh như tàu lá. Bệnh ngài khỏi chậm.' },
     ],
   },
   {
@@ -370,6 +372,7 @@ export const CARDS_A: Card[] = [
     moods: { thaihau: 'binh' },
     who: 'thaihau',
     when: { not: ['cung_nga'] },
+    where: 'ở Phật đường trong cung',
     title: 'Chép kinh cầu mưa',
     text: ['Ruộng nứt chân chim, Thái hậu cho các phi tần ăn chay chép kinh cầu mưa.', '"Ai thành tâm, trời sẽ thấy. Ai còn mải trang điểm, bản cung cũng thấy."'],
     choices: [
@@ -399,6 +402,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_bat_mach',
     chapter: [3],
+    when: { not: ['hanh_phan'] },
     place: 'phong',
     time: 'ngay',
     cast: ['me', 'hanh'],
@@ -415,6 +419,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_bat_thuoc',
     chapter: [3],
+    when: { not: ['hanh_phan'], riv: { thucphi: { st: ['manh', 'yeu'] } } },
     place: 'phong',
     time: 'chieu',
     cast: ['me', 'cungnu'],
@@ -430,7 +435,7 @@ export const CARDS_A: Card[] = [
         note: 'Thuốc đắng như mọi ngày. Bạn tự nhủ mình nghĩ nhiều quá.',
         risk: { p: 0.25, fail: { d: { sac: -8, an: -5 } }, failNote: 'Đêm ấy bụng quặn từng cơn. Thai giữ được, nhưng thái y lắc đầu rất lâu.' },
       },
-      { t: 'Đổ đi, từ nay Hạnh tự tay sắc', fx: { d: { tien: -15, hanh: 5, thucphi: -6 } }, note: 'Bạn phải tự mua thuốc ngoài cung. Cung nữ kia về kể lại, Thục phi mỉm cười.' },
+      { t: 'Đổ đi, từ nay Hạnh tự tay sắc', fx: { d: { tien: -15, hanh: 5, thucphi: -6 } }, note: 'Bạn phải bỏ tiền nhờ người mua thuốc ngoài cung, qua cổng còn phải đút lót lính khám. Cung nữ kia về kể lại, Thục phi mỉm cười.' },
     ],
   },
   {
@@ -445,13 +450,14 @@ export const CARDS_A: Card[] = [
     title: 'Tin đồn thai giả',
     text: ['Khắp hậu cung đồn bạn độn gối dưới áo để giữ ân sủng.', '"Bản cung không tin lời đồn. Nhưng bà đỡ đang đứng ngoài kia."'],
     choices: [
-      { t: 'Để bà đỡ khám ngay trước điện', fx: { d: { duc: 8, thaihau: 5, sac: -5 } }, note: 'Lời đồn tắt ngay trong ngày. Cái nhục bị khám trước mặt mọi người thì không tắt.' },
+      { t: 'Để bà đỡ khám ngay ở hậu điện cung Thái hậu', fx: { d: { duc: 8, thaihau: 5, sac: -5 } }, note: 'Lời đồn tắt ngay trong ngày. Cái nhục bị khám trước mắt các ma ma thì không tắt.' },
       { t: 'Xin chỉ để thái y của Hoàng thượng khám', fx: { d: { vua: 4, thaihau: -8 } }, note: 'Hoàng thượng đứng ra che cho bạn. Thái hậu nói: "Còn chưa sinh đã biết chọn người."' },
     ],
   },
   {
     id: 'a_mama_canh',
     chapter: [3],
+    when: { not: ['hanh_phan'] },
     place: 'phong',
     time: 'ngay',
     cast: ['me', 'mama'],
@@ -468,6 +474,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_che_hat_sen',
     chapter: [3],
+    when: { riv: { thucphi: { st: ['manh', 'yeu'] } } },
     place: 'phong',
     time: 'chieu',
     cast: ['me', 'thucphi'],
@@ -475,7 +482,7 @@ export const CARDS_A: Card[] = [
     moods: { thucphi: 'vui' },
     who: 'thucphi',
     title: 'Chè hạt sen',
-    text: ['Thục phi tự tay bưng hai bát chè hạt sen, đặt một bát trước mặt bạn.', '"Ta có Nghĩa rồi, còn sợ gì em nữa. Ăn đi, cho đứa nhỏ mát."'],
+    text: ['Thục phi sang thăm, tự tay lấy từ khay cung nữ hai bát chè hạt sen, đặt một bát trước mặt bạn.', '"Ta có Nghĩa rồi, còn sợ gì muội nữa. Ăn đi, cho đứa nhỏ mát."'],
     choices: [
       {
         t: 'Ăn cùng nàng',
@@ -483,12 +490,13 @@ export const CARDS_A: Card[] = [
         note: 'Chè ngọt vừa. Thục phi ngồi kể chuyện nuôi con tới tối, giọng rất thật.',
         risk: { p: 0.2, fail: { d: { sac: -8, an: -4, thucphi: -4 } }, failNote: 'Nửa đêm bạn nôn thốc tháo. Thái y nói ăn phải thứ lạnh, không chỉ ra là thứ gì.' },
       },
-      { t: 'Mời ngồi, nhưng viện cớ ốm nghén không ăn', fx: { d: { thucphi: -8, muu: 4 } }, note: 'Nàng bỏ về, để nguyên bát chè. Hạnh đổ cho mèo, con mèo vẫn sống.' },
+      { t: 'Mời ngồi, nhưng viện cớ ốm nghén không ăn', fx: { d: { thucphi: -8, muu: 4 } }, note: 'Nàng bỏ về, để nguyên bát chè. Bát chè đem đổ cho mèo, con mèo vẫn sống.' },
     ],
   },
   {
     id: 'a_thucphi_cau',
     chapter: [3],
+    when: { riv: { thucphi: { st: ['manh', 'yeu'] } } },
     place: 'vien',
     time: 'dem',
     cast: ['me', 'cungnu'],
@@ -496,7 +504,7 @@ export const CARDS_A: Card[] = [
     moods: { cungnu: 'buon' },
     who: 'cungnu',
     title: 'Người quỳ ngoài sân',
-    text: ['Cung nữ thân tín của Thục phi quỳ giữa sân viện bạn trong mưa.', '"Hoàng tử Nghĩa sốt ba ngày rồi. Nương nương chỉ xin cô đừng tranh với một đứa trẻ."'],
+    text: ['Cung nữ thân tín của Thục phi quỳ giữa sân viện bạn dưới mưa.', '"Hoàng tử Nghĩa sốt ba ngày rồi. Nương nương chỉ xin cô đừng tranh với một đứa trẻ."'],
     choices: [
       { t: 'Cho vào, nhắn rằng mình không tranh ngôi', fx: { d: { thucphi: 12, the: -6 } }, note: 'Thục phi bớt sợ, bớt ra tay. Lời hứa ấy về sau có người đem ra nhắc.' },
       { t: 'Đóng cửa, không tiếp', fx: { d: { thucphi: -10, the: 4 } }, note: 'Tin bạn không lùi bước lan ra tận triều. Có quan văn bắt đầu ngó về phía viện bạn.' },
@@ -525,7 +533,7 @@ export const CARDS_A: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Gà ác gửi vào cung',
-    text: ['Có người lén gửi vào hai con gà ác và một gói lá thuốc, nói là của {me}.', 'Lời nhắn chỉ một dòng: "Ăn cho con khỏe, đừng để ai biết."'],
+    text: ['Thái giám lo việc mua sắm ngoài thành lén mang vào hai con gà ác và một gói lá thuốc, nói là {me} gửi.', 'Lời nhắn chỉ một dòng: "Ăn cho con khỏe, đừng để ai biết."'],
     choices: [
       { t: 'Hầm ăn ngay đêm ấy', fx: { d: { sac: 5, the: 3, thaihau: -4 } }, note: 'Lần đầu sau mấy tháng bạn ăn thấy ngon. Đồ ngoài cung không qua kiểm là chuyện lớn, và có người biết.' },
       { t: 'Nộp lên phòng thái y kiểm trước', fx: { d: { duc: 4, sac: -2 } }, note: 'Thái y giữ lại gói lá, trả về con gà đã nguội. Bạn ăn mà nghẹn.' },
@@ -539,7 +547,7 @@ export const CARDS_A: Card[] = [
     cast: ['me', 'su'],
     who: 'su',
     title: 'Quẻ chùa Vân Tịch',
-    text: ['Sư bà chùa Vân Tịch đưa ống thẻ, mắt không nhìn bụng bạn.', '"Cô xin con trai hay xin mẹ tròn con vuông?"'],
+    text: ['Thái hậu cho bạn theo kiệu ra chùa Vân Tịch dâng hương, sư bà đưa ống thẻ mà mắt không nhìn bụng bạn.', '"Cô xin con trai hay xin mẹ tròn con vuông?"'],
     choices: [
       { t: 'Cúng năm mươi quan, xin con trai', fx: { d: { tien: -50, thaihau: 6, duc: -2 } }, note: 'Thái hậu nghe chuyện thì vui. Sư bà nhận tiền, khẽ thở dài.' },
       { t: 'Chỉ xin mẹ con bình an', fx: { d: { duc: 5, thaihau: -3 } }, note: 'Sư bà cho bạn một sợi chỉ đỏ buộc tay. Thái hậu bảo bạn không biết điều quan trọng nhất.' },
@@ -575,6 +583,7 @@ export const CARDS_A: Card[] = [
   {
     id: 'a_hoanghau_nuoi',
     chapter: [3],
+    when: { not: ['hoang_hau'], riv: { hoanghau: { st: ['manh', 'yeu', 'phuc'] } } },
     place: 'dien',
     time: 'chieu',
     cast: ['me', 'hoanghau'],
@@ -584,7 +593,7 @@ export const CARDS_A: Card[] = [
     title: 'Lời ngỏ của trung cung',
     text: ['Hoàng hậu đặt tay lên bụng bạn, tay lạnh như ngọc.', '"Nếu là con trai, bản cung muốn tự tay nuôi. Đứa trẻ có đích mẫu thì đường mới thẳng."'],
     choices: [
-      { t: 'Cúi đầu: "Được vậy là phúc của con."', fx: { d: { hoanghau: 12, the: 5, an: -4 } }, note: 'Nhà họ Tôn từ nay đứng sau đứa bé. Đêm ấy bạn ôm bụng khóc, không dám thành tiếng.' },
+      { t: 'Cúi đầu: "Được vậy là phúc của thần thiếp."', fx: { d: { hoanghau: 12, the: 5, an: -4 } }, note: 'Nhà họ Tôn từ nay đứng sau đứa bé. Đêm ấy bạn ôm bụng khóc, không dám thành tiếng.' },
       { t: 'Xin được tự nuôi con mình', fx: { d: { hoanghau: -12, vua: 3 } }, note: 'Hoàng hậu rút tay về. Lần đầu tiên bạn thấy trong mắt nàng có lửa.' },
     ],
   },
