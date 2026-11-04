@@ -14,7 +14,66 @@ import { CAST_NAME, CHAPTERS, ERA, NUM_LABEL, endingOf } from '@/lib/cung/world'
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
-const SEASON = ['một sáng đầu xuân', 'một trưa hè oi ả', 'một chiều mưa', 'một tối cuối thu', 'một sáng mùa đông', 'một ngày rằm'];
+const SEASONS = [
+  ['đầu xuân', 'giữa hè'],
+  ['cuối thu', 'giữa đông'],
+];
+const TIME_OF = { ngay: 'Một sáng', chieu: 'Một chiều', dem: 'Một đêm' } as const;
+const NUM_VI = ['', 'Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười'];
+
+/** chỗ diễn ra cảnh, nói thành chữ */
+function whereOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string {
+  if (card.where) return card.where;
+  const o = originOf(l.origin);
+  const has = (k: CastK) => card.cast.includes(k);
+  switch (card.place) {
+    case 'phong':
+      return `trong phòng ở ${rankOf(l).o}`;
+    case 'vien':
+      return `ngoài sân ${rankOf(l).o}`;
+    case 'vuon':
+      return 'ở vườn Thượng uyển';
+    case 'dien':
+      return has('thaihau') ? 'ở cung Thái hậu' : has('hoanghau') && !has('vua') ? 'ở cung Hoàng hậu' : has('quan') || has('tuong') ? 'ở chính điện' : 'ở điện Hoàng thượng';
+    case 'chua':
+      return 'ở chùa Vân Tịch';
+    case 'lang':
+      return `ở ${o.que}`;
+    case 'lang_mo':
+      return 'ở lăng ngoài thành';
+    case 'bien':
+      return 'ở bến sông';
+    case 'nui':
+      return 'trên núi';
+  }
+}
+
+/** câu nối cảnh: bao lâu sau, mùa nào, giờ nào, ở đâu */
+function bridgeOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string {
+  const half = Math.round(l.age * 2) % 2;
+  const season = SEASONS[half][hash(card.id) % 2];
+  const when = `${TIME_OF[card.time ?? 'ngay']} ${season}`;
+  const p = l.prev;
+  let gap = '';
+  if (!p) gap = 'Những ngày đầu trong cung.';
+  else {
+    const d = Math.round((l.age - p.age) * 2) / 2;
+    gap = d <= 0 ? 'Mấy hôm sau.' : d === 0.5 ? 'Nửa năm sau.' : d === 1 ? 'Một năm sau.' : `${NUM_VI[Math.floor(d)] ?? Math.floor(d)} năm sau.`;
+  }
+  const same = p && p.place === card.place && card.place !== 'dien';
+  return `${gap} ${when}, ${same ? 'vẫn ' : ''}${whereOf(card, l)}.`;
+}
+
+/** lòng người thành chữ */
+function feelOf(k: NumK, v: number): string {
+  if (v >= 60) return k === 'vua' ? 'Say đắm' : k === 'hanh' || k === 'phuc' ? 'Một lòng' : 'Tin cậy';
+  if (v >= 30) return 'Quý mến';
+  if (v >= 10) return 'Có cảm tình';
+  if (v > -10) return 'Dửng dưng';
+  if (v > -30) return 'Dè chừng';
+  if (v > -60) return k === 'hanh' || k === 'phuc' ? 'Oán giận' : 'Ghét';
+  return 'Thù hằn';
+}
 const ageOf = (l: Life) => Math.floor(l.age);
 const yearOf = (l: Life) => ageOf(l) - 13;
 const hash = (s: string) => {
@@ -267,10 +326,11 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>
+              <p className="c-bridge c-in">{bridgeOf(card, life)}</p>
               <div className="c-scroll c-unroll" key={`d${card.id}${life.seen.length}`}>
                 <div className="c-roll" />
                 <div className="c-sheet">
@@ -278,6 +338,7 @@ export default function Play() {
                     <span>{card.who && card.who !== 'me' ? (card.whoName ?? (card.who === 'meday' ? cap(originOf(life.origin).me) : CAST_NAME[card.who])) : fillText(card.title, life.origin)}</span>
                     {card.who && card.who !== 'me' && <small>{fillText(card.title, life.origin)}</small>}
                   </div>
+                  {card.lead && <p className="c-lead">{fillText(card.lead, life.origin)}</p>}
                   {card.text.map((t, i) => (
                     <p key={i} className="c-text" style={i ? { fontWeight: 500, fontSize: 15.5 } : undefined}>
                       {fillText(t, life.origin)}
@@ -288,7 +349,7 @@ export default function Play() {
                 <div className="c-roll" />
               </div>
               <p className="c-ask c-in">
-                Hôm nay là {SEASON[hash(card.id) % SEASON.length]} năm {ERA} thứ {yearOf(life)}. Bạn sẽ làm gì?
+                Năm {ERA} thứ {yearOf(life)}. Bạn sẽ làm gì?
               </p>
               <div className="c-choices c-in" key={`c${card.id}${life.seen.length}`}>
                 {opts.map(({ c, open }, i) => (
@@ -364,7 +425,7 @@ export default function Play() {
               <h3>Lòng người</h3>
               <div className="c-rel">
                 {(['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as NumK[]).map((k) => (
-                  <FragmentRow key={k} label={NUM_LABEL[k]} v={life.n[k]} />
+                  <FragmentRow key={k} label={k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]} v={life.n[k]} feel={feelOf(k, life.n[k])} />
                 ))}
               </div>
             </section>
@@ -401,13 +462,18 @@ function endPlace(id: string, dead: boolean): PlaceK {
   return 'vuon';
 }
 
-function FragmentRow({ label, v }: { label: string; v: number }) {
+/** một dòng lòng người: thanh hai chiều, giữa là dửng dưng, trái là ghét, phải là thương */
+function FragmentRow({ label, v, feel }: { label: string; v: number; feel: string }) {
+  const neg = v < 0;
   return (
     <>
       <span>{label}</span>
-      <i aria-label={`${label}: ${v}`}>
-        <em style={{ width: `${v}%` }} />
+      <i aria-label={`${label}: ${feel} (${v > 0 ? '+' : ''}${v})`} className={neg ? 'neg' : ''}>
+        <em style={neg ? { right: '50%', width: `${-v / 2}%` } : { left: '50%', width: `${v / 2}%` }} />
       </i>
+      <b className={neg ? 'neg' : v >= 10 ? 'pos' : ''}>
+        {feel} <small>{v > 0 ? '+' : ''}{v}</small>
+      </b>
     </>
   );
 }

@@ -1,4 +1,5 @@
 'use client';
+import { migrate } from './engine';
 /**
  * Lưu đời đang chơi và sổ kết cục. Chơi thử: lưu trong trình duyệt. Có tài khoản: lưu lên Supabase
  * (dùng chung bảng và hàm cs_* với tài khoản cũ; bản lưu của game cũ bị bỏ qua).
@@ -40,7 +41,7 @@ export async function loadMe(): Promise<{ username: string; meta: CMeta; life: L
   const sb = supabase();
   if (!p || !sb) {
     const g = readGuest();
-    return { username: 'Khách', meta: g.meta, life: isLife(g.life) ? g.life : null, guest: true };
+    return { username: 'Khách', meta: g.meta, life: isLife(g.life) ? migrate(g.life) : null, guest: true };
   }
   const { data, error } = await sb.rpc('cs_me', { p_token: p.token });
   if (error) return null;
@@ -49,7 +50,7 @@ export async function loadMe(): Promise<{ username: string; meta: CMeta; life: L
     return null;
   }
   const d = data as { username: string; meta: CMeta | null; state: unknown };
-  return { username: d.username, meta: d.meta ?? {}, life: isLife(d.state) ? d.state : null, guest: false };
+  return { username: d.username, meta: d.meta ?? {}, life: isLife(d.state) ? migrate(d.state) : null, guest: false };
 }
 
 let inflight: Promise<boolean> | null = null;

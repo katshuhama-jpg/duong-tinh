@@ -7,7 +7,7 @@
 
 /** chỉ số chính: Đức (giữ lễ), Sắc (nhan sắc, duyên), Thế (gia thế, chỗ dựa), Ân (ân sủng của vua, nguy hiểm ở cả hai đầu), Mưu (tai mắt, mưu trí) */
 export type StatK = 'duc' | 'sac' | 'the' | 'an' | 'muu';
-/** quan hệ 0-100 với từng người/phe */
+/** quan hệ -100 (thù) .. 0 (dửng dưng) .. 100 (một lòng) với từng người/phe */
 export type RelK =
   | 'vua' // nhà vua
   | 'thaihau' // thái hậu, mẹ vua
@@ -21,6 +21,8 @@ export type NumK = StatK | RelK | 'tien';
 
 export type PlaceK = 'vien' | 'phong' | 'vuon' | 'dien' | 'chua' | 'lang' | 'lang_mo' | 'bien' | 'nui';
 export type TimeK = 'ngay' | 'chieu' | 'dem';
+/** nét mặt trong tranh: vui, bình thường, lo, buồn (khóc), giận, sợ, đắc ý (cười nhạt) */
+export type MoodK = 'vui' | 'binh' | 'lo' | 'buon' | 'gian' | 'so' | 'dac';
 /** ai đứng trong cảnh */
 export type CastK =
   | 'me' // nhân vật chính
@@ -100,6 +102,14 @@ export interface Card {
   place: PlaceK;
   time?: TimeK;
   cast: CastK[];
+  /** nét mặt chung của cảnh (mặc định: bình thường) */
+  mood?: MoodK;
+  /** nét mặt riêng từng người, đè lên mood chung (vd Thục phi đắc ý khi mình sợ) */
+  moods?: Partial<Record<CastK, MoodK>>;
+  /** một câu nối với chuyện trước (hiện đầu thẻ), dùng cho thẻ là hệ quả của lựa chọn cũ */
+  lead?: string;
+  /** chỗ cụ thể nói thành chữ, đè lên chỗ mặc định theo place (vd "ở viện Thục phi") */
+  where?: string;
   /** người đang nói (hiện trên khung thoại) */
   who?: CastK;
   /** tên hiện trên khung thoại thay cho tên mặc định của vai (vd: "Sứ thần nước Sa Hải") */
@@ -166,4 +176,10 @@ export interface Life {
   /** câu điềm báo của thẻ gây ra cái chết */
   omen?: string;
   startedAt: number;
+  /** 2 = quan hệ theo thang -100..100 */
+  relV?: number;
+  /** cờ vừa đặt ở mấy lượt gần đây: thẻ hệ quả của chúng được ưu tiên rút */
+  fresh?: string[];
+  /** tuổi và chỗ của thẻ trước, để viết câu nối cảnh */
+  prev?: { age: number; place: string; card: string };
 }

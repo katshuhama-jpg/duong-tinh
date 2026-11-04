@@ -3,7 +3,7 @@
  * Cảnh nền theo chỗ (viện, phòng, vườn, điện, chùa, làng, lăng) và giờ (ngày, chiều, đêm);
  * nhân vật dựng từ một khung người chung, đổi áo, mũ, tóc theo vai.
  */
-import type { CastK, PlaceK, TimeK } from '@/lib/cung/types';
+import type { CastK, MoodK, PlaceK, TimeK } from '@/lib/cung/types';
 
 const INK = '#2a1d14';
 const GOLD = '#d9a441';
@@ -60,7 +60,7 @@ export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: bool
 }
 
 /** một người, đứng ở hoành độ x, chân chạm đáy tranh */
-export function Person({ x, look, flip = false, blink = false }: { x: number; look: Look; flip?: boolean; blink?: boolean }) {
+export function Person({ x, look, flip = false, blink = false, mood = 'binh' }: { x: number; look: Look; flip?: boolean; blink?: boolean; mood?: MoodK }) {
   const s = look.scale ?? 1;
   const skin = look.skin ?? '#f1d2b3';
   const hair = look.grey ? '#cfc6b8' : '#1d1410';
@@ -80,18 +80,7 @@ export function Person({ x, look, flip = false, blink = false }: { x: number; lo
       <ellipse cx="0" cy="-118" rx="25" ry="29" fill={skin} stroke={INK} strokeWidth="1.1" />
       {/* tóc hai bên */}
       {look.hat !== 'troc' && <path d="M-26 -114 Q-28 -150 0 -152 Q28 -150 26 -114 Q22 -138 0 -141 Q-22 -138 -26 -114 Z" fill={hair} stroke={INK} strokeWidth="0.8" />}
-      {/* mắt, mày, miệng */}
-      <g className={blink ? 'c-blink' : undefined}>
-        {look.sly ? (
-          <path d="M-16 -118 L-5 -116 M5 -116 L16 -118" stroke={INK} strokeWidth="2" strokeLinecap="round" />
-        ) : (
-          <path d="M-16 -116 Q-10 -120 -4 -116 M4 -116 Q10 -120 16 -116" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
-        )}
-      </g>
-      <path d="M-15 -125 Q-10 -128 -5 -126 M5 -126 Q10 -128 15 -125" fill="none" stroke={INK} strokeWidth="1" />
-      <path d="M0 -112 L-2 -104 L1 -103" fill="none" stroke="#c99a7a" strokeWidth="1" />
-      <path d="M-5 -97 Q0 -94 5 -97" fill="none" stroke={look.beard ? INK : SON} strokeWidth={look.beard ? 1.2 : 2.4} strokeLinecap="round" />
-      {!look.beard && <g fill="#e9a6a0" opacity="0.5"><circle cx="-15" cy="-106" r="4" /><circle cx="15" cy="-106" r="4" /></g>}
+      <Face look={look} mood={mood} blink={blink} />
       {look.beard && <path d="M-6 -92 Q0 -80 6 -92 M-12 -99 Q-16 -94 -14 -90 M12 -99 Q16 -94 14 -90" fill="none" stroke={look.grey ? '#9a9088' : INK} strokeWidth="1.2" />}
       {/* mũ, khăn, búi */}
       {look.hat === 'bun' && (
@@ -153,6 +142,82 @@ export function Person({ x, look, flip = false, blink = false }: { x: number; lo
       {look.hat === 'troc' && <ellipse cx="0" cy="-138" rx="25" ry="16" fill={skin} stroke={INK} strokeWidth="1" />}
       {look.hat === 'tre' && <g><circle cx="-14" cy="-150" r="7" fill={hair} /><circle cx="14" cy="-150" r="7" fill={hair} /></g>}
       {look.hat === 'troc' && <g fill="#3a2a20">{[-30, -20, -10, 0, 10, 20, 30].map((d) => <circle key={d} cx={d} cy={-60 + Math.abs(d) * 0.3} r="2.6" />)}</g>}
+    </g>
+  );
+}
+
+
+/** mắt, mày, mũi, miệng theo nét mặt */
+function Face({ look, mood, blink }: { look: Look; mood: MoodK; blink: boolean }) {
+  const w = { fill: 'none', stroke: INK, strokeLinecap: 'round' as const };
+  const lip = look.beard ? INK : SON;
+  const lw = look.beard ? 1.3 : 2.2;
+  // mắt
+  let eyes;
+  if (mood === 'vui') eyes = <path d="M-16 -116 Q-10 -121 -4 -116 M4 -116 Q10 -121 16 -116" {...w} strokeWidth="2" />;
+  else if (mood === 'buon') eyes = <path d="M-16 -118 Q-10 -114 -4 -117 M4 -117 Q10 -114 16 -118" {...w} strokeWidth="2" />;
+  else if (mood === 'dac' || (look.sly && mood !== 'so')) eyes = <path d="M-16 -118 L-5 -116 M5 -116 L16 -118" {...w} strokeWidth="2" />;
+  else if (mood === 'so')
+    eyes = (
+      <g>
+        <ellipse cx="-10" cy="-117" rx="3.6" ry="4.2" fill="#fff" stroke={INK} strokeWidth="1" />
+        <ellipse cx="10" cy="-117" rx="3.6" ry="4.2" fill="#fff" stroke={INK} strokeWidth="1" />
+        <circle cx="-10" cy="-117" r="1.6" fill={INK} />
+        <circle cx="10" cy="-117" r="1.6" fill={INK} />
+      </g>
+    );
+  else
+    eyes = (
+      <g fill={INK}>
+        <ellipse cx="-10" cy="-117" rx="2.6" ry={mood === 'gian' ? 1.8 : 2.6} />
+        <ellipse cx="10" cy="-117" rx="2.6" ry={mood === 'gian' ? 1.8 : 2.6} />
+      </g>
+    );
+  // mày
+  const brow =
+    mood === 'gian'
+      ? 'M-17 -128 L-4 -123 M4 -123 L17 -128'
+      : mood === 'lo' || mood === 'buon'
+        ? 'M-16 -124 Q-10 -125 -4 -129 M4 -129 Q10 -125 16 -124'
+        : mood === 'so'
+          ? 'M-16 -128 Q-10 -133 -4 -129 M4 -129 Q10 -133 16 -128'
+          : 'M-15 -125 Q-10 -128 -5 -126 M5 -126 Q10 -128 15 -125';
+  // miệng
+  const mouth =
+    mood === 'vui'
+      ? 'M-7 -98 Q0 -92 7 -98'
+      : mood === 'dac'
+        ? 'M-6 -97 Q2 -96 7 -100'
+        : mood === 'lo'
+          ? 'M-5 -96 Q0 -98 5 -96'
+          : mood === 'buon' || mood === 'gian'
+            ? 'M-6 -95 Q0 -100 6 -95'
+            : 'M-5 -97 Q0 -96 5 -97';
+  return (
+    <g>
+      <g className={blink && mood !== 'vui' && mood !== 'buon' ? 'c-blink' : undefined}>{eyes}</g>
+      <path d={brow} {...w} strokeWidth={mood === 'gian' ? 1.8 : 1.1} />
+      <path d="M0 -112 L-2 -104 L1 -103" fill="none" stroke="#c99a7a" strokeWidth="1" />
+      {mood === 'so' ? <ellipse cx="0" cy="-97" rx="3" ry="3.6" fill="#7a2a22" stroke={INK} strokeWidth="0.8" /> : <path d={mouth} {...w} stroke={lip} strokeWidth={lw} />}
+      {!look.beard && (mood === 'vui' || mood === 'dac') && (
+        <g fill="#e9a6a0" opacity="0.5">
+          <circle cx="-15" cy="-106" r="4" />
+          <circle cx="15" cy="-106" r="4" />
+        </g>
+      )}
+      {mood === 'gian' && !look.beard && (
+        <g fill="#d9735e" opacity="0.35">
+          <circle cx="-15" cy="-107" r="5" />
+          <circle cx="15" cy="-107" r="5" />
+        </g>
+      )}
+      {mood === 'buon' && (
+        <g className="c-tear" fill="#9cc3d6" stroke="#5f8ea6" strokeWidth="0.5">
+          <path d="M-12 -112 Q-14 -106 -12 -104 Q-10 -106 -12 -112 Z" />
+          <path d="M12 -112 Q10 -106 12 -104 Q14 -106 12 -112 Z" />
+        </g>
+      )}
+      {mood === 'lo' && <path d="M19 -132 Q22 -126 19 -124 Q16 -126 19 -132 Z" fill="#cfe3ec" stroke="#5f8ea6" strokeWidth="0.5" />}
     </g>
   );
 }
@@ -418,7 +483,7 @@ function Backdrop({ place, time }: { place: PlaceK; time: TimeK }) {
 const SLOTS = [180, 296, 76];
 
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label }: { place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string }) {
+export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {} }: { place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -428,6 +493,9 @@ export default function Scene({ place, time = 'ngay', cast, looks, label }: { pl
         <pattern id="c-lattice2" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M0 7 H14 M7 0 V14" stroke="#4e160f" strokeWidth="2" /><rect x="3" y="3" width="8" height="8" fill="none" stroke="#4e160f" strokeWidth="1.2" /></pattern>
         <pattern id="c-silk" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 5 L5 0" stroke="#d8c294" strokeWidth="0.4" /></pattern>
         <pattern id="c-stone" width="22" height="8" patternUnits="userSpaceOnUse"><rect width="22" height="8" fill="#b3a27f" /><path d="M0 8 H22 M11 0 V8" stroke="#9c8b69" strokeWidth="0.6" /></pattern>
+        <radialGradient id="c-vig" cx="50%" cy="50%" r="70%"><stop offset="55%" stopColor="#1a120c" stopOpacity="0" /><stop offset="100%" stopColor="#1a120c" stopOpacity="0.55" /></radialGradient>
+        <radialGradient id="c-vig-r" cx="50%" cy="50%" r="70%"><stop offset="50%" stopColor="#7a1c14" stopOpacity="0" /><stop offset="100%" stopColor="#7a1c14" stopOpacity="0.5" /></radialGradient>
+        <radialGradient id="c-vig-b" cx="50%" cy="50%" r="70%"><stop offset="40%" stopColor="#2c3550" stopOpacity="0.08" /><stop offset="100%" stopColor="#2c3550" stopOpacity="0.5" /></radialGradient>
         <clipPath id="c-clip"><rect x="10" y="8" width="370" height="296" /></clipPath>
       </defs>
       <g clipPath="url(#c-clip)">
@@ -436,10 +504,14 @@ export default function Scene({ place, time = 'ngay', cast, looks, label }: { pl
           const look = looks[k as CastK] ?? lookOf(k as CastK);
           return (
             <g key={k} className="c-enter" style={{ animationDelay: `${0.15 + i * 0.12}s` }}>
-              <Person x={SLOTS[i]} look={i === 0 ? look : { ...look, scale: (look.scale ?? 1) * 0.82 }} flip={i === 2} blink={k === 'me'} />
+              <Person x={SLOTS[i]} look={i === 0 ? look : { ...look, scale: (look.scale ?? 1) * 0.82 }} flip={i === 2} blink={k === 'me'} mood={moods[k as CastK] ?? mood} />
             </g>
           );
         })}
+        {/* không khí: căng thì tối mép, giận thì ửng đỏ, buồn thì xám lạnh */}
+        {(mood === 'so' || mood === 'gian' || mood === 'buon' || mood === 'lo') && (
+          <rect x="0" y="0" width="390" height="312" fill={mood === 'gian' ? 'url(#c-vig-r)' : mood === 'buon' ? 'url(#c-vig-b)' : 'url(#c-vig)'} className="c-mood" pointerEvents="none" />
+        )}
       </g>
       <rect x="10" y="8" width="370" height="296" fill="none" stroke={GOLD2} strokeWidth="3" />
       <rect x="5" y="3" width="380" height="306" fill="none" stroke="#8f2419" strokeWidth="2" />

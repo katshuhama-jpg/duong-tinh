@@ -31,7 +31,7 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
     name: name.trim() || 'Nụ',
     age: 16,
     rank: o.rank,
-    n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 20, thaihau: 30, hoanghau: 30, thucphi: 40, hanh: 50, phuc: 30, quan: 20, tuong: 10, tien: 30, ...o.n },
+    n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 0, thaihau: 0, hoanghau: 0, thucphi: -10, hanh: 30, phuc: 0, quan: 0, tuong: 0, tien: 30, ...o.n },
     flags: [...o.flags],
     kids: [],
     chapter: 1,
@@ -43,8 +43,24 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
     end: null,
     back: null,
     startedAt: Date.now(),
+    relV: 2,
+    fresh: [],
   };
   l.card = nextCard(l);
+  return l;
+}
+
+/** bản lưu cũ (quan hệ 0-100): dời về thang -100..100 */
+export const REL_KEYS = ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as const;
+const REL_OFF: Record<(typeof REL_KEYS)[number], number> = { vua: -20, thaihau: -30, hoanghau: -30, thucphi: -50, hanh: -20, phuc: -30, quan: -20, tuong: -10 };
+export function migrate(l: Life): Life {
+  const fix = (x: Omit<Life, 'back'> | Life) => {
+    if (x.relV === 2) return;
+    for (const k of REL_KEYS) x.n[k] = Math.max(-100, Math.min(100, (x.n[k] ?? 0) + REL_OFF[k]));
+    x.relV = 2;
+  };
+  fix(l);
+  if (l.back) fix(l.back);
   return l;
 }
 
@@ -87,10 +103,13 @@ export function nextCard(l: Life): string | null {
   if (l.smalls < chap(ch).smalls) {
     const pool = SMALL.filter((c) => c.chapter.includes(ch) && ok(c.when, l) && (c.repeat || !l.seen.includes(c.id)));
     if (pool.length) {
-      const total = pool.reduce((a, c) => a + (c.weight ?? 1), 0);
+      // thẻ hệ quả của lựa chọn vừa rồi (cần cờ mới đặt) được ưu tiên, để chuyện nối tiếp chuyện
+      const fresh = (l.fresh ?? []).map((x) => x.slice(x.indexOf(':') + 1));
+      const w = (c: Card) => (c.weight ?? 1) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
+      const total = pool.reduce((a, c) => a + w(c), 0);
       let r = rand(l.seed, step(l)) * total;
       for (const c of pool) {
-        r -= c.weight ?? 1;
+        r -= w(c);
         if (r <= 0) return c.id;
       }
       return pool[pool.length - 1].id;
@@ -160,7 +179,8 @@ function finish(l: Life, id: string) {
 
 /* ---------- chọn ---------- */
 export const choicesOf = (card: Card, l: Life) => card.choices.map((c) => ({ c, open: ok(c.need, l) }));
-const clamp = (k: NumK, v: number) => (k === 'tien' ? Math.max(0, Math.round(v)) : Math.max(0, Math.min(100, Math.round(v))));
+const REL = new Set<string>(REL_KEYS);
+const clamp = (k: NumK, v: number) => (k === 'tien' ? Math.max(0, Math.round(v)) : Math.max(REL.has(k) ? -100 : 0, Math.min(100, Math.round(v))));
 
 export interface Result {
   life: Life;
@@ -186,7 +206,12 @@ export function choose(l0: Life, idx: number): Result {
   const before = { ...l.n };
   const rank0 = l.rank;
   for (const [k, v] of Object.entries(fx.d ?? {}) as [NumK, number][]) l.n[k] = clamp(k, l.n[k] + v);
-  for (const f of fx.flag ?? []) if (!l.flags.includes(f)) l.flags.push(f);
+  const added = (fx.flag ?? []).filter((f) => !l.flags.includes(f));
+  for (const f of added) l.flags.push(f);
+  // cờ mới nằm trong danh sách "vừa xảy ra" 3 lượt (dạng "lượt:cờ")
+  const turn = l0.seen.length;
+  l.fresh = [...added.map((f) => `${turn}:${f}`), ...(l0.fresh ?? []).filter((x) => turn - parseInt(x, 10) < 3)];
+  l.prev = { age: l0.age, place: card.place, card: card.id };
   if (fx.unflag) l.flags = l.flags.filter((f) => !fx.unflag!.includes(f));
   if (fx.rank) promote(l, fx.rank);
   if (fx.kid) {

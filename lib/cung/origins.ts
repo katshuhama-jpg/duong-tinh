@@ -58,7 +58,7 @@ export const ORIGINS: Origin[] = [
     que: 'phủ Thượng thư họ Đoàn',
     me: 'cha',
     rank: 2,
-    n: { the: 45, an: 14, duc: 55, muu: 35, quan: 40, thucphi: 32, hoanghau: 24, tien: 150 },
+    n: { the: 45, an: 14, duc: 55, muu: 35, quan: 20, thucphi: -18, hoanghau: -6, tien: 150 },
     flags: ['g_quan'],
     intro: [
       'Cha bạn là quan Thượng thư Bộ Hình họ Đoàn, đang đứng đối đầu Thái phó Tôn giữa triều. Đêm trước ngày tuyển, cha gọi bạn vào thư phòng.',
@@ -76,7 +76,7 @@ export const ORIGINS: Origin[] = [
     que: 'viện Hoán Y',
     me: 'bà Tư giặt áo',
     rank: 0,
-    n: { the: 3, sac: 48, an: 4, muu: 42, duc: 46, hanh: 60, phuc: 40, tien: 5 },
+    n: { the: 3, sac: 48, an: 4, muu: 42, duc: 46, hanh: 40, phuc: 10, tien: 5 },
     flags: ['g_cung', 'cung_nga'],
     intro: [
       'Năm mười hai tuổi, nhà bạn mất mùa, cha bán bạn cho người tuyển cung nữ lấy ba thúng thóc. Bốn năm nay, bạn giặt áo ở viện Hoán Y, tay nứt nẻ vì nước tro.',
@@ -94,7 +94,7 @@ export const ORIGINS: Origin[] = [
     que: 'cố đô Hưng Thành',
     me: 'nhũ mẫu',
     rank: 4,
-    n: { the: 30, duc: 60, sac: 60, an: 20, muu: 34, thaihau: 14, quan: 24, tien: 60, vua: 26 },
+    n: { the: 30, duc: 60, sac: 60, an: 20, muu: 34, thaihau: -16, quan: 4, tien: 60, vua: 6 },
     flags: ['g_chua', 'nghi_ky'],
     intro: [
       'Ba năm trước, tiên đế nhà Khánh Vân đem quân vào cố đô Hưng Thành. Cha bạn, vua cuối triều Hưng, nhường ngôi rồi mất trong một ngôi chùa xa.',
