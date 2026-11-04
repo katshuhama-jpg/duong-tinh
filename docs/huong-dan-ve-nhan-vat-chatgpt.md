@@ -6,7 +6,7 @@ Tài liệu này dành cho ChatGPT. Hãy đọc hết và làm đúng mọi quy 
 
 ## 0. DANH SÁCH CẦN LÀM (BẢN RÚT GỌN, ƯU TIÊN SỐ 1)
 
-Chỉ làm các ảnh trong bảng này. Chỉ một góc (góc A). Mỗi người chỉ làm đúng các nét mặt ghi trong cột "Nét mặt". Game tự lật gương ra góc B, tự cắt chân dung từ góc A, tự làm hiệu ứng nét mặt còn lại (rung, tối mép, giọt lệ). Các mã tuổi khác ở mục 5 KHÔNG làm, trừ khi tôi gõ riêng.
+Chỉ làm các ảnh trong bảng này. Mỗi người chỉ MỘT góc: nhân vật chính (mã `me…`) góc A, mặt hướng sang PHẢI; mọi nhân vật khác góc B, mặt hướng sang TRÁI (mục 3). Mỗi người chỉ làm đúng các nét mặt ghi trong cột "Nét mặt". Game tự lật gương khi cần, tự cắt chân dung, tự làm hiệu ứng cho nét mặt còn lại (rung, tối mép, giọt lệ). Các mã tuổi khác ở mục 5 KHÔNG làm, trừ khi tôi gõ riêng.
 
 | Thứ tự | Mã | Nét mặt | Số ảnh |
 | --- | --- | --- | --- |
@@ -41,22 +41,22 @@ Chỉ làm các ảnh trong bảng này. Chỉ một góc (góc A). Mỗi ngư�
 
 **Lệnh nhanh nhất:** gõ `làm tiếp danh sách`. Bạn tự làm mã kế tiếp chưa xong trong bảng trên, đủ các nét mặt của mã đó trong một lượt (nhiều ảnh riêng, mỗi ảnh một người). Xong thì báo "Xong <mã> (<số ảnh>). Gõ làm tiếp danh sách để sang <mã kế>".
 
-Gõ `<mã>` (vd `hanh`) cũng được: làm đủ các nét mặt của mã đó theo bảng trên, góc A.
+Gõ `<mã>` (vd `hanh`) cũng được: làm đủ các nét mặt của mã đó theo bảng trên, đúng góc của mã.
 
 ---
 
 ## 1. CÁCH TÔI RA LỆNH
 
-**MỖI ẢNH MỘT NGƯỜI, NHIỀU ẢNH MỘT LƯỢT.** Một lệnh ra 8 ảnh riêng (8 nét mặt), không ghép vào một ảnh. Người chiếm gần hết chiều cao ảnh, độ phân giải cao nhất có thể (2K).
+**MỖI ẢNH MỘT NGƯỜI, NHIỀU ẢNH MỘT LƯỢT.** Một lệnh ra nhiều ảnh riêng (mỗi nét mặt một ảnh), không ghép vào một ảnh. Người chiếm gần hết chiều cao ảnh, độ phân giải cao nhất có thể (2K).
 
 Lệnh chính: **`<mã>`**, ví dụ `me1`, `hanh`, `thucphi2`. Góc nhìn đã cố định theo mã (mục 3), không cần ghi góc.
 
-Khi nhận lệnh này, trong MỘT LƯỢT trả lời, hãy tạo **8 ảnh riêng biệt** (dùng chế độ tạo nhiều ảnh từ một lệnh, giữ nhân vật đồng nhất giữa các ảnh):
+Khi nhận lệnh này, trong MỘT LƯỢT trả lời, hãy tạo **các ảnh riêng biệt** cho từng nét mặt (dùng chế độ tạo nhiều ảnh từ một lệnh, giữ nhân vật đồng nhất giữa các ảnh). Số nét mặt: theo cột "Nét mặt" ở mục 0 nếu mã có trong bảng đó, nếu không thì đủ 8 nét mặt ở mục 4:
 1. Tra mã ở mục 5 (nhân vật, tuổi, trang phục, đồ cầm tay). Góc: mã bắt đầu bằng `me`, `quan1`-`quan5_me`, `cung1`-`cung5_me`, `chua1`-`chua5_me` (nhân vật chính) dùng góc A; mọi mã khác dùng góc B.
-2. Ảnh 1 đến 8 là 8 nét mặt ở mục 4, đúng thứ tự. Mỗi ảnh là MỘT người, toàn thân tới bàn chân, khổ dọc 2:3, chất lượng cao nhất, độ phân giải cao nhất có thể (2K, khoảng 1365 x 2048; tối thiểu 1024 x 1536).
-3. Tám ảnh phải giống nhau tuyệt đối về thân người, tư thế, tay, trang phục, tóc, mũ, trâm, góc đầu, khung hình, cỡ người, vị trí trong ảnh. Chỉ khuôn mặt thay đổi.
+2. Mỗi ảnh một nét mặt, theo thứ tự ở mục 0 hoặc mục 4. Mỗi ảnh là MỘT người, toàn thân tới bàn chân, khổ dọc 2:3, chất lượng cao nhất, độ phân giải cao nhất có thể (2K, khoảng 1365 x 2048; tối thiểu 1024 x 1536).
+3. Các ảnh phải giống nhau tuyệt đối về thân người, tư thế, tay, trang phục, tóc, mũ, trâm, góc đầu, khung hình, cỡ người, vị trí trong ảnh. Chỉ khuôn mặt thay đổi.
 4. Ghi tên file dưới từng ảnh (mục 6).
-5. Nếu không tạo được 8 ảnh trong một lượt, tạo ảnh 1 trước rồi ghi "Gõ Tiếp để vẽ nét mặt 2: Cười"; mỗi lần tôi gõ `Tiếp`, chỉ sửa vùng mặt của ảnh 1 sang nét mặt kế tiếp.
+5. Nếu không tạo được nhiều ảnh trong một lượt, tạo ảnh 1 trước rồi ghi "Gõ Tiếp để vẽ nét mặt 2: Cười"; mỗi lần tôi gõ `Tiếp`, chỉ sửa vùng mặt của ảnh 1 sang nét mặt kế tiếp.
 
 **Tuyệt đối không ghép nhiều người vào một ảnh (không lưới, không sprite sheet).** Ảnh ghép làm mặt quá nhỏ, vào game bị nhòe.
 
@@ -66,7 +66,7 @@ Lệnh phụ:
 
 | Lệnh | Bạn làm gì |
 | --- | --- |
-| `Tiếp` | Khi chưa đủ 8 ảnh: nét mặt kế tiếp, sửa riêng vùng mặt của ảnh 1. Khi đã đủ 8: báo "Xong <mã>". |
+| `Tiếp` | Khi chưa đủ số ảnh của mã: nét mặt kế tiếp, sửa riêng vùng mặt của ảnh 1. Khi đã đủ: báo "Xong <mã>". |
 | `<mã gốc> đủ tuổi` | Làm mọi giai đoạn tuổi của cùng một người (vd `hanh đủ tuổi` = `hanh`, `hanh2`, `hanh3`), mỗi giai đoạn đủ 8 nét mặt, theo thứ tự trẻ trước già sau, giữ cùng khuôn mặt. |
 | `nhóm <1/2/3/4> đủ bộ` | Làm lần lượt mọi mã trong nhóm đó ở mục 5, theo thứ tự trong bảng, mỗi mã đủ 8 nét mặt. Khi xong một mã, báo "Xong <mã>, tiếp theo là <mã kế>". |
 | `Đang ở đâu?` | Nhắc lại đang làm mã nào, nét mặt số mấy, còn bao nhiêu ảnh. |
