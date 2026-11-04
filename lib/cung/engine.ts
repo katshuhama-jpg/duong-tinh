@@ -2,7 +2,7 @@
  * Bộ máy một đời trong cung: rút thẻ, áp hệ quả, đếm năm, lương, chặng, kết cục.
  * Thuần dữ liệu (không đụng tới giao diện) để chạy thử hàng loạt bằng script.
  */
-import type { Card, Choice, Cond, Fx, Life, NumK } from './types';
+import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, RANKS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, type Rank } from './world';
 import { CRISIS } from './content/big';
 import { ALL_BIG, SMALL, bigsOf } from './content/index';
@@ -46,9 +46,13 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
     relV: 2,
     fresh: [],
   };
+  l.chStart = snapOf(l);
+  l.showCh = { to: 1 };
   l.card = nextCard(l);
   return l;
 }
+
+export const snapOf = (l: Life): ChapterSnap => ({ ch: l.chapter, age: l.age, rank: rankOf(l).t, n: { ...l.n }, logLen: l.log.length, kids: l.kids.length });
 
 /** bản lưu cũ (quan hệ 0-100): dời về thang -100..100 */
 export const REL_KEYS = ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as const;
@@ -105,7 +109,11 @@ export function nextCard(l: Life): string | null {
     if (pool.length) {
       // thẻ hệ quả của lựa chọn vừa rồi (cần cờ mới đặt) được ưu tiên, để chuyện nối tiếp chuyện
       const fresh = (l.fresh ?? []).map((x) => x.slice(x.indexOf(':') + 1));
-      const w = (c: Card) => (c.weight ?? 1) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
+      // nhịp phim: thẻ đầu chương ưu tiên "hook", thẻ ngay trước ngã rẽ lớn ưu tiên "lặng"
+      const first = l.smalls === 0;
+      const lastBefore = l.smalls === chap(ch).smalls - 1;
+      const beatW = (c: Card) => (c.beat === 'hook' ? (first ? 8 : 0.4) : c.beat === 'lang' ? (lastBefore ? 8 : 0.5) : 1);
+      const w = (c: Card) => (c.weight ?? 1) * beatW(c) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
       const total = pool.reduce((a, c) => a + w(c), 0);
       let r = rand(l.seed, step(l)) * total;
       for (const c of pool) {
@@ -134,12 +142,18 @@ export function nextCard(l: Life): string | null {
 }
 
 function moveTo(l: Life, ch: number) {
+  // hết một chương: chụp lại để màn chương tổng kết đổi thay
+  const end = snapOf(l);
+  const from = l.chStart;
+  const picks = from ? l.log.slice(from.logLen).filter((x) => x.k === 'pick').map((x) => x.t) : [];
   l.chapter = ch;
   l.smalls = 0;
   l.bigAt = 0;
   // sang chặng mới mà đang được sủng thì được thăng một bậc
   if (ch <= 5 && l.n.an >= 50 && l.rank < 9) promote(l, 1);
-  l.log.push({ age: Math.floor(l.age), t: `Chặng mới: ${chap(ch).t}.`, k: 'year' });
+  l.log.push({ age: Math.floor(l.age), t: `Chương mới: ${chap(ch).t}.`, k: 'year' });
+  l.showCh = { to: ch, from, end, picks };
+  l.chStart = snapOf(l);
 }
 
 function promote(l: Life, d: number) {

@@ -110,6 +110,10 @@ export interface Card {
   moods?: Partial<Record<CastK, MoodK>>;
   /** một câu nối với chuyện trước (hiện đầu thẻ), dùng cho thẻ là hệ quả của lựa chọn cũ */
   lead?: string;
+  /** cảnh nền riêng, đè lên cảnh theo place: cong (cổng thành), lanh (lãnh cung, ngục), bep (ngự dược, bếp), tam (tẩm điện), thu (thư phòng), hanh (hành lang), trieu (chính điện lúc chầu) */
+  bg?: 'cong' | 'lanh' | 'bep' | 'tam' | 'thu' | 'hanh' | 'trieu';
+  /** nhịp phim: hook (mở chương, gây tò mò), lang (quãng lặng trước bão), cang (dồn nén) */
+  beat?: 'hook' | 'lang' | 'cang';
   /** chỗ cụ thể nói thành chữ, đè lên chỗ mặc định theo place (vd "ở viện Thục phi") */
   where?: string;
   /** người đang nói (hiện trên khung thoại) */
@@ -160,6 +164,16 @@ export interface Ending {
   /** bia ghi "tẩm" (bậc cao) hay "mộ" */
 }
 
+/** ảnh chụp lúc đầu (hoặc cuối) một chương */
+export interface ChapterSnap {
+  ch: number;
+  age: number;
+  rank: string;
+  n: Record<NumK, number>;
+  logLen: number;
+  kids: number;
+}
+
 /** một ngã rẽ đã chọn: bản đời ngay trước lúc chọn (không kèm nhật ký) */
 export interface Mark {
   card: string;
@@ -208,6 +222,10 @@ export interface Life {
   relV?: number;
   /** cờ vừa đặt ở mấy lượt gần đây: thẻ hệ quả của chúng được ưu tiên rút */
   fresh?: string[];
+  /** đầu chương đang chơi: để cuối chương tổng kết đổi thay */
+  chStart?: ChapterSnap;
+  /** màn chương đang chờ hiện: tổng kết chương vừa xong (nếu có) và mở màn chương mới */
+  showCh?: { to: number; from?: ChapterSnap; end?: ChapterSnap; picks?: string[] };
   /** các ngã rẽ đã đi qua, mỗi cái giữ một bản để quay lại chọn lại */
   marks?: Mark[];
   /** tuổi và chỗ của thẻ trước, để viết câu nối cảnh */

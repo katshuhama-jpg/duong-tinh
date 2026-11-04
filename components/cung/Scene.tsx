@@ -458,6 +458,173 @@ function Pond({ y = 248 }: { y?: number }) {
   );
 }
 
+
+/* ---------- cảnh nền riêng cho từng loại sự kiện ---------- */
+export type BgK = 'cong' | 'lanh' | 'bep' | 'tam' | 'thu' | 'hanh' | 'trieu';
+function Pillars({ xs, y0 = 40, y1 = 250, c = SON }: { xs: number[]; y0?: number; y1?: number; c?: string }) {
+  return <>{xs.map((x) => <g key={x}><rect x={x} y={y0} width="16" height={y1 - y0} fill={c} stroke={INK} strokeWidth="0.8" /><rect x={x - 2} y={y0} width="20" height="6" fill={GOLD} /><rect x={x - 3} y={y1 - 6} width="22" height="8" fill="#5a3a22" /></g>)}</>;
+}
+function SpecialBg({ bg, time }: { bg: BgK; time: TimeK }) {
+  const night = time === 'dem';
+  switch (bg) {
+    case 'cong':
+      // cổng thành: tường gạch, cửa vòm, lầu canh, cờ
+      return (
+        <g>
+          <Sky time={time} />
+          <rect x="0" y="110" width="390" height="140" fill={night ? '#5a5048' : '#a89478'} stroke={INK} strokeWidth="1" />
+          {Array.from({ length: 12 }).map((_, r) => <path key={r} d={`M0 ${116 + r * 11} H390`} stroke={night ? '#463e38' : '#8a7860'} strokeWidth="0.8" />)}
+          {Array.from({ length: 14 }).map((_, i) => <rect key={i} x={i * 30} y="98" width="18" height="14" fill={night ? '#5a5048' : '#a89478'} stroke={INK} strokeWidth="0.8" />)}
+          <path d="M145 250 V170 Q195 120 245 170 V250 Z" fill="#1a120c" stroke={INK} strokeWidth="1.4" />
+          <path d="M150 250 V172 Q195 128 240 172 V250" fill="none" stroke="#5a3a22" strokeWidth="5" />
+          <Roof y={70} x0={120} x1={270} />
+          <rect x="130" y="70" width="130" height="30" fill="#6e1c13" stroke={INK} strokeWidth="1" />
+          <rect x="170" y="76" width="50" height="16" fill="#e8d2a6" stroke={GOLD2} strokeWidth="1" />
+          <path d="M60 98 V40 M330 98 V40" stroke="#4a3022" strokeWidth="3" />
+          <path className="c-sway" d="M62 42 Q90 46 104 40 Q96 58 104 72 Q84 66 62 70 Z" fill={SON} stroke={INK} strokeWidth="0.8" />
+          <path className="c-sway2" d="M332 42 Q360 46 374 40 Q366 58 374 72 Q354 66 332 70 Z" fill={GOLD2} stroke={INK} strokeWidth="0.8" />
+          {night && <><Lantern x={128} y={150} cls="c-sway" /><Lantern x={262} y={150} cls="c-sway2" /></>}
+          <rect x="0" y="250" width="390" height="62" fill="url(#c-stone)" />
+        </g>
+      );
+    case 'lanh':
+      // lãnh cung, ngục: tường trống, cửa sổ chấn song, rơm, bát mẻ
+      return (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill={night ? '#2a2622' : '#6a6258'} />
+          <rect x="0" y="0" width="390" height="312" fill="url(#c-stone)" opacity="0.35" />
+          <path d="M40 60 L60 90 L50 120 M300 30 L290 70 L310 96" stroke="#3a342e" strokeWidth="1.4" fill="none" />
+          <rect x="230" y="40" width="90" height="70" fill={night ? '#1e2438' : '#cfc6b8'} stroke={INK} strokeWidth="2" />
+          {[244, 260, 276, 292, 308].map((x) => <rect key={x} x={x} y="40" width="5" height="70" fill="#2a1d14" />)}
+          {night && <circle cx="290" cy="64" r="9" fill="#f3e6c0" opacity="0.6" />}
+          <path d="M230 110 L170 250 L340 250 L320 110 Z" fill="#f3e6c0" opacity={night ? 0.06 : 0.14} />
+          <rect x="0" y="230" width="390" height="82" fill="#4a423a" />
+          <path d="M20 250 Q70 236 120 250 Q90 258 20 256 Z M300 252 Q340 238 380 252 Q350 260 300 258 Z" fill="#c9a56a" opacity="0.8" />
+          <ellipse cx="80" cy="262" rx="14" ry="5" fill="#8a7a6a" stroke={INK} strokeWidth="0.8" />
+          <path d="M84 258 L90 254" stroke={INK} strokeWidth="0.8" />
+        </g>
+      );
+    case 'bep':
+      // ngự dược, thái y viện, bếp: tủ thuốc nhiều ngăn, lò, ấm sắc
+      return (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill={night ? '#3a2418' : '#7a5a3a'} />
+          <rect x="20" y="30" width="200" height="190" fill="#5a3a22" stroke={INK} strokeWidth="1.4" />
+          {Array.from({ length: 5 }).map((_, r) => Array.from({ length: 6 }).map((_, c) => <g key={`${r}-${c}`}><rect x={28 + c * 32} y={38 + r * 36} width="28" height="30" fill="#8a5a2a" stroke={INK} strokeWidth="0.6" /><circle cx={42 + c * 32} cy={53 + r * 36} r="2" fill={GOLD} /></g>))}
+          <rect x="250" y="160" width="110" height="80" fill="#6a5a4a" stroke={INK} strokeWidth="1.2" />
+          <ellipse cx="305" cy="160" rx="34" ry="8" fill="#2a1d14" />
+          <path className="c-flame" d="M282 236 Q290 210 300 226 Q306 204 316 228 Q324 214 328 236 Z" fill="#d9601e" />
+          <path d="M286 150 Q286 124 305 122 Q324 124 324 150 Z M324 136 Q338 134 340 126" fill="#4a3a2a" stroke={INK} strokeWidth="1" />
+          <path className="c-smoke" d="M305 118 Q296 96 308 80 Q318 64 306 46" fill="none" stroke="#cfc6b8" strokeWidth="2" />
+          <path d="M240 60 H380 M250 60 V40 M370 60 V40" stroke="#4a3022" strokeWidth="3" />
+          {[262, 290, 318, 346].map((x) => <path key={x} d={`M${x} 60 Q${x - 6} 80 ${x} 96 Q${x + 6} 80 ${x} 60`} fill="#7a8a4a" stroke={INK} strokeWidth="0.6" />)}
+          <rect x="0" y="240" width="390" height="72" fill="#5a4030" />
+        </g>
+      );
+    case 'tam':
+      // tẩm điện: long sàng rèm vàng, bình phong rồng, lư hương
+      return (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill={night ? '#2c1812' : '#5a2418'} />
+          <rect x="40" y="20" width="310" height="16" fill={GOLD2} stroke={INK} strokeWidth="1" />
+          <path d="M40 36 Q60 140 50 240 L110 240 Q96 140 110 36 Z M350 36 Q330 140 340 240 L280 240 Q294 140 280 36 Z" fill="#d9a441" stroke={INK} strokeWidth="1" opacity="0.92" />
+          <rect x="100" y="150" width="190" height="80" fill="#8f2419" stroke={INK} strokeWidth="1.2" />
+          <rect x="110" y="140" width="170" height="16" fill="#f1ead8" stroke={INK} strokeWidth="1" />
+          <path d="M150 90 Q195 60 240 90 Q230 120 195 110 Q160 120 150 90 Z" fill="none" stroke={GOLD} strokeWidth="2" />
+          <g transform="translate(360 230)"><path d="M-14 0 L-10 -24 H10 L14 0 Z" fill="#8a6a2a" stroke={INK} strokeWidth="1" /><path className="c-smoke" d="M0 -26 Q-6 -40 2 -52 Q8 -64 0 -76" fill="none" stroke="#cfc6b8" strokeWidth="1.4" /></g>
+          {night && <><Lantern x={30} y={60} cls="c-sway" /><Lantern x={364} y={60} cls="c-sway2" /></>}
+          <rect x="0" y="240" width="390" height="72" fill="#3e1c12" />
+        </g>
+      );
+    case 'thu':
+      // thư phòng: kệ sách, án thư, nghiên mực, cuộn tấu chương
+      return (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill={night ? '#2e2218' : '#6e5236'} />
+          <rect x="20" y="24" width="150" height="200" fill="#4a3022" stroke={INK} strokeWidth="1.2" />
+          {[0, 1, 2, 3].map((r) => <g key={r}><rect x="20" y={70 + r * 48} width="150" height="5" fill="#2a1d14" />{Array.from({ length: 9 }).map((_, i) => <rect key={i} x={28 + i * 15} y={36 + r * 48} width="11" height="34" fill={['#2f4f6c', SON, '#e8dcc0', '#6a4a36'][(i + r) % 4]} stroke={INK} strokeWidth="0.5" />)}</g>)}
+          <rect x="200" y="40" width="160" height="110" fill={night ? '#1e2438' : '#e8d2a6'} stroke={INK} strokeWidth="2" />
+          <path d="M210 130 Q240 70 270 110 Q300 60 350 120" fill="none" stroke="#6a7a5a" strokeWidth="2" opacity="0.7" />
+          <rect x="190" y="196" width="190" height="16" fill="#5a1a12" stroke={INK} strokeWidth="1" />
+          <rect x="220" y="184" width="60" height="12" fill="#f1ead8" stroke={INK} strokeWidth="0.8" />
+          <ellipse cx="320" cy="190" rx="14" ry="5" fill="#2a1d14" />
+          <path d="M340 172 L352 194" stroke="#8a5a2a" strokeWidth="2.4" />
+          {night && <g><rect x="296" y="166" width="10" height="20" fill="#f1ead8" /><path className="c-flame" d="M301 156 Q296 164 301 168 Q306 164 301 156 Z" fill="#f0c27a" /></g>}
+          <rect x="0" y="240" width="390" height="72" fill="#4a3424" />
+        </g>
+      );
+    case 'hanh':
+      // hành lang dài: hàng cột đỏ chạy xa, đèn treo, nền đá
+      return (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill={night ? '#241a24' : '#d9c49a'} />
+          <path d="M0 40 L170 120 L220 120 L390 40 Z" fill="url(#c-tiles)" stroke={INK} strokeWidth="0.8" />
+          <path d="M0 290 L170 170 L220 170 L390 290 Z" fill="url(#c-stone)" />
+          {[{ x: 20, h: 230, w: 22 }, { x: 80, h: 170, w: 16 }, { x: 128, h: 120, w: 11 }, { x: 160, h: 78, w: 7 }].map((c, i) => (
+            <g key={i}>
+              <rect x={c.x} y={155 - c.h / 2} width={c.w} height={c.h} fill={SON} stroke={INK} strokeWidth="0.8" />
+              <rect x={390 - c.x - c.w} y={155 - c.h / 2} width={c.w} height={c.h} fill={SON} stroke={INK} strokeWidth="0.8" />
+            </g>
+          ))}
+          <rect x="176" y="122" width="38" height="46" fill={night ? '#0e0a10' : '#6e4a30'} />
+          {night && <><Lantern x={100} y={60} cls="c-sway" /><Lantern x={290} y={60} cls="c-sway2" /><Lantern x={170} y={100} cls="c-sway" /></>}
+        </g>
+      );
+    case 'trieu':
+      // chính điện: ngai trên bệ, cột rồng, hàng quan bóng mờ hai bên
+      return (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill={night ? '#2c1410' : '#7a2016'} />
+          <rect x="0" y="0" width="390" height="30" fill="#5a1a12" />
+          <path d="M0 30 H390" stroke={GOLD} strokeWidth="3" />
+          <Pillars xs={[30, 344]} y0={30} y1={250} />
+          <path d="M120 200 H270 V180 H250 V160 H140 V180 H120 Z" fill={GOLD2} stroke={INK} strokeWidth="1" />
+          <path d="M165 160 V90 Q195 70 225 90 V160 Z" fill={SON} stroke={GOLD} strokeWidth="2" />
+          <circle cx="195" cy="110" r="10" fill="none" stroke={GOLD} strokeWidth="2" />
+          <rect x="150" y="44" width="90" height="26" fill="#2a1d14" stroke={GOLD} strokeWidth="1.4" />
+          <path d="M160 57 H230" stroke={GOLD} strokeWidth="1.2" />
+          <g fill="#2a1d14" opacity="0.35">{[70, 96, 280, 306].map((x) => <g key={x}><rect x={x} y="170" width="18" height="70" rx="6" /><circle cx={x + 9} cy="164" r="8" /></g>)}</g>
+          <rect x="0" y="250" width="390" height="62" fill="url(#c-stone)" />
+        </g>
+      );
+  }
+}
+
+/* ---------- mùa và thời tiết phủ lên cảnh ---------- */
+export type SeasonK = 'xuan' | 'ha' | 'thu' | 'dong';
+function SeasonFx({ season, rain, indoor }: { season?: SeasonK; rain?: boolean; indoor: boolean }) {
+  return (
+    <g pointerEvents="none">
+      {!indoor && season === 'xuan' && (
+        <g>
+          <path d="M390 10 Q330 30 300 70 M340 34 Q330 50 336 66" fill="none" stroke="#4a3022" strokeWidth="3" />
+          <g fill="#f2b8c2" stroke="#c46a7a" strokeWidth="0.4">{[[300, 68], [318, 50], [336, 64], [356, 28], [372, 18], [330, 40]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="5" />)}</g>
+        </g>
+      )}
+      {!indoor && season === 'thu' && (
+        <g>{Array.from({ length: 14 }).map((_, i) => <path key={i} className="c-petal" style={{ animationDelay: `${(i % 7) * 0.7}s` }} d={`M${(i * 61) % 380 + 6} ${(i * 29) % 90 + 10} q5 -4 8 2 q-4 5 -8 -2 z`} fill={i % 2 ? '#c46a2a' : '#d9a441'} />)}</g>
+      )}
+      {!indoor && season === 'dong' && (
+        <g>
+          <rect x="0" y="0" width="390" height="312" fill="#e8eef2" opacity="0.18" />
+          <g fill="#ffffff">{Array.from({ length: 34 }).map((_, i) => <circle key={i} className="c-petal" style={{ animationDelay: `${(i % 9) * 0.5}s` }} cx={(i * 47) % 384 + 4} cy={(i * 31) % 140 + 6} r={1.4 + (i % 3) * 0.6} />)}</g>
+        </g>
+      )}
+      {!indoor && season === 'ha' && !rain && (
+        <g opacity="0.85">
+          <ellipse cx="40" cy="296" rx="26" ry="8" fill="#5a8a5a" />
+          <path d="M40 290 Q36 270 44 262 Q52 270 46 290 Z" fill="#f2b8c2" stroke="#c46a7a" strokeWidth="0.6" />
+        </g>
+      )}
+      {rain && (
+        <g className="c-rain" stroke="#9cb4c8" strokeWidth="1.2" opacity={indoor ? 0.25 : 0.7}>
+          {Array.from({ length: 40 }).map((_, i) => <path key={i} d={`M${(i * 37) % 390} ${(i * 53) % 280} l-6 16`} />)}
+        </g>
+      )}
+    </g>
+  );
+}
+
 function Backdrop({ place, time }: { place: PlaceK; time: TimeK }) {
   const night = time === 'dem';
   if (place === 'phong')
@@ -803,7 +970,7 @@ function Motif({ m, solo }: { m: MotifK; solo: boolean }) {
 const SLOTS = [180, 296, 76];
 
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif }: { motif?: MotifK; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
+export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain }: { motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -819,7 +986,8 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
         <clipPath id="c-clip"><rect x="10" y="8" width="370" height="296" /></clipPath>
       </defs>
       <g clipPath="url(#c-clip)">
-        <Backdrop place={place} time={time} />
+        {bg ? <SpecialBg bg={bg} time={time} /> : <Backdrop place={place} time={time} />}
+        <SeasonFx season={season} rain={rain} indoor={!!bg || place === 'phong'} />
         {motif && (motif === 'rem' || motif === 'trang') && <Motif m={motif} solo={!cast.length} />}
         {order.slice(0, 3).map((k, i) => {
           const look = looks[k as CastK] ?? lookOf(k as CastK);

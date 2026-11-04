@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
-import Scene, { lookOf, type Look } from '@/components/cung/Scene';
+import Scene, { Person, lookOf, type BgK, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
@@ -51,6 +51,27 @@ function whereOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string 
       return 'trên núi';
   }
 }
+
+/** cảnh nền riêng: theo card.bg, không có thì đoán từ chữ chỉ chỗ và tiêu đề */
+function bgOf(card: NonNullable<ReturnType<typeof cardOf>>): BgK | undefined {
+  if (card.bg) return card.bg;
+  const w = `${card.where ?? ''} ${card.title}`.toLowerCase();
+  const t = card.text.join(' ').toLowerCase();
+  if (/cửa tây|cổng thành|ngọ môn|lầu cửa|cửa thành|cửa ngọ|cổng cung/.test(w)) return 'cong';
+  if (/lãnh cung|ngục|nhà giam|cấm túc|lạc mai/.test(w)) return 'lanh';
+  if (/ngự dược|thái y viện|bếp|phòng thuốc/.test(w)) return 'bep';
+  if (/tẩm điện|tẩm cung|long sàng/.test(w) || (card.place !== 'vuon' && /hấp hối|thổ huyết|bên giường bệnh/.test(t) && card.cast.includes('vua'))) return 'tam';
+  if (/thư phòng/.test(w)) return 'thu';
+  if (/hành lang/.test(w)) return 'hanh';
+  if (card.place === 'dien' && (/chính điện|buổi chầu|sân rồng/.test(w) || ((card.cast.includes('quan') || card.cast.includes('tuong')) && /triều|chầu|bá quan|trăm quan|tâu/.test(t)))) return 'trieu';
+  return undefined;
+}
+const SEASON_K: SeasonK[][] = [
+  ['xuan', 'ha'],
+  ['thu', 'dong'],
+];
+const seasonOf = (card: { id: string }, l: Life): SeasonK => SEASON_K[Math.round(l.age * 2) % 2][hash(card.id) % 2];
+const rainOf = (card: NonNullable<ReturnType<typeof cardOf>>) => /mưa (to|lớn|rơi|dầm|ngâu|gió)|trời mưa|giữa mùa mưa|dưới mưa/.test(card.text.join(' ').toLowerCase());
 
 /** câu nối cảnh: bao lâu sau, mùa nào, giờ nào, ở đâu */
 function bridgeOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string {
@@ -349,6 +370,92 @@ export default function Play() {
     );
   }
 
+  /* ---------- màn chương: tổng kết chương vừa qua, mở màn chương mới ---------- */
+  if (life.showCh && !res) {
+    const sc = life.showCh;
+    const next = CHAPTERS.find((c) => c.n === sc.to)!;
+    const prevCh = sc.from ? CHAPTERS.find((c) => c.n === sc.from!.ch) : null;
+    const go = () => keep({ ...life, showCh: undefined });
+    const REL: NumK[] = ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'];
+    const STAT: NumK[] = ['duc', 'sac', 'the', 'an', 'muu'];
+    const looks = looksOf(life);
+    return (
+      <main className="c-app">
+        <div className="c-band" aria-hidden="true" />
+        <div className="c-page c-chap">
+          {sc.from && sc.end && prevCh && (
+            <section className="c-recap" aria-label={`Tổng kết chương ${prevCh.n}`}>
+              <p className="c-sub">Hết chương {NUM_HOI[prevCh.n] ?? prevCh.n} · {prevCh.t}</p>
+              <p className="c-note" style={{ textAlign: 'center' }}>
+                {Math.floor(sc.from.age)} tuổi đến {Math.floor(sc.end.age)} tuổi · {sc.from.rank === sc.end.rank ? `vẫn là ${sc.end.rank}` : `${sc.from.rank} lên ${sc.end.rank}`}
+                {sc.end.kids > sc.from.kids ? ` · thêm ${sc.end.kids - sc.from.kids} đứa con` : ''}
+              </p>
+              <div className="c-recap-stats">
+                {STAT.map((k) => {
+                  const d = sc.end!.n[k] - sc.from!.n[k];
+                  return (
+                    <div key={k}>
+                      <span>{NUM_LABEL[k]}</span>
+                      <b>{sc.end!.n[k]}</b>
+                      <em className={d > 0 ? 'up' : d < 0 ? 'down' : ''}>{d > 0 ? `+${d}` : d < 0 ? d : '='}</em>
+                    </div>
+                  );
+                })}
+              </div>
+              <h3>Lòng người đổi thay</h3>
+              <div className="c-recap-rel">
+                {REL.map((k) => {
+                  const a = sc.from!.n[k];
+                  const b = sc.end!.n[k];
+                  const d = b - a;
+                  const ck = k as CastK;
+                  return (
+                    <div key={k} className={Math.abs(d) >= 8 ? 'big' : ''}>
+                      <svg viewBox="-48 128 96 92" width="56" height="54" aria-hidden="true">
+                        <Person x={0} look={looks[ck] ?? lookOf(ck)} mood={b >= 30 ? 'vui' : b <= -30 ? 'gian' : d <= -8 ? 'lo' : 'binh'} />
+                      </svg>
+                      <b>{k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]}</b>
+                      <small>
+                        {feelOf(k, a) === feelOf(k, b) ? (
+                          <>
+                            {feelOf(k, b)} <i className={d > 0 ? 'up' : d < 0 ? 'down' : ''}>{d ? `(${d > 0 ? '+' : ''}${d})` : ''}</i>
+                          </>
+                        ) : (
+                          <>
+                            {feelOf(k, a)}, nay <i className={d > 0 ? 'up' : 'down'}>{feelOf(k, b)}</i>
+                          </>
+                        )}
+                      </small>
+                    </div>
+                  );
+                })}
+              </div>
+              {!!sc.picks?.length && (
+                <>
+                  <h3>Những việc đã làm</h3>
+                  <ul className="c-recap-picks">
+                    {sc.picks.slice(-6).map((t, i) => (
+                      <li key={i}>{t}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </section>
+          )}
+          <section className="c-chapter-open" key={next.n}>
+            <p className="c-chapter-no">Chương {NUM_HOI[next.n] ?? next.n}</p>
+            <h1 className="c-title">{next.t}</h1>
+            <p className="c-chapter-epi">{next.epi}</p>
+            <p className="c-chapter-hook">{next.hook}</p>
+          </section>
+          <button type="button" className="c-btn" onClick={go}>
+            Vào chương {NUM_HOI[next.n] ?? next.n}
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   const pick = (i: number) => {
     if (!card || res) return;
     const r = choose(life, i);
@@ -400,7 +507,7 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>
