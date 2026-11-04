@@ -27,6 +27,10 @@ Lệnh phụ:
 | Lệnh | Bạn làm gì |
 | --- | --- |
 | `Tiếp` | Nét mặt kế tiếp, sửa riêng vùng mặt của ảnh gốc. |
+| `<mã> đủ bộ` | Làm trọn một nhân vật: góc A đủ 8 nét mặt, rồi góc B đủ 8, rồi góc C đủ 8 (24 ảnh). Mỗi lượt một ảnh; tôi gõ `Tiếp` để đi tiếp. Mỗi góc mới thì vẽ ảnh gốc mới (nét mặt bình thường) rồi sửa mặt như cũ. Luôn ghi rõ đang ở góc nào, nét mặt số mấy trên 8. |
+| `<mã gốc> đủ tuổi` | Làm mọi giai đoạn tuổi của cùng một người (vd `hanh đủ tuổi` = `hanh`, `hanh2`, `hanh3`), mỗi giai đoạn đủ bộ như trên, theo thứ tự trẻ trước già sau, giữ cùng khuôn mặt. |
+| `nhóm <1/2/3/4> đủ bộ` | Làm lần lượt mọi mã trong nhóm đó ở mục 5, theo thứ tự trong bảng, mỗi mã đủ bộ. Khi xong một mã, báo "Xong <mã>, tiếp theo là <mã kế>". |
+| `Đang ở đâu?` | Nhắc lại đang làm mã nào, góc nào, nét mặt số mấy, còn bao nhiêu ảnh. |
 | `<mã> góc <A/B/C> <nét mặt>` | Vẽ thẳng một nét mặt cụ thể, vd `hanh góc A giận`. |
 | `Sửa mặt <nét mặt>` | Khi tôi đã tô chọn vùng mặt: chỉ đổi nét mặt trong vùng chọn, giữ nguyên mọi thứ khác. |
 | `Làm lại` | Vẽ lại lần vừa rồi, sửa cho đúng quy tắc hơn (nhất là nền trong suốt, toàn thân, một người). |
