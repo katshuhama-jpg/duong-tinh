@@ -127,7 +127,7 @@ export const BIG_STEPS: Card[] = [
     where: 'ở cung Thái hậu',
     who: 'thucphi',
     title: 'Hạnh bị lôi vào',
-    text: ['Hai bà vú lôi Hạnh vào giữa điện, mặt nó không còn hột máu.', 'Thục phi lau nước mắt, giọng ngọt như mía: "Con bé này giữ hộp đồ của em phải không?"'],
+    text: ['Hai ma ma lôi Hạnh vào giữa điện, mặt nó không còn hột máu.', 'Thục phi lau nước mắt, giọng ngọt như mía: "Con bé này giữ hộp đồ của em phải không?"'],
     choices: [
       { t: 'Đứng chắn trước Hạnh, tố Thục phi tự giấu trâm', fx: { next: 'bs_vu_to', d: { hanh: 4 } }, note: 'Cả điện im phăng phắc. Thục phi buông khăn, nước mắt khô lại rất nhanh.' },
       { t: 'Để Hạnh khỏi bị đánh, quỳ xuống nhận lỗi thay nó', fx: { next: 'bs_vu_nhan', d: { hanh: 6 } }, note: 'Hạnh khóc nấc. Thục phi bước tới, chìa tay đỡ bạn.' },
@@ -184,7 +184,7 @@ export const BIG_STEPS: Card[] = [
     text: ['Thục phi đỡ bạn dậy, bàn tay lạnh như đá. Thái hậu chờ nghe bạn chịu tội thế nào.', '"Em còn trẻ, lỡ dại một lần thôi mà."'],
     choices: [
       { t: 'Cúi đầu, chịu giáng bậc cho mọi chuyện yên', fx: { d: { duc: -4, an: -10, thucphi: 10, thaihau: 4 }, rank: -1 }, note: 'Bạn bị giáng một bậc. Thục phi nắm tay bạn: "Em ngoan thế này, chị thương."' },
-      { t: 'Chịu giáng bậc, nhưng xin giữ Hạnh lại bên mình', fx: { d: { duc: -2, an: -10, thucphi: 6, hanh: 10 }, rank: -1 }, note: 'Bạn bị giáng một bậc. Đêm ấy Hạnh quỳ ngoài sân đến sáng, không ai bảo nó.' },
+      { t: 'Chịu giáng bậc, chỉ xin đừng ai động đến Hạnh', fx: { d: { duc: -2, an: -10, thucphi: 6, hanh: 10 }, rank: -1 }, note: 'Bạn bị giáng một bậc. Đêm ấy Hạnh quỳ ngoài sân đến sáng, không ai bảo nó.' },
     ],
   },
 
@@ -239,7 +239,7 @@ export const BIG_STEPS: Card[] = [
     text: ['Canh hai, bạn giật mình vì bụng dưới nặng trĩu, nhói lên từng hồi.', 'Hạnh run tay thắp đèn: "Nương nương, nô tì đi gọi người nhé?"'],
     choices: [
       { t: 'Nằm im, niệm Phật đến sáng', fx: { d: { thucphi: 6 } }, note: 'Cơn đau qua đi lúc gà gáy. Sáng ra thái y bắt mạch, thai vẫn yên.', risk: { p: 0.5, fail: { d: { an: -10, sac: -6 }, flag: ['say_thai'], years: 1 }, failNote: 'Nửa đêm bụng quặn đau. Sáng ra, thái y chỉ lắc đầu.' } },
-      { t: 'Sai Hạnh chạy thẳng đến tẩm điện báo Hoàng thượng', need: { flags: ['ba_bao_vua'] }, lockHint: 'Cần đã báo tin cho Hoàng thượng trước', fx: { d: { vua: 8, an: 6, thucphi: -8, hanh: 4 } }, note: 'Ngài đã biết tin từ đêm ấy, nên không hỏi một câu, chỉ khoác áo đi cùng ba thái y. Đến gà gáy, thai vẫn yên.', risk: { p: 0.1, fail: { d: { an: -6, sac: -6, vua: 6 }, flag: ['say_thai'], years: 1 }, failNote: 'Ngài đến kịp, nhưng thuốc đã ngấm. Ngài ngồi bên giường đến sáng, không nói gì.' } },
+      { t: 'Sai Hạnh chạy đến tẩm điện, nhờ thái giám hầu đêm báo Hoàng thượng', need: { flags: ['ba_bao_vua'] }, lockHint: 'Cần đã báo tin cho Hoàng thượng trước', fx: { d: { vua: 8, an: 6, thucphi: -8, hanh: 4 } }, note: 'Ngài đã biết tin từ đêm ấy, nên không hỏi một câu, chỉ khoác áo đi cùng ba thái y. Đến gà gáy, thai vẫn yên.', risk: { p: 0.1, fail: { d: { an: -6, sac: -6, vua: 6 }, flag: ['say_thai'], years: 1 }, failNote: 'Ngài đến kịp, nhưng thuốc đã ngấm. Ngài ngồi bên giường đến sáng, không nói gì.' } },
       { t: 'Sai Hạnh chạy đi gọi thái y ngay trong đêm', fx: { d: { thucphi: -4, muu: 2, hanh: 4 } }, note: 'Thái y châm ba mũi kim, bắt bạn nằm yên ba ngày. Cả hậu cung biết chuyện bát thuốc.', risk: { p: 0.3, fail: { d: { an: -10, sac: -6 }, flag: ['say_thai'], years: 1 }, failNote: 'Thái y đến muộn nửa canh giờ. Ông chỉ lắc đầu.' } },
     ],
   },
@@ -300,7 +300,7 @@ export const BIG_STEPS: Card[] = [
       { t: '"Đứng sau một bước. Ta chỉ lo cho con ăn học."', fx: { next: 'bs_bang_hoc', d: { duc: 2 } }, note: 'Thái phó cúi đầu rất thấp rồi lui đi. Con bạn đã ngủ gục trên vai.' },
       { t: '"Sau rèm, ngồi cạnh Hoàng hậu."', fx: { next: 'bs_bang_rem', d: { quan: -2 } }, note: 'Thái phó nhíu mày, không đáp. Sáng hôm sau, sau rèm chính điện có thêm một chiếc ghế.' },
       { t: 'Ghé tai Thái phó: ngày mai cho con hạ chỉ giam Hoàng hậu', need: { num: { quan: [20, 100] } }, lockHint: 'Cần phe quan văn từ 20', fx: { next: 'bs_bang_giam', d: { muu: 2 } }, note: 'Thái phó im rất lâu, rồi lấy ra một tờ giấy vàng đã viết sẵn.' },
-      { t: '"Ta muốn hỏi tướng Lê Trực trước đã."', need: { flags: ['ket_tuong', 'giac'] }, lockHint: 'Cần kết giao tướng Lê Trực và có giặc ngoài biên', fx: { next: 'bs_bang_tuong' }, note: 'Thái phó biến sắc. Gần sáng, ngựa trạm báo giặc vượt ải, tướng Lê Trực đã về tới cửa thành.' },
+      { t: '"Ta muốn hỏi tướng Lê Trực trước đã."', need: { flags: ['ket_tuong', 'giac'] }, lockHint: 'Cần kết giao tướng Lê Trực và có giặc ngoài biên', fx: { next: 'bs_bang_tuong' }, note: 'Thái phó biến sắc. Gần sáng, ngựa trạm báo giặc vượt ải. Tướng Lê Trực đang trên đường về chịu tang, đã tới cửa thành.' },
     ],
   },
   {
@@ -319,7 +319,7 @@ export const BIG_STEPS: Card[] = [
     choices: [
       { t: 'Xin cùng buông rèm, mỗi người một nửa việc nước', fx: { next: 'bs_bang_rem', d: { quan: -2 } }, note: 'Cả điện xôn xao. Hoàng hậu từ sau rèm bước ra, mặt không đổi sắc.' },
       { t: 'Bảo con hạ chỉ ngay giữa triều: giam Hoàng hậu', need: { num: { quan: [20, 100] } }, lockHint: 'Cần phe quan văn từ 20', fx: { next: 'bs_bang_giam', d: { muu: 2 } }, note: 'Nửa hàng quan văn quỳ xuống hô vạn tuế. Hoàng hậu được mời ra giữa điện.' },
-      { t: 'Gửi người ra biên gọi tướng Lê Trực về', need: { flags: ['ket_tuong', 'giac'] }, lockHint: 'Cần kết giao tướng Lê Trực và có giặc ngoài biên', fx: { next: 'bs_bang_tuong' }, note: 'Chưa tan triều, ngựa trạm đã báo giặc vượt ải. Đến tối, tướng Lê Trực về tới cửa thành.' },
+      { t: 'Cho ngựa trạm đi đón tướng Lê Trực, đang dẫn quân về chịu tang', need: { flags: ['ket_tuong', 'giac'] }, lockHint: 'Cần kết giao tướng Lê Trực và có giặc ngoài biên', fx: { next: 'bs_bang_tuong' }, note: 'Chưa tan triều, ngựa trạm đã báo giặc vượt ải. Đến tối, tướng Lê Trực về tới cửa thành.' },
     ],
   },
   {
@@ -410,11 +410,11 @@ export const BIG_STEPS: Card[] = [
     where: 'ở ngõ sau cung',
     who: 'phuc',
     title: 'Ngọn đèn ở góc tường',
-    text: ['Phúc cầm đèn lồng chờ ở góc tường: "Ngõ sau ra chùa Vân Tịch còn thông."', '"Nhưng nô tài vừa nghe tiếng ngựa ở đầu ngõ."'],
+    text: ['Phúc cầm đèn lồng chờ ở góc tường: "Cửa ngách phía bắc do người của nô tài canh, ra chùa Vân Tịch còn kịp."', '"Nhưng nô tài vừa nghe tiếng ngựa ở đầu ngõ."'],
     choices: [
       { t: 'Thổi tắt đèn, cứ thế bế con chạy ra chùa', fx: { next: 'bs_phan_chua' }, note: 'Bạn chạy trong bóng tối, con úp mặt vào cổ bạn. Tiếng vó ngựa rẽ sang lối khác.' },
       { t: 'Quay lại, ra thẳng sân rồng', fx: { next: 'bs_phan_san', d: { duc: 2 } }, note: 'Phúc kêu lên một tiếng rồi cầm đèn đi theo. Đuốc đã sáng rực trước mặt.' },
-      { t: 'Đưa ấn tín cho Phúc, bảo chạy ra biên gọi tướng Lê Trực', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { next: 'bs_phan_tuong', d: { phuc: 4 } }, note: 'Phúc nhét ấn vào ngực áo, biến vào bóng tối. Bạn ôm con ngồi sau bức bình phong đến sáng.' },
+      { t: 'Đưa ấn tín cho Phúc, bảo ra cửa ngách gọi quân tướng Lê Trực đóng ngoài thành', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { next: 'bs_phan_tuong', d: { phuc: 4 } }, note: 'Phúc nhét ấn vào ngực áo, biến vào bóng tối. Bạn bế con quay vào, ngồi sau bức bình phong đến sáng.' },
     ],
   },
   {
@@ -430,7 +430,7 @@ export const BIG_STEPS: Card[] = [
     who: 'quan',
     whoName: 'Một viên quan văn',
     title: 'Cấm vệ đứng nhìn',
-    text: ['Một viên quan văn chạy vào, mũ lệch: "Chúng có trăm người. Quân cấm vệ đứng ngoài nhìn, chưa theo bên nào."', '"Xin nương nương bế bệ hạ đi ngay!"'],
+    text: ['Một viên quan văn trực đêm chạy vào, mũ lệch: "Chúng có trăm người. Quân cấm vệ đứng ngoài nhìn, chưa theo bên nào."', '"Xin nương nương bế bệ hạ đi ngay!"'],
     choices: [
       { t: 'Ra thẳng sân rồng nói chuyện với lính', fx: { next: 'bs_phan_san', d: { duc: 2 } }, note: 'Viên quan quỳ sụp, níu vạt áo bạn. Bạn gỡ tay ông ra, bước đi.' },
       { t: 'Nghe lời quan, bế vua con trốn ra chùa Vân Tịch', fx: { next: 'bs_phan_chua', d: { quan: 2 } }, note: 'Viên quan dẫn đường qua ngõ sau, rồi quay lại giữ cửa. Bạn không biết tên ông.' },
@@ -462,13 +462,13 @@ export const BIG_STEPS: Card[] = [
     place: 'dien',
     time: 'dem',
     cast: ['me', 'tuong', 'con'],
-    mood: 'so',
-    moods: { tuong: 'gian', con: 'so' },
+    mood: 'lo',
+    moods: { tuong: 'so', con: 'so' },
     where: 'giữa sân rồng',
     who: 'tuong',
     whoName: 'Lính cầm đuốc',
     title: 'Trăm ngọn đuốc',
-    text: ['Trăm ngọn đuốc khựng lại khi bạn bước ra trong triều phục. Tên lính già đứng đầu hàng chĩa giáo, tay run run.', '"Lui vào đi, nương nương. Bọn tôi chỉ đòi Hoàng tử Nghĩa."'],
+    text: ['Trăm ngọn đuốc khựng lại khi bạn bước ra trong triều phục. Tên lính già đứng đầu hàng chĩa giáo, tay run run.', '"Lui vào đi, nương nương. Bọn tôi chỉ đòi ngôi cho Hoàng tử Nghĩa."'],
     omen: 'Kẻ thua cuộc tranh ngôi năm ấy chưa bao giờ rời kinh thành.',
     choices: [
       { t: 'Đứng giữa sân, gọi tên từng người lính', fx: { d: { duc: 10 }, flag: ['thang_phan'], years: 3 }, note: 'Bạn đứng giữa trăm ngọn đuốc, gọi tên từng người lính. Từng người một hạ giáo.', risk: { p: 0.6, fail: { end: 'd_binh_bien' }, failNote: 'Ngọn giáo đầu tiên không chờ bạn nói hết.' } },
@@ -487,9 +487,9 @@ export const BIG_STEPS: Card[] = [
     where: 'trước cửa ngọ môn',
     who: 'tuong',
     title: 'Trời sáng ở ngọ môn',
-    text: ['Trời hửng sáng, quân biên ải của tướng Lê Trực đứng kín cửa ngọ môn. Hoàng tử Nghĩa bị trói quỳ giữa sân.', '"Xin nương nương định tội."'],
+    text: ['Trời hửng sáng, quân của tướng Lê Trực từ trại ngoài thành đã đứng kín cửa ngọ môn. Hoàng tử Nghĩa bị trói quỳ giữa sân.', '"Xin nương nương định tội."'],
     choices: [
-      { t: 'Giao Nghĩa cho triều đình xử theo phép nước', fx: { d: { tuong: 10, muu: 6 }, flag: ['thang_phan'], years: 3 }, note: 'Trời sáng, quân biên ải đã đứng kín cửa ngọ môn. Hoàng tử Nghĩa bị bắt sống.' },
+      { t: 'Giao Nghĩa cho triều đình xử theo phép nước', fx: { d: { tuong: 10, muu: 6 }, flag: ['thang_phan'], years: 3 }, note: 'Triều đình xử Nghĩa theo luật mưu phản. Tướng Lê Trực rút quân về trại ngay trong ngày.' },
       { t: 'Tha chết, đày Nghĩa ra đảo xa', fx: { d: { tuong: 6, muu: 4, duc: 8 }, flag: ['thang_phan'], years: 3 }, note: 'Thuyền chở Nghĩa đi lúc nước ròng. Tướng Lê Trực lắc đầu, nhưng không cãi.' },
     ],
   },

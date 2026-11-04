@@ -9,6 +9,8 @@ import type { Card, Ending } from '../types';
 const OUT = ['nu_y', 'h_hoa_than', 'bi_quen', 'o_chua'];
 /** thêm cung nga: chưa phải phi tần thì không có chuyện lương, đèn, vấn an */
 const NG = [...OUT, 'cung_nga'];
+/** Thục phi còn ở trong cung (chưa chết, chưa bị đày) */
+const TP_ON = { thucphi: { st: ['manh', 'yeu'] as ('manh' | 'yeu')[] } };
 
 export const ENDINGS_FEUD: Ending[] = [
   { id: 'd_fd_lanh_cung', name: 'Mùa đông ở lãnh cung', desc: 'Than không về, chăn không về. Đến tháng Chạp người ta mở cửa thì đã muộn.', dead: true },
@@ -21,7 +23,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_mia',
     chapter: [1, 2],
-    when: { num: { thucphi: [-100, -20] }, not: NG },
+    when: { num: { thucphi: [-100, -20] }, not: NG, riv: TP_ON },
     weight: 3,
     place: 'vuon',
     time: 'chieu',
@@ -31,7 +33,7 @@ export const FEUD: Card[] = [
     who: 'thucphi',
     lead: 'Thục phi đã để ý đến bạn, theo cách không ai muốn.',
     title: 'Lời mỉa bên hồ',
-    text: ['Giữa tiệc ngắm sen, Thục phi cầm vạt áo bạn lên, cười với cả bàn.', '"Vải này may rèm thì đẹp. Em mặc vào cung, chắc nhà cũng đã cố lắm."'],
+    text: ['Giữa tiệc ngắm hoa bên hồ, Thục phi cầm vạt áo bạn lên, cười với cả bàn.', '"Vải này may rèm thì đẹp. Em mặc vào cung, chắc nhà cũng đã cố lắm."'],
     choices: [
       { t: 'Cười theo, khen Thục phi tinh mắt', fx: { d: { thucphi: 10, sac: -3, duc: 2 }, flag: ['fd_tp_mia'] }, note: 'Cả bàn cười một lượt rồi quên. Thục phi quay sang trêu người khác.' },
       { t: 'Đáp lại: "Vải thô mặc lâu mới mềm, như lòng người."', fx: { d: { thucphi: -12, sac: 4, an: 2 }, flag: ['fd_tp_mia'] }, note: 'Bàn tiệc im bặt. Hoàng thượng ngồi xa, khẽ nhếch mép cười.' },
@@ -41,7 +43,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_tra',
     chapter: [2, 3, 4, 5],
-    when: { flags: ['fd_tp_tradua'], not: [...NG, 'fd_tp_hoa'] },
+    when: { flags: ['fd_tp_tradua'], not: [...NG, 'fd_tp_hoa', 'hanh_phan', 'hoang_hau'], riv: { thucphi: { st: ['manh', 'yeu'] }, hoanghau: { st: ['manh', 'yeu', 'phuc'] } } },
     weight: 3,
     place: 'vien',
     time: 'ngay',
@@ -60,7 +62,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_lo',
     chapter: [2, 3, 4, 5, 6],
-    when: { flags: ['fd_tp_tin_gia'], not: NG },
+    when: { flags: ['fd_tp_tin_gia'], not: NG, riv: TP_ON },
     weight: 3,
     place: 'phong',
     time: 'dem',
@@ -70,7 +72,7 @@ export const FEUD: Card[] = [
     who: 'cungnu',
     lead: 'Mấy tin giả bạn thả sang viện Thục phi, bên ấy đã nghi.',
     title: 'Con bé bị lật bài',
-    text: ['Con bé đưa tin quỳ trước giường bạn, má sưng một bên.', '"Nương nương bên ấy biết em bị cô dùng rồi. Bà bảo nếu em không mang về được một thứ thật, em sẽ ra giếng."'],
+    text: ['Con bé đưa tin quỳ trước giường bạn, má sưng một bên.', '"Nương nương bên ấy biết nô tì bị cô dùng rồi. Bà bảo nếu nô tì không mang về được một thứ thật, nô tì sẽ ra giếng."'],
     choices: [
       { t: 'Cho nó một tin thật mà vô hại, để nó sống', fx: { d: { duc: 5, muu: 3, thucphi: -4 }, flag: ['fd_tp_lo'] }, note: 'Nó mang về tin bạn thích hoa sen trắng. Thục phi không tin, nhưng con bé còn sống.' },
       { t: 'Xin Phúc chuyển nó đi viện khác ngay đêm nay', fx: { d: { tien: -20, phuc: 4, thucphi: -8 }, flag: ['fd_tp_lo'] }, note: 'Con bé được đưa sang viện Hoán Y giặt áo. Thục phi mất một con mắt, và biết là do ai.' },
@@ -80,7 +82,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_tin',
     chapter: [2, 3, 4, 5],
-    when: { flags: ['fd_tp_tai_mat'], not: [...NG, 'thai_hau'] },
+    when: { flags: ['fd_tp_tai_mat'], not: [...NG, 'thai_hau'], riv: TP_ON },
     weight: 3,
     place: 'phong',
     time: 'dem',
@@ -99,7 +101,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_thuoc',
     chapter: [2, 3, 4, 5],
-    when: { num: { thucphi: [-100, -40] }, not: NG },
+    when: { num: { thucphi: [-100, -40] }, not: [...NG, 'hanh_phan', 'hoang_hau'], riv: { thucphi: { st: ['manh', 'yeu'] }, hoanghau: { st: ['manh', 'yeu', 'phuc'] } } },
     weight: 3,
     place: 'phong',
     time: 'dem',
@@ -124,7 +126,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_vu',
     chapter: [2, 3, 4, 5],
-    when: { num: { thucphi: [-100, -40] }, not: [...NG, 'thai_hau'] },
+    when: { num: { thucphi: [-100, -40] }, not: [...NG, 'thai_hau'], riv: TP_ON },
     weight: 3,
     place: 'dien',
     time: 'ngay',
@@ -148,7 +150,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_nguoi',
     chapter: [2, 3, 4, 5, 6],
-    when: { num: { thucphi: [-100, -25] }, not: NG },
+    when: { num: { thucphi: [-100, -25] }, not: [...NG, 'hanh_phan'], riv: TP_ON },
     weight: 3,
     place: 'phong',
     time: 'chieu',
@@ -165,7 +167,7 @@ export const FEUD: Card[] = [
         t: 'Giữ lại, cho nó nghe toàn chuyện mình muốn bên kia nghe',
         fx: { d: { muu: 8, thucphi: -12 }, flag: ['fd_tp_nguoi', 'fd_tp_tin_gia'] },
         note: 'Thục phi sai người chặn một cỗ kiệu không có ai ngồi. Bên ấy mất mặt mà không biết vì đâu.',
-        risk: { p: 0.3, fail: { d: { muu: -4, an: -6, thucphi: -8 }, flag: ['fd_tp_nguoi'] }, failNote: 'Con bé biết mình bị lộ, bịa thêm chuyện bạn chê Hoàng thượng. Tin ấy đến tai ngài trước khi bạn kịp hay.' },
+        risk: { p: 0.3, fail: { d: { muu: -4, an: -6, thucphi: -8 }, flag: ['fd_tp_nguoi'] }, failNote: 'Con bé biết mình bị lộ, bịa thêm chuyện bạn chê Hoàng thượng. Tin ấy lan khắp hậu cung trước khi bạn kịp hay.' },
       },
       { t: 'Trả nó gấp đôi bạc, để nó làm tai mắt cho mình', need: { num: { tien: [50, 99999] } }, lockHint: 'Cần 50 quan', fx: { d: { tien: -50, muu: 6, thucphi: -4 }, flag: ['fd_tp_nguoi', 'fd_tp_tai_mat'] }, note: 'Từ đó bạn biết Thục phi ăn gì, ngủ giờ nào, ghét ai hơn ghét bạn.' },
     ],
@@ -173,7 +175,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_con',
     chapter: [3, 4, 5],
-    when: { kids: 1, num: { thucphi: [-100, -50] }, not: [...NG, 'thai_hau', 'hau_nuoi'] },
+    when: { kids: 1, num: { thucphi: [-100, -50] }, not: [...NG, 'thai_hau', 'hau_nuoi', 'hoang_hau'], riv: { thucphi: { st: ['manh', 'yeu'] }, hoanghau: { st: ['manh', 'yeu', 'phuc'] } } },
     weight: 3,
     place: 'dien',
     time: 'ngay',
@@ -198,7 +200,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_dem',
     chapter: [3, 4, 5, 6, 7],
-    when: { num: { thucphi: [-100, -70] }, not: [...NG, 'fd_tp_hoa'] },
+    when: { num: { thucphi: [-100, -70] }, not: [...NG, 'fd_tp_hoa'], riv: TP_ON },
     weight: 4,
     place: 'vien',
     time: 'dem',
@@ -225,7 +227,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_gia',
     chapter: [7],
-    when: { num: { thucphi: [-100, -40] }, not: OUT },
+    when: { num: { thucphi: [-100, -40] }, not: OUT, riv: { thucphi: { st: ['manh', 'yeu', 'phuc'] } } },
     weight: 3,
     place: 'phong',
     time: 'chieu',
@@ -246,7 +248,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_tp_on',
     chapter: [2, 3, 4, 5, 6],
-    when: { num: { thucphi: [40, 100] }, not: NG },
+    when: { num: { thucphi: [40, 100] }, not: NG, riv: { thucphi: { st: ['manh', 'yeu', 'phuc'] } } },
     weight: 3,
     place: 'vuon',
     time: 'chieu',
@@ -259,7 +261,7 @@ export const FEUD: Card[] = [
     text: ['Thục phi vờ ngắm cá, đứng sát bên bạn.', '"Tối mai người ta sẽ lục viện em tìm bùa. Gầm giường phía tây, em xem lại đi."'],
     choices: [
       { t: 'Về ngay, lật tung gầm giường', fx: { d: { muu: 6, thucphi: 6, an: 3 }, flag: ['fd_tp_on'] }, note: 'Dưới viên gạch lỏng có một hình nhân bằng gỗ đào. Đêm sau, người lục viện về tay không.' },
-      { t: 'Hỏi thẳng: "Sao chị lại báo cho em?"', fx: { d: { thucphi: 10, duc: 3, muu: 2 }, flag: ['fd_tp_on'] }, note: '"Vì lần trước em không đẩy ta xuống." Thục phi đi rồi bạn mới về lật gầm giường, vẫn còn kịp.' },
+      { t: 'Hỏi thẳng: "Sao chị lại báo cho em?"', fx: { d: { thucphi: 10, duc: 3, muu: 2 }, flag: ['fd_tp_on'] }, note: '"Vì em chưa từng dồn ta đến đường cùng." Thục phi đi rồi bạn mới về lật gầm giường, vẫn còn kịp.' },
     ],
   },
 
@@ -267,13 +269,14 @@ export const FEUD: Card[] = [
   {
     id: 'fd_hh_quy',
     chapter: [1, 2, 3, 4],
-    when: { num: { hoanghau: [-100, -25] }, not: NG },
+    when: { num: { hoanghau: [-100, -25] }, not: [...NG, 'hoang_hau'], riv: { hoanghau: { st: ['manh', 'yeu'] } } },
     weight: 3,
     place: 'dien',
     time: 'ngay',
     cast: ['me', 'hoanghau'],
     mood: 'buon',
     moods: { hoanghau: 'gian' },
+    where: 'ngoài sân cung Hoàng hậu',
     who: 'hoanghau',
     lead: 'Trung cung đã ghi tên bạn vào sổ những kẻ không biết phận.',
     title: 'Quỳ sân trung cung',
@@ -291,32 +294,32 @@ export const FEUD: Card[] = [
   {
     id: 'fd_hh_luong',
     chapter: [2, 3, 4, 5],
-    when: { num: { hoanghau: [-100, -40] }, not: [...NG, 'diet_dich', 'thai_hau'] },
+    when: { num: { hoanghau: [-100, -40] }, not: [...NG, 'diet_dich', 'thai_hau', 'hoang_hau'], riv: { hoanghau: { st: ['manh', 'yeu'] } } },
     weight: 3,
     place: 'phong',
-    time: 'dem',
+    time: 'chieu',
     cast: ['me', 'phuc'],
     mood: 'buon',
     moods: { phuc: 'lo' },
     who: 'phuc',
     lead: 'Trung cung không cần nói ra, chỉ cần một nét bút trong sổ.',
     title: 'Nửa phần lương',
-    text: ['Phúc mang lương tháng đến, chỉ còn một nửa, than sưởi cũng bớt hai giỏ.', '"Lệnh trung cung, nói viện người tiêu pha quá độ. Nô tài chỉ dám làm theo."'],
+    text: ['Phúc mang lương tháng đến, chỉ còn một nửa, dầu đèn cũng bớt hai vò.', '"Lệnh trung cung, nói viện người tiêu pha quá độ. Nô tài chỉ dám làm theo."'],
     choices: [
-      { t: 'Cầm bớt đồ trang sức, nhịn qua mùa đông', fx: { d: { tien: -40, sac: -3, duc: 5 }, flag: ['fd_hh_luong'] }, note: 'Bạn mặc ba lớp áo ngồi thêu. Tay cóng, đường kim vẫn thẳng.' },
+      { t: 'Cầm bớt đồ trang sức, nhịn cho qua mấy tháng', fx: { d: { tien: -40, sac: -3, duc: 5 }, flag: ['fd_hh_luong'] }, note: 'Bạn ngồi thêu dưới một ngọn đèn. Mắt mỏi, đường kim vẫn thẳng.' },
       {
         t: 'Mang sổ lương lên cung Thái hậu',
         fx: { d: { thaihau: 4, hoanghau: -15, muu: 4, tien: 20 }, flag: ['fd_hh_luong'] },
         note: 'Thái hậu cho trả đủ lương. Hoàng hậu bị nhắc một câu trước mặt các phi tần, và nhớ cả đời.',
         risk: { p: 0.3, fail: { d: { thaihau: -6, hoanghau: -15, an: -4 }, flag: ['fd_hh_luong'] }, failNote: 'Thái hậu gạt sổ sang bên: "Việc hậu cung là việc của trung cung." Bạn về tay không.' },
       },
-      { t: 'Thêu một tấm khăn, tự mang sang tạ lỗi với Hoàng hậu', fx: { d: { hoanghau: 25, an: -3, tien: -10 }, flag: ['fd_hh_luong', 'fd_hh_hoa'] }, note: 'Hoàng hậu cầm khăn, lật mặt trái xem đường chỉ. Tháng sau lương về đủ, kèm một giỏ than.' },
+      { t: 'Thêu một tấm khăn, tự mang sang tạ lỗi với Hoàng hậu', fx: { d: { hoanghau: 25, an: -3, tien: -10 }, flag: ['fd_hh_luong', 'fd_hh_hoa'] }, note: 'Hoàng hậu cầm khăn, lật mặt trái xem đường chỉ. Tháng sau lương về đủ, kèm một vò dầu đèn.' },
     ],
   },
   {
     id: 'fd_hh_lanh',
     chapter: [2, 3, 4],
-    when: { num: { hoanghau: [-100, -70] }, not: [...NG, 'diet_dich', 'fd_hh_hoa'] },
+    when: { num: { hoanghau: [-100, -70] }, not: [...NG, 'diet_dich', 'fd_hh_hoa', 'hoang_hau'], riv: { hoanghau: { st: ['manh', 'yeu'] } } },
     weight: 4,
     place: 'dien',
     time: 'chieu',
@@ -342,7 +345,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_hh_che',
     chapter: [2, 3, 4, 5, 6],
-    when: { num: { hoanghau: [40, 100] }, not: [...NG, 'diet_dich'] },
+    when: { num: { hoanghau: [40, 100] }, not: [...NG, 'diet_dich', 'hoang_hau'], riv: { hoanghau: { st: ['manh', 'yeu', 'phuc'] }, thucphi: { st: ['manh', 'yeu'] } } },
     weight: 3,
     place: 'dien',
     time: 'ngay',
@@ -404,7 +407,7 @@ export const FEUD: Card[] = [
     text: ['Ma ma Trịnh đọc ý chỉ ngay giữa sân: bạn "mê hoặc thánh thượng", cấm túc nửa năm.', 'Hai thái giám khóa cổng viện bằng một ổ khóa đồng to bằng nắm tay.'],
     choices: [
       { t: 'Chép kinh Hiếu, mỗi tháng dâng một quyển', fx: { d: { duc: 8, an: -10, thaihau: 20 }, flag: ['fd_th_cam'] }, note: 'Quyển thứ sáu, Thái hậu đọc đến trang cuối. Ổ khóa được tháo trước hạn mười ngày.' },
-      { t: 'Nhờ người lén đưa thư cho Hoàng thượng', need: { num: { vua: [25, 100] } }, lockHint: 'Cần Hoàng thượng từ 25', fx: { d: { vua: 5, an: 5, thaihau: -15 }, flag: ['fd_th_cam'] }, note: 'Hoàng thượng sang cung mẹ xin. Khóa được tháo, nhưng Thái hậu nói: "Nó dạy được con ta cãi mẹ rồi."' },
+      { t: 'Nhờ thái giám đưa cơm lén giắt thư cho Hoàng thượng', need: { num: { vua: [25, 100] } }, lockHint: 'Cần Hoàng thượng từ 25', fx: { d: { vua: 5, an: 5, thaihau: -15 }, flag: ['fd_th_cam'] }, note: 'Hoàng thượng sang cung mẹ xin. Khóa được tháo, nhưng Thái hậu nói: "Nó dạy được con ta cãi mẹ rồi."' },
       { t: 'Ngồi yên, đợi hết hạn', fx: { d: { an: -15, sac: -4, muu: 3 }, flag: ['fd_th_cam'] }, note: 'Nửa năm không ai đến, kể cả đèn. Ra khỏi viện, bạn thấy hậu cung có ba gương mặt mới.' },
     ],
   },
@@ -461,7 +464,7 @@ export const FEUD: Card[] = [
     who: 'phuc',
     lead: 'Hoàng thượng đã chán bạn, và cả hậu cung đều biết.',
     title: 'Thẻ bài úp mặt',
-    text: ['Ba tháng nay, thẻ bài tên bạn lần nào cũng bị Hoàng thượng lật úp xuống khay.', 'Phúc ngập ngừng: "Nô tài đặt được thẻ người lên trên cùng. Ngài lật nữa thì nô tài cũng hết cách."'],
+    text: ['Ba tháng nay, thẻ bài tên bạn lần nào cũng bị Hoàng thượng lật úp xuống khay.', 'Phúc ngập ngừng: "Theo lệ, thẻ của người nằm giữa khay. Muốn lên trên cùng, nô tài phải lo lót cả phòng Kính sự."'],
     choices: [
       {
         t: 'Đưa Phúc bạc, nhờ đặt thẻ lên trên',
@@ -562,7 +565,7 @@ export const FEUD: Card[] = [
     choices: [
       { t: 'Trả hết nợ cho nó, dặn từ nay đừng nhận của ai', fx: { d: { tien: -40, hanh: 30, duc: 3 }, flag: ['fd_hanh_ban'] }, note: 'Hạnh khóc đến sáng. Từ đó nó ngủ ngay trước cửa phòng bạn.' },
       { t: 'Không nói gì, để nó mang tin giả sang bên kia', fx: { d: { muu: 7, hanh: -10, thucphi: -6 }, flag: ['fd_hanh_ban', 'hanh_phan'] }, note: 'Bên kia mắc lừa hai lần. Lần thứ ba, Hạnh nhìn bạn và biết bạn đã biết.' },
-      { t: 'Đuổi nó về quê ngay đêm nay', fx: { d: { hanh: -30, muu: 2, an: -2 }, flag: ['fd_hanh_ban', 'fd_hanh_di', 'hanh_phan'] }, note: 'Hạnh đi không mang theo gì ngoài bọc áo. Viện bạn bỗng rộng và lạnh hẳn.' },
+      { t: 'Trả nó về phủ Nội vụ, xin cho về quê', fx: { d: { hanh: -30, muu: 2, an: -2 }, flag: ['fd_hanh_ban', 'fd_hanh_di', 'hanh_phan'] }, note: 'Hạnh đi không mang theo gì ngoài bọc áo. Viện bạn bỗng rộng và lạnh hẳn.' },
     ],
   },
   {
@@ -578,7 +581,7 @@ export const FEUD: Card[] = [
     who: 'phuc',
     lead: 'Hạnh hận bạn đã lâu. Sáng nay nó không còn ở đó.',
     title: 'Hộp tư trang trống',
-    text: ['Sáng ra giường Hạnh lạnh tanh, hộp tư trang của bạn trống trơn.', 'Phúc chạy vào: "Lính cửa Tây nói canh tư có một đứa hầu ra ngoài, mang theo cả sổ thư của viện."'],
+    text: ['Sáng ra giường Hạnh lạnh tanh, hộp tư trang của bạn trống trơn.', 'Phúc chạy vào: "Lính cửa Tây nói canh tư có một đứa hầu cầm thẻ bài viện người ra ngoài, mang theo cả sổ thư."'],
     choices: [
       { t: 'Báo cấm quân đuổi bắt', fx: { d: { tien: 20, hanh: -20, duc: -4, muu: 3 }, flag: ['fd_hanh_cap', 'hanh_phan'] }, note: 'Hạnh bị bắt ở bến sông, đánh ba mươi roi rồi đuổi khỏi cung. Sổ thư thì không tìm lại được.' },
       { t: 'Để nó đi, coi như trả công mấy năm hầu hạ', fx: { d: { tien: -50, duc: 6, hanh: 20 }, flag: ['fd_hanh_cap', 'hanh_phan'] }, note: 'Bạn bảo Phúc ghi sổ là Hạnh xin về quê. Mấy năm sau có người mang đến một gói chè, không đề tên.' },
@@ -607,7 +610,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_hanh_bang',
     chapter: [1, 2, 3, 4, 5, 6],
-    when: { flags: ['fd_hanh_bang'], not: [...OUT, 'thai_hau', 'hanh_phan'] },
+    when: { flags: ['fd_hanh_bang'], not: [...OUT, 'thai_hau', 'hanh_phan'], riv: TP_ON },
     weight: 3,
     place: 'phong',
     time: 'dem',
@@ -658,7 +661,7 @@ export const FEUD: Card[] = [
     who: 'phuc',
     lead: 'Phúc ghét bạn, mà Phúc lại giữ sổ thư.',
     title: 'Thư nhà không tới',
-    text: ['Ba tháng không có thư của {me}, hôm nay bạn thấy một góc phong bì quen cháy dở trong lò than phòng Phúc.', 'Phúc cúi đầu: "Chắc lẫn với giấy vụn. Nô tài sơ ý."'],
+    text: ['Ba tháng không có thư của {me}. Người bạn sai đi dò mang về một góc phong bì quen, cháy dở, nhặt trong lò than phòng Phúc.', 'Phúc cúi đầu: "Chắc lẫn với giấy vụn. Nô tài sơ ý."'],
     choices: [
       { t: 'Biếu Phúc một nén bạc, nhờ từ nay để ý giùm', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, phuc: 20 }, flag: ['fd_phuc_thu'] }, note: 'Thư sau đến đúng hẹn, còn được vuốt phẳng. Bạn hiểu cái giá của một con dấu chuyển thư.' },
       {
@@ -667,7 +670,7 @@ export const FEUD: Card[] = [
         note: 'Phúc bị phạt bổng ba tháng. Từ đó thư của bạn đến đủ, nhưng luôn bị bóc trước.',
         risk: { p: 0.3, fail: { d: { phuc: -20, the: -4 }, flag: ['fd_phuc_thu'] }, failNote: 'Phủ Nội vụ toàn người quen của Phúc. Góc giấy bị coi là "không đủ làm bằng".' },
       },
-      { t: 'Từ nay gửi thư theo đường khác', fx: { d: { tien: -15, muu: 5, phuc: -5 }, flag: ['fd_phuc_thu'] }, note: 'Bạn nhờ người đi chợ mang thư ra ngoài. Chậm hơn, đắt hơn, nhưng không qua tay Phúc.' },
+      { t: 'Từ nay gửi thư theo đường khác', fx: { d: { tien: -15, muu: 5, phuc: -5 }, flag: ['fd_phuc_thu'] }, note: 'Bạn nhờ thái giám đi chợ giắt thư mang ra ngoài. Chậm hơn, đắt hơn, nhưng không qua tay Phúc.' },
     ],
   },
   {
@@ -724,7 +727,7 @@ export const FEUD: Card[] = [
   {
     id: 'fd_quan_so',
     chapter: [2, 3, 4, 5, 6, 7],
-    when: { num: { quan: [-100, -25] }, not: NG },
+    when: { num: { quan: [-100, -25] }, not: NG, riv: { thaipho: { st: ['an', 'manh', 'yeu'] } } },
     weight: 3,
     place: 'phong',
     time: 'chieu',
@@ -737,14 +740,14 @@ export const FEUD: Card[] = [
     text: ['Phúc mang về bản chép tờ sớ của Thái phó Tôn: "hậu cung xa xỉ, có kẻ thò tay vào việc triều".', '"Tên người không ghi, nhưng cả triều đều biết ông ấy nói ai."'],
     choices: [
       { t: 'Tự xin giảm nửa lương, góp vào kho cứu đói', fx: { d: { tien: -60, duc: 8, quan: 20 }, flag: ['fd_quan_so'] }, note: 'Thái phó đọc tờ tâu của bạn giữa triều, im lặng một lúc rồi rút tờ sớ về.' },
-      { t: 'Nhờ tướng Lê Trực lên tiếng bênh', need: { num: { tuong: [20, 100] } }, lockHint: 'Cần võ tướng từ 20', fx: { d: { tuong: -4, quan: -15, the: 5 }, flag: ['fd_quan_so'] }, note: 'Lê Trực đập bàn giữa triều. Tờ sớ bị gác, và phe văn ghi thêm tên ông vào sổ thù.' },
+      { t: 'Nhờ người nhắn tướng Lê Trực lên tiếng bênh', need: { num: { tuong: [20, 100] } }, lockHint: 'Cần võ tướng từ 20', fx: { d: { tuong: -4, quan: -15, the: 5 }, flag: ['fd_quan_so'] }, note: 'Lê Trực đập bàn giữa triều. Tờ sớ bị gác, và phe văn ghi thêm tên ông vào sổ thù.' },
       { t: 'Mặc kệ, sống như cũ', fx: { d: { quan: -8, an: -3, muu: 2 }, flag: ['fd_quan_so'] }, note: 'Tờ sớ thứ hai dài gấp đôi tờ đầu.' },
     ],
   },
   {
     id: 'fd_quan_ngo',
     chapter: [4, 5, 6, 7],
-    when: { num: { quan: [-100, -70] }, not: NG },
+    when: { num: { quan: [-100, -70] }, not: NG, riv: { thaipho: { st: ['an', 'manh', 'yeu'] } } },
     weight: 4,
     place: 'dien',
     time: 'ngay',
@@ -753,15 +756,16 @@ export const FEUD: Card[] = [
     moods: { quan: 'gian' },
     who: 'quan',
     where: 'trên lầu cửa Ngọ',
+    bg: 'cong',
     lead: 'Phe quan văn hận bạn đến mức không còn giữ lễ.',
     title: 'Trăm quan quỳ cửa Ngọ',
     text: ['Thái phó Tôn dẫn hơn trăm quan quỳ trước cửa Ngọ, dâng sớ xin trị tội bạn "làm loạn cương thường".', '"Ngày nào người ấy còn trong cung, ngày ấy chúng thần còn quỳ."'],
     choices: [
       { t: 'Xuống trước cửa, tháo trâm tạ tội trước trăm quan', fx: { d: { duc: 10, quan: 25, the: -10, an: -8 }, flag: ['fd_quan_ngo'] }, note: 'Thái phó đứng dậy trước tiên. Ông đỡ bạn, nói nhỏ: "Biết lùi là biết giữ nước."' },
-      { t: 'Cho cấm quân giải tán', need: { num: { tuong: [25, 100] } }, lockHint: 'Cần võ tướng từ 25', fx: { d: { tuong: 4, quan: -20, duc: -8, muu: 6 }, flag: ['fd_quan_ngo'] }, note: 'Lính dàn hàng, quan văn lùi từng bước. Sử quan về chép một dòng rất dài.' },
+      { t: 'Nhờ võ tướng cho cấm quân giải tán', need: { num: { tuong: [25, 100] } }, lockHint: 'Cần võ tướng từ 25', fx: { d: { tuong: 4, quan: -20, duc: -8, muu: 6 }, flag: ['fd_quan_ngo'] }, note: 'Lính dàn hàng, quan văn lùi từng bước. Sử quan về chép một dòng rất dài.' },
       { t: 'Đưa tờ giấy có ấn của Thái hậu ra', need: { flags: ['fd_th_y'] }, lockHint: 'Cần giữ tờ giấy Thái hậu trao', fx: { d: { quan: 15, the: 8, muu: 4 }, flag: ['fd_quan_ngo'] }, note: 'Tờ giấy chỉ có hai dòng chữ Thái hậu. Thái phó đọc xong, lạy về phía cung Tĩnh Hòa rồi cho trăm quan lui.' },
       {
-        t: 'Liều bắt Thái phó Tôn hạ ngục để răn trăm quan',
+        t: 'Liều mượn lệnh vua, sai cấm quân bắt Thái phó Tôn hạ ngục',
         fx: { d: { quan: -25, muu: 10, the: 10, duc: -10 }, flag: ['fd_quan_ngo'] },
         note: 'Trăm quan tan trong một buổi. Từ đó trên triều không ai dám nhắc tên bạn, kể cả để khen.',
         risk: { p: 0.5, fail: { end: 'd_fd_ngo_mon' }, failNote: 'Cấm quân không chịu bắt người đứng đầu sĩ phu. Đến lượt bạn bị trói.' },
@@ -772,17 +776,16 @@ export const FEUD: Card[] = [
   {
     id: 'fd_quan_do',
     chapter: [2, 3, 4, 5, 6, 7],
-    when: { num: { quan: [40, 100] }, not: NG },
+    when: { num: { quan: [40, 100] }, not: NG, riv: { thaipho: { st: ['an', 'manh', 'yeu'] } } },
     weight: 3,
-    place: 'dien',
-    time: 'ngay',
-    cast: ['me', 'quan'],
+    place: 'phong',
+    time: 'chieu',
+    cast: ['me', 'phuc'],
     mood: 'binh',
-    who: 'quan',
-    where: 'ngoài hành lang chính điện',
+    who: 'phuc',
     lead: 'Bao năm bạn giữ lễ với sĩ phu, nay sĩ phu giữ lời cho bạn.',
     title: 'Thái phó bác sớ',
-    text: ['Có ngự sử dâng sớ vu nhà bạn tư thông với giặc, Thái phó Tôn bác ngay giữa triều.', 'Tan triều ông đi ngang, chỉ nói: "Người ngay thì lão không để ai vu. Thế thôi."'],
+    text: ['Có ngự sử dâng sớ vu nhà bạn tư thông với giặc, Thái phó Tôn bác ngay giữa triều.', 'Tan triều, Phúc mang vào một câu ông nhắn: "Người ngay thì lão không để ai vu. Thế thôi."'],
     choices: [
       { t: 'Gửi lễ tạ, kèm bộ sách quý', fx: { d: { tien: -25, quan: 6, the: 8 }, flag: ['fd_quan_do'] }, note: 'Ông trả lễ, giữ sách. Trong triều từ đó có người gọi viện bạn là "viện có chữ".' },
       { t: 'Xin ông dạy chữ cho con', need: { kids: 1 }, lockHint: 'Cần có con', fx: { d: { quan: 10, duc: 4, the: 4 }, flag: ['fd_quan_do', 'fd_quan_thay'] }, note: 'Thái phó nhận dạy mỗi tuần hai buổi. Con bạn về đọc thuộc chữ "trung" trước chữ "hiếu".' },
@@ -796,7 +799,7 @@ export const FEUD: Card[] = [
     when: { num: { tuong: [-100, -25] }, not: NG },
     weight: 3,
     place: 'vien',
-    time: 'dem',
+    time: 'ngay',
     cast: ['me', 'phuc'],
     mood: 'so',
     moods: { phuc: 'lo' },
@@ -821,9 +824,10 @@ export const FEUD: Card[] = [
     mood: 'so',
     moods: { tuong: 'gian' },
     who: 'tuong',
+    where: 'ở cổng viện, sát cửa Tây',
     lead: 'Phe võ tướng ghét bạn đã lâu. Đêm nay họ đứng nhìn.',
     title: 'Kiêu binh đòi lương',
-    text: ['Kiêu binh phá cửa Tây đòi lương, lửa cháy đến tường viện bạn mà quân Lê Trực vẫn đứng ngoài hào.', 'Lê Trực ngồi trên ngựa: "Lính đói thì đòi người đã bớt lương họ. Mạt tướng không có lệnh."'],
+    text: ['Kiêu binh phá cửa Tây đòi lương, lửa cháy đến tường viện bạn mà quân Lê Trực vẫn đứng ngoài hào.', 'Bên kia hào, Lê Trực ngồi trên ngựa nói vọng sang: "Lính đói thì đòi người đã bớt lương họ. Mạt tướng không có lệnh."'],
     choices: [
       { t: 'Mở hòm riêng chia tiền cho lính', need: { num: { tien: [60, 99999] } }, lockHint: 'Cần 60 quan', fx: { d: { tien: -100, tuong: 25, the: -4 }, flag: ['fd_tuong_bien'] }, note: 'Lính tan khi trời rạng. Lê Trực xuống ngựa, lần đầu chắp tay với bạn.' },
       { t: 'Bỏ viện, chạy vào điện trong lánh nạn', fx: { d: { the: -10, tien: -40, duc: 2, muu: 2 }, flag: ['fd_tuong_bien'] }, note: 'Sáng ra viện bạn chỉ còn bốn bức tường ám khói. Đồ đạc, thư từ theo lửa hết.' },
@@ -850,7 +854,7 @@ export const FEUD: Card[] = [
     where: 'trên đường về từ lăng',
     lead: 'Tướng Lê Trực chưa quên những lần bạn đứng về phía quân.',
     title: 'Ngựa sổng đường lăng',
-    text: ['Ngựa kéo kiệu bạn bỗng lồng lên, phóng thẳng về phía bờ vực.', 'Lê Trực phi ngựa cắt ngang, chém đứt dây cương: "Có kẻ cắt dây yên. Nương nương về rồi hẵng hỏi."'],
+    text: ['Ngựa kéo xe bạn bỗng lồng lên, phóng thẳng về phía bờ vực.', 'Lê Trực phi ngựa cắt ngang, chém đứt dây cương: "Có kẻ cắt dây yên. Nương nương về rồi hẵng hỏi."'],
     choices: [
       { t: 'Tạ ơn ngay giữa đường, trước mặt mọi người', fx: { d: { tuong: 6, the: 8, quan: -6 }, flag: ['fd_tuong_cuu'] }, note: 'Ai cũng thấy tướng quân cứu bạn. Phe văn về thì thầm "hậu cung kết võ thần".' },
       { t: 'Nhờ ông tra xem ai cắt dây', fx: { d: { tuong: 4, muu: 8, thucphi: -6 }, flag: ['fd_tuong_cuu'] }, note: 'Ba hôm sau, một tên mã phu được vớt lên dưới sông. Lê Trực gửi vào một chữ: "Thục".' },
