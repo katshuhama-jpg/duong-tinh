@@ -151,6 +151,7 @@ function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
   m.nghia = { dir: `/nv/${l.chapter >= 6 || l.riv?.nghia?.st === 'giang' ? 'nghia2' : 'nghia'}`, face: 'l' };
   const king = l.flags.includes('thai_hau') || l.flags.includes('nhiep');
   m.con = { dir: `/nv/${king ? (l.chapter >= 6 ? 'con_vua2' : 'con_vua') : l.chapter >= 4 ? 'con2' : 'con'}`, face: 'l' };
+  m.tuong = { dir: `/nv/${l.chapter >= 6 ? 'tuong2' : 'tuong'}`, face: 'l' };
   m.phuc = { dir: `/nv/${l.age >= 42 || l.chapter >= 5 ? 'phuc2' : 'phuc'}`, face: 'l' };
   const hh = l.riv?.hoanghau?.st;
   m.hoanghau = { dir: `/nv/${hh === 'giang' || hh === 'phuc' || l.flags.includes('hoang_hau') || l.age >= 56 ? 'hoanghau3' : l.age >= 40 || l.chapter >= 4 ? 'hoanghau2' : 'hoanghau'}`, face: 'l' };
