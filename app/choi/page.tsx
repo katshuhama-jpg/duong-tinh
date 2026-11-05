@@ -157,6 +157,7 @@ function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
   m.su = { dir: '/nv/su', face: 'l' };
   m.meday = { dir: `/nv/${l.chapter >= 4 || l.rank >= 5 ? 'meday2' : 'meday'}`, face: 'l' };
   m.cungnu = { dir: '/nv/cungnu', face: 'l' };
+  m.ngoai = { dir: '/nv/ngoai', face: 'l' };
   m.phuc = { dir: `/nv/${l.age >= 42 || l.chapter >= 5 ? 'phuc2' : 'phuc'}`, face: 'l' };
   const hh = l.riv?.hoanghau?.st;
   m.hoanghau = { dir: `/nv/${hh === 'giang' || hh === 'phuc' || l.flags.includes('hoang_hau') || l.age >= 56 ? 'hoanghau3' : l.age >= 40 || l.chapter >= 4 ? 'hoanghau2' : 'hoanghau'}`, face: 'l' };
