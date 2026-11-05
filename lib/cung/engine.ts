@@ -2,6 +2,7 @@
  * Bộ máy một đời trong cung: rút thẻ, áp hệ quả, đếm năm, lương, chặng, kết cục.
  * Thuần dữ liệu (không đụng tới giao diện) để chạy thử hàng loạt bằng script.
  */
+import { TALES } from './content/tales';
 import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, guardsOf, type Rank } from './world';
 import { CRISIS } from './content/big';
@@ -52,6 +53,7 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
   pickFocus(l);
   l.showCh = { to: 1 };
   l.card = nextCard(l);
+  queueTale(l);
   return l;
 }
 
@@ -93,6 +95,26 @@ export function applyRiv(l: Life, d: Fx['riv']) {
     else if (r.th <= 10 && r.st === 'manh') r.st = 'yeu';
     else if (r.th >= 30 && r.st === 'yeu') r.st = 'manh';
   }
+}
+/** lời kể trước một sự kiện lớn: chỉ một lần mỗi đời */
+function queueTale(l: Life) {
+  const id = l.card;
+  if (!id || l.end || l.seen.includes(id) || (l.tales ?? []).some((x) => x.card === id)) return;
+  const tl = TALES[id];
+  if (!tl) return;
+  l.tales = [...(l.tales ?? []), { t: tl.t, lines: tl.lines.map((x) => fillText(x, l.origin)), card: id }];
+  l.log.push({ age: Math.floor(l.age), t: `${tl.t}. ${fillText(tl.lines[0], l.origin)}`, k: 'tale' });
+}
+/** lời kể khi một mối nguy ngã */
+function fallTale(k: RivalK, st: RivalState['st']): { t: string; lines: string[]; riv: RivalK } | null {
+  const n = RIV_NAME[k];
+  if (st === 'chet')
+    return { t: `${n} không còn`, riv: k, lines: [`Trong cung, người chết không được nhắc tên quá ba ngày. Viện của ${n} khóa lại, đồ đạc kiểm kê vào kho, người hầu chia về các viện khác.`, 'Có người khóc thật, có người khóc cho phải lẽ. Bạn nhớ từng việc người ấy đã làm với mình, và cả cái giá mình đã trả để có ngày hôm nay.', 'Một cái ghế trong hậu cung vừa trống. Sẽ có người khác muốn ngồi vào.'] };
+  if (st === 'giang')
+    return { t: `${n} rời khỏi cuộc chơi`, riv: k, lines: [`Chiếu xuống vào một buổi sáng rất bình thường. ${n} rời chỗ cũ, mang theo ít hơn những gì đã mang đến.`, 'Những người từng theo hầu lần lượt tìm chủ mới. Có mấy người tìm đến cửa viện bạn.', 'Trong cung không ai ngã hẳn, chỉ là chưa đứng dậy được. Bạn biết vậy, nên chưa vội mừng.'] };
+  if (st === 'phuc')
+    return { t: `${n} cúi đầu`, riv: k, lines: [`Chiều ấy ${n} tự đến viện bạn, không mang theo ai, lần đầu tiên cúi đầu trước.`, 'Kẻ thù quy phục là người hiểu mình nhất, cũng là người phải canh kỹ nhất.', 'Từ nay, những gì ' + n + ' biết về hậu cung cũng là của bạn.'] };
+  return null;
 }
 const RIV_NAME = Object.fromEntries(RIVALS.map((x) => [x.k, x.t])) as Record<RivalK, string>;
 const ST_LOG: Partial<Record<RivalState['st'], string>> = { giang: 'bị giáng, rời khỏi cuộc chơi', chet: 'đã chết', phuc: 'đã quy phục bạn', yeu: 'thất thế' };
@@ -376,7 +398,11 @@ export function choose(l0: Life, idx: number): Result {
     const was = JSON.parse(riv0 || 'null') as Record<RivalK, RivalState> | null;
     for (const k of Object.keys(l.riv) as RivalK[]) {
       const st = l.riv[k].st;
-      if (was && was[k] && was[k].st !== st && ST_LOG[st]) l.log.push({ age: Math.floor(l.age), t: `${RIV_NAME[k]} ${ST_LOG[st]}.`, k: 'rank' });
+      if (was && was[k] && was[k].st !== st && ST_LOG[st]) {
+        l.log.push({ age: Math.floor(l.age), t: `${RIV_NAME[k]} ${ST_LOG[st]}.`, k: 'rank' });
+        const ft = fallTale(k, st);
+        if (ft) l.tales = [...(l.tales ?? []), ft];
+      }
     }
   }
 
@@ -394,6 +420,7 @@ export function choose(l0: Life, idx: number): Result {
     else if (kind === 'small') l.smalls += 1;
     l.card = nextCard(l);
   }
+  queueTale(l);
   if (l.end && endingOf(l.end)?.dead) l.omen = card.omen ?? 'Có những điềm báo chỉ nhìn lại mới thấy.';
 
   // hệ quả nhìn thấy được
@@ -430,6 +457,7 @@ export function rewindTo(l: Life, i: number): Life | null {
   b.end = null;
   b.omen = undefined;
   b.log.push({ age: Math.floor(b.age), t: 'Quay lại ngã rẽ, chọn lại một lần nữa.', k: 'note' });
+  b.tales = undefined;
   return b;
 }
 
@@ -442,5 +470,6 @@ export function rewind(l: Life): Life | null {
   b.end = null;
   b.omen = undefined;
   b.log.push({ age: Math.floor(b.age), t: 'Quay lại ngã rẽ. Lần này, nhớ lấy điềm báo.', k: 'note' });
+  b.tales = undefined;
   return b;
 }

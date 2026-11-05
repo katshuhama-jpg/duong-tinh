@@ -614,6 +614,36 @@ export default function Play() {
     );
   }
 
+  if (life.tales?.length && !res && !life.showCh && !life.end) {
+    const tl = life.tales[0];
+    const tc = tl.card ? cardOf(tl.card) : null;
+    const rv = tl.riv ? RIVALS.find((x) => x.k === tl.riv) : null;
+    const scene = tc
+      ? { place: tc.place, time: tc.time ?? 'ngay', cast: tc.cast.filter((c) => c !== 'me').slice(0, 2) as CastK[], bg: bgOf(tc) }
+      : { place: 'vien' as PlaceK, time: 'chieu' as const, cast: rv ? [rv.cast as CastK] : ([] as CastK[]), bg: undefined };
+    const go = () => keep({ ...life, tales: life.tales!.slice(1) });
+    return (
+      <main className="c-app c-tale">
+        <div className="c-band" aria-hidden="true" />
+        <div className="c-page">
+          <p className="c-tale-kicker">Lời kể</p>
+          <h2 className="c-tale-title">{tl.t}</h2>
+          <div className="c-tale-art">
+            <Scene bgImg={`/bg/${scene.bg ?? scene.place}/${scene.time}.webp`} place={scene.place} time={scene.time} cast={scene.cast} bg={scene.bg} mood={rv ? 'buon' : 'binh'} looks={looksOf(life)} imgs={imgsOf(life)} label={tl.t} />
+          </div>
+          {tl.lines.map((x, i) => (
+            <p key={i} className={`c-tale-line ${i === 0 ? 'c-tale-drop' : ''}`} style={{ animationDelay: `${0.3 + i * 0.9}s` }}>
+              {x}
+            </p>
+          ))}
+          <button type="button" className="c-btn c-tale-line" style={{ animationDelay: `${0.3 + tl.lines.length * 0.9}s` }} onClick={go}>
+            Đọc tiếp
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   const pick = (i: number) => {
     if (!card || res) return;
     const r = choose(life, i);

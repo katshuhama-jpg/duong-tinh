@@ -334,3 +334,12 @@ a:hover { color: #6d1a11; }
 @keyframes c-breath { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.004, 1.012); } }
 .c-scene .c-imgin { animation: c-fadein 0.35s ease-out both; }
 .c-title.c-brand { font-family: 'Splash', var(--serif); font-weight: 400; font-size: clamp(38px, 12vw, 60px); line-height: 1.15; white-space: nowrap; padding: 6px 0 2px; }
+
+.c-tale .c-page { padding-top: 28px; }
+.c-tale-kicker { text-align: center; letter-spacing: 6px; text-transform: uppercase; font-size: 12px; color: var(--mute); margin: 0; }
+.c-tale-title { font-family: 'Splash', var(--serif); font-weight: 400; font-size: 40px; color: var(--son); text-align: center; margin: 6px 0 14px; line-height: 1.15; }
+.c-tale-art { margin-bottom: 14px; filter: sepia(0.25) saturate(0.85); }
+.c-tale-line { opacity: 0; animation: c-rise 0.8s ease-out forwards; }
+p.c-tale-line { font-family: var(--serif); font-size: 18px; line-height: 1.65; margin: 0 0 12px; opacity: 0; animation: c-rise 0.8s ease-out forwards; }
+.c-tale-drop::first-letter { font-size: 2.2em; float: left; line-height: 0.9; padding: 4px 6px 0 0; color: var(--son); }
+.c-log li.tale span { font-style: italic; color: var(--son2); }

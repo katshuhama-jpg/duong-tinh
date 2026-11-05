@@ -221,7 +221,7 @@ export interface Mark {
 export interface LogLine {
   age: number;
   t: string;
-  k?: 'pick' | 'note' | 'year' | 'rank';
+  k?: 'pick' | 'note' | 'year' | 'rank' | 'tale';
 }
 
 export interface Life {
@@ -260,6 +260,8 @@ export interface Life {
   chStart?: ChapterSnap;
   /** màn chương đang chờ hiện: tổng kết chương vừa xong (nếu có) và mở màn chương mới */
   showCh?: { to: number; from?: ChapterSnap; end?: ChapterSnap; picks?: string[] };
+  /** lời kể đang chờ hiện (trang kể chuyện giữa hai cảnh) */
+  tales?: { t: string; lines: string[]; card?: string; riv?: RivalK }[];
   /** bàn cờ mối nguy */
   riv?: Record<RivalK, RivalState>;
   /** kẻ thù chính của chương đang chơi (thẻ của họ ra dày hơn) */
