@@ -3,7 +3,7 @@
  * Thuần dữ liệu (không đụng tới giao diện) để chạy thử hàng loạt bằng script.
  */
 import { TALES } from './content/tales';
-import type { Card, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
+import type { Card, CastK, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, guardsOf, type Rank } from './world';
 import { CRISIS } from './content/big';
 import { ALL_BIG, BRANCH_CARDS, SMALL, bigsOf } from './content/index';
@@ -102,18 +102,19 @@ function queueTale(l: Life) {
   if (!id || l.end || l.seen.includes(id) || (l.tales ?? []).some((x) => x.card === id)) return;
   const tl = TALES[id];
   if (!tl) return;
-  l.tales = [...(l.tales ?? []), { t: tl.t, lines: tl.lines.map((x) => fillText(x, l.origin)), card: id }];
+  l.tales = [...(l.tales ?? []), { t: tl.t, lines: tl.lines.map((x) => fillText(x, l.origin)), card: id, s: tl.s }];
   l.log.push({ age: Math.floor(l.age), t: `${tl.t}. ${fillText(tl.lines[0], l.origin)}`, k: 'tale' });
 }
 /** lời kể khi một mối nguy ngã */
-function fallTale(k: RivalK, st: RivalState['st']): { t: string; lines: string[]; riv: RivalK } | null {
+function fallTale(k: RivalK, st: RivalState['st']): NonNullable<Life['tales']>[number] | null {
   const n = RIV_NAME[k];
+  const who = [RIVALS.find((x) => x.k === k)!.cast as CastK];
   if (st === 'chet')
-    return { t: `${n} không còn`, riv: k, lines: [`Trong cung, người chết không được nhắc tên quá ba ngày. Viện của ${n} khóa lại, đồ đạc kiểm kê vào kho, người hầu chia về các viện khác.`, 'Có người khóc thật, có người khóc cho phải lẽ. Bạn nhớ từng việc người ấy đã làm với mình, và cả cái giá mình đã trả để có ngày hôm nay.', 'Một cái ghế trong hậu cung vừa trống. Sẽ có người khác muốn ngồi vào.'] };
+    return { t: `${n} không còn`, riv: k, s: { bg: 'lanh', time: 'dem', cast: [] }, lines: [`Trong cung, người chết không được nhắc tên quá ba ngày. Viện của ${n} khóa lại, đồ đạc kiểm kê vào kho, người hầu chia về các viện khác.`, 'Có người khóc thật, có người khóc cho phải lẽ. Bạn nhớ từng việc người ấy đã làm với mình, và cả cái giá mình đã trả để có ngày hôm nay.', 'Một cái ghế trong hậu cung vừa trống. Sẽ có người khác muốn ngồi vào.'] };
   if (st === 'giang')
-    return { t: `${n} rời khỏi cuộc chơi`, riv: k, lines: [`Chiếu xuống vào một buổi sáng rất bình thường. ${n} rời chỗ cũ, mang theo ít hơn những gì đã mang đến.`, 'Những người từng theo hầu lần lượt tìm chủ mới. Có mấy người tìm đến cửa viện bạn.', 'Trong cung không ai ngã hẳn, chỉ là chưa đứng dậy được. Bạn biết vậy, nên chưa vội mừng.'] };
+    return { t: `${n} rời khỏi cuộc chơi`, riv: k, s: { bg: 'cong', time: 'chieu', cast: who }, lines: [`Chiếu xuống vào một buổi sáng rất bình thường. ${n} rời chỗ cũ, mang theo ít hơn những gì đã mang đến.`, 'Những người từng theo hầu lần lượt tìm chủ mới. Có mấy người tìm đến cửa viện bạn.', 'Trong cung không ai ngã hẳn, chỉ là chưa đứng dậy được. Bạn biết vậy, nên chưa vội mừng.'] };
   if (st === 'phuc')
-    return { t: `${n} cúi đầu`, riv: k, lines: [`Chiều ấy ${n} tự đến viện bạn, không mang theo ai, lần đầu tiên cúi đầu trước.`, 'Kẻ thù quy phục là người hiểu mình nhất, cũng là người phải canh kỹ nhất.', 'Từ nay, những gì ' + n + ' biết về hậu cung cũng là của bạn.'] };
+    return { t: `${n} cúi đầu`, riv: k, s: { bg: 'phong', time: 'chieu', cast: who }, lines: [`Chiều ấy ${n} tự đến viện bạn, không mang theo ai, lần đầu tiên cúi đầu trước.`, 'Kẻ thù quy phục là người hiểu mình nhất, cũng là người phải canh kỹ nhất.', 'Từ nay, những gì ' + n + ' biết về hậu cung cũng là của bạn.'] };
   return null;
 }
 const RIV_NAME = Object.fromEntries(RIVALS.map((x) => [x.k, x.t])) as Record<RivalK, string>;

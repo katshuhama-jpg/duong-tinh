@@ -3,14 +3,18 @@
  * Nói cái người chơi chưa biết (lệ cung, chuyện cũ, ai đang tính gì), để sự kiện có bối cảnh.
  * Mỗi lời kể 3-4 câu, giọng kể chuyện, xưng "bạn". Chỉ hiện một lần mỗi đời.
  */
+import type { CastK, TimeK } from '../types';
 export interface Tale {
   t: string;
   lines: string[];
+  /** cảnh riêng của lời kể: nền (thư mục /bg), giờ, người trong tranh, mưa */
+  s?: { bg: string; time: TimeK; cast: CastK[]; rain?: boolean };
 }
 
 export const TALES: Record<string, Tale> = {
   // ---- mở đầu ----
   op_cong: {
+    s: { bg: 'cong', time: 'ngay', cast: [] },
     t: 'Phượng Thành',
     lines: [
       'Phượng Thành có chín lớp cửa. Người thường đi cửa Ngọ, quan đi cửa Đông, còn con gái được tuyển vào hậu cung thì đi cửa Tây, cánh cửa chỉ mở một nửa.',
@@ -19,6 +23,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b1_tra: {
+    s: { bg: 'phong', time: 'dem', cast: ['mama'] },
     t: 'Lệ chén trà',
     lines: [
       'Hậu cung có một lệ không ai ghi vào sổ: người mới vào, đêm đầu sẽ có một chén trà.',
@@ -27,6 +32,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b1_hoi: {
+    s: { bg: 'vuon', time: 'dem', cast: ['vua'] },
     t: 'Rằm tháng Bảy',
     lines: [
       'Rằm tháng Bảy, Hoàng thượng ra hồ sen thả đèn cầu cho người đã khuất. Đó là đêm duy nhất trong năm người mới được đứng gần ngài.',
@@ -36,6 +42,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ---- chương hai ----
   b2_den: {
+    s: { bg: 'hanh', time: 'dem', cast: ['phuc'] },
     t: 'Ngọn đèn đỏ',
     lines: [
       'Mỗi tối, thái giám phòng Kính Sự bưng khay thẻ bài vào điện. Hoàng thượng lật thẻ nào, đèn đỏ treo trước cửa viện ấy.',
@@ -44,6 +51,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b2_quen: {
+    s: { bg: 'phong', time: 'chieu', cast: ['cungnu'] },
     t: 'Những người không được gọi',
     lines: [
       'Hậu cung có hơn ba trăm người, mà một năm chỉ có ba trăm sáu mươi đêm.',
@@ -52,6 +60,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b2_vu: {
+    s: { bg: 'dien', time: 'ngay', cast: ['thucphi'] },
     t: 'Chiếc trâm và cái hộp',
     lines: [
       'Trong cung, muốn hại một người không cần thuốc độc. Chỉ cần một món đồ nằm sai chỗ.',
@@ -60,6 +69,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b2_sung: {
+    s: { bg: 'thu', time: 'dem', cast: ['phuc'] },
     t: 'Cuốn sổ của phòng Kính Sự',
     lines: [
       'Phòng Kính Sự ghi từng đêm Hoàng thượng ngủ ở đâu. Cuốn sổ ấy là bằng chứng khi ai có thai, và là vũ khí khi ai bị nghi.',
@@ -69,6 +79,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ---- chương ba ----
   b3_thai: {
+    s: { bg: 'phong', time: 'ngay', cast: ['xuanlan'] },
     t: 'Tin vui trong cung',
     lines: [
       'Trong cung, có con là có chỗ đứng. Người có con trai thì được lên bậc, được thêm người hầu, và được thêm kẻ thù.',
@@ -77,6 +88,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b3_sinh: {
+    s: { bg: 'vien', time: 'dem', cast: ['hanh'], rain: true },
     t: 'Cửa sinh, cửa tử',
     lines: [
       'Người xưa nói đàn bà đi đẻ là một chân trong quan tài. Trong cung, quan tài ấy còn có người đóng đinh sẵn.',
@@ -85,6 +97,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b3_mat: {
+    s: { bg: 'phong', time: 'dem', cast: ['hanh'] },
     t: 'Sau mất mát',
     lines: [
       'Trong cung, mất một đứa con không ai để tang. Người ta chỉ nói thai yếu, trời không cho, rồi thôi.',
@@ -94,6 +107,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ---- chương bốn ----
   b4_lap: {
+    s: { bg: 'trieu', time: 'ngay', cast: ['quan'] },
     t: 'Chiếc ghế ở Đông cung',
     lines: [
       'Theo lệ, con trưởng được lập làm Đông cung. Nhưng lệ là do người viết, và người viết thì có thể viết lại.',
@@ -102,6 +116,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b4_khong: {
+    s: { bg: 'dien', time: 'chieu', cast: ['hoanghau'] },
     t: 'Người đàn bà không con trai',
     lines: [
       'Trong cung, người không có con trai thì sống nhờ ân sủng. Ân sủng thì như nước, đổ vào đâu là chảy đi đó.',
@@ -110,6 +125,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b4_bien: {
+    s: { bg: 'bienai', time: 'ngay', cast: ['tuong'] },
     t: 'Tin dữ từ biên ải',
     lines: [
       'Biên giới phía bắc yên được mười năm. Mùa thu năm ấy, giặc tràn qua ba đồn trong một đêm.',
@@ -119,6 +135,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ---- chương năm ----
   b5_bang: {
+    s: { bg: 'tam', time: 'dem', cast: ['vua'] },
     t: 'Mặt trời lặn',
     lines: [
       'Mùa đông năm ấy, Hoàng thượng không ra khỏi tẩm điện. Thái y đổi ba lần, thuốc đổi bảy thang.',
@@ -127,6 +144,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b5_sung: {
+    s: { bg: 'tam', time: 'dem', cast: ['vua', 'thucphi'] },
     t: 'Lời trăn trối',
     lines: [
       'Lời vua lúc lâm chung nặng hơn mọi tờ chiếu. Nhưng lời ấy có thành chiếu được hay không, còn tùy ai đứng bên giường.',
@@ -135,6 +153,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b5_bang2: {
+    s: { bg: 'trieu', time: 'chieu', cast: ['thucphi'] },
     t: 'Ngai vàng đổi chủ',
     lines: [
       'Vua mới lên ngôi thì hậu cung cũ phải dọn chỗ. Người có công được ở lại, người có thù thì chờ ngày xét.',
@@ -144,6 +163,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ---- chương sáu ----
   b6_tau: {
+    s: { bg: 'donghan', time: 'ngay', cast: [] },
     t: 'Năm hạn',
     lines: [
       'Ba năm liền mất mùa ở phía nam. Dân bán ruộng, rồi bán con, rồi bỏ làng đi.',
@@ -152,6 +172,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   b6_phan: {
+    s: { bg: 'cong', time: 'dem', cast: ['nghia'] },
     t: 'Đêm dài nhất',
     lines: [
       'Hoàng tử Nghĩa chưa bao giờ quên chiếc ghế ở Đông cung từng suýt là của mình. Thục phi vẫn gửi thư cho con mỗi tháng.',
@@ -161,6 +182,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ---- chương bảy ----
   b7_cuoi: {
+    s: { bg: 'vuon', time: 'chieu', cast: ['hanh'] },
     t: 'Ba mươi năm',
     lines: [
       'Ba mươi năm trước, bạn đi qua cửa Tây với một cái tay nải. Ba mươi năm sau, nhiều cánh cửa trong cung đã mở theo lời bạn.',
@@ -171,6 +193,7 @@ export const TALES: Record<string, Tale> = {
 
   // ===== chương một, hai: những trò đầu tiên =====
   ca_gieng: {
+    s: { bg: 'gieng', time: 'ngay', cast: [] },
     t: 'Cái giếng sau viện',
     lines: [
       'Viện Nghi Lễ có một cái giếng sau bếp, nước trong mà không ai múc. Cung nữ cũ bảo mười năm nay nó đã vớt lên bốn người.',
@@ -179,6 +202,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ca_tram: {
+    s: { bg: 'vien', time: 'ngay', cast: ['xuanlan'] },
     t: 'Lệnh bài của chủ',
     lines: [
       'Cung nữ cầm lệnh bài của chủ thì được vào bất cứ viện nào dưới bậc chủ mình. Thục phi đứng thứ hai hậu cung, nghĩa là được vào gần như mọi nơi.',
@@ -187,6 +211,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ca_thu: {
+    s: { bg: 'dien', time: 'ngay', cast: ['hoanghau'] },
     t: 'Thư nhà',
     lines: [
       'Thư người mới gửi ra ngoài phải qua viện Nghi Lễ, rồi qua cung Hoàng hậu. Ai cũng biết, mà ai cũng quên khi nhớ nhà.',
@@ -195,6 +220,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ca_khoc: {
+    s: { bg: 'vuon', time: 'ngay', cast: ['thucphi'] },
     t: 'Nước mắt của Thục phi',
     lines: [
       'Thục phi vào cung mười hai năm, chưa thua một trận nào bằng lý lẽ. Bà thắng bằng nước mắt.',
@@ -203,6 +229,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ca_ao: {
+    s: { bg: 'phong', time: 'ngay', cast: ['hanh'] },
     t: 'Áo lễ',
     lines: [
       'Áo lễ ngự ban là áo của vua, không phải của người mặc. Làm hỏng áo ngự ban là bất kính, tội nhẹ thì giáng bậc, tội nặng thì ra lãnh cung.',
@@ -211,6 +238,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rc_ninh_ra: {
+    s: { bg: 'phong', time: 'dem', cast: ['ninh'] },
     t: 'Chị em một chiếu',
     lines: [
       'Hai người vào cung cùng một khóa thì thường thành chị em, vì chẳng còn ai khác để thương.',
@@ -219,6 +247,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ft_ph_hanh: {
+    s: { bg: 'gieng', time: 'chieu', cast: ['xuanlan', 'hanh'] },
     t: 'Người hầu thân',
     lines: [
       'Trong cung, muốn hại chủ thì mua người hầu. Người hầu ăn lương ít, nhà nghèo, lại đứng gần chủ hơn ai hết.',
@@ -227,6 +256,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ft_ph_gai: {
+    s: { bg: 'dien', time: 'ngay', cast: ['thucphi'] },
     t: 'Đứa con trưởng',
     lines: [
       'Hoàng tử Nghĩa là con trai lớn nhất của Hoàng thượng. Thục phi giữ con như giữ ấn, ai lại gần cũng bị nhìn bằng nửa con mắt.',
@@ -235,6 +265,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ft_xl_bay: {
+    s: { bg: 'hanh', time: 'chieu', cast: ['xuanlan'] },
     t: 'Bàn tay của Thục phi',
     lines: [
       'Thục phi chưa bao giờ tự tay làm điều gì. Tay bà sạch, vì đã có Xuân Lan.',
@@ -243,6 +274,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ft_xl_thuoc: {
+    s: { bg: 'bep', time: 'dem', cast: ['xuanlan'] },
     t: 'Ấm thuốc bổ',
     lines: [
       'Thuốc bổ của phi tần sắc ngay trong bếp viện, mỗi ngày hai lần, ai cũng ra vào được.',
@@ -251,6 +283,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   fh_cat: {
+    s: { bg: 'hanh', time: 'ngay', cast: ['tao'] },
     t: 'Tào công công',
     lines: [
       'Tào công công vào cung năm chín tuổi, hầu Hoàng hậu từ ngày bà còn là thái tử phi. Ông không biết chữ nhiều, nhưng nhớ mặt từng người.',
@@ -259,6 +292,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   fp_ninh_lat: {
+    s: { bg: 'vuon', time: 'chieu', cast: ['hienphi', 'ninh'] },
     t: 'Người dạy Ninh',
     lines: [
       'Hiền phi không có con, không tranh sủng, ai gặp cũng khen hiền. Bà chỉ có một thú vui: dạy dỗ người mới.',
@@ -267,6 +301,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rc_ut_ra: {
+    s: { bg: 'vuon', time: 'dem', cast: ['uyentan'] },
     t: 'Người từ giáo phường',
     lines: [
       'Uyển tần vào cung không qua tuyển tú. Hoàng thượng xem nàng múa trong một yến tiệc, đêm ấy cho xe đón thẳng vào.',
@@ -276,6 +311,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ===== chương ba, bốn: những cuộc chiến dài =====
   ca_huong: {
+    s: { bg: 'phong', time: 'ngay', cast: ['thucphi'] },
     t: 'Quà của Thục phi',
     lines: [
       'Thục phi chưa bao giờ tặng ai thứ gì mà không có lý do. Quà của bà càng đẹp, người nhận càng nên sợ.',
@@ -284,6 +320,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ra_tp_ra: {
+    s: { bg: 'thu', time: 'dem', cast: ['phuc'] },
     t: 'Ngày ra tay',
     lines: [
       'Trong cung, chứng cứ không làm ai ngã. Người ta ngã khi chứng cứ đến đúng tai, vào đúng lúc.',
@@ -292,6 +329,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ra_hh_ra: {
+    s: { bg: 'dien', time: 'ngay', cast: ['hoanghau'] },
     t: 'Mẫu nghi thiên hạ',
     lines: [
       'Hoàng hậu không con, không sủng, nhưng có lễ. Bà là mẫu nghi thiên hạ, tên ghi trong tông phả, cả triều đình phải lạy.',
@@ -300,6 +338,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   fh_chung: {
+    s: { bg: 'chua', time: 'chieu', cast: ['su'] },
     t: 'Lương tần năm ấy',
     lines: [
       'Mười năm trước, trong cung có một Lương tần sinh được hoàng tử. Đứa bé mất sau ba ngày, Lương tần mất sau ba tháng.',
@@ -308,6 +347,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rb_lt_ra: {
+    s: { bg: 'phong', time: 'ngay', cast: ['letan'] },
     t: 'Cháu gái nhà Tôn',
     lines: [
       'Lệ tần vào cung đúng lúc bạn mang thai. Không ai tin đó là chuyện tình cờ.',
@@ -316,6 +356,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rc_hp_ra: {
+    s: { bg: 'phong', time: 'dem', cast: ['hienphi', 'thaihau'] },
     t: 'Người không để lại dấu tay',
     lines: [
       'Hiền phi chưa bao giờ bị ai nghi. Mỗi lần trong cung có chuyện, bà đều đang ở bên giường bệnh của ai đó.',
@@ -324,6 +365,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   fp_mac_ra: {
+    s: { bg: 'cong', time: 'ngay', cast: ['mac'] },
     t: 'Giáo của nhà họ Mạc',
     lines: [
       'Cấm quân giữ chín cửa Phượng Thành. Ai giữ cấm quân thì giữ được cả vua lẫn hậu cung trong tay.',
@@ -332,6 +374,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_dau: {
+    s: { bg: 'phong', time: 'dem', cast: ['con'] },
     t: 'Bệnh của trẻ con',
     lines: [
       'Trẻ con trong cung chết vì bệnh nhiều hơn chết vì dao. Bệnh thì không ai phải chịu tội.',
@@ -340,6 +383,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_dc: {
+    s: { bg: 'tam', time: 'dem', cast: ['vua', 'phuc'] },
     t: 'Di chiếu',
     lines: [
       'Vua băng mà không có di chiếu thì ngai vàng thuộc về người giữ được ấn và cửa cung đêm ấy.',
@@ -348,6 +392,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   ft_qc: {
+    s: { bg: 'thu', time: 'dem', cast: ['phuc'] },
     t: 'Mẹ con một thuyền',
     lines: [
       'Thục phi đã thôi tranh sủng từ lâu. Giờ bà tranh cho con: ngôi Đông cung, rồi ngai vàng.',
@@ -356,6 +401,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   fh_qc: {
+    s: { bg: 'thaimieu', time: 'ngay', cast: ['hoanghau'] },
     t: 'Lễ tế Thái miếu',
     lines: [
       'Rằm tháng Bảy tế Thái miếu là lễ lớn nhất của tông thất. Hoàng hậu dẫn các hoàng tử ra lạy tổ, với tư cách mẹ đích của tất cả.',
@@ -364,6 +410,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   fp_qc: {
+    s: { bg: 'thu', time: 'dem', cast: [] },
     t: 'Bắt người hiền',
     lines: [
       'Gom hết lời khai, bạn thấy mọi việc đều có tay người khác: Ninh, cung nữ, thái y. Không việc nào có tay Hiền phi.',
@@ -373,6 +420,7 @@ export const TALES: Record<string, Tale> = {
   },
   // ===== chương năm trở đi: triều đình =====
   cb_phe: {
+    s: { bg: 'trieu', time: 'ngay', cast: ['quan'] },
     t: 'Tờ sớ đổi Đông cung',
     lines: [
       'Vua hôn mê ba tháng. Triều đình không ai dám nói chuyện sau này, nhưng ai cũng đang làm.',
@@ -381,6 +429,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rb_tp_ra: {
+    s: { bg: 'phu', time: 'ngay', cast: ['quan'] },
     t: 'Cây cổ thụ',
     lines: [
       'Thái phó Tôn làm quan ba đời vua. Môn sinh của ông ngồi khắp sáu bộ, kho Thái thương, cả Thái y viện.',
@@ -389,6 +438,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rb_ng_ra: {
+    s: { bg: 'cong', time: 'dem', cast: ['nghia'] },
     t: 'Trăm tử sĩ',
     lines: [
       'Nghĩa không có ngôi Đông cung, nhưng có lòng của những người từng nhận ơn mẹ hắn.',
@@ -397,6 +447,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_gia: {
+    s: { bg: 'phu', time: 'chieu', cast: ['quan'] },
     t: 'Nhà họ Tôn muốn gì',
     lines: [
       'Vua con còn nhỏ, ai nuôi dạy vua là người nắm ngai. Thái phó Tôn muốn là người ấy.',
@@ -405,6 +456,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_su: {
+    s: { bg: 'trieu', time: 'ngay', cast: ['ngoai'] },
     t: 'Nước Sa Hải',
     lines: [
       'Sa Hải là nước nhỏ ở phía nam, sống bằng biển và buôn bán. Ba mươi năm qua, họ chưa từng dám đòi gì.',
@@ -413,6 +465,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_kieu: {
+    s: { bg: 'cong', time: 'dem', cast: [] },
     t: 'Lương của lính',
     lines: [
       'Lính túc vệ giữ cửa cung, sống bằng lương nhà nước. Ba tháng không có lương, họ bắt đầu nghe người khác nói.',
@@ -421,6 +474,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   rb_nd: {
+    s: { bg: 'sanrong', time: 'ngay', cast: [] },
     t: 'Điềm phượng',
     lines: [
       'Trong sách xưa, phượng đậu là điềm trời chọn người cầm quyền. Người tin thì quỳ, người không tin thì đếm xem ai quỳ trước.',
@@ -429,6 +483,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_tu: {
+    s: { bg: 'trieu', time: 'ngay', cast: ['con'] },
     t: 'Vua đã lớn',
     lines: [
       'Hai mươi năm ngồi sau rèm, bạn dạy con chữ nhẫn trước chữ trị. Giờ con đã lớn, và con muốn tự quyết.',
@@ -437,6 +492,7 @@ export const TALES: Record<string, Tale> = {
     ],
   },
   cb_no: {
+    s: { bg: 'cong', time: 'chieu', cast: ['thucphi'] },
     t: 'Người cũ',
     lines: [
       'Ba mươi năm, những người từng là kẻ thù đều già đi như nhau.',

@@ -1056,7 +1056,7 @@ export default function Scene({ bgImg, place, time = 'ngay', cast, looks, label,
       <g clipPath="url(#c-clip)">
         {bgImg ? (
           <g>
-            <image href={bgImg} x="0" y="0" width="390" height="312" preserveAspectRatio="xMidYMid slice" filter="url(#c-bgsoft)" />
+            <image href={bgImg} x="0" y="0" width="390" height="312" preserveAspectRatio="xMidYMid slice" filter={cast.length ? "url(#c-bgsoft)" : undefined} />
             <rect x="0" y="0" width="390" height="312" fill="#f4ede0" opacity="0.06" />
             <rect x="0" y="0" width="390" height="312" fill="url(#c-floor)" />
           </g>
