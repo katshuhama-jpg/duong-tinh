@@ -333,3 +333,4 @@ a:hover { color: #6d1a11; }
 .c-scene .c-breath { transform-box: fill-box; transform-origin: 50% 100%; animation: c-breath 4.2s ease-in-out infinite; }
 @keyframes c-breath { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.004, 1.012); } }
 .c-scene .c-imgin { animation: c-fadein 0.35s ease-out both; }
+.c-title.c-brand { font-family: 'Splash', var(--serif); font-weight: 400; font-size: clamp(38px, 12vw, 60px); line-height: 1.15; white-space: nowrap; padding: 6px 0 2px; }

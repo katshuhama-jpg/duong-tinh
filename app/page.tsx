@@ -35,7 +35,7 @@ export default function Home() {
       <div className="c-band" aria-hidden="true" />
       <div className="c-page">
         <p className="c-sub">Triều Khánh Vân · Phượng Thành</p>
-        <h1 className="c-title">Chín Bậc Phượng</h1>
+        <h1 className="c-title c-brand">Chín Bậc Phượng</h1>
         <MusicButton className="c-btn ghost" />
         <Scene bgImg="/bg/vien/dem.webp" imgs={{ me: { dir: '/nv/me2', face: 'r' }, hanh: { dir: '/nv/hanh', face: 'l' } }} place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
         <p className="c-prose">

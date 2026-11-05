@@ -22,8 +22,9 @@ import { FACTION_TP } from './faction_tp';
 import { FACTION_HAU } from './faction_hau';
 import { FACTION_HP } from './faction_hp';
 import { FEUD } from './feud';
+import { OPENING } from './opening';
 
-const ROUTES = [...FACTION_TP, ...FACTION_HAU, ...FACTION_HP, ...RIVALS_A, ...RIVALS_B, ...RIVALS_C, ...BEATS_A, ...BEATS_B, ...CHAINS_A, ...CHAINS_B, ...BIG_STEPS, ...DEEP_ARCS, ...DEEP_EVENTS, ...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN, ...FEUD];
+const ROUTES = [...OPENING, ...FACTION_TP, ...FACTION_HAU, ...FACTION_HP, ...RIVALS_A, ...RIVALS_B, ...RIVALS_C, ...BEATS_A, ...BEATS_B, ...CHAINS_A, ...CHAINS_B, ...BIG_STEPS, ...DEEP_ARCS, ...DEEP_EVENTS, ...ORIGIN_DAN, ...ORIGIN_QUAN, ...ORIGIN_CUNG, ...ORIGIN_CHUA, ...ROUTES_VN, ...ROUTES_CN, ...FEUD];
 /** thẻ nhỏ của mọi chặng (gồm cả thẻ mồi của các tuyến phụ) */
 export const SMALL: Card[] = [...CARDS_A, ...CARDS_B, ...ROUTES.filter((c) => !c.big)];
 
