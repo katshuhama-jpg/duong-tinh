@@ -1008,7 +1008,7 @@ function ImgPerson({ x, img, mood, want, h, top, name }: { x: number; img: CastI
       <g transform={flip ? 'scale(-1 1)' : undefined}>
         <g className="c-breath">
           {top == null && <ellipse cx="0" cy="-3" rx={w * 0.38} ry="5" fill="#1a120c" opacity="0.3" filter="url(#c-shadow)" />}
-          <image key={href} className="c-imgin" filter="url(#c-halo)" href={href} x={-w / 2} y={-h} width={w} height={h} preserveAspectRatio="xMidYMax meet" />
+          <image key={href} className="c-imgin" href={href} x={-w / 2} y={-h} width={w} height={h} preserveAspectRatio="xMidYMax meet" />
         </g>
       </g>
       {name && (
