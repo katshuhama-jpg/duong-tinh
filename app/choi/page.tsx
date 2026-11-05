@@ -10,7 +10,7 @@ import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
-import type { CastK, Life, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
+import type { CastK, Life, MoodK, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
 import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
 import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
 import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone, guardsOf } from '@/lib/cung/world';
@@ -522,7 +522,7 @@ export default function Play() {
                       const changed = a && a.st !== b.st;
                       return (
                         <div key={x.k} className={changed ? 'big' : ''}>
-                          <RivalFace k={x.k} r={b} />
+                          <RivalFace life={life} k={x.k} r={b} />
                           <b>{x.t}</b>
                           <small>
                             {changed ? (
@@ -553,9 +553,7 @@ export default function Play() {
                   const ck = k as CastK;
                   return (
                     <div key={k} className={Math.abs(d) >= 8 ? 'big' : ''}>
-                      <svg viewBox="-48 128 96 92" width="56" height="54" aria-hidden="true">
-                        <Person x={0} look={looks[ck] ?? lookOf(ck)} mood={b >= 30 ? 'vui' : b <= -30 ? 'gian' : d <= -8 ? 'lo' : 'binh'} />
-                      </svg>
+                      <FaceImg dir={faceDir(ck, life)} size={54} mood={b >= 30 ? 'vui' : b <= -30 ? 'gian' : d <= -8 ? 'lo' : 'binh'} />
                       <b>{k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]}</b>
                       <small>
                         {feelOf(k, a) === feelOf(k, b) ? (
@@ -595,7 +593,7 @@ export default function Play() {
                 <span>
                   {life.focus.map((k) => (
                     <span key={k}>
-                      <RivalFace k={k} r={life.riv![k]} size={46} />
+                      <RivalFace life={life} k={k} r={life.riv![k]} size={46} />
                       <b>{RIVALS.find((x) => x.k === k)?.t}</b>
                     </span>
                   ))}
@@ -833,14 +831,28 @@ function FragmentRow({ label, v, feel }: { label: string; v: number; feel: strin
 }
 
 /** chân dung nhỏ một mối nguy, mờ đi khi đã bị diệt */
-function RivalFace({ k, r, size = 44 }: { k: RivalK; r: RivalState; size?: number }) {
+function faceDir(k: CastK, l?: Life | null): string {
+  return (l && imgsOf(l)[k]?.dir) || `/nv/${k}`;
+}
+function FaceImg({ dir, mood, size, className = '' }: { dir: string; mood: MoodK; size: number; className?: string }) {
+  return (
+    <span className={`c-rface ${className}`} style={{ width: size, height: size }} aria-hidden="true">
+      <img src={`${dir}/f_${mood}.webp`} alt="" width={size} height={size} />
+    </span>
+  );
+}
+function RivalFace({ k, r, size = 44, life }: { k: RivalK; r: RivalState; size?: number; life?: Life | null }) {
   const def = RIVALS.find((x) => x.k === k)!;
   const out = gone(r.st);
   return (
-    <svg viewBox="-48 128 96 92" width={size} height={size * 0.96} aria-hidden="true" className={`c-rface ${out ? 'out' : ''} ${r.st}`}>
-      <Person x={0} look={lookOf(def.cast)} mood={out ? (r.st === 'phuc' ? 'lo' : 'buon') : r.th >= 70 ? 'dac' : r.th >= 40 ? 'gian' : 'lo'} />
-      {r.st === 'chet' && <path d="M-40 140 L40 214 M40 140 L-40 214" stroke="#a8281d" strokeWidth="5" opacity="0.8" />}
-    </svg>
+    <span className="c-rface-wrap" style={{ width: size, height: size }}>
+      <FaceImg dir={faceDir(def.cast, life)} size={size} className={`${out ? 'out' : ''} ${r.st}`} mood={out ? (r.st === 'phuc' ? 'lo' : 'buon') : r.th >= 70 ? 'dac' : r.th >= 40 ? 'gian' : 'lo'} />
+      {r.st === 'chet' && (
+        <svg viewBox="0 0 10 10" className="c-rface-x" aria-hidden="true">
+          <path d="M1 1 L9 9 M9 1 L1 9" stroke="#a8281d" strokeWidth="1" opacity="0.8" />
+        </svg>
+      )}
+    </span>
   );
 }
 
@@ -860,7 +872,7 @@ function ThreatStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
           const r = rv[x.k];
           return (
             <span key={x.k} className={`c-threat ${gone(r.st) ? 'out' : ''} ${focus.includes(x.k) && !gone(r.st) ? 'focus' : ''}`}>
-              <RivalFace k={x.k} r={r} size={30} />
+              <RivalFace life={life} k={x.k} r={r} size={30} />
               <i>
                 <em style={{ width: `${gone(r.st) ? 0 : r.th}%` }} />
               </i>
@@ -886,7 +898,7 @@ function ThreatBoard({ life }: { life: Life }) {
         if (!r) return null;
         return (
           <div key={x.k} className={`c-board-row ${gone(r.st) ? 'out' : ''} ${r.st === 'an' ? 'hide' : ''} ${x.of ? 'guard' : ''}`}>
-            {r.st === 'an' ? <span className="c-board-q">?</span> : <RivalFace k={x.k} r={r} />}
+            {r.st === 'an' ? <span className="c-board-q">?</span> : <RivalFace life={life} k={x.k} r={r} />}
             <div>
               <b>
                 {r.st === 'an' ? 'Chưa lộ mặt' : x.t} <small>{r.st === 'an' ? `từ chương ${x.from}` : RIV_ST[r.st]}</small>

@@ -998,21 +998,21 @@ export interface CastImg {
   /** ảnh gốc quay mặt về phía nào */
   face: 'r' | 'l';
 }
-function ImgPerson({ x, img, mood, want, big, name }: { x: number; img: CastImg; mood: MoodK; want: 'r' | 'l' | null; big: boolean; name?: string }) {
-  const h = big ? 286 : 250;
-  const w = h * 0.3;
+function ImgPerson({ x, img, mood, want, h, top, name }: { x: number; img: CastImg; mood: MoodK; want: 'r' | 'l' | null; h: number; top?: number; name?: string }) {
+  const w = h * 0.36;
   const flip = want != null && want !== img.face;
   const href = `${img.dir}/${mood}.webp`;
+  const y0 = top != null ? top + h : 306;
   return (
-    <g transform={`translate(${x} 306)`}>
+    <g transform={`translate(${x} ${y0})`}>
       <g transform={flip ? 'scale(-1 1)' : undefined}>
         <g className="c-breath">
-          <ellipse cx="0" cy="-3" rx={w * 0.42} ry="5" fill="#1a120c" opacity="0.32" filter="url(#c-shadow)" />
+          {top == null && <ellipse cx="0" cy="-3" rx={w * 0.38} ry="5" fill="#1a120c" opacity="0.3" filter="url(#c-shadow)" />}
           <image key={href} className="c-imgin" filter="url(#c-halo)" href={href} x={-w / 2} y={-h} width={w} height={h} preserveAspectRatio="xMidYMax meet" />
         </g>
       </g>
       {name && (
-        <g>
+        <g transform={`translate(0 ${306 - y0})`}>
           <rect x={-name.length * 3.4 - 6} y="-18" width={name.length * 6.8 + 12} height="16" rx="2" fill={SON} stroke={GOLD} strokeWidth="1" opacity="0.92" />
           <text x="0" y="-6" textAnchor="middle" fontSize="11.5" fontFamily="'Be Vietnam Pro', sans-serif" fontWeight="600" fill="#f7eedb">{name}</text>
         </g>
@@ -1020,6 +1020,13 @@ function ImgPerson({ x, img, mood, want, big, name }: { x: number; img: CastImg;
     </g>
   );
 }
+
+/** khuôn hình: 1 người cận nửa người, 2 người trung cảnh, 3 người toàn cảnh */
+const SHOT: Record<number, { x: number; h: number; top?: number }[]> = {
+  1: [{ x: 195, h: 560, top: 22 }],
+  2: [{ x: 128, h: 430, top: 30 }, { x: 272, h: 410, top: 44 }],
+  3: [{ x: 180, h: 286 }, { x: 296, h: 250 }, { x: 76, h: 250 }],
+};
 
 /** tranh cảnh hoàn chỉnh trong khung */
 export default function Scene({ bgImg, place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain, wind, imgs = {} }: { bgImg?: string; imgs?: Partial<Record<CastK, CastImg>>; motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; wind?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
@@ -1035,12 +1042,11 @@ export default function Scene({ bgImg, place, time = 'ngay', cast, looks, label,
         <radialGradient id="c-vig" cx="50%" cy="50%" r="70%"><stop offset="55%" stopColor="#1a120c" stopOpacity="0" /><stop offset="100%" stopColor="#1a120c" stopOpacity="0.55" /></radialGradient>
         <radialGradient id="c-vig-r" cx="50%" cy="50%" r="70%"><stop offset="50%" stopColor="#7a1c14" stopOpacity="0" /><stop offset="100%" stopColor="#7a1c14" stopOpacity="0.5" /></radialGradient>
         <radialGradient id="c-vig-b" cx="50%" cy="50%" r="70%"><stop offset="40%" stopColor="#2c3550" stopOpacity="0.08" /><stop offset="100%" stopColor="#2c3550" stopOpacity="0.5" /></radialGradient>
-        <filter id="c-halo" x="-20%" y="-10%" width="140%" height="120%" colorInterpolationFilters="sRGB">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="b" />
-          <feFlood floodColor={time === 'dem' ? '#9fb4e0' : time === 'chieu' ? '#ffd9a0' : '#fff6e2'} floodOpacity={time === 'dem' ? 0.45 : 0.6} />
+        <filter id="c-halo" x="-25%" y="-10%" width="150%" height="120%" colorInterpolationFilters="sRGB">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="b" />
+          <feFlood floodColor={time === 'dem' ? '#a9bde6' : time === 'chieu' ? '#ffd7a0' : '#fff4dc'} floodOpacity={time === 'dem' ? 0.3 : 0.42} />
           <feComposite in2="b" operator="in" result="g" />
-          <feGaussianBlur in="SourceGraphic" stdDeviation="0.35" result="s" />
-          <feMerge><feMergeNode in="g" /><feMergeNode in="s" /></feMerge>
+          <feMerge><feMergeNode in="g" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
         <filter id="c-shadow" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="3" /></filter>
         <filter id="c-bgsoft" x="0" y="0" width="1" height="1"><feGaussianBlur stdDeviation="1.1" /><feColorMatrix type="saturate" values="0.82" /></filter>
@@ -1063,7 +1069,7 @@ export default function Scene({ bgImg, place, time = 'ngay', cast, looks, label,
           if (im)
             return (
               <g key={k} className="c-enter" style={{ animationDelay: `${0.15 + i * 0.12}s` }}>
-                <ImgPerson x={SLOTS[i]} img={im} mood={moods[k as CastK] ?? mood} want={i === 1 ? 'l' : i === 2 ? 'r' : order.length > 1 ? 'r' : null} big={i === 0} name={names[k as CastK]} />
+                <ImgPerson {...(order.slice(0, 3).every((c) => imgs[c as CastK]) ? SHOT[Math.min(order.length, 3)][i] : { x: SLOTS[i], h: i === 0 ? 286 : 250 })} img={im} mood={moods[k as CastK] ?? mood} want={i === 1 ? 'l' : i === 2 ? 'r' : order.length > 1 ? 'r' : null} name={names[k as CastK]} />
               </g>
             );
           return (

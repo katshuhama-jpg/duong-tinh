@@ -37,7 +37,7 @@ export default function Home() {
         <p className="c-sub">Triều Khánh Vân · Phượng Thành</p>
         <h1 className="c-title">Chín Bậc Phượng</h1>
         <MusicButton className="c-btn ghost" />
-        <Scene place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
+        <Scene bgImg="/bg/vien/dem.webp" imgs={{ me: { dir: '/nv/me2', face: 'r' }, hanh: { dir: '/nv/hanh', face: 'l' } }} place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
         <p className="c-prose">
           Bốn con đường vào cung: gái làng chè được vua để mắt, con quan bị dâng làm con tin, cung nga giặt áo, và công chúa của triều đã mất. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
         </p>
