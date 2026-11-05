@@ -379,7 +379,7 @@ export const DEEP_ARCS: Card[] = [
     who: 'con',
     whoName: 'Hoàng tử Nghĩa',
     title: 'Đứa bé ở hồ sen',
-    text: ['Hoàng tử Nghĩa mười hai tuổi trượt chân xuống hồ sen, quanh đó không một người hầu.', 'Bạn kéo được thằng bé lên, cậu ho sặc sụa, nắm chặt vạt áo bạn.'],
+    text: ['Hoàng tử Nghĩa lên tám trượt chân xuống hồ sen, quanh đó không một người hầu.', 'Bạn kéo được thằng bé lên, cậu ho sặc sụa, nắm chặt vạt áo bạn.'],
     choices: [
       { t: 'Bế trả tận tay Thục phi', fx: { d: { thucphi: 10, an: -2 }, flag: ['ar_t_on'] }, note: 'Thục phi giật lấy con, không nói lời cảm ơn. Nhưng đêm ấy bà sai người mang sang một hộp mứt sen.' },
       { t: 'Bế đến Thái hậu, tâu Thục phi bỏ con một mình', fx: { d: { thaihau: 8, thucphi: -14, muu: 3 }, flag: ['ar_t_ke'] }, note: 'Thục phi bị trách giữa điện. Lúc lui ra, bà nhìn bạn như nhìn một mũi kim.' },

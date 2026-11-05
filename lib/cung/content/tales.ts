@@ -168,4 +168,280 @@ export const TALES: Record<string, Tale> = {
       'Chỉ còn Hạnh. Chiều nay, hai người ra ngồi bên hồ sen cũ.',
     ],
   },
+
+  // ===== chương một, hai: những trò đầu tiên =====
+  ca_gieng: {
+    t: 'Cái giếng sau viện',
+    lines: [
+      'Viện Nghi Lễ có một cái giếng sau bếp, nước trong mà không ai múc. Cung nữ cũ bảo mười năm nay nó đã vớt lên bốn người.',
+      'Người nào cũng được ghi là tự trầm vì nhớ nhà. Không ai hỏi vì sao người nhớ nhà lại để hài ngay ngắn trên bờ.',
+      'Sáng nay giếng lại có người. Là cô gái nằm giường bên bạn.',
+    ],
+  },
+  ca_tram: {
+    t: 'Lệnh bài của chủ',
+    lines: [
+      'Cung nữ cầm lệnh bài của chủ thì được vào bất cứ viện nào dưới bậc chủ mình. Thục phi đứng thứ hai hậu cung, nghĩa là được vào gần như mọi nơi.',
+      'Lục viện người khác là chuyện xấu hổ. Lục ra đồ thì là chuyện chết người. Lục không ra thì người lục cũng chẳng mất gì.',
+      'Thục phi biết vậy. Bà chưa bao giờ thua một ván lục viện.',
+    ],
+  },
+  ca_thu: {
+    t: 'Thư nhà',
+    lines: [
+      'Thư người mới gửi ra ngoài phải qua viện Nghi Lễ, rồi qua cung Hoàng hậu. Ai cũng biết, mà ai cũng quên khi nhớ nhà.',
+      'Hoàng hậu không cần đọc hết. Bà chỉ cần một câu than thở là đủ biết người ấy mềm hay cứng.',
+      'Lá thư bạn gửi tháng trước đã không đi đến làng.',
+    ],
+  },
+  ca_khoc: {
+    t: 'Nước mắt của Thục phi',
+    lines: [
+      'Thục phi vào cung mười hai năm, chưa thua một trận nào bằng lý lẽ. Bà thắng bằng nước mắt.',
+      'Bà khóc trước Thái hậu thì Thái hậu mềm lòng, khóc trước Hoàng thượng thì người kia có tội. Người bị khóc chưa kịp mở miệng đã thua nửa phần.',
+      'Hôm qua ở cầu đá, bạn đã đi trước bà một bước.',
+    ],
+  },
+  ca_ao: {
+    t: 'Áo lễ',
+    lines: [
+      'Áo lễ ngự ban là áo của vua, không phải của người mặc. Làm hỏng áo ngự ban là bất kính, tội nhẹ thì giáng bậc, tội nặng thì ra lãnh cung.',
+      'Áo được cất trong rương có khóa, chìa khóa chỉ người hầu thân cận giữ. Muốn rạch được nó, phải có người ở rất gần.',
+      'Còn nửa canh giờ nữa là đánh trống chầu.',
+    ],
+  },
+  rc_ninh_ra: {
+    t: 'Chị em một chiếu',
+    lines: [
+      'Hai người vào cung cùng một khóa thì thường thành chị em, vì chẳng còn ai khác để thương.',
+      'Nhưng một khóa tuyển chỉ có vài người được gọi. Ngủ chung chiếu với nhau, ai cũng biết người kia sợ gì, thèm gì, giấu gì.',
+      'Ninh biết bạn rõ hơn ai hết. Và bạn cũng vừa biết rõ Ninh.',
+    ],
+  },
+  ft_ph_hanh: {
+    t: 'Người hầu thân',
+    lines: [
+      'Trong cung, muốn hại chủ thì mua người hầu. Người hầu ăn lương ít, nhà nghèo, lại đứng gần chủ hơn ai hết.',
+      'Xuân Lan làm việc này đã nhiều năm. Nàng không mua bằng một lần, mà bằng từng gói bạc nhỏ, đến khi người kia không còn đường lui.',
+      'Phúc nói hắn đã thấy hai lần. Hạnh chưa từng kể với bạn lần nào.',
+    ],
+  },
+  ft_ph_gai: {
+    t: 'Đứa con trưởng',
+    lines: [
+      'Hoàng tử Nghĩa là con trai lớn nhất của Hoàng thượng. Thục phi giữ con như giữ ấn, ai lại gần cũng bị nhìn bằng nửa con mắt.',
+      'Nhưng giữ con cũng là dùng con. Mỗi lần Nghĩa ốm, lại có một người trong hậu cung gặp họa.',
+      'Đĩa bánh viện bạn biếu hôm qua, đến sáng nay đã thành chứng cứ.',
+    ],
+  },
+  ft_xl_bay: {
+    t: 'Bàn tay của Thục phi',
+    lines: [
+      'Thục phi chưa bao giờ tự tay làm điều gì. Tay bà sạch, vì đã có Xuân Lan.',
+      'Xuân Lan theo hầu từ năm mười tám tuổi, biết hết những gì chủ làm, và cũng đã làm hết những việc ấy.',
+      'Muốn Thục phi ngã, trước hết phải làm cho bà mất bàn tay ấy.',
+    ],
+  },
+  ft_xl_thuoc: {
+    t: 'Ấm thuốc bổ',
+    lines: [
+      'Thuốc bổ của phi tần sắc ngay trong bếp viện, mỗi ngày hai lần, ai cũng ra vào được.',
+      'Người muốn hại không cần thuốc độc mạnh. Chỉ cần mỗi ngày một ít, nửa năm sau người uống sẽ yếu đi như bệnh thật.',
+      'Canh tư đêm nay, Hạnh không ngủ được, nên ra bếp xem lửa.',
+    ],
+  },
+  fh_cat: {
+    t: 'Tào công công',
+    lines: [
+      'Tào công công vào cung năm chín tuổi, hầu Hoàng hậu từ ngày bà còn là thái tử phi. Ông không biết chữ nhiều, nhưng nhớ mặt từng người.',
+      'Cuốn sổ bìa lam của ông ghi ai đến viện nào, ai tặng gì cho ai, ai khóc ở đâu. Hoàng hậu không cần ra khỏi cung vẫn biết hết.',
+      'Chừng nào ông còn đó, mọi tin bạn gửi đi đều qua tay ông trước.',
+    ],
+  },
+  fp_ninh_lat: {
+    t: 'Người dạy Ninh',
+    lines: [
+      'Hiền phi không có con, không tranh sủng, ai gặp cũng khen hiền. Bà chỉ có một thú vui: dạy dỗ người mới.',
+      'Những người được Hiền phi dạy thường lên rất nhanh, rồi ngã rất đau. Khi họ ngã, Hiền phi luôn là người đầu tiên đến an ủi.',
+      'Ninh là học trò mới nhất của bà.',
+    ],
+  },
+  rc_ut_ra: {
+    t: 'Người từ giáo phường',
+    lines: [
+      'Uyển tần vào cung không qua tuyển tú. Hoàng thượng xem nàng múa trong một yến tiệc, đêm ấy cho xe đón thẳng vào.',
+      'Cả hậu cung khinh nàng xuất thân giáo phường, mà cũng sợ nàng: người không có gì để mất thì dám làm mọi thứ.',
+      'Ai cũng nói đêm yến nay, nàng sẽ được phong phi.',
+    ],
+  },
+  // ===== chương ba, bốn: những cuộc chiến dài =====
+  ca_huong: {
+    t: 'Quà của Thục phi',
+    lines: [
+      'Thục phi chưa bao giờ tặng ai thứ gì mà không có lý do. Quà của bà càng đẹp, người nhận càng nên sợ.',
+      'Trong cung có những mùi hương làm người ta ngủ ngon, và có những mùi hương làm thai không giữ được.',
+      'Chiếc gối thêu trăm con thơm ngát cả phòng.',
+    ],
+  },
+  ra_tp_ra: {
+    t: 'Ngày ra tay',
+    lines: [
+      'Trong cung, chứng cứ không làm ai ngã. Người ta ngã khi chứng cứ đến đúng tai, vào đúng lúc.',
+      'Thục phi có Hoàng tử Nghĩa, có nhà ngoại trong triều, có hai mươi năm ân sủng. Đánh trượt một lần, người ngã sẽ là bạn.',
+      'Đêm nay, Phúc trải hết những gì đã gom được lên bàn.',
+    ],
+  },
+  ra_hh_ra: {
+    t: 'Mẫu nghi thiên hạ',
+    lines: [
+      'Hoàng hậu không con, không sủng, nhưng có lễ. Bà là mẫu nghi thiên hạ, tên ghi trong tông phả, cả triều đình phải lạy.',
+      'Phế một Hoàng hậu thì phải có tội thật lớn, và phải có người dám tâu. Một trăm năm qua, chỉ có hai lần.',
+      'Bà còn ngồi ở cung Ngọc Khuê ngày nào, ngôi hậu không bao giờ là của bạn.',
+    ],
+  },
+  fh_chung: {
+    t: 'Lương tần năm ấy',
+    lines: [
+      'Mười năm trước, trong cung có một Lương tần sinh được hoàng tử. Đứa bé mất sau ba ngày, Lương tần mất sau ba tháng.',
+      'Người ta nói hai mẹ con yếu bóng vía. Bà vú hầu Hoàng hậu năm ấy bị đuổi khỏi cung ngay sau đám tang.',
+      'Hạnh vừa tìm ra bà vú ấy, ở nhờ một am nhỏ dưới chùa Vân Tịch.',
+    ],
+  },
+  rb_lt_ra: {
+    t: 'Cháu gái nhà Tôn',
+    lines: [
+      'Lệ tần vào cung đúng lúc bạn mang thai. Không ai tin đó là chuyện tình cờ.',
+      'Nhà họ Tôn có người trong triều, có người trong Thái y viện, và giờ có người trong hậu cung. Ông Thái phó muốn một đứa cháu ngoại làm vua.',
+      'Chiếc túi thơm Lệ tần tặng bạn tháng trước, Hạnh vẫn để trên bàn.',
+    ],
+  },
+  rc_hp_ra: {
+    t: 'Người không để lại dấu tay',
+    lines: [
+      'Hiền phi chưa bao giờ bị ai nghi. Mỗi lần trong cung có chuyện, bà đều đang ở bên giường bệnh của ai đó.',
+      'Sau lưng bà là cha, Mạc tướng quân, người giữ cấm quân. Đụng đến Hiền phi là đụng đến giáo của cả kinh thành.',
+      'Thái hậu trở bệnh. Lại là Hiền phi ngày đêm hầu thuốc.',
+    ],
+  },
+  fp_mac_ra: {
+    t: 'Giáo của nhà họ Mạc',
+    lines: [
+      'Cấm quân giữ chín cửa Phượng Thành. Ai giữ cấm quân thì giữ được cả vua lẫn hậu cung trong tay.',
+      'Mạc tướng quân giữ chức ấy mười lăm năm. Con gái ông ngồi trong cung, ông đứng ngoài cửa, hai cha con canh nhau từ hai phía.',
+      'Muốn hạ Hiền phi, phải hạ được cha bà trước.',
+    ],
+  },
+  cb_dau: {
+    t: 'Bệnh của trẻ con',
+    lines: [
+      'Trẻ con trong cung chết vì bệnh nhiều hơn chết vì dao. Bệnh thì không ai phải chịu tội.',
+      'Thái y Lục là người duy nhất bạn còn tin trong Thái y viện. Ông đã bắt mạch cho con từ ngày nó còn trong bụng.',
+      'Đêm nay, ông bắt mạch rất lâu.',
+    ],
+  },
+  cb_dc: {
+    t: 'Di chiếu',
+    lines: [
+      'Vua băng mà không có di chiếu thì ngai vàng thuộc về người giữ được ấn và cửa cung đêm ấy.',
+      'Hoàng thượng biết điều đó. Ngài cũng biết trong số người đứng quanh giường mình, không ai không có phe.',
+      'Đêm nay, ngài cho tất cả ra ngoài, trừ bạn và Phúc.',
+    ],
+  },
+  ft_qc: {
+    t: 'Mẹ con một thuyền',
+    lines: [
+      'Thục phi đã thôi tranh sủng từ lâu. Giờ bà tranh cho con: ngôi Đông cung, rồi ngai vàng.',
+      'Mẹ con bà là một thuyền. Đánh mẹ thì con phải ra mặt, đánh con thì mẹ phải ra tay. Muốn thắng, phải đánh cả hai cùng lúc.',
+      'Mọi thứ cần có, Phúc đã gom đủ.',
+    ],
+  },
+  fh_qc: {
+    t: 'Lễ tế Thái miếu',
+    lines: [
+      'Rằm tháng Bảy tế Thái miếu là lễ lớn nhất của tông thất. Hoàng hậu dẫn các hoàng tử ra lạy tổ, với tư cách mẹ đích của tất cả.',
+      'Trước tổ tiên, ai là mẹ đích thì người ấy là mẹ của vua sau này. Mẹ đẻ chỉ đứng ở hàng sau.',
+      'Lễ năm nay, Hoàng hậu muốn dắt tay con bạn.',
+    ],
+  },
+  fp_qc: {
+    t: 'Bắt người hiền',
+    lines: [
+      'Gom hết lời khai, bạn thấy mọi việc đều có tay người khác: Ninh, cung nữ, thái y. Không việc nào có tay Hiền phi.',
+      'Người như vậy không bắt được bằng chứng cứ. Chỉ bắt được khi chính họ ra tay.',
+      'Muốn Hiền phi ra tay, phải cho bà một thứ bà không thể không lấy.',
+    ],
+  },
+  // ===== chương năm trở đi: triều đình =====
+  cb_phe: {
+    t: 'Tờ sớ đổi Đông cung',
+    lines: [
+      'Vua hôn mê ba tháng. Triều đình không ai dám nói chuyện sau này, nhưng ai cũng đang làm.',
+      'Đông cung đã lập thì khó đổi. Muốn đổi phải có cớ, mà cớ dễ nhất là nói Đông cung còn nhỏ, mẹ Đông cung xuất thân thấp.',
+      'Hôm nay, Bộ Lễ dâng sớ.',
+    ],
+  },
+  rb_tp_ra: {
+    t: 'Cây cổ thụ',
+    lines: [
+      'Thái phó Tôn làm quan ba đời vua. Môn sinh của ông ngồi khắp sáu bộ, kho Thái thương, cả Thái y viện.',
+      'Người ta nói Thái phó là cây cổ thụ: chặt thân thì rễ còn, đào rễ thì thân đổ đè lên người đào.',
+      'Giờ trên bàn bạn có sổ kho hụt, thư mua quan, và tên những người khách đến phủ ông lúc nửa đêm.',
+    ],
+  },
+  rb_ng_ra: {
+    t: 'Trăm tử sĩ',
+    lines: [
+      'Nghĩa không có ngôi Đông cung, nhưng có lòng của những người từng nhận ơn mẹ hắn.',
+      'Trăm tử sĩ không phải là nhiều. Nhưng đủ để mở một cánh cửa, nếu bên trong có người chờ.',
+      'Phúc báo trang trại sát cửa Tây đêm nào cũng sáng đèn.',
+    ],
+  },
+  cb_gia: {
+    t: 'Nhà họ Tôn muốn gì',
+    lines: [
+      'Vua con còn nhỏ, ai nuôi dạy vua là người nắm ngai. Thái phó Tôn muốn là người ấy.',
+      'Cách chắc nhất để một nhà ở bên vua mãi mãi là gả con gái cho vua. Nhà họ Tôn đã làm vậy hai lần, với hai đời vua trước.',
+      'Hôm nay, ông dâng lên một bức họa.',
+    ],
+  },
+  cb_su: {
+    t: 'Nước Sa Hải',
+    lines: [
+      'Sa Hải là nước nhỏ ở phía nam, sống bằng biển và buôn bán. Ba mươi năm qua, họ chưa từng dám đòi gì.',
+      'Nhưng họ nghe tin vua băng, vua mới còn nhỏ, và người cầm quyền là một người đàn bà ngồi sau rèm.',
+      'Sứ thần của họ hôm nay không quỳ.',
+    ],
+  },
+  cb_kieu: {
+    t: 'Lương của lính',
+    lines: [
+      'Lính túc vệ giữ cửa cung, sống bằng lương nhà nước. Ba tháng không có lương, họ bắt đầu nghe người khác nói.',
+      'Có người đã nói với họ rằng tiền lương bị giữ lại vì đàn bà sau rèm tiêu hoang.',
+      'Đêm nay, tiếng khiên gõ vang ngoài cửa cung.',
+    ],
+  },
+  rb_nd: {
+    t: 'Điềm phượng',
+    lines: [
+      'Trong sách xưa, phượng đậu là điềm trời chọn người cầm quyền. Người tin thì quỳ, người không tin thì đếm xem ai quỳ trước.',
+      'Bá quan biết vậy. Kẻ thật lòng muốn bạn nhiếp chính trọn đời, kẻ muốn đẩy bạn lên cao để có cớ kéo xuống.',
+      'Sáng nay, có chim phượng đậu trên nóc điện chầu.',
+    ],
+  },
+  cb_tu: {
+    t: 'Vua đã lớn',
+    lines: [
+      'Hai mươi năm ngồi sau rèm, bạn dạy con chữ nhẫn trước chữ trị. Giờ con đã lớn, và con muốn tự quyết.',
+      'Một ông vua trẻ muốn chứng tỏ mình thì không cần lý do. Chỉ cần một kẻ thù.',
+      'Sáng nay, con ném tờ sớ can gián xuống thềm.',
+    ],
+  },
+  cb_no: {
+    t: 'Người cũ',
+    lines: [
+      'Ba mươi năm, những người từng là kẻ thù đều già đi như nhau.',
+      'Có người đã chết, có người ở chùa, có người còn đó, chỉ chờ một lần đến đòi món nợ cũ.',
+      'Chiều nay, có một bà già chống gậy đứng trước cửa cung.',
+    ],
+  },
 };
