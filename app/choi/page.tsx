@@ -272,19 +272,20 @@ export default function Play() {
           <div className="c-page">
             <div className="c-pro-art">
               <Scene
+                bgImg="/bg/trieu/chieu.webp"
                 place="dien"
                 time="chieu"
                 bg="trieu"
                 cast={['me', 'con', 'quan']}
                 mood="dac"
                 moods={{ quan: 'so', con: 'binh' }}
-                motif="rem"
+                imgs={{ me: { dir: '/nv/me4', face: 'r' }, con: { dir: '/nv/con_vua', face: 'l' }, quan: { dir: '/nv/quan', face: 'l' } }}
                 looks={{ me: { ...lookOf('me', { robe: '#c49a3a', phuong: 9 }), pattern: 'phuong' }, con: lookOf('con', { king: true }) }}
                 label="Sau tấm rèm trúc, người đàn bà đội mũ chín phượng; vua nhỏ ngồi trước rèm, quan đại thần quỳ"
               />
             </div>
             <p className="c-pro-line" style={{ animationDelay: '0.6s' }}>Năm {ERA} thứ ba mươi bảy.</p>
-            <p className="c-pro-line" style={{ animationDelay: '1.8s' }}>Trăm quan quỳ kín sân rồng. Trên ngai là một ông vua mười tuổi. Sau tấm rèm trúc là người thật sự cầm thiên hạ: một người đàn bà đội mũ chín phượng.</p>
+            <p className="c-pro-line" style={{ animationDelay: '1.8s' }}>Trăm quan quỳ kín sân rồng. Trên ngai là một ông vua còn non trẻ. Sau tấm rèm trúc là người thật sự cầm thiên hạ: một người đàn bà đội mũ chín phượng.</p>
             <p className="c-pro-line" style={{ animationDelay: '3.2s' }}>Thục phi đã chết. Hoàng hậu đã bị phế. Thái phó Tôn đã ra pháp trường. Không còn ai dám cuốn tấm rèm này lên.</p>
             <p className="c-pro-line" style={{ animationDelay: '4.8s' }}>Ba mươi năm trước, bà chỉ là một cô gái mười tám tuổi, đứng run trước cổng cung.</p>
             <p className="c-pro-line strong" style={{ animationDelay: '6.2s' }}>Cô gái ấy sẽ ngồi sau tấm rèm này, hay chết trong một cái giếng sau viện. Tất cả tùy vào bạn.</p>
@@ -344,9 +345,11 @@ export default function Play() {
             {o.k === 'dan' ? 'Kiệu hoa qua cổng thành' : o.k === 'quan' ? 'Con tin của nhà họ Đoàn' : o.k === 'cung' ? 'Ba thúng thóc' : 'Công chúa của triều đã mất'}
           </h1>
           <Scene
+            bgImg={`/bg/${o.place}/${o.k === 'quan' || o.k === 'chua' ? 'dem' : 'chieu'}.webp`}
             place={o.place}
             time={o.k === 'quan' || o.k === 'chua' ? 'dem' : 'chieu'}
             cast={o.k === 'dan' ? ['me', 'meday'] : o.k === 'quan' ? ['me', 'quan'] : o.k === 'cung' ? ['me', 'mama'] : ['me', 'su']}
+            imgs={{ me: { dir: `/nv/${o.k === 'quan' ? 'quan1' : o.k === 'cung' ? 'cung1' : o.k === 'chua' ? 'chua1' : 'me1'}`, face: 'r' }, meday: { dir: '/nv/meday', face: 'l' }, quan: { dir: '/nv/quan', face: 'l' }, mama: { dir: '/nv/mama', face: 'l' }, su: { dir: '/nv/su', face: 'l' } }}
             looks={{ me: lookOf('me', { robe: o.k === 'cung' ? '#8a8f7a' : o.k === 'chua' ? '#c46a4a' : o.k === 'quan' ? '#6a9a6e' : undefined }) }}
             label={o.intro[0]}
           />
@@ -405,6 +408,7 @@ export default function Play() {
             <p className="c-unlock-seal">{e.branch ? (fresh ? 'Mở khóa nhánh rẽ' : 'Nhánh rẽ') : fresh ? 'Mở khóa kết cục' : 'Kết cục'}</p>
             <div className="c-unlock-art">
               <Scene
+                bgImg={`/bg/${art?.bg ?? art?.place ?? endPlace(e.id, !!e.dead)}/${art?.time ?? 'chieu'}.webp`}
                 place={art?.place ?? endPlace(e.id, !!e.dead)}
                 time={art?.time ?? 'chieu'}
                 cast={art?.cast ?? (e.dead ? [] : ['me'])}
@@ -664,7 +668,7 @@ export default function Play() {
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} imgs={imgsOf(life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene bgImg={`/bg/${bgOf(card) ?? card.place}/${rainOf(card) ? 'mua' : card.time ?? 'ngay'}.webp`} place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} imgs={imgsOf(life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>

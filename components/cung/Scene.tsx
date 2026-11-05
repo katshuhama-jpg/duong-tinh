@@ -1021,7 +1021,7 @@ function ImgPerson({ x, img, mood, want, big, name }: { x: number; img: CastImg;
 }
 
 /** tranh cảnh hoàn chỉnh trong khung */
-export default function Scene({ place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain, wind, imgs = {} }: { imgs?: Partial<Record<CastK, CastImg>>; motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; wind?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
+export default function Scene({ bgImg, place, time = 'ngay', cast, looks, label, mood = 'binh', moods = {}, names = {}, motif, bg, season, rain, wind, imgs = {} }: { bgImg?: string; imgs?: Partial<Record<CastK, CastImg>>; motif?: MotifK; bg?: BgK; season?: SeasonK; rain?: boolean; wind?: boolean; place: PlaceK; time?: TimeK; cast: CastK[]; looks: Partial<Record<CastK, Look>>; label: string; mood?: MoodK; moods?: Partial<Record<CastK, MoodK>>; names?: Partial<Record<CastK, string>> }) {
   const order = cast.includes('me') ? ['me', ...cast.filter((c) => c !== 'me')] : cast;
   return (
     <svg viewBox="0 0 390 312" width="100%" role="img" aria-label={label} className="c-scene" style={{ display: 'block' }}>
@@ -1034,10 +1034,18 @@ export default function Scene({ place, time = 'ngay', cast, looks, label, mood =
         <radialGradient id="c-vig" cx="50%" cy="50%" r="70%"><stop offset="55%" stopColor="#1a120c" stopOpacity="0" /><stop offset="100%" stopColor="#1a120c" stopOpacity="0.55" /></radialGradient>
         <radialGradient id="c-vig-r" cx="50%" cy="50%" r="70%"><stop offset="50%" stopColor="#7a1c14" stopOpacity="0" /><stop offset="100%" stopColor="#7a1c14" stopOpacity="0.5" /></radialGradient>
         <radialGradient id="c-vig-b" cx="50%" cy="50%" r="70%"><stop offset="40%" stopColor="#2c3550" stopOpacity="0.08" /><stop offset="100%" stopColor="#2c3550" stopOpacity="0.5" /></radialGradient>
+        <filter id="c-bgsoft" x="0" y="0" width="1" height="1"><feGaussianBlur stdDeviation="1.1" /><feColorMatrix type="saturate" values="0.82" /></filter>
+        <linearGradient id="c-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stopColor="#1a120c" stopOpacity="0" /><stop offset="1" stopColor="#1a120c" stopOpacity="0.42" /></linearGradient>
         <clipPath id="c-clip"><rect x="10" y="8" width="370" height="296" /></clipPath>
       </defs>
       <g clipPath="url(#c-clip)">
-        {bg ? <SpecialBg bg={bg} time={time} /> : <Backdrop place={place} time={time} />}
+        {bgImg ? (
+          <g>
+            <image href={bgImg} x="0" y="0" width="390" height="312" preserveAspectRatio="xMidYMid slice" filter="url(#c-bgsoft)" />
+            <rect x="0" y="0" width="390" height="312" fill="#f4ede0" opacity="0.06" />
+            <rect x="0" y="0" width="390" height="312" fill="url(#c-floor)" />
+          </g>
+        ) : bg ? <SpecialBg bg={bg} time={time} /> : <Backdrop place={place} time={time} />}
         <SeasonFx season={season} rain={rain} wind={wind} indoor={!!bg || place === 'phong'} />
         {motif && motif !== 'hoa' && motif !== 'den' && <Motif m={motif} solo={!cast.length} />}
         {order.slice(0, 3).map((k, i) => {
