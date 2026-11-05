@@ -636,7 +636,7 @@ export const RIVALS_B: Card[] = [
   },
   {
     id: 'rb_ng_khan',
-    chapter: [4],
+    chapter: [5, 6],
     weight: 3,
     when: { not: NGH, riv: { nghia: { st: LIVE, ev: [0, 70] } } },
     place: 'vuon',
@@ -646,7 +646,7 @@ export const RIVALS_B: Card[] = [
     moods: { hanh: 'so' },
     who: 'hanh',
     title: 'Hai bóng sau hòn non bộ',
-    text: ['Đi lễ trăng về, Hạnh kéo bạn nấp sau gốc hòe: Hoàng tử Nghĩa đang ôm một Tài nhân trẻ của Hoàng thượng.', 'Chiếc khăn lụa của nàng rơi bên bờ hồ.'],
+    text: ['Đi lễ trăng về, Hạnh kéo bạn nấp sau gốc hòe: Hoàng tử Nghĩa, đã ngoài hai mươi, đang ôm một Tài nhân trong hậu cung.', 'Chiếc khăn lụa của nàng rơi bên bờ hồ.'],
     choices: [
       { t: 'Đợi hai người đi rồi, nhặt chiếc khăn', fx: { d: { muu: 3 }, riv: { nghia: { ev: 30 } } }, note: 'Khăn thêu tên nàng, góc khăn có vết mực của Đông cung thư phòng. Bạn gấp lại, cất dưới đáy hộp trâm.', risk: { p: 0.25, fail: { riv: { nghia: { ev: 15, th: 18 } } }, failNote: 'Lúc cúi nhặt khăn, bạn ngẩng lên thấy Nghĩa đứng bên kia hồ, nhìn thẳng về phía mình.' } },
       { t: 'Kéo Hạnh đi, coi như không thấy', fx: { d: { duc: 3 }, riv: { nghia: { ev: 8 } } }, note: 'Bạn không thấy gì, nhưng bạn nhớ hết. Đôi khi chỉ nhớ thôi cũng đủ.' },
