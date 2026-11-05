@@ -1007,7 +1007,8 @@ function ImgPerson({ x, img, mood, want, big, name }: { x: number; img: CastImg;
     <g transform={`translate(${x} 306)`}>
       <g transform={flip ? 'scale(-1 1)' : undefined}>
         <g className="c-breath">
-          <image key={href} className="c-imgin" href={href} x={-w / 2} y={-h} width={w} height={h} preserveAspectRatio="xMidYMax meet" />
+          <ellipse cx="0" cy="-3" rx={w * 0.42} ry="5" fill="#1a120c" opacity="0.32" filter="url(#c-shadow)" />
+          <image key={href} className="c-imgin" filter="url(#c-halo)" href={href} x={-w / 2} y={-h} width={w} height={h} preserveAspectRatio="xMidYMax meet" />
         </g>
       </g>
       {name && (
@@ -1034,6 +1035,14 @@ export default function Scene({ bgImg, place, time = 'ngay', cast, looks, label,
         <radialGradient id="c-vig" cx="50%" cy="50%" r="70%"><stop offset="55%" stopColor="#1a120c" stopOpacity="0" /><stop offset="100%" stopColor="#1a120c" stopOpacity="0.55" /></radialGradient>
         <radialGradient id="c-vig-r" cx="50%" cy="50%" r="70%"><stop offset="50%" stopColor="#7a1c14" stopOpacity="0" /><stop offset="100%" stopColor="#7a1c14" stopOpacity="0.5" /></radialGradient>
         <radialGradient id="c-vig-b" cx="50%" cy="50%" r="70%"><stop offset="40%" stopColor="#2c3550" stopOpacity="0.08" /><stop offset="100%" stopColor="#2c3550" stopOpacity="0.5" /></radialGradient>
+        <filter id="c-halo" x="-20%" y="-10%" width="140%" height="120%" colorInterpolationFilters="sRGB">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="b" />
+          <feFlood floodColor={time === 'dem' ? '#9fb4e0' : time === 'chieu' ? '#ffd9a0' : '#fff6e2'} floodOpacity={time === 'dem' ? 0.45 : 0.6} />
+          <feComposite in2="b" operator="in" result="g" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0.35" result="s" />
+          <feMerge><feMergeNode in="g" /><feMergeNode in="s" /></feMerge>
+        </filter>
+        <filter id="c-shadow" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="3" /></filter>
         <filter id="c-bgsoft" x="0" y="0" width="1" height="1"><feGaussianBlur stdDeviation="1.1" /><feColorMatrix type="saturate" values="0.82" /></filter>
         <linearGradient id="c-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stopColor="#1a120c" stopOpacity="0" /><stop offset="1" stopColor="#1a120c" stopOpacity="0.42" /></linearGradient>
         <clipPath id="c-clip"><rect x="10" y="8" width="370" height="296" /></clipPath>
