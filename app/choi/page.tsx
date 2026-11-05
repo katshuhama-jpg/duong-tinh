@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
 import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { alliesOf, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { alliesOf, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
@@ -139,7 +139,8 @@ function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
   m.me = { dir: `/nv/${meStage(l)}`, face: 'r' };
   m.hanh = { dir: `/nv/${l.age >= 55 ? 'hanh3' : l.age >= 35 ? 'hanh2' : 'hanh'}`, face: 'l' };
   const tp = l.riv?.thucphi?.st;
-  m.vua = { dir: `/nv/${l.chapter >= 4 ? 'vua2' : 'vua'}`, face: 'l' };
+  const newKing = l.flags.includes('vua_bang') || l.chapter >= 6;
+  m.vua = { dir: newKing ? (sons(l) && (l.flags.includes('con_dongcung') || l.flags.includes('nhiep') || l.flags.includes('thai_hau')) ? '/nv/con_vua2' : '/nv/nghia') : `/nv/${l.chapter >= 4 ? 'vua2' : 'vua'}`, face: 'l' };
   m.thaihau = { dir: `/nv/${l.chapter >= 4 ? 'thaihau2' : 'thaihau'}`, face: 'l' };
   m.mama = { dir: '/nv/mama', face: 'l' };
   m.tao = { dir: `/nv/${l.chapter >= 5 ? 'tao2' : 'tao'}`, face: 'l' };
@@ -243,7 +244,7 @@ export default function Play() {
     [meta],
   );
 
-  const card = life?.card ? cardOf(life.card) : null;
+  const card = life?.card ? (() => { const c = cardOf(life.card!); return c ? viewCard(c, life) : null; })() : null;
   // tải trước ảnh nhân vật đang dùng, để đổi nét mặt không bị nháy trắng
   const imgDirs = life ? Object.values(imgsOf(life)).map((x) => x!.dir).join('|') : '';
   useEffect(() => {

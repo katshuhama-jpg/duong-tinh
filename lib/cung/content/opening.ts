@@ -165,4 +165,25 @@ export const OPENING: Card[] = [
       { t: 'Sai Hạnh mang sang cung Hoàng hậu một hũ chè ngon, nhờ chuyển lời', need: { num: { tien: [5, 99999] } }, lockHint: 'Cần 5 quan', fx: { d: { tien: -5, hoanghau: 2, muu: 3 }, riv: { tao: { ev: 4 } } }, note: 'Tào công công nhận hũ chè, rồi thả Phúc. Hạnh về kể: kho của ông ta chất đầy quà của các viện, cái nào cũng ghi tên.' },
     ],
   },
+  // ---- cầu nối: vào chặng Mang thai mà chưa từng được gọi hầu thì phải có đêm ấy trước ----
+  {
+    id: 'tt_goi',
+    urgent: true,
+    chapter: [3, 4],
+    when: { not: ['da_hau', 'cung_nga'], kids: 0 },
+    place: 'phong',
+    time: 'dem',
+    cast: ['me', 'vua', 'phuc'],
+    mood: 'lo',
+    moods: { vua: 'binh', phuc: 'dac' },
+    who: 'phuc',
+    beat: 'hook',
+    title: 'Ngọn đèn đỏ đầu tiên',
+    text: ['Chập tối, thái giám Phúc treo một ngọn đèn đỏ trước cửa viện bạn. Bao năm trong cung, đây là lần đầu tiên.', '"Hoàng thượng nhớ mặt nương nương từ lâu rồi. Đêm nay ngài cho gọi."'],
+    choices: [
+      { t: 'Pha một ấm chè, kể chuyện ngoài cung cho ngài nghe', fx: { d: { an: 12, vua: 12 }, flag: ['da_hau', 'vua_thuong'] }, note: 'Hoàng thượng nghe đến khuya, cười mấy lần. Trước khi ngủ, ngài nắm tay bạn rất lâu. Mấy tháng sau, thái y bắt mạch rồi cúi đầu rất thấp.' },
+      { t: 'Giữ lễ, hầu ngài thay áo, không nói một lời thừa', fx: { d: { an: 8, duc: 6, vua: 6 }, flag: ['da_hau'] }, note: 'Ngài ít nói, bạn cũng vậy. Nhưng sáng hôm sau, ngài dặn Phúc đừng tháo đèn vội. Mấy tháng sau, thái y bắt mạch rồi cúi đầu rất thấp.' },
+      { t: 'Xin ngài nghe một chuyện oan trong cung trước đã', fx: { d: { an: 4, muu: 6, vua: 4, the: 4 }, flag: ['da_hau'] }, note: 'Hoàng thượng nhíu mày, rồi nghe hết. Ngài không hứa gì, nhưng từ đêm ấy, đèn đỏ treo trước cửa viện bạn thêm nhiều lần nữa.' },
+    ],
+  },
 ];

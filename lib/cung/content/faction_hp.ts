@@ -611,7 +611,7 @@ export const FACTION_HP: Card[] = [
       },
       {
         t: 'Đuổi Hạnh ra khỏi viện ngay đêm nay',
-        fx: { d: { hanh: -40, muu: -2 }, riv: { hienphi: { th: 5 } }, flag: ['fp_hanh_xong', 'fp_hanh_duoi'] },
+        fx: { d: { hanh: -40, muu: -2 }, riv: { hienphi: { th: 5 } }, flag: ['fp_hanh_xong', 'fp_hanh_duoi', 'hanh_di'] },
         note: 'Hạnh đi, không mang theo gì ngoài bộ áo. Hôm sau nó đã đứng hầu trong viện Hiền phi.',
       },
     ],

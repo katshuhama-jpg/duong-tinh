@@ -546,7 +546,7 @@ export const FACTION_TP: Card[] = [
         fx: { d: { muu: 2 }, next: 'ft_ph_hanh_gia' },
         note: 'Tối ấy bạn cố ý nói to với Phúc: tuần sau sổ thuốc sẽ đi qua cửa Nam sang cung Thái hậu.',
       },
-      { t: 'Đuổi Hạnh về viện Hoán Y ngay', fx: { d: { hanh: -40, duc: -2 } }, note: 'Hạnh khóc lạy ở cổng viện đến tối rồi mới đi. Bạn không bao giờ biết nó có phản thật hay không.' },
+      { t: 'Đuổi Hạnh về viện Hoán Y ngay', fx: { d: { hanh: -40, duc: -2 }, flag: ['hanh_di'] }, note: 'Hạnh khóc lạy ở cổng viện đến tối rồi mới đi. Bạn không bao giờ biết nó có phản thật hay không.' },
     ],
   },
   {

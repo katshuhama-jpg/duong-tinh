@@ -616,7 +616,7 @@ export const FACTION_HAU: Card[] = [
         note: 'Hạnh mang bạc trả về cung Ngọc Khuê, kèm một câu bạn dặn. Từ đó nó theo bạn như cái bóng, và nhớ mặt từng người bên ấy.',
       },
       { t: 'Giữ Hạnh lại, nhưng không tin nữa', fx: { d: { hanh: -10, muu: 2 }, flag: ['fh_hanh_xong'] }, note: 'Hạnh vẫn chải tóc cho bạn mỗi sáng. Bạn không còn nói chuyện gì quan trọng khi có nó trong phòng.' },
-      { t: 'Đuổi Hạnh khỏi viện', fx: { d: { hanh: -50, duc: -2 }, riv: { hoanghau: { th: 5 } }, flag: ['fh_hanh_xong', 'fh_hanh_di'] }, note: 'Hạnh đi, không mang theo gì ngoài bộ áo. Tuần sau người ta thấy nó bưng trà ở cung Ngọc Khuê.' },
+      { t: 'Đuổi Hạnh khỏi viện', fx: { d: { hanh: -50, duc: -2 }, riv: { hoanghau: { th: 5 } }, flag: ['fh_hanh_xong', 'fh_hanh_di', 'hanh_di'] }, note: 'Hạnh đi, không mang theo gì ngoài bộ áo. Tuần sau người ta thấy nó bưng trà ở cung Ngọc Khuê.' },
     ],
   },
   {
@@ -794,7 +794,7 @@ export const FACTION_HAU: Card[] = [
     id: 'fh_hai_tp',
     chapter: [2, 3, 4, 5],
     weight: 4,
-    when: { not: [...NG, 'fh_hai_tp_xong'], flags: ['lien:hoanghau+thucphi'], riv: { hoanghau: { st: ALIVE }, thucphi: { st: ALIVE } } },
+    when: { not: [...NG, 'fh_hai_tp_xong'], flags: ['lien:hoanghau+thucphi'], riv: { hoanghau: { st: ALIVE }, thucphi: { st: ALIVE }, xuanlan: { st: ['an', 'manh', 'yeu', 'phuc'] } } },
     place: 'vien',
     time: 'dem',
     cast: ['me', 'phuc', 'hanh'],

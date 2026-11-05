@@ -13,6 +13,41 @@ const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL, ...BRANCH_CARDS];
 const URGENT = SMALL.filter((c) => c.urgent);
 export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
 
+const SUMMONED = new Set(['b2_den', 'b2_sung', 'tt_goi']);
+/** người chỉ có một (không dùng chung vai): đã chết hay bị giáng thì không xuất hiện ở chuyện thường nữa */
+const UNIQUE_RIV = RIVALS.filter((x) => x.cast !== 'quan');
+/** thẻ có hợp với đời đang sống không: người đã đi, vua đã băng thì thôi */
+export function fits(c: Card, l: Life): boolean {
+  const txt = c.text.join(' ');
+  const req = c.when?.flags ?? [];
+  if (l.flags.includes('hanh_di') && !req.includes('hanh_di') && (c.cast.includes('hanh') || /Hạnh/.test(txt))) return false;
+  if (l.flags.includes('vua_bang') && c.cast.includes('vua') && c.whoName == null) return false;
+  if (c.cast.includes('con') && !l.kids.length && !c.whoName) return false;
+  for (const r of UNIQUE_RIV) {
+    const st = l.riv?.[r.k]?.st;
+    if ((st === 'chet' || st === 'giang') && c.cast.includes(r.cast as CastK) && !(c.when?.riv && r.k in c.when.riv)) return false;
+  }
+  return true;
+}
+/** ngã rẽ lớn không bỏ được: Hạnh đã đi thì một cung nữ khác đứng thay */
+export function viewCard(c0: Card, l: Life): Card {
+  const tp = l.riv?.thaipho?.st;
+  let c = c0;
+  if ((tp === 'chet' || tp === 'giang') && !(c0.when?.riv && 'thaipho' in c0.when.riv) && JSON.stringify(c0).includes('Thái phó')) {
+    const tw = (x: string) => x.replace(/Thái phó Tôn/g, 'quan Thượng thư').replace(/Thái phó/g, 'quan Thượng thư').replace(/(^|[.!?:]\s+|"\s*)quan Thượng thư/g, (m) => m.replace('quan', 'Quan'));
+    c = { ...c0, text: c0.text.map(tw), lead: c0.lead && tw(c0.lead), choices: c0.choices.map((o) => ({ ...o, t: tw(o.t), note: o.note ? tw(o.note) : o.note })) };
+  }
+  if (!l.flags.includes('hanh_di') || !(c.cast.includes('hanh') || c.text.some((x) => x.includes('Hạnh')))) return c;
+  const sw = (x: string) => x.replace(/Hạnh/g, 'cung nữ').replace(/(^|[.!?:]\s+|"\s*)cung nữ/g, (m) => m.replace('cung nữ', 'Cung nữ'));
+  return {
+    ...c,
+    cast: c.cast.map((k) => (k === 'hanh' ? 'cungnu' : k)),
+    who: c.who === 'hanh' ? 'cungnu' : c.who,
+    text: c.text.map(sw),
+    choices: c.choices.map((o) => ({ ...o, t: sw(o.t), note: o.note ? sw(o.note) : o.note })),
+  };
+}
+
 /* ---------- ngẫu nhiên có hạt giống: cùng một đời, cùng một bước thì ra cùng một kết quả ---------- */
 function rand(seed: number, salt: string) {
   let h = 2166136261 ^ seed;
@@ -211,10 +246,10 @@ export function nextCard(l: Life): string | null {
   if (l.age >= 68 && l.chapter < 7) moveTo(l, 7);
   const ch = l.chapter;
   // bước ngoặt: đủ điều kiện là hiện ngay
-  const turn = URGENT.find((c) => c.chapter.includes(ch) && !l.seen.includes(c.id) && ok(c.when, l));
+  const turn = URGENT.find((c) => c.chapter.includes(ch) && !l.seen.includes(c.id) && ok(c.when, l) && fits(c, l));
   if (turn) return turn.id;
   if (l.smalls < chap(ch).smalls) {
-    const pool = SMALL.filter((c) => !c.step && !c.urgent && c.chapter.includes(ch) && ok(c.when, l) && (c.repeat || !l.seen.includes(c.id)));
+    const pool = SMALL.filter((c) => !c.step && !c.urgent && c.chapter.includes(ch) && ok(c.when, l) && fits(c, l) && (c.repeat || !l.seen.includes(c.id)));
     if (pool.length) {
       // thẻ hệ quả của lựa chọn vừa rồi (cần cờ mới đặt) được ưu tiên, để chuyện nối tiếp chuyện
       const fresh = (l.fresh ?? []).map((x) => x.slice(x.indexOf(':') + 1));
@@ -344,7 +379,10 @@ export function choose(l0: Life, idx: number): Result {
     l.marks = [...(l0.marks ?? []), { card: card.id, pick: idx, age: l0.age, chapter: l0.chapter, logLen: l0.log.length, snap }].slice(-40);
   }
   let fx: Fx = ch.fx;
-  let note = ch.note ?? '';
+  let note = viewCard(card, l0).choices[idx].note ?? '';
+  if (['b5_bang', 'b5_bang2', 'b5_sung', 'b5_bang_x'].includes(card.id) && !l.flags.includes('vua_bang')) l.flags.push('vua_bang');
+  // đã được gọi hầu vua: có thì mới có thể mang thai
+  if (!l.flags.includes('da_hau') && (SUMMONED.has(card.id) || (card.cast.includes('vua') && /đèn đỏ|thị tẩm|ngủ lại/.test(card.text.join(' '))))) l.flags.push('da_hau');
   if (ch.risk && rand(l.seed, `risk|${card.id}|${idx}|${l.age}`) < ch.risk.p) {
     fx = ch.risk.fail;
     note = ch.risk.failNote;

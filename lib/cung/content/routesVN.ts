@@ -63,7 +63,7 @@ export const ROUTES_VN: Card[] = [
     big: true,
     chapter: [4],
     after: 'b4_bien',
-    when: { flags: ['giac'], num: { duc: [96, 100] }, rankMin: 3, not: ['h_giam_quoc'] },
+    when: { flags: ['giac'], num: { duc: [96, 100] }, rankMin: 3, not: ['h_giam_quoc', 'hoang_hau'] },
     place: 'dien',
     time: 'ngay',
     cast: ['me', 'vua', 'hoanghau'],
