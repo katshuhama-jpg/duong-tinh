@@ -129,12 +129,14 @@ function meStage(l: Life): string {
   if (l.age >= 55) return 'me5';
   if (f('thai_hau') || f('thai_phi') || f('nhiep') || l.chapter >= 6) return 'me4';
   if (f('hoang_hau') || l.rank >= 8) return 'me3';
-  if (l.rank >= 3 || l.age >= 20) return 'me2';
-  return 'me1';
+  const o = l.origin ?? 'dan';
+  if (o === 'cung' && l.flags.includes('cung_nga')) return 'cung1';
+  if (l.rank >= 3 || l.age >= 22) return 'me2';
+  return o === 'quan' ? 'quan1' : o === 'cung' ? 'cung1' : o === 'chua' ? 'chua1' : 'me1';
 }
 function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
   const m: Partial<Record<CastK, CastImg>> = {};
-  if ((l.origin ?? 'dan') === 'dan' && !l.flags.includes('cung_nga')) m.me = { dir: `/nv/${meStage(l)}`, face: 'r' };
+  m.me = { dir: `/nv/${meStage(l)}`, face: 'r' };
   m.hanh = { dir: `/nv/${l.age >= 55 ? 'hanh3' : l.age >= 35 ? 'hanh2' : 'hanh'}`, face: 'l' };
   const tp = l.riv?.thucphi?.st;
   m.vua = { dir: `/nv/${l.chapter >= 4 ? 'vua2' : 'vua'}`, face: 'l' };
