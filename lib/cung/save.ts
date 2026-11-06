@@ -34,6 +34,29 @@ function writeGuest(g: Guest) {
     /* bỏ qua */
   }
 }
+/** đếm lượt chơi khách: mã ngẫu nhiên trong máy, chương, số kết cục. Không có thông tin cá nhân */
+let lastPing = 0;
+function guestPing(g: Guest) {
+  const sb = supabase();
+  if (!sb || Date.now() - lastPing < 60_000) return;
+  lastPing = Date.now();
+  let id = '';
+  try {
+    id = localStorage.getItem('cung.gid') ?? '';
+    if (!id) {
+      id = (crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`).replace(/[^a-z0-9-]/gi, '');
+      localStorage.setItem('cung.gid', id);
+    }
+  } catch {
+    return;
+  }
+  const l = g.life;
+  const info = { origin: l?.origin ?? null, chapter: l?.chapter ?? null, age: l ? Math.floor(l.age) : null, endings: g.meta.cung?.length ?? 0, lives: g.meta.cungLives ?? 0, mobile: /Mobi|iPhone|Android/i.test(navigator.userAgent) };
+  sb.rpc('cs_guest_ping', { p_id: id, p_info: info }).then(
+    () => undefined,
+    () => undefined,
+  );
+}
 const isLife = (x: unknown): x is Life => !!x && typeof x === 'object' && (x as Life).v === 'cung1';
 
 export async function loadMe(): Promise<{ username: string; meta: CMeta; life: Life | null; guest: boolean } | null> {
@@ -41,6 +64,7 @@ export async function loadMe(): Promise<{ username: string; meta: CMeta; life: L
   const sb = supabase();
   if (!p || !sb) {
     const g = readGuest();
+    guestPing(g);
     return { username: 'Khách', meta: g.meta, life: isLife(g.life) ? migrate(g.life) : null, guest: true };
   }
   const { data, error } = await sb.rpc('cs_me', { p_token: p.token });
@@ -69,7 +93,9 @@ async function send(life: Life | null) {
 export async function saveLife(life: Life | null): Promise<boolean> {
   const p = currentPlayer();
   if (!p || !supabase()) {
-    writeGuest({ ...readGuest(), life });
+    const g = { ...readGuest(), life };
+    writeGuest(g);
+    guestPing(g);
     return true;
   }
   if (inflight) {
@@ -96,7 +122,9 @@ export async function saveMeta(meta: CMeta): Promise<boolean> {
   const p = currentPlayer();
   const sb = supabase();
   if (!p || !sb) {
-    writeGuest({ ...readGuest(), meta });
+    const g = { ...readGuest(), meta };
+    writeGuest(g);
+    guestPing(g);
     return true;
   }
   const { error } = await sb.rpc('cs_save_meta', { p_token: p.token, p_meta: meta });
