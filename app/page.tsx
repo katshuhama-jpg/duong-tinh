@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import MusicButton from '@/components/cung/MusicButton';
+import { MusicMini } from '@/components/cung/TopBar';
 import { FateTree, type TreePath } from '@/components/cung/Tree';
 import Scene, { lookOf } from '@/components/cung/Scene';
 import { playTrack } from '@/lib/cung/music';
@@ -33,10 +33,15 @@ export default function Home() {
   return (
     <main className="c-app">
       <div className="c-band" aria-hidden="true" />
+      <header className="c-nav">
+        <div className="c-top-row">
+          <span className="c-top-title">Trang đầu</span>
+          <MusicMini />
+        </div>
+      </header>
       <div className="c-page">
         <p className="c-sub">Triều Khánh Vân · Phượng Thành</p>
         <h1 className="c-title c-brand">Chín Bậc Phượng</h1>
-        <MusicButton className="c-btn ghost" />
         <Scene bgImg="/bg/vien/dem.webp" imgs={{ me: { dir: '/nv/me2', face: 'r' }, hanh: { dir: '/nv/hanh', face: 'l' } }} place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
         <p className="c-prose">
           Bốn con đường vào cung: gái làng chè được vua để mắt, con quan bị dâng làm con tin, cung nga giặt áo, và công chúa của triều đã mất. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
@@ -65,10 +70,15 @@ export default function Home() {
           )}
         </div>
 
-        <section aria-labelledby="ket-cuc" style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
-          <h2 id="ket-cuc" style={{ margin: 0, fontFamily: 'var(--serif)', color: 'var(--son)', fontSize: 22 }}>
-            Sổ kết cục · {got.size}/{ENDINGS.length}
-          </h2>
+        <details className="c-book-fold">
+          <summary>
+            <span>Sổ kết cục</span>
+            <b>
+              {got.size}/{ENDINGS.length} đã mở
+            </b>
+            <small>Bấm để xem những đời đã sống, những cách chết và cây số phận</small>
+          </summary>
+        <section aria-label="Sổ kết cục" style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 10 }}>
           <div className="c-tabs" role="tablist">
             <button type="button" role="tab" aria-selected={tab === 'song'} onClick={() => setTab('song')}>
               Những đời sống
@@ -96,6 +106,7 @@ export default function Home() {
           </ul>
           )}
         </section>
+        </details>
         <p className="c-note" style={{ textAlign: 'center' }}>
           Triều đại, nhân vật, tên cung điện đều hư cấu. Khung chín bậc, lương bổng, lễ nghi mô phỏng hậu cung nhà Nguyễn.
         </p>

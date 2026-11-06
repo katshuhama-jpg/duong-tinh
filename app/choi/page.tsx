@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import MusicButton from '@/components/cung/MusicButton';
+import TopBar from '@/components/cung/TopBar';
 import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { alliesOf, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
@@ -270,6 +271,7 @@ export default function Play() {
       return (
         <main className="c-app c-pro">
           <div className="c-band" aria-hidden="true" />
+          <TopBar back={{ label: 'Trang đầu', href: '/' }} title="Mở đầu" step={1} total={3} />
           <div className="c-page">
             <div className="c-pro-art">
               <Scene
@@ -294,7 +296,7 @@ export default function Play() {
               Quay về ba mươi năm trước
             </button>
             <button type="button" className="c-pro-skip" onClick={() => setPro(false)}>
-              Bỏ qua
+              Bỏ qua phần mở đầu ›
             </button>
           </div>
         </main>
@@ -305,20 +307,20 @@ export default function Play() {
       return (
         <main className="c-app">
           <div className="c-band" aria-hidden="true" />
+          <TopBar back={{ label: 'Mở đầu', onClick: () => setPro(true) }} title="Chọn thân phận" step={2} total={3} />
           <div className="c-page">
-            <p className="c-sub">Năm {ERA} thứ ba</p>
             <h1 className="c-title" style={{ fontSize: 28 }}>
               Bạn vào cung bằng đường nào?
             </h1>
             <p className="c-note" style={{ textAlign: 'center' }}>
-              Bốn đường, bốn bộ phim. Xuất phát khác, chỗ dựa khác, kẻ thù khác.
+              Mỗi đường là một câu chuyện riêng: xuất thân khác, chỗ dựa khác, kẻ thù khác. Bấm vào một đường để xem và đặt tên.
             </p>
             <div className="c-paths">
               {ORIGINS.map((o) => (
                 <button key={o.k} type="button" className="c-path" disabled={!o.open} aria-disabled={!o.open} onClick={() => o.open && (setOg(o.k), setName(DEFAULT_NAME[o.k]), setRoll(0))}>
                   <b>
                     {o.t}
-                    {!o.open && <em className="c-soon">Sắp mở</em>}
+                    {!o.open ? <em className="c-soon">Đang viết</em> : <em className="c-go">Chọn ›</em>}
                   </b>
                   <span>{o.pitch}</span>
                   <small>
@@ -327,10 +329,7 @@ export default function Play() {
                 </button>
               ))}
             </div>
-            <MusicButton className="c-btn ghost" />
-            <Link href="/" className="c-note" style={{ textAlign: 'center' }}>
-              Về trang đầu
-            </Link>
+            {ORIGINS.some((x) => !x.open) && <p className="c-note" style={{ textAlign: 'center' }}>Những đường ghi &quot;Đang viết&quot; sẽ mở khi câu chuyện của chúng hoàn thành.</p>}
           </div>
         </main>
       );
@@ -340,8 +339,8 @@ export default function Play() {
     return (
       <main className="c-app">
         <div className="c-band" aria-hidden="true" />
+        <TopBar back={{ label: 'Chọn thân phận', onClick: () => setOg(null) }} title={o.t} step={3} total={3} />
         <div className="c-page">
-          <p className="c-sub">{o.t}</p>
           <h1 className="c-title" style={{ fontSize: 28 }}>
             {o.k === 'dan' ? 'Kiệu hoa qua cổng thành' : o.k === 'quan' ? 'Con tin của nhà họ Đoàn' : o.k === 'cung' ? 'Ba thúng thóc' : 'Công chúa của triều đã mất'}
           </h1>
@@ -377,10 +376,7 @@ export default function Play() {
             Tên đặt theo lối thời Lý - Trần (như công chúa Phật Kim, Ngọc Kiều, Kiều Oanh). Trong cung không ai gọi tên thật, chỉ gọi theo họ: &quot;{o.ho} thị&quot;.
           </p>
           <button type="button" className="c-btn" onClick={() => keep(newLife(name, o.k))}>
-            Bước qua cổng thành
-          </button>
-          <button type="button" className="c-btn ghost" onClick={() => setOg(null)}>
-            Chọn đường khác
+            Bắt đầu: bước qua cổng thành
           </button>
         </div>
       </main>
