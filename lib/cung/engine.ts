@@ -3,6 +3,7 @@
  * Thuần dữ liệu (không đụng tới giao diện) để chạy thử hàng loạt bằng script.
  */
 import { TALES } from './content/tales';
+import { ZERO_END } from './content/stat_zero';
 import type { Card, CastK, ChapterSnap, Choice, Cond, Fx, Life, NumK, RivalK, RivalState } from './types';
 import { CHAPTERS, DAUGHTER_NAMES, HOANG_HAU_RANK, RANKS, RIVALS, SON_NAMES, THAI_HAU, THAI_PHI, endingOf, gone, guardsOf, type Rank } from './world';
 import { CRISIS } from './content/big';
@@ -343,6 +344,22 @@ export function autoEnding(l: Life) {
   if (f('duoi_thucphi') && l.n.duc < 50) return 'e_lang_le';
   return 'e_hien_phi';
 }
+/** chỉ số chạm đáy: lần đầu hiện cảnh cảnh báo, lần sau thì khép đời */
+function zeroCheck(l: Life) {
+  if (l.end || !l.card || cardOf(l.card)?.step) return;
+  for (const k of Object.keys(ZERO_END) as NumK[]) {
+    if (l.n[k] > 0) continue;
+    if (k === 'an' && (l.flags.includes('cung_nga') || l.flags.includes('vua_bang') || l.chapter >= 6 || l.flags.includes('nhiep') || l.flags.includes('thai_hau') || l.flags.includes('o_chua'))) continue;
+    if (k === 'sac' && l.age >= 45) continue;
+    const warned = `canh0_${k}`;
+    if (!l.flags.includes(warned)) {
+      l.flags.push(warned);
+      l.card = `w0_${k}`;
+      l.chain = { kind: 'small', hoi: 1 };
+    } else finish(l, ZERO_END[k]!);
+    return;
+  }
+}
 function finish(l: Life, id: string) {
   l.end = id === 'auto' ? autoEnding(l) : id;
   l.card = null;
@@ -458,6 +475,7 @@ export function choose(l0: Life, idx: number): Result {
     else if (kind === 'big') l.bigAt += 1;
     else if (kind === 'small') l.smalls += 1;
     l.card = nextCard(l);
+    zeroCheck(l);
   }
   queueTale(l);
   if (l.end && endingOf(l.end)?.dead) l.omen = card.omen ?? 'Có những điềm báo chỉ nhìn lại mới thấy.';
