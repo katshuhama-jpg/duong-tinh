@@ -13,6 +13,7 @@ import { NG_CARDS, ngBigsOf, NG_WRITTEN } from './nghiem/index';
 import { CASES, initCases, judge, suspectName, caseOf, clueSet, clueOf, isGia } from './nghiem/cases';
 import { NG_CHAPTERS, NG_ERA, NG_HIEM_END, NG_YEAR0, NG_ZERO_END } from './nghiem/world';
 import { NG_PROLOGUE, NG_TALES } from './nghiem/prologue';
+import { GHICHU, GHICHU_MAX } from './ghichu/index';
 import { dauMoi, vayCanh } from './nghiem/daumoi';
 
 /** phần Con tin họ Nghiêm (đường con quan) dùng kho thẻ riêng */
@@ -374,7 +375,17 @@ export function nextCard(l: Life): string | null {
   return nextCard(l);
 }
 
+/** hết chương: mở các ghi chú của chương vừa qua mà đời này đã gặp chi tiết */
+function openNotes(l: Life) {
+  const part = isNg(l) ? 'nghiem' : 'che';
+  const had = new Set((l.notes ?? []).map((x) => x.id));
+  const fresh = GHICHU.filter((g) => g.part === part && g.chapter === l.chapter && !had.has(g.id) && ok(g.when, l))
+    .sort((a, b) => (b.w ?? 1) - (a.w ?? 1))
+    .slice(0, GHICHU_MAX);
+  if (fresh.length) l.notes = [...(l.notes ?? []), ...fresh.map((g) => ({ id: g.id, ch: l.chapter }))];
+}
 function moveTo(l: Life, ch: number) {
+  openNotes(l);
   // hết một chương: chụp lại để màn chương tổng kết đổi thay
   const end = snapOf(l);
   const from = l.chStart;
@@ -513,6 +524,7 @@ function hiemEnd(l: Life) {
   l.omen = last ? `Lần dò cuối, "${fillNg(last.title, l)}", có người đứng ngoài cửa nghe hết.` : 'Bạn đã đào quá nhanh, và có người đếm từng bước.';
 }
 function finish(l: Life, id: string) {
+  openNotes(l);
   l.end = id === 'auto' ? autoEnding(l) : id;
   l.card = null;
   const e = endingOf(l.end);

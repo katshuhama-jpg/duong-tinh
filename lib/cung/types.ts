@@ -291,6 +291,8 @@ export interface Life {
   chStart?: ChapterSnap;
   /** màn chương đang chờ hiện: tổng kết chương vừa xong (nếu có) và mở màn chương mới */
   showCh?: { to: number; from?: ChapterSnap; end?: ChapterSnap; picks?: string[] };
+  /** ghi chú "Chuyện chưa ai kể" đã mở trong đời này: id và chương */
+  notes?: { id: string; ch: number }[];
   /** lời kể đang chờ hiện (trang kể chuyện giữa hai cảnh) */
   tales?: { t: string; lines: string[]; card?: string; riv?: RivalK; kicker?: string; skip?: boolean; s?: { bg: string; time: TimeK; cast: CastK[]; rain?: boolean; imgs?: Partial<Record<CastK, string>>; moods?: Partial<Record<CastK, MoodK>>; prop?: string } }[];
   /** phần Con tin họ Nghiêm: các vụ án (tay sai bốc lúc đầu đời, manh mối đã nhặt, đã xử chưa) */

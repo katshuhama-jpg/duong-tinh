@@ -388,3 +388,10 @@ p.c-tale-line { font-family: var(--serif); font-size: 18px; line-height: 1.65; m
 .c-book-fold > summary b { font: 600 13px var(--sans); color: var(--son); }
 .c-book-fold > summary small { grid-column: 1 / -1; font-size: 12.5px; color: var(--mute); }
 .c-book-fold[open] > summary small { display: none; }
+
+/* ghi chú cuối chương: "Chuyện chưa ai kể" */
+.c-ghichu { margin: 14px 0 6px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--son); text-align: left; }
+.c-ghichu h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 17px; color: var(--son); text-align: center; }
+.c-ghichu article + article { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.c-ghichu h4 { margin: 0 0 4px; font-family: var(--serif); font-size: 15px; }
+.c-ghichu p { margin: 0 0 6px; font-family: var(--serif); font-size: 15px; line-height: 1.6; }

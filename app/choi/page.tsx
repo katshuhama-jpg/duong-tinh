@@ -6,9 +6,10 @@ import MusicButton from '@/components/cung/MusicButton';
 import TopBar from '@/components/cung/TopBar';
 import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { alliesOf, chapOf, doubt, isNg, migrate, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { alliesOf, chapOf, doubt, fillNg, isNg, migrate, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import EndBook, { partOfOrigin } from '@/components/cung/EndBook';
+import GhiChuList from '@/components/cung/GhiChu';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
@@ -26,7 +27,7 @@ const SEASONS = [
   ['cuối thu', 'giữa đông'],
 ];
 const TIME_OF = { ngay: 'Một sáng', chieu: 'Một chiều', dem: 'Một đêm' } as const;
-const NUM_HOI = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu'];
+const NUM_HOI = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy'];
 const TIME_AT = { ngay: 'ngay lúc ấy', chieu: 'chiều hôm ấy', dem: 'đêm ấy' } as const;
 const NUM_VI = ['', 'Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười'];
 
@@ -576,6 +577,7 @@ export default function Play() {
             <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
             <p className="c-unlock-desc">{fillText(life.endDesc ?? e.desc, life.origin)}</p>
             {art?.story && <p className="c-prose c-unlock-story">{fillText(art.story, life.origin)}</p>}
+            <GhiChuList ids={(life.notes ?? []).filter((x) => x.ch === life.chapter).map((x) => x.id)} fill={(x) => (isNg(life) ? fillNg(x, life) : fillText(x, life.origin))} />
             <p className="c-note">
               {rank.t} {originOf(life.origin).ho} thị ({life.name}), {ageOf(life)} tuổi · {sons(life) ? `${sons(life)} hoàng tử` : 'không có hoàng tử'}
               {life.kids.length - sons(life) ? `, ${life.kids.length - sons(life)} công chúa` : ''} · Bia ghi chữ &quot;{tomb}&quot;
@@ -651,6 +653,7 @@ export default function Play() {
                 {Math.floor(sc.from.age)} tuổi đến {Math.floor(sc.end.age)} tuổi · {sc.from.rank === sc.end.rank ? `vẫn là ${sc.end.rank}` : `${sc.from.rank} lên ${sc.end.rank}`}
                 {sc.end.kids > sc.from.kids ? ` · thêm ${sc.end.kids - sc.from.kids} đứa con` : ''}
               </p>
+              <GhiChuList ids={(life.notes ?? []).filter((x) => x.ch === prevCh.n).map((x) => x.id)} fill={(x) => (isNg(life) ? fillNg(x, life) : fillText(x, life.origin))} />
               <div className="c-recap-stats">
                 {STAT.map((k) => {
                   const d = sc.end!.n[k] - sc.from!.n[k];
@@ -1009,6 +1012,20 @@ export default function Play() {
                 <FateTree paths={((meta.tree as TreePath[] | undefined) ?? []).filter((x) => (x.o ?? 'dan') === (life.origin ?? 'dan'))} life={life} />
               </details>
             </section>
+            {(life.notes ?? []).length > 0 && (
+              <section>
+                <h3>Sổ ghi chép</h3>
+                <details className="c-treefold">
+                  <summary>Đọc lại những chuyện chưa ai kể của đời này</summary>
+                  {Array.from(new Set((life.notes ?? []).map((x) => x.ch))).map((c) => (
+                    <div key={c}>
+                      <p className="c-sub" style={{ margin: '12px 0 0' }}>Chương {NUM_HOI[c] ?? c} · {chapOf(life, c).t}</p>
+                      <GhiChuList ids={(life.notes ?? []).filter((x) => x.ch === c).map((x) => x.id)} heading={null} fill={(x) => (isNg(life) ? fillNg(x, life) : fillText(x, life.origin))} />
+                    </div>
+                  ))}
+                </details>
+              </section>
+            )}
             <section>
               <h3>Sổ kết cục · {partOfOrigin(life.origin) === 'nghiem' ? 'Con tin họ Nghiêm' : 'Cô gái chè'}</h3>
               <details className="c-treefold">
