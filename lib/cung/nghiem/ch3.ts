@@ -643,7 +643,7 @@ export const NG_CH3: Card[] = [
     moods: { vua: 'gian' },
     who: 'vua',
     title: 'Tờ trình về chén thuốc an thai',
-    text: ['Hoàng thượng đặt tờ trình của thái y viện lên án: "Nàng nói đi. Ai đã động vào thuốc của con trẫm?"', 'Mở Sổ án để xem lại manh mối trước khi trả lời.'],
+    text: ['Hoàng thượng đặt tờ trình của thái y viện lên bàn: "Nàng nói đi. Ai đã động vào thuốc của con trẫm?"', 'Mở Sổ án để xem lại manh mối trước khi trả lời.'],
     omen: 'Người bưng chén lên chưa chắc là người bỏ thuốc vào chén.',
     choices: [
       { t: 'Tâu: {S:an3:ns}', fx: { accuse: { an: 'an3', who: 'ns' } }, note: 'Bạn nói ra cái tên. Từ giờ, cái tên ấy là của bạn.' },
@@ -820,7 +820,7 @@ export const NG_CH3: Card[] = [
     moods: { uyennhu: 'gian' },
     who: 'uyennhu',
     title: 'Ấn của Quý phi',
-    text: ['Uyển Như bị tước ngôi Quý phi, thu lại ấn, đưa về lãnh cung. Nàng không cúi đầu, tà áo xanh vẫn thẳng như ngày ra mắt.', 'Đi ngang bạn, nàng dừng lại: "Cô sẽ nhớ ngày hôm nay."'],
+    text: ['Uyển Như bị tước ngôi, đưa về lãnh cung. Nàng không cúi đầu, tà áo xanh vẫn thẳng như ngày ra mắt.', 'Đi ngang bạn, nàng dừng lại: "Cô sẽ nhớ ngày hôm nay."'],
     omen: 'Đèn sáng chưa chắc là đúng người.',
     choices: [
       { t: 'Nhìn thẳng nàng, không đáp', fx: { d: { the: 4, thucphi: -20 }, flag: ['phe_un'] }, note: 'Uyển Như cười, rồi đi. Chiều ấy, phủ Thái sư đóng cổng, không tiếp ai.' },
