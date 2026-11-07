@@ -56,7 +56,7 @@ export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k
             <li key={x.k} style={{ opacity: x.st === 'con' ? 0.6 : 1 }}>
               {x.lo ? (
                 <>
-                  {x.t}: {VC[x.st]}
+                  {x.t}: {x.t.startsWith('Bản gốc') && x.st === 'nho' ? 'đã nằm trong tay bạn' : x.t.startsWith('Bản gốc') && x.st === 'con' ? 'còn trong tay người khác' : VC[x.st]}
                 </>
               ) : (
                 <>Trụ thứ {i + 1}: chưa rõ</>

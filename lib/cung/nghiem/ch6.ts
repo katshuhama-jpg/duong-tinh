@@ -511,7 +511,7 @@ export const NG_CH6: Card[] = [
     part: P,
     chapter: [6],
     weight: 2,
-    when: { ...OPEN, not: [...OPEN.not, 'o_chua', 'giu_lang'] },
+    when: { ...OPEN, not: [...OPEN.not, 'o_chua', 'giu_lang', 'lv_lo', 'lv_tin_gia', 'lv_mon'] },
     place: 'phong',
     img: 'vienchi',
     time: 'chieu',

@@ -42,11 +42,24 @@ const NG_WHERE: Record<string, string> = {
   congphu: 'trước cổng phủ Nghiêm',
   thuphong: 'trong thư phòng của cha',
   phonghoc: 'trong phòng học cũ ở phủ',
+  tam: 'trong tẩm điện',
+  dien: 'ở chính điện',
+  trieu: 'ở triều đường',
+  lanh: 'trong ngục',
+  thaimieu: 'ở Thái miếu',
+  lang: 'ở lăng',
+  lang_mo: 'bên lăng mộ',
+  chua: 'ở chùa',
+  thu: 'trong thư phòng',
+  hanh: 'ngoài hành lang',
+  vuon: 'trong vườn ngự',
+  bep: 'ở bếp thuốc',
+  cong: 'ở cổng thành',
 };
 function whereOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string {
   if (card.where) return card.where;
   if (isNg(l) && card.img && NG_WHERE[card.img]) return NG_WHERE[card.img];
-  if (isNg(l) && card.place === 'phong') return 'trong viện cũ của chị';
+  if (isNg(l) && card.place === 'phong') return l.chapter <= 3 ? 'trong viện cũ của chị' : 'trong viện của bạn';
   const o = originOf(l.origin);
   const has = (k: CastK) => card.cast.includes(k);
   switch (card.place) {

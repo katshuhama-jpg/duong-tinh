@@ -46,12 +46,12 @@ const tyTen = (id: string, flags: string[], not: string[]): Card => ({
   choices: [
     {
       t: 'Nhận lời khai, ghi đủ tên ông vào hồ sơ',
-      fx: { clue: ['a7_thaiy'], flag: ['ty_ten', 'ty_ten_xong', 'khai_thaiy'], d: { hiem: 8 } },
+      fx: { clue: ['a7_thaiy'], flag: ['ty_ten', 'ty_ten_xong', 'khai_thaiy'], d: { hiem: 6 } },
       note: 'Ông ký tên dưới lời khai, nét chữ vẫn đẹp như trên đơn thuốc năm xưa: "Thần biết đó là thuốc gì. Thần kê vì sợ cho vợ con. Giờ thần không còn gì để sợ." {GIA:a7_thaiy}',
     },
     {
       t: 'Nhận lời khai, rồi đưa ông ra khỏi kinh trước khi án mở',
-      fx: { clue: ['a7_thaiy'], flag: ['ty_ten_xong', 'ty_tron', 'khai_thaiy'], d: { hiem: 14, duc: -4 } },
+      fx: { clue: ['a7_thaiy'], flag: ['ty_ten_xong', 'ty_tron', 'khai_thaiy'], d: { hiem: 6, duc: -8, the: -4 } },
       note: 'Ông đi ngay trong đêm, xe không treo đèn. Lời khai ở lại, người thì không. Tông nhân phủ sẽ hỏi người khai đâu, và bà sẽ phải trả lời. {GIA:a7_thaiy}',
     },
     { t: 'Từ chối, bảo ông về hiệu thuốc', fx: { flag: ['ty_ten_xong', 'ty_tha'], d: { duc: 2 } }, note: 'Ông đứng lặng rất lâu, rồi cúi đầu về. Hồ sơ của chị thiếu đúng một tờ, tờ ông đã cầm tới tận cửa.' },
@@ -122,7 +122,7 @@ export const NG_THAN47: Card[] = [
     omen: 'Người đứng gần nhất cũng là người cầm dao gần nhất.',
     choices: [
       { t: 'Hỏi thẳng: "Năm ấy, vụ ấy, là em phải không?"', fx: { d: { hanh: -40, muu: 3, hiem: -4 }, flag: ['lv_lo', 'di_luavang'] }, note: 'Lụa Vàng quỳ xuống, gói than rơi vỡ: "Họ trả nợ cho em. Từ năm ấy em báo tin cho cung trên." Sáng ra bạn cho nàng ra khỏi cung. Viện bạn bớt một người, và bớt một đôi tai.' },
-      { t: 'Giả như không thấy, từ nay chỉ nói với nàng điều mình muốn cung trên nghe', fx: { d: { muu: 4, hiem: -6 }, flag: ['lv_lo', 'lv_mon'] }, note: 'Tin bạn cố ý cho Lụa Vàng nghe đi lên cung trên chỉ trong một đêm. Bạn biết thêm một điều: tai mắt người kia nằm ngay trong viện mình.' },
+      { t: 'Giả như không thấy, từ nay chỉ nói với nàng điều mình muốn cung trên nghe', fx: { d: { muu: 4, hiem: -6 }, flag: ['lv_lo', 'lv_mon', 'lv_tin_gia'] }, note: 'Tin bạn cố ý cho Lụa Vàng nghe đi lên cung trên chỉ trong một đêm. Bạn biết thêm một điều: tai mắt người kia nằm ngay trong viện mình.' },
       { t: 'Thôi, nàng chỉ xin than', fx: { d: { hiem: 4 } }, note: 'Lụa Vàng ôm gói than về viện. Đêm ấy than cháy rất đượm, mà bạn không ngủ được.' },
     ],
   },
