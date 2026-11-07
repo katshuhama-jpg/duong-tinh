@@ -45,17 +45,17 @@ export const CASES: Case[] = [
     title: 'Án chiếc lược ngà',
     sum: 'Đêm đầu ở viện cũ của chị, một tú nữ cùng đợt treo cổ trên xà chái sau. Sổ ghi tự vẫn, nhưng chân nó còn đi hài.',
     suspects: [
-      { k: 'tg', label: 'Người đi hài cỏ', name: 'Thái giám quét sân Lộc' },
-      { k: 'mm', label: 'Bàn tay ám mùi dầu đèn', name: 'Ma ma giữ đèn họ Ông' },
-      { k: 'cq', label: 'Kẻ đeo khăn lụa xanh', name: 'Cung nữ hầu Quý phi' },
-      { k: 'lv', label: 'Người biết lối sau viện', name: 'Lụa Vàng', cast: 'luavang' },
+      { k: 'tg', label: 'Bóng người cao gầy', name: 'Thái giám quét sân Lộc' },
+      { k: 'mm', label: 'Bóng đàn bà đứng tuổi', name: 'Ma ma giữ đèn họ Ông' },
+      { k: 'cq', label: 'Bóng cô gái áo xanh', name: 'Cung nữ hầu Quý phi' },
+      { k: 'lv', label: 'Bóng người trong viện mình', name: 'Lụa Vàng', cast: 'luavang' },
     ],
     tay: ['tg', 'mm'],
     clues: [
-      { id: 'a1_hai', an: 'an1', kind: 'vat', t: 'Đôi hài cỏ ướt nước giếng dưới gầm chái', key: true },
-      { id: 'a1_gieng', an: 'an1', kind: 'nhan', t: 'Người gánh nước thấy bóng ai ra giếng lúc canh ba' },
-      { id: 'a1_cungphong', an: 'an1', kind: 'khai', t: 'Lời tú nữ ngủ cùng phòng: nó nhặt được một món đồ cũ' },
-      { id: 'a1_day', an: 'an1', kind: 'vat', t: 'Sợi dây thắt cổ là dây buộc rèm của kho đèn' },
+      { id: 'a1_hai', an: 'an1', kind: 'vat', t: 'Đôi hài cỏ ướt nước giếng giấu dưới gầm chái', key: true },
+      { id: 'a1_gieng', an: 'an1', kind: 'nhan', t: 'Người gánh nước thấy hai bóng người ra giếng lúc canh ba' },
+      { id: 'a1_cungphong', an: 'an1', kind: 'khai', t: 'Lời tú nữ cùng phòng: có người gọi Hoa ra lúc canh hai' },
+      { id: 'a1_day', an: 'an1', kind: 'vat', t: 'Sợi dây thắt cổ lấy từ kho chung, dòng sổ kho bị mực đè' },
       { id: 'a1_khan', an: 'an1', kind: 'vat', t: 'Chiếc khăn lụa xanh rơi ngay dưới xà', gai: 'cq' },
     ],
   },
@@ -65,16 +65,16 @@ export const CASES: Case[] = [
     title: 'Án đêm bị xóa',
     sum: 'Tài nhân viện Đông có thai, mà sổ đến thăm không có dòng nào ghi Hoàng thượng gọi nàng. Ở tháng Tư, giấy mỏng như vừa bị cạo. Ai đã cầm dao?',
     suspects: [
-      { k: 'tl', label: 'Ngón tay dính mực tàu', name: 'Thư lại nội vụ Bảo' },
-      { k: 'mm', label: 'Người giữ chìa kho sổ', name: 'Ma ma giữ đèn họ Ông' },
-      { k: 'lv', label: 'Kẻ đi giày vải mới', name: 'Lụa Vàng', cast: 'luavang' },
-      { k: 'kt', label: 'Người đứng chép thay sổ ban đêm', name: 'Tiểu thái giám Khương' },
+      { k: 'tl', label: 'Bóng người gù lưng', name: 'Thư lại nội vụ Bảo' },
+      { k: 'md', label: 'Bóng đàn bà đeo chùm chìa', name: 'Ma ma trực kho họ Đàm' },
+      { k: 'lv', label: 'Bóng người trong viện mình', name: 'Lụa Vàng', cast: 'luavang' },
+      { k: 'kt', label: 'Bóng người thấp nhỏ', name: 'Tiểu thái giám Khương' },
     ],
     tay: ['tl', 'kt'],
     clues: [
       { id: 'a2_muc', an: 'an2', kind: 'vat', t: 'Dòng chữ chép đè dùng mực khác màu', key: true },
       { id: 'a2_den', an: 'an2', kind: 'nhan', t: 'Người trực đêm thấy đèn kho sổ sáng sau giờ khóa' },
-      { id: 'a2_dao', an: 'an2', kind: 'vat', t: 'Con dao cạo giấy giấu trong ống bút' },
+      { id: 'a2_dao', an: 'an2', kind: 'vat', t: 'Con dao cạo giấy giấu trong một ống bút ở kho' },
       { id: 'a2_no', an: 'an2', kind: 'khai', t: 'Lời đồn ai đó vừa trả hết nợ cờ bạc' },
       { id: 'a2_giay', an: 'an2', kind: 'vat', t: 'Vết giày vải mới in trên tro ở cửa kho', gai: 'lv' },
     ],
@@ -85,17 +85,17 @@ export const CASES: Case[] = [
     title: 'Án thuốc an thai',
     sum: 'Chén thuốc an thai thứ mười hai có vị lạ, nhũ mẫu nếm thử rồi nhổ ra. Thái y Thẩm run tay từ hôm báo hỷ mạch. Ai đã bỏ thêm vị thuốc vào lò?',
     suspects: [
-      { k: 'ns', label: 'Người canh lò sắc thuốc', name: 'Người sắc thuốc Mùi' },
-      { k: 'mb', label: 'Bàn tay có mùi hạt cau', name: 'Ma ma bếp thuốc họ Đinh' },
+      { k: 'ns', label: 'Bóng người ngồi bên lò', name: 'Người sắc thuốc Mùi' },
+      { k: 'mb', label: 'Bóng đàn bà ở bếp thuốc', name: 'Ma ma bếp thuốc họ Đinh' },
       { k: 'un', label: 'Người có lý do nhất', name: 'Quý phi Hà Uyển Như', cast: 'uyennhu' },
-      { k: 'lv', label: 'Người bưng chén lên', name: 'Lụa Vàng', cast: 'luavang' },
+      { k: 'lv', label: 'Bóng người trong viện mình', name: 'Lụa Vàng', cast: 'luavang' },
     ],
     tay: ['ns', 'mb'],
     clues: [
       { id: 'a3_ba', an: 'an3', kind: 'vat', t: 'Bã thuốc trong lò có vị không nằm trong đơn', key: true },
-      { id: 'a3_cau', an: 'an3', kind: 'nhan', t: 'Người quét bếp ngửi thấy mùi hạt cau sống ở cửa bếp đêm ấy' },
+      { id: 'a3_cau', an: 'an3', kind: 'nhan', t: 'Người quét bếp ngửi thấy mùi hạt cau sống đêm ấy' },
       { id: 'a3_don', an: 'an3', kind: 'khai', t: 'Thái y Thẩm quỳ khai: có người bắt ông kê thêm một vị' },
-      { id: 'a3_bac', an: 'an3', kind: 'vat', t: 'Nén bạc mới có dấu kho khâu trong vạt áo người bếp thuốc' },
+      { id: 'a3_bac', an: 'an3', kind: 'vat', t: 'Nén bạc mới có dấu kho, khâu trong một vạt áo ở bếp' },
       { id: 'a3_tram', an: 'an3', kind: 'vat', t: 'Cây trâm lông công của Quý phi rơi ở cửa bếp', gai: 'un' },
     ],
   },
@@ -131,7 +131,13 @@ export function clueSet(l: Life, clueId: string): string[] {
   const real = c.clues.filter((x) => !x.gai);
   const i = real.findIndex((x) => x.id === clueId);
   const off = Math.floor(rnd(l.seed, `moi|${c.id}`) * others.length);
-  return [tay, others[(i + off) % others.length]];
+  // người mồi của chứng then chốt không xuất hiện ở manh mối nào khác, để chỉ tay sai có thể đủ chứng
+  const ki = Math.max(0, real.findIndex((x) => x.key));
+  const keyDecoy = others[off % others.length];
+  if (i === ki) return [tay, keyDecoy];
+  const rest = others.filter((k) => k !== keyDecoy);
+  const j = real.filter((x, n) => n !== ki).findIndex((x) => x.id === clueId);
+  return [tay, rest[(j + off) % rest.length]];
 }
 
 /** đã đủ manh mối để biết tên người này chưa */
@@ -139,7 +145,7 @@ export function knows(l: Life, an: string, k: string) {
   const st = l.an?.[an];
   if (!st) return false;
   if (st.xu) return true;
-  return st.clues.filter((id) => clueSet(l, id).includes(k)).length >= 2;
+  return st.clues.filter((id) => clueSet(l, id).includes(k)).length >= 3;
 }
 export const suspectName = (l: Life, an: string, k: string) => {
   const s = caseOf(an).suspects.find((x) => x.k === k)!;
@@ -148,7 +154,8 @@ export const suspectName = (l: Life, an: string, k: string) => {
 
 export function strength(l: Life, an: string, k: string) {
   const st = l.an?.[an] ?? { clues: [] as string[], tay: '' };
-  const found = st.clues.map((id) => clueOf(id)!).filter(Boolean);
+  // đã nghi chứng gài (cờ nghi_<id manh mối>) thì không tính chứng ấy
+  const found = st.clues.map((id) => clueOf(id)!).filter((x) => x && !(x.gai && l.flags.includes(`nghi_${x.id}`)));
   const real = found.filter((x) => !x.gai);
   const consistent = real.every((x) => clueSet(l, x.id).includes(k));
   const about = found.filter((x) => clueSet(l, x.id).includes(k));

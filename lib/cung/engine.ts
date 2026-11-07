@@ -10,7 +10,7 @@ import { CRISIS } from './content/big';
 import { ALL_BIG, BRANCH_CARDS, SMALL, bigsOf } from './content/index';
 import { fillText, originOf } from './origins';
 import { NG_CARDS, ngBigsOf, NG_WRITTEN } from './nghiem/index';
-import { CASES, initCases, judge, suspectName, caseOf } from './nghiem/cases';
+import { CASES, initCases, judge, suspectName, caseOf, clueSet } from './nghiem/cases';
 import { NG_CHAPTERS, NG_ERA, NG_HIEM_END, NG_YEAR0, NG_ZERO_END } from './nghiem/world';
 import { NG_PROLOGUE, NG_TALES } from './nghiem/prologue';
 
@@ -74,6 +74,10 @@ export function viewCard(c0: Card, l: Life): Card {
 export function fillNg(x: string, l: Life) {
   return x
     .replace(/\{S:(an\d+):(\w+)\}/g, (_m, an: string, k: string) => suspectName(l, an, k))
+    .replace(/\{C:(a\d_\w+)\}/g, (_m, id: string) => {
+      const an = id.startsWith('a1') ? 'an1' : id.startsWith('a2') ? 'an2' : id.startsWith('a3') ? 'an3' : 'an' + id[1];
+      return clueSet(l, id).map((k) => suspectName(l, an, k)).join(' hoặc ');
+    })
     .replace(/\{TAY:(an\d+)\}/g, (_m, an: string) => caseOf(an).suspects.find((s) => s.k === l.an?.[an]?.tay)?.name ?? '')
     .replace(/\{XU:(an\d+)\}/g, (_m, an: string) => {
       const w = l.an?.[an]?.xu?.who;
@@ -504,6 +508,8 @@ export function choose(l0: Life, idx: number): Result {
       }
       else if (j.kind === 'phancong') {
         caseNext = `${an}_pc1`;
+        // buộc sai người mà lại thiếu chứng: phản công nặng
+        if (!j.dung) l.flags.push(`${an}_nang`);
         l.n.hiem = clamp('hiem', l.n.hiem + 15);
       } else if (j.kind === 'gai') {
         l.flags.push(`oan_${an}`);
@@ -532,7 +538,9 @@ export function choose(l0: Life, idx: number): Result {
   const kind: 'big' | 'crisis' | 'small' = l.chain?.kind ?? (card.big ? 'big' : isCrisis ? 'crisis' : 'small');
   const nextId = caseNext ?? fx.next;
   const nextStep = nextId && !fx.end ? cardOf(nextId) : null;
-  const years = fx.years ?? (nextStep ? 0 : isNg(l) ? (kind === 'big' ? 2 / 12 : 1 / 12) : kind === 'big' ? 1 : 0.5);
+  // phần Nghiêm: đang có án mở thì chỉ trôi vài ngày; ngoài án thì một tháng mỗi thẻ
+  const caseOpen = isNg(l) && Object.values(l.an ?? {}).some((x) => x.mo != null && !x.xu);
+  const years = fx.years ?? (nextStep ? 0 : isNg(l) ? (caseOpen ? 0 : kind === 'big' ? 2 / 12 : 1 / 12) : kind === 'big' ? 1 : 0.5);
   const a0 = l.age;
   l.age = isNg(l) ? Math.round((l.age + years) * 12) / 12 : Math.round((l.age + years) * 2) / 2;
   for (let y = Math.floor(a0) + 1; y <= Math.floor(l.age); y++) {
