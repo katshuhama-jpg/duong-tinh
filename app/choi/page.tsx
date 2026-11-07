@@ -8,6 +8,7 @@ import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK 
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
 import { alliesOf, chapOf, doubt, isNg, migrate, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
+import EndBook, { partOfOrigin } from '@/components/cung/EndBook';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
 import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
@@ -1005,7 +1006,14 @@ export default function Play() {
               <LifeMarks life={life} onRewind={(i) => (setBook(false), setRes(null), keep(rewindTo(life, i)))} />
               <details className="c-treefold">
                 <summary>Cây kết cục của mọi đời</summary>
-                <FateTree paths={(meta.tree as TreePath[] | undefined) ?? []} life={life} />
+                <FateTree paths={((meta.tree as TreePath[] | undefined) ?? []).filter((x) => (x.o ?? 'dan') === (life.origin ?? 'dan'))} life={life} />
+              </details>
+            </section>
+            <section>
+              <h3>Sổ kết cục · {partOfOrigin(life.origin) === 'nghiem' ? 'Con tin họ Nghiêm' : 'Cô gái chè'}</h3>
+              <details className="c-treefold">
+                <summary>Xem các kết cục của thân phận này</summary>
+                <EndBook meta={meta} part={partOfOrigin(life.origin)} showTree={false} />
               </details>
             </section>
             <section>
