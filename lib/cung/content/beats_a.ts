@@ -28,9 +28,9 @@ export const BEATS_A: Card[] = [
     text: ['Đêm đầu ở viện mới, Hạnh mở cửa đổ nước thì thấy một chén trà còn ấm đặt trên bậc, không một bóng người.', 'Dưới đáy chén nằm một cánh sen khô, cuộn tròn như ngón tay.'],
     omen: 'Đêm đầu tiên, người đặt chén trà đã biết phòng bạn ở đâu, và biết bạn uống trà gì.',
     choices: [
-      { t: 'Bảo Hạnh đổ ra gốc cây, rửa chén thật sạch', fx: { d: { muu: 2, duc: 2 } }, note: 'Sáng ra, đám cỏ quanh gốc cây úa vàng một vệt. Bạn không nói với ai.' },
-      { t: 'Đổ trà đi, giữ lại cánh sen khô trong hộp kim chỉ', fx: { d: { muu: 4 }, flag: ['ba_canh_sen'] }, note: 'Cánh sen khô có mùi hăng lạ, không giống sen ở hồ nào bạn từng thấy.' },
-      { t: 'Ngồi với Hạnh đến sáng, xem ai quay lại lấy chén', fx: { d: { hanh: 8, sac: -2 } }, note: 'Canh tư có tiếng guốc dừng ngoài hiên, rồi đi. Hạnh tựa vai bạn ngủ gục.' },
+      { t: 'Bảo Hạnh đổ ra gốc cây, rửa chén thật sạch', fx: { d: { muu: 2, duc: 2 }, flag: ['ba_tra_dau'] }, note: 'Sáng ra, đám cỏ quanh gốc cây úa vàng một vệt. Bạn không nói với ai.' },
+      { t: 'Đổ trà đi, giữ lại cánh sen khô trong hộp kim chỉ', fx: { d: { muu: 4 }, flag: ['ba_canh_sen', 'ba_tra_dau'] }, note: 'Cánh sen khô có mùi hăng lạ, không giống sen ở hồ nào bạn từng thấy.' },
+      { t: 'Ngồi với Hạnh đến sáng, xem ai quay lại lấy chén', fx: { d: { hanh: 8, sac: -2 }, flag: ['ba_tra_dau'] }, note: 'Canh tư có tiếng guốc dừng ngoài hiên, rồi đi. Hạnh tựa vai bạn ngủ gục.' },
     ],
   },
   {
@@ -49,9 +49,9 @@ export const BEATS_A: Card[] = [
     text: ['Đêm ấy, ngay cạnh chậu áo bạn giặt dở, có người đặt một chén trà sen còn bốc khói.', 'Hạnh nói nhỏ: "Cả viện Hoán Y này, chưa ai được uống trà sen bao giờ."'],
     omen: 'Một chén trà sen đặt cạnh chậu áo của cung nga: có người đã để ý bạn từ rất sớm.',
     choices: [
-      { t: 'Đổ chén trà vào rãnh nước, làm như không thấy', fx: { d: { muu: 3, duc: 2 } }, note: 'Sáng ra rãnh nước nổi mấy con cá chết trắng. Bà Tư nhìn bạn, không hỏi.' },
-      { t: 'Đổ trà, giữ lại cánh sen khô dưới đáy chén', fx: { d: { muu: 4 }, flag: ['ba_canh_sen'] }, note: 'Cánh sen khô có mùi hăng lạ. Bạn giấu nó trong lót giày.' },
-      { t: 'Chia đôi lo lắng với Hạnh, thức canh đến sáng', fx: { d: { hanh: 8, sac: -2 } }, note: 'Không ai quay lại lấy chén. Chỉ có ngọn đèn lồng bên kia tường tắt rất muộn.' },
+      { t: 'Đổ chén trà vào rãnh nước, làm như không thấy', fx: { d: { muu: 3, duc: 2 }, flag: ['ba_tra_dau'] }, note: 'Sáng ra rãnh nước nổi mấy con cá chết trắng. Bà Tư nhìn bạn, không hỏi.' },
+      { t: 'Đổ trà, giữ lại cánh sen khô dưới đáy chén', fx: { d: { muu: 4 }, flag: ['ba_canh_sen', 'ba_tra_dau'] }, note: 'Cánh sen khô có mùi hăng lạ. Bạn giấu nó trong lót giày.' },
+      { t: 'Chia đôi lo lắng với Hạnh, thức canh đến sáng', fx: { d: { hanh: 8, sac: -2 }, flag: ['ba_tra_dau'] }, note: 'Không ai quay lại lấy chén. Chỉ có ngọn đèn lồng bên kia tường tắt rất muộn.' },
     ],
   },
   {

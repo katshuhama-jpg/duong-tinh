@@ -445,7 +445,7 @@ export const BEATS_B: Card[] = [
     chapter: [7],
     beat: 'hook',
     weight: 2,
-    when: { not: OUT },
+    when: { flags: ['ba_tra_dau'], not: OUT },
     place: 'phong',
     time: 'ngay',
     bg: 'thu',
