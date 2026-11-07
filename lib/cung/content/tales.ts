@@ -120,7 +120,7 @@ export const TALES: Record<string, Tale> = {
     t: 'Người đàn bà không con trai',
     lines: [
       'Trong cung, người không có con trai thì sống nhờ ân sủng. Ân sủng thì như nước, đổ vào đâu là chảy đi đó.',
-      'Khi vua băng, phi tần không con sẽ lên chùa hoặc về lãnh cung. Ai cũng biết, mà không ai nói ra.',
+      'Khi vua băng hà, phi tần không con sẽ lên chùa hoặc về lãnh cung. Ai cũng biết, mà không ai nói ra.',
       'Hoàng hậu cũng không có con. Lần đầu tiên, bà nhìn bạn như nhìn một người cùng thuyền.',
     ],
   },
@@ -386,7 +386,7 @@ export const TALES: Record<string, Tale> = {
     s: { bg: 'tam', time: 'dem', cast: ['vua', 'phuc'] },
     t: 'Di chiếu',
     lines: [
-      'Vua băng mà không có di chiếu thì ngai vàng thuộc về người giữ được ấn và cửa cung đêm ấy.',
+      'Vua băng hà mà không có di chiếu thì ngai vàng thuộc về người giữ được ấn và cửa cung đêm ấy.',
       'Hoàng thượng biết điều đó. Ngài cũng biết trong số người đứng quanh giường mình, không ai không có phe.',
       'Đêm nay, ngài cho tất cả ra ngoài, trừ bạn và Phúc.',
     ],
@@ -460,7 +460,7 @@ export const TALES: Record<string, Tale> = {
     t: 'Nước Sa Hải',
     lines: [
       'Sa Hải là nước nhỏ ở phía nam, sống bằng biển và buôn bán. Ba mươi năm qua, họ chưa từng dám đòi gì.',
-      'Nhưng họ nghe tin vua băng, vua mới còn nhỏ, và người cầm quyền là một người đàn bà ngồi sau rèm.',
+      'Nhưng họ nghe tin vua băng hà, vua mới còn nhỏ, và người cầm quyền là một người đàn bà ngồi sau rèm.',
       'Sứ thần của họ hôm nay không quỳ.',
     ],
   },

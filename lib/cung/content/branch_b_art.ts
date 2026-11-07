@@ -51,7 +51,7 @@ export const BRANCH_B_ART: Record<string, EndArt> = {
     mood: 'vui',
     motif: 'chieu',
     story:
-      'Trong Thái miếu có bài vị của một ông vua băng giữa canh ba. Ở làng ven sông có ông lão ngày ngày ngồi câu bên bờ ao, chẳng bao giờ được con cá nào to. Vợ ông nấu cơm, phơi thuốc cho ông lang, thỉnh thoảng hát một bài hò không ai trong làng biết. Ông sống thêm mười hai năm, mất trong giấc ngủ trưa, tay vẫn cầm cần câu.',
+      'Trong Thái miếu có bài vị của một ông vua băng hà giữa canh ba. Ở làng ven sông có ông lão ngày ngày ngồi câu bên bờ ao, chẳng bao giờ được con cá nào to. Vợ ông nấu cơm, phơi thuốc cho ông lang, thỉnh thoảng hát một bài hò không ai trong làng biết. Ông sống thêm mười hai năm, mất trong giấc ngủ trưa, tay vẫn cầm cần câu.',
   },
   e_nb_ve_kinh: {
     place: 'vien',

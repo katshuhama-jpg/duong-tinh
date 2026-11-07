@@ -490,7 +490,7 @@ export const ENDINGS_BRANCH_A: Ending[] = [
   { id: 'd_na_bien_bao', branch: true, tier: 25, dead: true, name: 'Con sóng thứ chín', desc: 'Công chúa hòa thân chưa đến được nơi gả. Bà nhường chỗ trên thuyền con cho mười thị nữ, rồi ở lại với chiếc thuyền rồng.' },
   // 3. vi hành
   { id: 'd_na_do_dao', branch: true, tier: 60, dead: true, name: 'Chợ đêm bến sông', desc: 'Một đêm ra chợ cùng vua, bà đỡ lưỡi dao thay ngài giữa hàng bánh đúc. Ngài truy phong bà làm phi, và cấm hẳn chợ đêm ấy.' },
-  { id: 'e_na_hang_chieu', branch: true, tier: 50, tone: 'vien', name: 'Vợ anh hàng chiếu', desc: 'Một đêm vi hành, nhà vua không về nữa. Triều đình chép ngài băng vì bạo bệnh, còn ở một làng ven biển có đôi vợ chồng bán chiếu cười rất to.' },
+  { id: 'e_na_hang_chieu', branch: true, tier: 50, tone: 'vien', name: 'Vợ anh hàng chiếu', desc: 'Một đêm vi hành, nhà vua không về nữa. Triều đình chép ngài băng hà vì bạo bệnh, còn ở một làng ven biển có đôi vợ chồng bán chiếu cười rất to.' },
   { id: 'e_na_quan_che', branch: true, tier: 20, tone: 'buon', name: 'Quán chè cửa Tây', desc: 'Bà ở lại ngoài cổng thành, mở một quán chè. Năm đầu có người áo vải ghé ba lần, năm sau một lần, rồi không thấy nữa.' },
   // 4. lãnh cung
   { id: 'e_na_tuong_vang', branch: true, tier: 10, tone: 'buon', name: 'Chải tóc búp bê rơm', desc: 'Bẻ một chiếc trâm, đổi lấy cả đời trong lãnh cung. Bà già đi đúng như người bà từng chăm, đến cả cách chải tóc cho con búp bê rơm.' },

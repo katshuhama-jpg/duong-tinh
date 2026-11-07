@@ -1,6 +1,6 @@
 import type { Card } from '../types';
 
-/** Thẻ nhỏ chặng 4 (Ngôi Đông cung), 5 (Vua băng), 6 (Buông rèm), 7 (Tuổi già). */
+/** Thẻ nhỏ chặng 4 (Ngôi Đông cung), 5 (Vua băng hà), 6 (Buông rèm), 7 (Tuổi già). */
 export const CARDS_B: Card[] = [
   // ───────────── Chặng 4: Ngôi Đông cung ─────────────
   {
@@ -186,7 +186,7 @@ export const CARDS_B: Card[] = [
     ],
   },
 
-  // ───────────── Chặng 5: Vua băng ─────────────
+  // ───────────── Chặng 5: Vua băng hà ─────────────
   {
     id: 'b_canh_giuong',
     chapter: [5],

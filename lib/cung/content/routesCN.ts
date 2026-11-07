@@ -402,7 +402,7 @@ export const ROUTES_CN: Card[] = [
     lead: 'Mấy năm giữ bút sau rèm, bạn thảo hết chiếu chỉ cho vua trẻ.',
     who: 'quan',
     title: 'Bản thảo di chiếu',
-    text: ['Vua trẻ băng đột ngột, chưa có con. Chỉ bạn biết bản thảo di chiếu viết tên ai.', 'Ngoài thềm điện, hai phe tôn thất cùng cầm đuốc đợi bạn bước ra.'],
+    text: ['Vua trẻ băng hà đột ngột, chưa có con. Chỉ bạn biết bản thảo di chiếu viết tên ai.', 'Ngoài thềm điện, hai phe tôn thất cùng cầm đuốc đợi bạn bước ra.'],
     omen: 'Người cầm bút thảo chiếu luôn là người đầu tiên bên thua muốn bịt miệng.',
     choices: [
       { t: 'Bước ra, đọc đúng từng chữ trong bản thảo', fx: { d: { duc: 20 }, flag: ['kc_e_nu_su'] }, note: 'Phe được tên cúi đầu tạ ơn. Phe thua tắt đuốc, đi về trong im lặng.', risk: { p: 0.45, fail: { end: 'd_chieu_cuoi' }, failNote: 'Bạn chưa đọc hết dòng thứ hai.' } },

@@ -36,7 +36,7 @@ Quy ước:
 - Đường dân nữ (`origin_dan.ts`): tuyến "Người cũ ở cửa Tây", Khoan là trai làng làm lính canh. Cờ `dn_khoan` (Khoan còn ở kinh), `dn_tai_mat` (Khoan làm tai mắt). Kết cục `e_dan_thuyen`, `d_dan_ben`.
 
 ## Chặng và tuổi
-1 Nhập cung (16-17) · 2 Được gọi (17-20) · 3 Mang thai (19-24) · 4 Ngôi Đông cung (22-30) · 5 Vua băng (28-36) · 6 Buông rèm (32-50, chỉ khi bạn nhiếp chính, có cờ `nhiep`) · 7 Tuổi già (45-70).
+1 Nhập cung (16-17) · 2 Được gọi (17-20) · 3 Mang thai (19-24) · 4 Ngôi Đông cung (22-30) · 5 Vua băng hà (28-36) · 6 Buông rèm (32-50, chỉ khi bạn nhiếp chính, có cờ `nhiep`) · 7 Tuổi già (45-70).
 
 ## Chỉ số (`NumK`, thang 0-100 trừ `tien` tính bằng quan)
 - `duc` Đức (giữ lễ), `sac` Sắc, `the` Thế (chỗ dựa, nhà mẹ đẻ), `an` Ân sủng (nguy hiểm ở cả hai đầu: quá cao bị ghen hại, quá thấp bị quên), `muu` Mưu (tai mắt, mưu trí).

@@ -474,7 +474,7 @@ export const DEEP_ARCS: Card[] = [
     moods: { thucphi: 'vui' },
     who: 'thucphi',
     title: 'Gian chùa còn trống',
-    text: ['Từ ngày tiên đế băng, Thục phi xin lên chùa Vân Tịch tu. Bạn lên thăm. Bà chỉ gian phía sau: "Chùa còn một gian. Em có lên không?"', '"Đêm ở hồ năm ấy, chỉ có em ngồi lại."'],
+    text: ['Từ ngày tiên đế băng hà, Thục phi xin lên chùa Vân Tịch tu. Bạn lên thăm. Bà chỉ gian phía sau: "Chùa còn một gian. Em có lên không?"', '"Đêm ở hồ năm ấy, chỉ có em ngồi lại."'],
     choices: [
       { t: 'Lên chùa, ở cùng bà những năm còn lại', fx: { d: { duc: 6, thucphi: 15 }, flag: ['kc_e_ar_hai_ba'] }, note: 'Hai bà già quét lá đa mỗi sáng, cãi nhau về cách pha trà.' },
       { t: 'Ở lại cung, gửi lên chùa một gói chè', fx: { d: { thucphi: 5, the: 3 } }, note: 'Thư sau, Thục phi chỉ viết một chữ: "Ngon."' },

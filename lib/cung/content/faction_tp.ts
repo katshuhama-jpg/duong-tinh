@@ -7,7 +7,7 @@
  *  3. Gom thóp và bị phản: ft_ph_xoa (đốt kho sổ, giết người giữ sổ), ft_ph_chung (nhân chứng chết giếng),
  *     ft_ph_hanh (3 hồi, Xuân Lan lôi kéo Hạnh), ft_ph_gai (3 hồi, vu bạn hại Hoàng tử Nghĩa lúc nhỏ, lật ngược).
  *  4. Đổi trục sang tranh ngôi (chương 4-6): ft_ng_doi, ft_ng_hoc.
- *     Đánh hai mặt khi liên thủ: ft_hai_lt (Lệ tần), ft_hai_ut (Uyển tần), ft_hai_tp (Thái phó, 2 hồi), ft_hai_ng (mẹ con Nghĩa, đêm vua băng).
+ *     Đánh hai mặt khi liên thủ: ft_hai_lt (Lệ tần), ft_hai_ut (Uyển tần), ft_hai_tp (Thái phó, 2 hồi), ft_hai_ng (mẹ con Nghĩa, đêm vua băng hà).
  *  5. Quyết chiến 4 hồi: ft_qc (cần Xuân Lan đã bị diệt), ft_qc_lieu (bản liều khi Xuân Lan còn: nàng lao ra đỡ chủ).
  *     Dư chấn: đánh Thục phi khi Nghĩa đã lớn thì Nghĩa trả thù - ft_ng_tang (thề), ft_bt (3 hồi).
  * Mô-típ: phấn thủy ngân và hồng hoa (Chân Hoàn truyện), Võ Tắc Thiên đem con ra vu người, người hầu chết thay chủ, mẹ con giành tội.

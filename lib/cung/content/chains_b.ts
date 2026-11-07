@@ -1,5 +1,5 @@
 /**
- * Sự kiện nhiều hồi cho chặng 4-7 (Ngôi Đông cung, Vua băng, Buông rèm, Tuổi già).
+ * Sự kiện nhiều hồi cho chặng 4-7 (Ngôi Đông cung, Vua băng hà, Buông rèm, Tuổi già).
  * Thẻ mở đầu là thẻ nhỏ (weight 3), các hồi sau có step: true và chỉ tới bằng fx.next.
  * Cờ tiền tố cb_.
  *  1. cb_dau    (ch4) Con lên đậu, thái y nghi có người bỏ thứ gì vào thuốc.

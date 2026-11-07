@@ -85,6 +85,6 @@ export const ORIGIN_DAN: Card[] = [
 ];
 
 export const ENDINGS_DAN: Ending[] = [
-  { id: 'e_dan_thuyen', name: 'Thuyền về bến cũ', desc: 'Đêm vua băng, sổ cung ghi một phi tần chết đuối. Ở một làng chè xa kinh, có đôi vợ chồng già hái chè đến cuối đời, không ai biết người vợ từng là ai.' },
+  { id: 'e_dan_thuyen', name: 'Thuyền về bến cũ', desc: 'Đêm vua băng hà, sổ cung ghi một phi tần chết đuối. Ở một làng chè xa kinh, có đôi vợ chồng già hái chè đến cuối đời, không ai biết người vợ từng là ai.' },
   { id: 'd_dan_ben', name: 'Bến sông canh tư', desc: 'Cấm quân chờ sẵn ở bến. Hai người bị xử chung một ngày, tội tư thông. Năm ấy, mẹ ở Mai Đông đốt hết chè trong nhà.', dead: true },
 ];

@@ -17,7 +17,7 @@ export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
 const SUMMONED = new Set(['b2_den', 'b2_sung', 'tt_goi']);
 /** người chỉ có một (không dùng chung vai): đã chết hay bị giáng thì không xuất hiện ở chuyện thường nữa */
 const UNIQUE_RIV = RIVALS.filter((x) => x.cast !== 'quan');
-/** thẻ có hợp với đời đang sống không: người đã đi, vua đã băng thì thôi */
+/** thẻ có hợp với đời đang sống không: người đã đi, vua đã băng hà thì thôi */
 export function fits(c: Card, l: Life): boolean {
   const txt = c.text.join(' ');
   const req = c.when?.flags ?? [];

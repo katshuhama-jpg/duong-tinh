@@ -47,7 +47,7 @@ export const ROUTES_VN: Card[] = [
     who: 'ngoai',
     whoName: 'Quan tư tế nước Sa Hải',
     title: 'Giàn hỏa bên biển',
-    text: ['Vua Sa Hải băng sau mười lăm tháng, khi bạn đang mang thai bốn tháng. Người Sa Hải dựng giàn củi trầm trên bãi cát.', 'Quan tư tế cúi chào rất thấp: "Theo lệ nước này, hoàng hậu theo vua về trời. Ba ngày nữa là ngày tốt."'],
+    text: ['Vua Sa Hải băng hà sau mười lăm tháng, khi bạn đang mang thai bốn tháng. Người Sa Hải dựng giàn củi trầm trên bãi cát.', 'Quan tư tế cúi chào rất thấp: "Theo lệ nước này, hoàng hậu theo vua về trời. Ba ngày nữa là ngày tốt."'],
     omen: 'Sính lễ là hai châu đất, nhưng không ai hỏi phong tục bên kia biển.',
     choices: [
       { t: 'Xin làm lễ chiêu hồn ngoài biển, kéo dài cho kịp thuyền sứ nhà sang viếng tang', fx: { end: 'e_thuyen_ve' }, note: 'Giữa khói hương, thuyền sứ viếng tang mang cờ Phượng Thành áp mạn. Người ta kéo bạn lên, buồm căng về phía bắc.', risk: { p: 0.4, fail: { end: 'd_gian_hoa' }, failNote: 'Thuyền nhà đến chậm một con nước.' } },
@@ -162,7 +162,7 @@ export const ROUTES_VN: Card[] = [
     lead: 'Từ ngày làm nữ học sĩ, bạn chỉ gặp Hoàng thượng bên án thư.',
     title: 'Đêm ở trạm vườn Quế',
     text: ['Hoàng thượng đi tuần, gọi nữ học sĩ theo hầu chép thơ, nghỉ đêm ở trạm vườn Quế. Giữa canh ba, ngài ôm ngực ngã xuống.', 'Trong phòng chỉ có bạn, và chén trà bạn vừa pha còn ấm.'],
-    omen: 'Người thức hầu vua trong đêm vua băng, xưa nay hiếm ai sống sót.',
+    omen: 'Người thức hầu vua trong đêm vua băng hà, xưa nay hiếm ai sống sót.',
     choices: [
       { t: 'Quỳ giữ nguyên chỗ, gọi thái y và quan hộ giá', fx: { end: 'e_an_oan', years: 14 }, note: 'Bạn bị giam mười bốn năm. Vua mới lên ngôi đọc lại hồ sơ, tự tay viết chiếu minh oan.', risk: { p: 0.5, fail: { end: 'd_vuon_que' }, failNote: 'Án xử trong ba ngày. Không ai hỏi bạn câu nào.' } },
       { t: 'Bỏ trốn trong đêm, nhờ nhà Thượng thư họ Đàm che giấu', fx: { end: 'e_an_oan', years: 20 }, note: 'Bạn đổi tên, dạy chữ ở một làng ven sông. Hai mươi năm sau, chiếu minh oan dán ở đình làng.', risk: { p: 0.5, fail: { end: 'd_vuon_que' }, failNote: 'Lính đuổi kịp ở bến đò. Nhà họ Đàm cũng không thoát.' } },
@@ -272,7 +272,7 @@ export const ROUTES_VN: Card[] = [
     moods: { quan: 'dac', con: 'so' },
     who: 'quan',
     title: 'Hai đứa trẻ trên ngai',
-    text: ['Vua Nghĩa băng khi chưa có con trai, tôn thất không ai đủ tuổi. Thái phó Tôn dắt cháu nội tám tuổi vào điện, đặt tay nó vào tay con gái bạn.', '"Công chúa là máu họ cũ. Lên ngôi rồi gả cho cháu thần, nước không một ngày không vua."'],
+    text: ['Vua Nghĩa băng hà khi chưa có con trai, tôn thất không ai đủ tuổi. Thái phó Tôn dắt cháu nội tám tuổi vào điện, đặt tay nó vào tay con gái bạn.', '"Công chúa là máu họ cũ. Lên ngôi rồi gả cho cháu thần, nước không một ngày không vua."'],
     omen: 'Ông Thái phó đã chờ ngai vàng từ ngày gả con gái làm Hoàng hậu.',
     choices: [
       { t: 'Gật đầu, để con gái lên ngôi rồi nhường cho chồng', fx: { d: { quan: 15, the: -10, duc: -4 }, flag: ['h_doi_ho'], years: 2 }, note: 'Họ cũ mất ngôi trong một đám cưới không ai khóc. Hai đứa trẻ ngồi chung ngai, chân chưa chạm đất.' },

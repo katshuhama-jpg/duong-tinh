@@ -135,7 +135,7 @@ export const BEATS_B: Card[] = [
     ],
   },
 
-  /* ================= Chặng 5: Vua băng ================= */
+  /* ================= Chặng 5: Vua băng hà ================= */
   // hook
   {
     id: 'bb_khan_mau',

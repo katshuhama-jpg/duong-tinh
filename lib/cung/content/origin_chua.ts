@@ -320,7 +320,7 @@ export const ORIGIN_CHUA: Card[] = [
     omen: 'Ấn ngọc truyền quốc chưa từng mang lại bình yên cho người nào giữ nó.',
     choices: [
       { t: '"Thần thiếp không biết."', fx: { d: { duc: 4, vua: -8, an: -4 } }, note: 'Ngài buông tay bạn. Từ đó, ngài ho nhiều hơn và hỏi ít hơn.' },
-      { t: 'Lén nhắn tàn quân: triều mới đang tìm ấn, phải đi trước', fx: { d: { muu: 8, the: 8 }, flag: ['p_tan', 'p_an_tan'] }, note: 'Một tháng sau, tin về: ấn đã lên núi Thạch Lĩnh. Ôn Tùng gửi lời: "Chờ ngày vua băng."', risk: { p: 0.35, fail: { end: 'd_mat_thu' }, failNote: 'Người đưa tin bị bắt ở bến đò. Trong búi tóc có mảnh lụa thêu chim lạc của bạn.' } },
+      { t: 'Lén nhắn tàn quân: triều mới đang tìm ấn, phải đi trước', fx: { d: { muu: 8, the: 8 }, flag: ['p_tan', 'p_an_tan'] }, note: 'Một tháng sau, tin về: ấn đã lên núi Thạch Lĩnh. Ôn Tùng gửi lời: "Chờ ngày vua băng hà."', risk: { p: 0.35, fail: { end: 'd_mat_thu' }, failNote: 'Người đưa tin bị bắt ở bến đò. Trong búi tóc có mảnh lụa thêu chim lạc của bạn.' } },
       { t: '"Ấn ấy nên thuộc về người nối được cả hai dòng."', fx: { d: { vua: 6, quan: 4, thaihau: -8 }, flag: ['p_hai'] }, note: 'Ngài im rất lâu, nhìn ra khoảng sân tối, rồi gật đầu rất chậm.' },
       { t: 'Vẽ chỗ giấu ấn, đổi lấy bài vị cho cha và lệnh tha tàn quân', need: { flags: ['p_biet_an'] }, lockHint: 'Cần biết chỗ giấu ấn ngọc', fx: { d: { vua: 15, thaihau: 12, quan: 8, the: -6 }, flag: ['p_dang_an', 'p_trung'], unflag: ['nghi_ky', 'p_tan'] }, note: 'Ấn về kinh trong hòm gấm. Bài vị cha bạn được đặt vào chùa Lũng Vân, có lính canh hương.' },
     ],
@@ -341,7 +341,7 @@ export const ORIGIN_CHUA: Card[] = [
     who: 'tuong',
     whoName: 'Lão tướng Ôn Tùng',
     title: 'Cờ Hưng ở cửa tây',
-    text: ['Canh ba, Hoàng thượng băng. Chuông chưa kịp đánh, cửa tây đã rực đuốc dưới cờ Hưng, lão tướng Ôn Tùng đòi gặp bạn.', 'Bạn bế con lên lầu cửa. Ôn Tùng ngẩng lên: "Công chúa, mở cửa. Thần đưa cháu ngoại vua Hưng lên ngôi."'],
+    text: ['Canh ba, Hoàng thượng băng hà. Chuông chưa kịp đánh, cửa tây đã rực đuốc dưới cờ Hưng, lão tướng Ôn Tùng đòi gặp bạn.', 'Bạn bế con lên lầu cửa. Ôn Tùng ngẩng lên: "Công chúa, mở cửa. Thần đưa cháu ngoại vua Hưng lên ngôi."'],
     omen: 'Từ ngày bạn trả lời tàn quân, đêm này đã được hẹn sẵn.',
     choices: [
       { t: 'Đứng giữa cửa, xin Ôn Tùng hạ giáo để lập con hai dòng máu', fx: { d: { duc: 8, quan: 6 }, flag: ['p_hai'], unflag: ['p_tan'] }, note: 'Lão tướng nhìn đứa trẻ rất lâu, rồi cắm cờ xuống đất: "Thần về núi. Đừng để nó quên họ ngoại."', risk: { p: 0.35, fail: { d: { the: -15, thaihau: -10 }, unflag: ['p_tan'] }, failNote: 'Ôn Tùng không nghe. Đến sáng, đầu ông treo ở cửa tây, và cả triều nhìn về phía bạn.' } },

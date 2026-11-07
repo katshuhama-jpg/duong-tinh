@@ -274,7 +274,7 @@ export const ENDING_ART: Record<string, EndArt> = {
     mood: 'buon',
     motif: 'hoa',
     story:
-      'Vua băng giữa vườn Quế, người đứng gần nhất là {ho} thị. Án xử trong một buổi sáng, cả họ ra pháp trường cùng ngày, hoa quế rụng vàng lối đi. Hai mươi năm sau có chiếu minh oan dán ở cổng thành. Không còn ai họ {ho} đến nhận, tờ chiếu bay mất trong một trận gió.',
+      'Vua băng hà giữa vườn Quế, người đứng gần nhất là {ho} thị. Án xử trong một buổi sáng, cả họ ra pháp trường cùng ngày, hoa quế rụng vàng lối đi. Hai mươi năm sau có chiếu minh oan dán ở cổng thành. Không còn ai họ {ho} đến nhận, tờ chiếu bay mất trong một trận gió.',
   },
   e_an_oan: {
     place: 'lang',
@@ -455,7 +455,7 @@ export const ENDING_ART: Record<string, EndArt> = {
     mood: 'dac',
     motif: 'chieu',
     story:
-      'Đêm tiên đế băng, di chiếu nằm trên án, mực còn ướt. {ho} thị sửa đúng một chữ, rồi cuộn lại, buộc dây như cũ. Sáng ra, phe nắm cấm quân lên ngôi, cả kinh thành không đổ một giọt máu. Cuốn sử bà chép suốt ba mươi năm sau sạch như nước, chỉ thiếu đúng một đêm.',
+      'Đêm tiên đế băng hà, di chiếu nằm trên án, mực còn ướt. {ho} thị sửa đúng một chữ, rồi cuộn lại, buộc dây như cũ. Sáng ra, phe nắm cấm quân lên ngôi, cả kinh thành không đổ một giọt máu. Cuốn sử bà chép suốt ba mươi năm sau sạch như nước, chỉ thiếu đúng một đêm.',
   },
   d_chieu_cuoi: {
     place: 'dien',
@@ -585,7 +585,7 @@ export const ENDING_ART: Record<string, EndArt> = {
     mood: 'vui',
     motif: 'trang',
     story:
-      'Đêm vua băng, thuyền rời bến lúc trống canh tư dưới một vầng trăng lớn, {ho} thị không ngoái lại. Sổ cung ghi một phi tần chết đuối. Ở một làng chè xa kinh, có đôi vợ chồng già hái chè đến cuối đời. Người vợ hát rất hay, nhưng không ai trong làng biết bà từng là ai.',
+      'Đêm vua băng hà, thuyền rời bến lúc trống canh tư dưới một vầng trăng lớn, {ho} thị không ngoái lại. Sổ cung ghi một phi tần chết đuối. Ở một làng chè xa kinh, có đôi vợ chồng già hái chè đến cuối đời. Người vợ hát rất hay, nhưng không ai trong làng biết bà từng là ai.',
   },
   d_dan_ben: {
     place: 'bien',

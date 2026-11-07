@@ -57,7 +57,7 @@ export const BRANCH_A_ART: Record<string, EndArt> = {
     mood: 'vui',
     motif: 'chieu',
     story:
-      'Chiếc ngọc bội chìm xuống sông, và một ông vua biến mất khỏi sử sách. Triều đình chép ngài băng vì bạo bệnh, lập em ngài lên thay. Ở một làng ven biển có đôi vợ chồng dệt chiếu, ông chồng viết chữ đẹp lạ thường. Chiều chiều họ ngồi ngoài bãi cãi nhau xem chiếu nào bán được giá hơn.',
+      'Chiếc ngọc bội chìm xuống sông, và một ông vua biến mất khỏi sử sách. Triều đình chép ngài băng hà vì bạo bệnh, lập em ngài lên thay. Ở một làng ven biển có đôi vợ chồng dệt chiếu, ông chồng viết chữ đẹp lạ thường. Chiều chiều họ ngồi ngoài bãi cãi nhau xem chiếu nào bán được giá hơn.',
   },
   e_na_quan_che: {
     place: 'lang',

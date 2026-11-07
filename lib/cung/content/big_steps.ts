@@ -281,7 +281,7 @@ export const BIG_STEPS: Card[] = [
     ],
   },
 
-  /* ================= b5_bang: Đêm vua băng (chặng 5) ================= */
+  /* ================= b5_bang: Đêm vua băng hà (chặng 5) ================= */
   {
     id: 'bs_bang_lui',
     step: true,

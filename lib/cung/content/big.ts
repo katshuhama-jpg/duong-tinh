@@ -252,7 +252,7 @@ export const BIG: Card[] = [
     ],
   },
 
-  /* ---------------- Chặng 5: Vua băng ---------------- */
+  /* ---------------- Chặng 5: Vua băng hà ---------------- */
   {
     id: 'b5_bang',
     big: true,
@@ -267,8 +267,8 @@ export const BIG: Card[] = [
     where: 'trong tẩm điện Hoàng thượng',
     bg: 'tam',
     who: 'hoanghau',
-    title: 'Đêm vua băng',
-    text: ['Hoàng thượng băng giữa canh ba. Con bạn mới bảy tuổi, quỳ bên long sàng khóc không ra tiếng.', 'Hoàng hậu lau nước mắt, quay sang bạn: "Từ mai ta buông rèm, Thái phó phụ chính. Muội lo cho con là đủ."'],
+    title: 'Đêm vua băng hà',
+    text: ['Hoàng thượng băng hà giữa canh ba. Con bạn mới bảy tuổi, quỳ bên long sàng khóc không ra tiếng.', 'Hoàng hậu lau nước mắt, quay sang bạn: "Từ mai ta buông rèm, Thái phó phụ chính. Muội lo cho con là đủ."'],
     omen: 'Từ ngày con lên ngôi, mỗi bước của bạn đều có người đếm.',
     choices: [
       { t: 'Cúi đầu vâng dạ, bế con lui ra', fx: { next: 'bs_bang_lui', d: { hoanghau: 2 } }, note: 'Hoàng hậu gật đầu, không nhìn theo. Ngoài hành lang có người đứng chờ bạn.' },
@@ -289,8 +289,8 @@ export const BIG: Card[] = [
     where: 'trong tẩm điện Hoàng thượng',
     bg: 'tam',
     who: 'quan',
-    title: 'Đêm vua băng',
-    text: ['Hoàng thượng băng giữa canh ba. Con bạn quỳ bên long sàng khóc không ra tiếng, và trong hậu cung giờ không còn ai đứng trên bạn.', 'Thái phó Tôn khoác áo tang, quỳ xuống trước bạn: "Vua còn nhỏ. Xin nương nương giao việc triều cho lão phụ chính, nương nương chỉ lo cho vua là đủ."'],
+    title: 'Đêm vua băng hà',
+    text: ['Hoàng thượng băng hà giữa canh ba. Con bạn quỳ bên long sàng khóc không ra tiếng, và trong hậu cung giờ không còn ai đứng trên bạn.', 'Thái phó Tôn khoác áo tang, quỳ xuống trước bạn: "Vua còn nhỏ. Xin nương nương giao việc triều cho lão phụ chính, nương nương chỉ lo cho vua là đủ."'],
     omen: 'Từ ngày con lên ngôi, mỗi bước của bạn đều có người đếm.',
     choices: [
       { t: '"Từ mai ta buông rèm. Thái phó đứng ngoài rèm mà tâu."', fx: { d: { quan: -6, muu: 6, the: 8 }, flag: ['nhiep', 'thai_hau'], years: 1, chapter: 6 }, note: 'Thái phó lạy ba lạy, rất chậm. Sáng hôm sau, sau rèm chính điện chỉ có một chiếc ghế, và người ngồi là bạn.' },
@@ -311,7 +311,7 @@ export const BIG: Card[] = [
     where: 'trong tẩm điện Hoàng thượng',
     who: 'vua',
     title: 'Lời cuối của Hoàng thượng',
-    text: ['Trước khi băng, Hoàng thượng nắm tay bạn: "Trẫm phong nhà {ho} tước hầu, cho nàng có chỗ dựa."', 'Ngoài cửa, Thục phi đang đứng nghe.'],
+    text: ['Trước khi băng hà, Hoàng thượng nắm tay bạn: "Trẫm phong nhà {ho} tước hầu, cho nàng có chỗ dựa."', 'Ngoài cửa, Thục phi đang đứng nghe.'],
     choices: [
       { t: 'Nhận ân điển cho cả nhà', fx: { end: 'e_sung_phi' }, note: 'Một tháng sau khi vua mất, nhà {ho} bị tước hết, bạn bị đưa ra lăng ngoài thành.' },
       { t: 'Từ chối, xin Hoàng thượng đừng để lại di chiếu riêng', fx: { d: { duc: 12, an: -10 } }, note: 'Hoàng thượng thở dài, buông tay bạn.' },
@@ -330,7 +330,7 @@ export const BIG: Card[] = [
     moods: { thucphi: 'dac' },
     who: 'thucphi',
     title: 'Ngai vàng của người khác',
-    text: ['Hoàng thượng băng. Hoàng tử Nghĩa lên ngôi, Thục phi thành Hoàng thái phi, quyền nghiêng cả hậu cung.', 'Bà ta nhìn bạn qua làn khói hương: "Em định sống thế nào những năm còn lại?"'],
+    text: ['Hoàng thượng băng hà. Hoàng tử Nghĩa lên ngôi, Thục phi thành Hoàng thái phi, quyền nghiêng cả hậu cung.', 'Bà ta nhìn bạn qua làn khói hương: "Em định sống thế nào những năm còn lại?"'],
     omen: 'Ở dưới tay người từng là đối thủ, không có chỗ nào thật sự an toàn.',
     choices: [
       { t: 'Xin được ban gả cho tướng Lê Trực, xuất cung', need: { flags: ['ket_tuong'] }, lockHint: 'Cần kết giao tướng Lê Trực', fx: { end: 'e_lay_tuong' }, note: 'Kiệu hoa ra cổng thành giữa mùa gió. Người tướng già đứng chờ ở bến đò.' },

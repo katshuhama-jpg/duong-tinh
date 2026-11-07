@@ -1,5 +1,5 @@
 /**
- * Nhánh rẽ ngõ cụt chặng 4-7 (Ngôi Đông cung, Vua băng, Buông rèm, Tuổi già). Tiền tố nb_.
+ * Nhánh rẽ ngõ cụt chặng 4-7 (Ngôi Đông cung, Vua băng hà, Buông rèm, Tuổi già). Tiền tố nb_.
  * Mỗi nhánh mọc từ một ngã rẽ có sẵn (gắn thêm 1 lựa chọn qua BRANCH_B_CHOICES),
  * đi 2-3 cảnh rồi khép đời ở một kết cục riêng (branch: true).
  *  1. b4_lap   -> nb_lap_*   Bế con trốn khỏi cung, sống ở làng chài
@@ -269,7 +269,7 @@ export const BRANCH_B: Card[] = [
     who: 'quan',
     whoName: 'Sứ giả trong kinh',
     title: 'Sứ giả ở ruộng muối',
-    text: ['Mười năm, con bạn đã thành người đàn ông đen sạm, cùng dân cào muối trên ruộng.', 'Sứ giả trong kinh quỳ trên bờ ruộng: "Vua mới băng không con. Triều đình xin rước điện hạ về."'],
+    text: ['Mười năm, con bạn đã thành người đàn ông đen sạm, cùng dân cào muối trên ruộng.', 'Sứ giả trong kinh quỳ trên bờ ruộng: "Vua mới băng hà không con. Triều đình xin rước điện hạ về."'],
     omen: 'Ngôi vua đã trả đi thì người ta không mời về bằng lòng tốt.',
     choices: [
       { t: '"Con đừng về. Muối ở đây mặn, nhưng không có độc."', fx: { end: 'e_nb_vua_muoi' }, note: 'Con bạn cúi nhìn đôi tay nứt nẻ, rồi bảo sứ giả mang chiếu về.' },
@@ -489,7 +489,7 @@ export const ENDINGS_BRANCH_B: Ending[] = [
   { id: 'e_nb_me_linh', branch: true, tier: 58, tone: 'vien', name: 'Mẹ của lính đồn', desc: 'Sổ cung chép bà ốm chết trong viện. Ở đồn biên ải, lính gọi bà là mẹ, và giặc ba năm không qua được khe núi ấy.' },
   { id: 'd_nb_vong_lau', branch: true, tier: 72, dead: true, name: 'Lá cờ trên vọng lâu', desc: 'Một người lính tóc ngắn chết trên vọng lâu, tay không rời cán cờ. Mãi sau Lê Trực mới dám khắc tên thật lên bia.' },
   // 3. cb_dc
-  { id: 'e_nb_ong_lang', branch: true, tier: 44, tone: 'vien', name: 'Ông câu bên bờ ao', desc: 'Triều đình thờ một ông vua đã băng. Ở làng ven sông có ông lão câu cá và bà vợ nấu cơm, sống thêm mười hai năm không ai biết.' },
+  { id: 'e_nb_ong_lang', branch: true, tier: 44, tone: 'vien', name: 'Ông câu bên bờ ao', desc: 'Triều đình thờ một ông vua đã băng hà. Ở làng ven sông có ông lão câu cá và bà vợ nấu cơm, sống thêm mười hai năm không ai biết.' },
   { id: 'e_nb_ve_kinh', branch: true, tier: 24, tone: 'buon', name: 'Ông vua đã phát tang', desc: 'Về đến cửa Ngọ Môn, người ta bảo ông là kẻ mạo danh. Ông bị giải đi đâu không ai rõ, bà bị nhốt vào lãnh cung đến già.' },
   // 4. b5_bang2
   { id: 'd_nb_tuan_canh', branch: true, tier: 42, dead: true, name: 'Tiếng mõ canh tư', desc: 'Bà cầm đèn đi về phía lính tuần để người kia kịp ra ngoài. Sáng ra, sổ cung chép một phi tần trẫm mình dưới giếng.' },

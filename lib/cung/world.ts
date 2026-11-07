@@ -68,7 +68,7 @@ export const CHAPTERS: { n: number; t: string; smalls: number; epi: string; hook
   { n: 2, t: 'Được gọi', smalls: 7, epi: 'Ba nghìn giai lệ, một ngọn đèn đỏ. Đèn treo trước cửa ai, cả hậu cung đều biết.', hook: 'Đèn đỏ sắp treo. Và đâu đó, có người đang đếm từng đêm của bạn.' },
   { n: 3, t: 'Mang thai', smalls: 6, epi: 'Trong cung, có con là có chỗ đứng. Cũng là có thêm một cái cổ để người ta nhắm vào.', hook: 'Thái y bắt mạch xong, cúi đầu thật thấp. Tin vui này, không phải ai cũng vui.' },
   { n: 4, t: 'Ngôi Đông cung', smalls: 7, epi: 'Một chiếc ghế nhỏ ở Đông cung, mà bao nhiêu người đã ngã quanh nó.', hook: 'Triều đình bắt đầu bàn chuyện lập Đông cung. Tên con bạn được nhắc tới, và cả tên người khác.' },
-  { n: 5, t: 'Vua băng', smalls: 3, epi: 'Mặt trời lặn thì bóng tối chia nhau. Ai giữ được ấn, người ấy giữ được sáng mai.', hook: 'Hoàng thượng ho ra máu. Từ đêm nay, mỗi bước chân trong cung đều có người canh.' },
+  { n: 5, t: 'Vua băng hà', smalls: 3, epi: 'Mặt trời lặn thì bóng tối chia nhau. Ai giữ được ấn, người ấy giữ được sáng mai.', hook: 'Hoàng thượng ho ra máu. Từ đêm nay, mỗi bước chân trong cung đều có người canh.' },
   { n: 6, t: 'Buông rèm', smalls: 6, epi: 'Ngồi sau rèm, nghe cả triều tâu. Một câu nói sai, cả họ nhà mình trả giá.', hook: 'Con còn nhỏ, ngai còn lạnh. Và Thái phó Tôn đã cười với bạn hơi lâu.' },
   { n: 7, t: 'Tuổi già', smalls: 5, epi: 'Người cũ lần lượt đi. Chỉ có những món nợ là ở lại.', hook: 'Một sáng, có người gửi vào một chiếc hài thêu. Bạn nhận ra mũi kim của chính mình năm mười tám tuổi.' },
 ];
