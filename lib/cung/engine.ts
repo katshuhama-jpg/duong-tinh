@@ -541,6 +541,8 @@ export function choose(l0: Life, idx: number): Result {
         l.n.hiem = clamp('hiem', l.n.hiem + 15);
       } else if (j.kind === 'gai') {
         l.flags.push(`oan_${an}`);
+        // người hầu thân bị xử oan thì bị đưa đi khỏi viện
+        if (caseOf(an).suspects.find((s) => s.k === who)?.cast === 'luavang' && !l.flags.includes('di_luavang')) l.flags.push('di_luavang');
         caseNext = `${an}_xong`;
       } else caseNext = `${an}_khep`;
       if (caseNext && !cardOf(caseNext)) caseNext = undefined;
