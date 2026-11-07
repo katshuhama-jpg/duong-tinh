@@ -803,9 +803,13 @@ export default function Play() {
                 Năm {eraOf(life)} thứ {yearOf(life)}. Bạn sẽ làm gì?
               </p>
               <div className="c-choices c-in" key={`c${card.id}${life.seen.length}`}>
-                {opts.map(({ c, open }, i) => (
+                {opts
+                  .map((o, i) => ({ ...o, i }))
+                  // Con tin họ Nghiêm: lựa chọn bị khóa vì đã xử sai người thì ẩn hẳn, không để lộ là đã xử sai
+                  .filter(({ c, open }) => open || !(isNg(life) && c.need?.not?.some((f) => f.endsWith('_nang') && life.flags.includes(f))))
+                  .map(({ c, open, i }, j) => (
                   <button key={i} type="button" className="c-opt" disabled={!open} onClick={() => pick(i)}>
-                    <b>{ROMAN[i]}</b>
+                    <b>{ROMAN[j]}</b>
                     <span>
                       {fillText(c.t, life.origin)}
                       {!open && c.lockHint && <small>Khóa: {c.lockHint}</small>}

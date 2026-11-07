@@ -26,7 +26,7 @@ export const NG_PROLOGUE: Tale[] = [
     kicker: `${K} năm thứ ba, năm Tân Dậu`,
     t: 'Đêm mưa',
     s: { bg: 'hanh', time: 'dem', cast: [], rain: true, prop: 'bocta' },
-    lines: ['Năm Tân Dậu, Hoàng hậu sinh Hoàng trưởng tử. Cả kinh thành đốt pháo ba ngày.', 'Đêm ấy mưa rất to. Không ai nhớ ai đã đi qua hành lang cung Hoàng hậu lúc canh tư.'],
+    lines: ['Năm Tân Dậu, Hoàng hậu sinh Hoàng trưởng tử.', 'Cả kinh thành đốt pháo ba ngày.'],
   },
   {
     kicker: `${K} năm thứ tư`,
@@ -38,19 +38,19 @@ export const NG_PROLOGUE: Tale[] = [
     kicker: `${K} năm thứ năm`,
     t: 'Thư chị',
     s: { bg: 'phonghoc', time: 'dem', cast: ['me'], imgs: { me: 'hn0' }, moods: { me: 'binh' } },
-    lines: ['Thư chị gửi về mỗi mùa một lá. Lá nào cũng nói trong cung vui.', 'Có một lá có dòng bị bôi mực rất đậm. Em soi đèn mãi mà không đọc ra.'],
+    lines: ['Thư chị gửi về mỗi mùa một lá.', 'Lá nào cũng nói trong cung vui.'],
   },
   {
     kicker: `${K} năm thứ sáu`,
     t: 'Hồ sen',
     s: { bg: 'vuon', time: 'chieu', cast: ['thanh', 'huu', 'dao'], imgs: { thanh: 'thanh2', huu: 'huu0' }, moods: { thanh: 'buon', huu: 'vui' } },
-    lines: ['Chị lên Chiêu nghi. Người trong cung bảo chị hiền, chỉ hay ngồi một mình bên hồ sen.', 'Hoàng trưởng tử hay chạy sang chơi, vừa chạy vừa hát một câu ru lạ tai.'],
+    lines: ['Chị lên Chiêu nghi.', 'Người trong cung bảo chị hiền, chỉ hay ngồi một mình bên hồ sen.'],
   },
   {
     kicker: `${K} năm thứ bảy`,
     t: 'Ông Nghiêm sắt',
     s: { bg: 'trieu', time: 'ngay', cast: ['cha', 'thaisu'], imgs: { cha: 'cha0', thaisu: 'thaisu0' }, moods: { cha: 'gian', thaisu: 'dac' } },
-    lines: ['Cha quỳ giữa triều, giơ cao tờ sớ hặc Thái sư. Cả triều cúi đầu, chỉ cha ngẩng.', 'Từ đó người ta gọi cha là ông Nghiêm sắt. Sau rèm, có một người đã ghi nhớ tên cha.'],
+    lines: ['Cha quỳ giữa triều, giơ cao tờ sớ hặc Thái sư. Cả triều cúi đầu, chỉ cha ngẩng.', 'Từ đó người ta gọi cha là ông Nghiêm sắt.'],
   },
   {
     kicker: `${K} năm thứ tám`,

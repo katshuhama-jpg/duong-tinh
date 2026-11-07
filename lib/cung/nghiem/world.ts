@@ -47,7 +47,7 @@ export const TRUTHS: string[] = [
   'Sổ đến thăm năm Tân Dậu bị xóa một đêm',
   'Một cung nữ hầu trà tên Đào mang thai rồi biến mất',
   'Đêm Tân Dậu, chị trực ở cung Hoàng hậu',
-  'Sổ thuốc ghi: Hoàng hậu sinh con gái, mất',
+  'Sổ thuốc năm Tân Dậu có một dòng nhòe: Con... mất',
   'Có một mộ nhỏ không bia sau vườn cung Hoàng hậu',
   'Hoàng trưởng tử hát một câu ru không ai trong cung dạy',
   'Cha trả lời chị bằng một chữ: Im',
