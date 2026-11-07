@@ -529,7 +529,7 @@ export const NG_CH2: Card[] = [
     omen: 'Luật có lệ phản tọa: gọi tên mà không giữ nổi tên ấy, thì chính mình chịu tội của tên ấy.',
     choices: [
       { t: 'Trình: {S:an2:tl}', fx: { accuse: { an: 'an2', who: 'tl' } }, note: 'Bạn đặt bút. Từ giờ, cái tên ấy là của bạn.' },
-      { t: 'Trình: {S:an2:mm}', fx: { accuse: { an: 'an2', who: 'mm' } }, note: 'Bạn đặt bút. Từ giờ, cái tên ấy là của bạn.' },
+      { t: 'Trình: {S:an2:md}', fx: { accuse: { an: 'an2', who: 'md' } }, note: 'Bạn đặt bút. Từ giờ, cái tên ấy là của bạn.' },
       { t: 'Trình: {S:an2:lv}', fx: { accuse: { an: 'an2', who: 'lv' }, d: { hanh: -20 }, flag: ['buoc_lv'] }, note: 'Bạn đặt bút. Lụa Vàng đứng sau rèm, không thở.' },
       { t: 'Trình: {S:an2:kt}', fx: { accuse: { an: 'an2', who: 'kt' } }, note: 'Bạn đặt bút. Từ giờ, cái tên ấy là của bạn.' },
       { t: 'Thưa: sổ không bị sửa', fx: { accuse: { an: 'an2', who: 'tu' }, d: { duc: -3 } }, note: 'Bạn gấp tờ trình lại. Kiệm cúi chào, mỉm cười rất nhẹ.' },
