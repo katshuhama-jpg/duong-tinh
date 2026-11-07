@@ -2,6 +2,8 @@ import { newLife, choose, cardOf, choicesOf, doubt } from '../lib/cung/engine';
 import { strength } from '../lib/cung/nghiem/cases';
 const N = Number(process.argv[2] ?? 2000);
 const WANT = (process.argv[3] ?? '').split(',').filter(Boolean);
+const ENDW = (process.argv[4] ?? '').split(',').filter(Boolean);
+const A7 = process.argv[5];
 let s0 = 12345;
 const r = () => { s0 ^= s0 << 13; s0 >>>= 0; s0 ^= s0 >>> 17; s0 ^= s0 << 5; s0 >>>= 0; return s0 / 4294967296; };
 const seen: Record<string, number> = {}; const ends: Record<string, number> = {}; let ch7 = 0; let err = 0;
@@ -17,12 +19,13 @@ for (let i = 0; i < N; i++) {
       const acc = open.filter((x) => x.x.fx.accuse);
       if (acc.length) {
         const an = acc[0].x.fx.accuse!.an;
+        if (A7 && an === 'an7') pick = acc.find((x) => x.x.fx.accuse!.who === A7);
         if (l.flags.includes('vua_benh') && an === 'an5') pick = acc.find((x) => x.x.fx.accuse!.who === 'tu');
         for (const id of l.an?.[an]?.tu ?? []) if (r() < 0.5 && !l.flags.includes(`nghi_${id}`)) l = doubt(l, id) ?? l;
         pick = pick ?? acc.find((x) => !['tu', 'gac'].includes(x.x.fx.accuse!.who) && strength(l, an, x.x.fx.accuse!.who).du) ?? acc.find((x) => x.x.fx.accuse!.who === 'gac');
       }
       if (!pick) {
-        const sc = (x: any) => { let s = r() * 6; const fl = [...(x.fx.flag ?? []), ...(x.risk?.fail.flag ?? [])]; if (x.fx.clue && (l.n.hiem ?? 0) < 70) s += 4; if (x.fx.mo) s += 5; for (const w of WANT) if (fl.includes(w)) s += 20; if (x.fx.end) s -= 100; if (x.risk?.fail.end) s -= 4; if ((x.fx.d?.hiem ?? 0) > 8 && (l.n.hiem ?? 0) > 60) s -= 5; return s; };
+        const sc = (x: any) => { let s = r() * 6; const fl = [...(x.fx.flag ?? []), ...(x.risk?.fail.flag ?? [])]; if (x.fx.clue && (l.n.hiem ?? 0) < 70) s += 4; if (x.fx.mo) s += 5; for (const w of WANT) if (fl.includes(w)) s += 20; if (x.fx.end) s -= ENDW.includes(x.fx.end) ? -200 : 100; if (x.risk?.fail.end) s -= 4; if ((x.fx.d?.hiem ?? 0) > 8 && (l.n.hiem ?? 0) > 60) s -= 5; return s; };
         pick = open.slice().sort((a, b) => sc(b.x) - sc(a.x))[0];
       }
       l = choose(l, pick.j).life; t++;
