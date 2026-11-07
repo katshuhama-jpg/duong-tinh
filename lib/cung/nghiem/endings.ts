@@ -17,7 +17,7 @@ const RAW: Ending[] = [
   {"id": "n_6", "name": "Bị gả ra ngoài", "desc": "Thái hậu ban nàng cho một quan trấn xa."},
   {"id": "n_7", "name": "Hai tú nữ dưới một mái", "desc": "Kết bạn với Uyển Như, cùng xin ra cung."},
   {"id": "n_8", "name": "Kẻ chép sổ", "desc": "Từ bỏ ngôi phi, xin làm nữ sử chép sổ nội vụ."},
-  {"id": "n_9", "name": "Gánh lỗi cho Lụa Vàng", "desc": "Bị đánh trượng, què, sống ở viện vắng."},
+  {"id": "n_9", "name": "Gánh lỗi cho Lụa Vàng", "desc": "Bị đánh sáu mươi gậy, què chân, sống ở viện vắng."},
   {"id": "n_10", "name": "Giếng của chị", "desc": "Sáng ra người ta vớt bà lên từ giếng sau viện, một chiếc hài thêu còn nổi trên mặt nước. Viện của hai chị em lại khóa, lần này khóa hẳn.", "dead": true},
   {"id": "n_11", "name": "Tiếng hát qua vách", "desc": "Bỏ cuộc, sống yên, không bao giờ được gọi."},
   {"id": "n_12", "name": "Người thứ ba trong sổ", "desc": "Kiệm ghi tên bà vào sổ cung nữ thay vì sổ phi tần. Một nét bút, và con gái ông Nghiêm thành người giặt áo ở viện Hoán Y."},

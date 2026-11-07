@@ -101,7 +101,7 @@ const lvBan = (id: string, when: Card['when']): Card => ({
     { t: 'Không cãi, xin đóng cửa viện chờ xét', fx: { d: { an: -6, duc: -3, hanh: -10 }, flag: ['lv_ban'] }, note: 'Chuyện được trình lên rồi chìm xuống, như mọi chuyện Kiệm muốn chìm. Lụa Vàng vẫn hầu bạn, và cả hai cùng biết.' },
     { t: 'Hỏi Lụa Vàng: "Đôi giày vải mới ai cho em?"', need: { flags: ['biet_giay_lv'] }, lockHint: 'Cần biết chuyện đôi giày vải mới của Lụa Vàng', fx: { d: { hanh: -10, muu: 4, hiem: 6 }, flag: ['lv_ban'] }, note: 'Lụa Vàng tái mặt, lắp bắp nhận mình nhìn nhầm. Kiệm cho thu vòng về, coi như chưa có gì, và nhìn bạn không cười.' },
     { t: 'Sai người cầu Hoàng thượng', need: { flags: ['da_hau'], num: { vua: [15, 100] } }, lockHint: 'Cần đã hầu Hoàng thượng, Hoàng thượng từ 15', fx: { d: { vua: -6 }, flag: ['lv_ban'] }, note: 'Hoàng thượng phê một dòng: "Vòng ấy trẫm cho nàng." Kiệm thu tay. Từ đó, Lụa Vàng run mỗi khi bạn gọi tên nó.' },
-    { t: 'Cãi tới cùng, đòi tra khảo Lụa Vàng giữa sân', fx: { end: 'n_17' }, note: 'Tang vật nằm trong rương, nhân chứng là người của chính viện bạn. Không ai tra Lụa Vàng. Chiều ấy bạn bị tước bậc, đưa xuống làm nô tì giặt áo ở Hoán y cục.' },
+    { t: 'Cãi tới cùng, đòi tra khảo Lụa Vàng giữa sân', fx: { end: 'n_17' }, note: 'Tang vật nằm trong rương, nhân chứng là người của chính viện bạn. Không ai tra Lụa Vàng. Chiều ấy bạn bị tước bậc, đưa xuống làm nô tì giặt áo ở viện giặt áo.' },
   ],
 });
 
@@ -930,7 +930,7 @@ export const NG_CH2: Card[] = [
       { t: 'Nhờ người nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần đã quen Ngự sử Lý Mặc, chưa từng cầu', fx: { d: { quan: -5, hiem: 6 }, flag: ['che_lymac', 'n2_khep'] }, note: 'Lý Mặc dâng sớ xin đưa việc sửa sổ ra Tam pháp ty, nơi xử các án lớn. Kiệm lặng lẽ rút tờ sớ về. Không ai muốn sổ cung cấm ra công đường.' },
       { t: 'Nhắn Kiệm: lời khai đêm chái sau vẫn còn', need: { flags: ['bai_kiem'], not: ['dung_bai_kiem', 'an2_nang'] }, lockHint: 'Cần đang giữ lời khai làm con bài, và Kiệm còn sợ nó', fx: { d: { hiem: 8, phuc: -10 }, flag: ['dung_bai_kiem', 'n2_khep'] }, note: 'Gần sáng, có người đến trả lại tờ trình của bạn, kèm một câu: "Chưởng sự bảo việc này coi như chưa có." Con bài ấy đã dùng rồi.' },
       { t: 'Nhắn Kiệm: trang Tân Dậu cũng có vết cạo', need: { flags: ['su3'], not: ['dung_su3', 'an2_nang'] }, lockHint: 'Cần biết sổ năm Tân Dậu bị xóa, và Kiệm còn sợ điều ấy', fx: { d: { hiem: 15, muu: 3 }, flag: ['dung_su3', 'n2_khep', 'kiem_biet_su3'] }, note: 'Tờ sớ tố tội không được dâng. Nhưng từ đêm ấy, viện bạn có người canh mà bạn không thuê.' },
-      { t: 'Viết tờ xin tự giáng bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Không ai hại một phi tần đã tự ngã, và cũng không ai nhắc đến trang sổ tháng Tư nữa.' },
+      { t: 'Viết tờ xin tự hạ bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Không ai hại một phi tần đã tự ngã, và cũng không ai nhắc đến trang sổ tháng Tư nữa.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { next: 'an2_pc2' }, note: 'Bạn thổi tắt đèn. Ngoài kia, trống canh năm điểm sớm hơn mọi ngày.' },
     ],
   },

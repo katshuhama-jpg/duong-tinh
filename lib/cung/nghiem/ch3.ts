@@ -91,7 +91,7 @@ export const NG_CH3: Card[] = [
     who: 'thaiy',
     beat: 'hook',
     title: 'Hỷ mạch',
-    text: ['Thái y Thẩm bắt mạch rất lâu, rồi rụt tay về nhanh đến mức làm rơi khăn.', '"Chúc mừng nương nương. Là hỷ mạch, nương nương có thai rồi."'],
+    text: ['Thái y Thẩm bắt mạch rất lâu, rồi rụt tay về nhanh đến mức làm rơi khăn.', '"Chúc mừng nương nương. Nương nương có thai rồi."'],
     choices: [
       { t: 'Thưởng Thái y 10 quan', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, an: 6, the: 4 }, flag: ['co_thai'], years: 0.25 }, note: 'Ông nhận tiền mà không dám nhìn bạn. Lúc cúi nhặt khăn, tay ông vẫn run.' },
       { t: 'Hỏi: "Sao tay Thái y run?"', fx: { d: { muu: 3, hiem: 4, the: 4 }, flag: ['co_thai', 'hoi_thaiy'], years: 0.25 }, note: '"Thần... trời lạnh." Ngoài kia đang giữa hè.' },
@@ -732,7 +732,7 @@ export const NG_CH3: Card[] = [
       { t: 'Nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần quen Lý Mặc, chưa từng cầu', fx: { d: { quan: -10, hiem: 4 }, flag: ['che_lymac', 'n3_khep'] }, note: 'Sáng sớm, Lý Mặc dâng tờ xin xét bếp thuốc thái y viện. Chưa ai dám động vào bạn khi Viện Ngự sử đang nhìn.' },
       { t: 'Nhắn Kiệm: lời khai năm xưa vẫn nằm trong rương', need: { flags: ['bai_kiem'], not: ['dung_bai_kiem', 'an3_nang'] }, lockHint: 'Cần đang giữ lời khai về Kiệm, chưa dùng, và Kiệm còn sợ nó', fx: { d: { hiem: 8, phuc: -10 }, flag: ['dung_bai_kiem', 'n3_khep'] }, note: 'Nửa đêm, chén thuốc trên bàn bị một tiểu thái giám lặng lẽ bưng đi. Kiệm biết bạn còn giữ thứ gì.' },
       { t: 'Nhắn lên cung trên: trang sổ năm Tân Dậu, ta đã đọc', need: { flags: ['su3'], not: ['dung_su3', 'an3_nang'] }, lockHint: 'Cần biết chuyện sổ năm Tân Dậu, chưa dùng, và người kia còn sợ điều ấy', fx: { d: { hiem: 12 }, flag: ['dung_su3', 'n3_khep'] }, note: 'Chén thuốc được người lạ bưng đi. Từ hôm ấy, có người ở cung trên biết bạn đã đọc tới đâu.' },
-      { t: 'Viết tờ xin tự giáng bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Chẳng ai buồn hại một phi tần đã tự ngã, và chẳng ai còn nhắc đến chén thuốc ấy.' },
+      { t: 'Viết tờ xin tự hạ bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Chẳng ai buồn hại một phi tần đã tự ngã, và chẳng ai còn nhắc đến chén thuốc ấy.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { next: 'an3_pc2' }, note: 'Bạn đẩy chén thuốc ra xa, thổi tắt đèn. Ngoài kia có tiếng bước chân rất nhẹ.' },
     ],
   },
