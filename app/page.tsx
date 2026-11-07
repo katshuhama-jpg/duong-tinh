@@ -7,8 +7,6 @@ import { FateTree, type TreePath } from '@/components/cung/Tree';
 import Scene, { lookOf } from '@/components/cung/Scene';
 import { playTrack } from '@/lib/cung/music';
 import { signOut } from '@/lib/auth';
-import { rankOf } from '@/lib/cung/engine';
-import { originOf } from '@/lib/cung/origins';
 import { loadMe, type CMeta } from '@/lib/cung/save';
 import type { Life } from '@/lib/cung/types';
 import { ALL_ENDINGS as ENDINGS, NGHIEM_ENDINGS } from '@/lib/cung/world';
@@ -28,7 +26,6 @@ export default function Home() {
     loadMe().then((m) => setMe(m ? { meta: m.meta, life: m.life } : { meta: {}, life: null }));
   }, [ready, user]);
   const got = new Set(me?.meta.cung ?? []);
-  const live = me?.life && !me.life.end ? me.life : null;
   const ALLE = part === 'nghiem' ? NGHIEM_ENDINGS.filter((e) => e.id !== 'n_tiep') : ENDINGS;
   const gotN = ALLE.filter((e) => got.has(e.id)).length;
   const list = ALLE.filter((e) => (tab === 'chet' ? e.dead : !e.dead)).sort((a, b) => tierOf(b) - tierOf(a));
@@ -49,16 +46,9 @@ export default function Home() {
         <p className="c-prose">
           Mỗi thân phận là một câu chuyện riêng: gái làng chè được vua để mắt, và con gái nhà họ Nghiêm vào cung thay chỗ người chị đã chết. Cung nga giặt áo và nhà chùa đang được viết. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
         </p>
-        {live ? (
-          <div className="c-row">
-            <Link className="c-btn" href="/choi" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-              Sống tiếp: {rankOf(live).t} {originOf(live.origin).ho} thị, {Math.floor(live.age)} tuổi
-            </Link>
-          </div>
-        ) : null}
         <div className="c-row">
-          <Link className={live ? 'c-btn ghost' : 'c-btn'} href="/choi?moi=1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-            {live ? 'Bỏ đời này, vào cung lại từ đầu' : 'Vào cung'}
+          <Link className="c-btn" href="/choi?chon=1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
+            Tiếp tục
           </Link>
         </div>
         <div className="c-row">

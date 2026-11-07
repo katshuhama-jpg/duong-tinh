@@ -6,7 +6,7 @@ import MusicButton from '@/components/cung/MusicButton';
 import TopBar from '@/components/cung/TopBar';
 import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { alliesOf, chapOf, doubt, isNg, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { alliesOf, chapOf, doubt, isNg, migrate, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
@@ -287,14 +287,20 @@ export default function Play() {
   const [roll, setRoll] = useState(0);
   const [fresh, setFresh] = useState(false);
   const [tree, setTree] = useState(false);
-  const [pro, setPro] = useState(true);
+  /** màn chọn thân phận (bước 1/3) đang mở */
+  const [chon, setChon] = useState(false);
+  /** thân phận đã có đời dang dở: hỏi chơi tiếp hay chơi lại */
+  const [ask, setAsk] = useState<OriginK | null>(null);
+  /** bước 3/3 của cô gái chè: cảnh mở màn trước khi vào đời */
+  const [pro, setPro] = useState(false);
   const sugg = useMemo(() => suggestNames(og ?? 'dan', roll * 977 + 3, 4), [og, roll]);
 
   useEffect(() => {
-    const fresh = new URLSearchParams(window.location.search).get('moi') === '1';
+    const q = new URLSearchParams(window.location.search);
     loadMe().then((m) => {
       setMeta(m?.meta ?? {});
-      setLife(fresh ? null : (m?.life ?? null));
+      setLife(m?.life ?? null);
+      setChon(q.get('chon') === '1' || q.get('moi') === '1' || !m?.life);
       setLoaded(true);
     });
   }, []);
@@ -303,6 +309,37 @@ export default function Play() {
     setLife(l);
     void saveLife(l);
   }, []);
+
+  /** các đời dang dở theo từng thân phận: đời đang mở + các đời đã cất trong sổ */
+  const paused = (meta.lives ?? {}) as Partial<Record<OriginK, Life>>;
+  const openLife = (k: OriginK): Life | null => (life && !life.end && life.origin === k ? life : paused[k] && !paused[k]!.end ? paused[k]! : null);
+  /** đổi sang một đời khác: đời đang chơi dở của thân phận khác được cất lại */
+  const switchTo = (next: Life) => {
+    const lives = { ...paused };
+    if (life && !life.end && life.origin !== next.origin) lives[life.origin as OriginK] = life;
+    delete lives[next.origin as OriginK];
+    const m = { ...meta, lives };
+    setMeta(m);
+    void saveMeta(m);
+    setChon(false);
+    setAsk(null);
+    setOg(null);
+    setPro(false);
+    keep(next);
+  };
+  const startNew = (k: OriginK) => {
+    const l = newLife(name, k);
+    if (k === 'quan') {
+      // bà lão chè đổi vai theo kết cục đã mở ở phần cô gái chè
+      const got = new Set((meta.cung as string[] | undefined) ?? []);
+      const hau = ['e_hoang_hau', 'e_mau_nghi', 'e_nhiep_mau', 'e_nu_de', 'e_thai_phi'].some((x) => got.has(x));
+      if (hau) l.flags.push('balao_hau');
+      else if (got.has('e_di_tu')) l.flags.push('balao_su');
+      // tên bà lão là tên người chơi đã đặt ở phần cô gái chè
+      if (typeof meta.cheName === 'string' && meta.cheName) l.flags.push(`balao_ten:${meta.cheName}`);
+    }
+    switchTo(l);
+  };
 
   const unlock = useCallback(
     (id: string, l: Life) => {
@@ -338,14 +375,14 @@ export default function Play() {
 
   if (!loaded) return <main className="c-app" aria-busy="true" />;
 
-  /* ---------- mở đầu: đặt tên ---------- */
-  if (!life) {
-    /* mở màn: cảnh cuối uy lực nhất, rồi quay về ba mươi năm trước */
-    if (!og && pro) {
+  /* ---------- trước khi vào đời: chọn thân phận (1/3), đặt tên (2/3), mở màn (3/3) ---------- */
+  if (!life || chon) {
+    /* bước 3/3, cô gái chè: cảnh cuối uy lực nhất, rồi quay về ba mươi năm trước */
+    if (og === 'dan' && pro) {
       return (
         <main className="c-app c-pro">
           <div className="c-band" aria-hidden="true" />
-          <TopBar back={{ label: 'Trang đầu', href: '/' }} title="Mở đầu" step={1} total={3} />
+          <TopBar back={{ label: 'Đặt tên', onClick: () => setPro(false) }} title="Mở đầu" step={3} total={3} />
           <div className="c-page">
             <div className="c-pro-art">
               <Scene
@@ -366,54 +403,94 @@ export default function Play() {
             <p className="c-pro-line" style={{ animationDelay: '3.2s' }}>Thục phi đã chết. Hoàng hậu đã bị phế. Thái phó Tôn đã ra pháp trường. Không còn ai dám cuốn tấm rèm này lên.</p>
             <p className="c-pro-line" style={{ animationDelay: '4.8s' }}>Ba mươi năm trước, bà chỉ là một cô gái mười tám tuổi, đứng run trước cổng cung.</p>
             <p className="c-pro-line strong" style={{ animationDelay: '6.2s' }}>Cô gái ấy sẽ ngồi sau tấm rèm này, hay chết trong một cái giếng sau viện. Tất cả tùy vào bạn.</p>
-            <button type="button" className="c-btn c-pro-line" style={{ animationDelay: '7.2s' }} onClick={() => setPro(false)}>
+            <button type="button" className="c-btn c-pro-line" style={{ animationDelay: '7.2s' }} onClick={() => startNew('dan')}>
               Quay về ba mươi năm trước
             </button>
-            <button type="button" className="c-pro-skip" onClick={() => setPro(false)}>
+            <button type="button" className="c-pro-skip" onClick={() => startNew('dan')}>
               Bỏ qua phần mở đầu ›
             </button>
           </div>
         </main>
       );
     }
-    /* bước 1: chọn đường vào cung */
+    /* bước 1/3: chọn thân phận */
     if (!og) {
+      const has = ask ? openLife(ask) : null;
       return (
         <main className="c-app">
           <div className="c-band" aria-hidden="true" />
-          <TopBar back={{ label: 'Mở đầu', onClick: () => setPro(true) }} title="Chọn thân phận" step={2} total={3} />
+          <TopBar back={{ label: 'Trang đầu', href: '/' }} title="Chọn thân phận" step={1} total={3} />
           <div className="c-page">
             <h1 className="c-title" style={{ fontSize: 28 }}>
               Bạn vào cung bằng đường nào?
             </h1>
             <p className="c-note" style={{ textAlign: 'center' }}>
-              Mỗi đường là một câu chuyện riêng: xuất thân khác, chỗ dựa khác, kẻ thù khác. Bấm vào một đường để xem và đặt tên.
+              Mỗi thân phận là một câu chuyện riêng: xuất thân khác, chỗ dựa khác, kẻ thù khác.
             </p>
             <div className="c-paths">
-              {ORIGINS.map((o) => (
-                <button key={o.k} type="button" className="c-path" disabled={!o.open} aria-disabled={!o.open} onClick={() => o.open && (setOg(o.k), setName(DEFAULT_NAME[o.k]), setRoll(0))}>
-                  <b>
-                    {o.t}
-                    {!o.open ? <em className="c-soon">Đang viết</em> : <em className="c-go">Chọn ›</em>}
-                  </b>
-                  <span>{o.pitch}</span>
-                  <small>
-                    Họ {o.ho} · vào cung làm {o.k === 'cung' ? 'cung nga' : o.rank === 0 ? 'Tài nhân' : o.rank === 2 ? 'Mỹ nhân' : 'Tiệp dư'}
-                  </small>
-                </button>
-              ))}
+              {ORIGINS.map((o) => {
+                const cur = o.open ? openLife(o.k) : null;
+                return (
+                  <button
+                    key={o.k}
+                    type="button"
+                    className="c-path"
+                    disabled={!o.open}
+                    aria-disabled={!o.open}
+                    onClick={() => {
+                      if (!o.open) return;
+                      if (cur) setAsk(o.k);
+                      else (setOg(o.k), setName(DEFAULT_NAME[o.k]), setRoll(0));
+                    }}
+                  >
+                    <b>
+                      {o.t}
+                      {!o.open ? <em className="c-soon">Đang viết</em> : cur ? <em className="c-go">Đang chơi ›</em> : <em className="c-go">Chọn ›</em>}
+                    </b>
+                    <span>{o.pitch}</span>
+                    <small>
+                      {cur
+                        ? `${rankOf(cur).t} ${o.ho} thị, ${Math.floor(cur.age)} tuổi`
+                        : `Họ ${o.ho} · vào cung làm ${o.k === 'cung' ? 'cung nga' : o.rank === 0 ? 'Tài nhân' : o.rank === 2 ? 'Mỹ nhân' : 'Tiệp dư'}`}
+                    </small>
+                  </button>
+                );
+              })}
             </div>
             {ORIGINS.some((x) => !x.open) && <p className="c-note" style={{ textAlign: 'center' }}>Những đường ghi &quot;Đang viết&quot; sẽ mở khi câu chuyện của chúng hoàn thành.</p>}
           </div>
+          {ask && has && (
+            <div className="c-veil" onClick={() => setAsk(null)}>
+              <div className="c-panel c-ask-sheet" role="dialog" aria-modal="true" aria-label={originOf(ask).t} onClick={(e) => e.stopPropagation()}>
+                <header>
+                  <h2>{originOf(ask).t}</h2>
+                  <button type="button" onClick={() => setAsk(null)}>
+                    Đóng
+                  </button>
+                </header>
+                <p className="c-note" style={{ padding: '0 16px' }}>
+                  Bạn đang sống dở một đời: {rankOf(has).t} {originOf(ask).ho} thị, {Math.floor(has.age)} tuổi, chương {chapOf(has).n}: {chapOf(has).t}.
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '4px 16px 8px' }}>
+                  <button type="button" className="c-btn" onClick={() => switchTo(has === life ? has : migrate(has))}>
+                    Chơi tiếp
+                  </button>
+                  <button type="button" className="c-btn ghost" onClick={() => { const k = ask; setAsk(null); setOg(k); setName(DEFAULT_NAME[k]); setRoll(0); }}>
+                    Chơi lại từ đầu
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </main>
       );
     }
-    /* bước 2: đặt tên */
+    /* bước 2/3: đặt tên */
     const o = originOf(og);
     return (
       <main className="c-app">
         <div className="c-band" aria-hidden="true" />
-        <TopBar back={{ label: 'Chọn thân phận', onClick: () => setOg(null) }} title={o.t} step={3} total={3} />
+        <TopBar back={{ label: 'Chọn thân phận', onClick: () => setOg(null) }} title={o.t} step={2} total={3} />
         <div className="c-page">
           <h1 className="c-title" style={{ fontSize: 28 }}>
             {o.k === 'dan' ? 'Kiệu hoa qua cổng thành' : o.k === 'quan' ? 'Viện của chị' : o.k === 'cung' ? 'Ba thúng thóc' : 'Công chúa của triều đã mất'}
@@ -449,20 +526,8 @@ export default function Play() {
           <p className="c-note">
             Tên đặt theo lối thời Lý - Trần (như công chúa Phật Kim, Ngọc Kiều, Kiều Oanh). Trong cung không ai gọi tên thật, chỉ gọi theo họ: &quot;{o.ho} thị&quot;.
           </p>
-          <button type="button" className="c-btn" onClick={() => {
-            const l = newLife(name, o.k);
-            if (o.k === 'quan') {
-              // bà lão chè đổi vai theo kết cục đã mở ở phần cô gái chè
-              const got = new Set((meta.cung as string[] | undefined) ?? []);
-              const hau = ['e_hoang_hau', 'e_mau_nghi', 'e_nhiep_mau', 'e_nu_de', 'e_thai_phi'].some((x) => got.has(x));
-              if (hau) l.flags.push('balao_hau');
-              else if (got.has('e_di_tu')) l.flags.push('balao_su');
-              // tên bà lão là tên người chơi đã đặt ở phần cô gái chè
-              if (typeof meta.cheName === 'string' && meta.cheName) l.flags.push(`balao_ten:${meta.cheName}`);
-            }
-            keep(l);
-          }}>
-            Bắt đầu: bước qua cổng thành
+          <button type="button" className="c-btn" onClick={() => (o.k === 'dan' ? setPro(true) : startNew(o.k))}>
+            Tiếp: vào câu chuyện
           </button>
         </div>
       </main>
@@ -715,6 +780,7 @@ export default function Play() {
     return (
       <main className="c-app c-tale">
         <div className="c-band" aria-hidden="true" />
+        {tl.skip && <TopBar back={{ label: 'Chọn thân phận', onClick: () => setChon(true) }} title="Mở đầu" step={3} total={3} />}
         <div className="c-page">
           <p className="c-tale-kicker">{tl.kicker ?? 'Lời kể'}</p>
           <h2 className="c-tale-title">{tl.t}</h2>
