@@ -299,7 +299,7 @@ export default function Play() {
       const p = (l.marks ?? []).map((x) => `${x.card}.${x.pick}`);
       const old = ((meta.tree as TreePath[] | undefined) ?? []).filter((x) => !(x.e === id && x.p.join('|') === p.join('|')));
       const tree = [...old, { p, e: id, o: l.origin ?? 'dan' }].slice(-120);
-      const m = { ...meta, cung, tree, cungLives: (meta.cungLives ?? 0) + 1 };
+      const m = { ...meta, cung, tree, cungLives: (meta.cungLives ?? 0) + 1, ...(l.origin !== 'quan' && l.name ? { cheName: l.name } : {}) };
       setMeta(m);
       void saveMeta(m);
     },
@@ -444,6 +444,8 @@ export default function Play() {
               const hau = ['e_hoang_hau', 'e_mau_nghi', 'e_nhiep_mau', 'e_nu_de', 'e_thai_phi'].some((x) => got.has(x));
               if (hau) l.flags.push('balao_hau');
               else if (got.has('e_di_tu')) l.flags.push('balao_su');
+              // tên bà lão là tên người chơi đã đặt ở phần cô gái chè
+              if (typeof meta.cheName === 'string' && meta.cheName) l.flags.push(`balao_ten:${meta.cheName}`);
             }
             keep(l);
           }}>

@@ -1,7 +1,14 @@
 /** Sổ kết cục phần Con tin họ Nghiêm (theo kinh thánh mục 9). */
 import type { Ending } from '../types';
+import { NG_DESC_12 } from './desc12';
+import { NG_DESC_4 } from './desc4';
+import { NG_DESC_5 } from './desc5';
+import { NG_DESC_6 } from './desc6';
+import { NG_DESC_7 } from './desc7';
 
-export const NGHIEM_ENDINGS: Ending[] = [
+const DESC: Record<string, string> = { ...NG_DESC_12, ...NG_DESC_4, ...NG_DESC_5, ...NG_DESC_6, ...NG_DESC_7 };
+
+const RAW: Ending[] = [
   {"id": "n_1", "name": "Ngọc trả về phủ", "desc": "Xin về ngay tuần đầu."},
   {"id": "n_2", "name": "Hài còn trên chân", "desc": "Sáng ra, sổ nội vụ ghi thêm một dòng \"nhớ nhà, tự vẫn\". Chân bà vẫn còn đi hài, như con bé tú nữ đêm nào. Không ai trình xét lại.", "dead": true},
   {"id": "n_3", "name": "Viện cũ, người mới", "desc": "Phát điên vì những tiếng gõ vách, bị đưa ra ngoài."},
@@ -151,3 +158,5 @@ export const NGHIEM_ENDINGS: Ending[] = [
   {"id": "n_147", "name": "Tự giáng để sống", "desc": "Bà xin tự giáng, dời ra một viện ẩm ở góc thành. Không ai hại một phi tần đã tự ngã. Cũng không ai còn nhớ những cái tên bà từng muốn đòi lại."},
   { id: 'n_tiep', name: 'Hồ sơ còn dang dở', desc: 'Đời bà còn dài, hồ sơ chị Thanh còn mở. Các chương sau đang được viết. Chơi lại để thử phá án theo cách khác.' },
 ];
+
+export const NGHIEM_ENDINGS: Ending[] = RAW.map((e) => (DESC[e.id] ? { ...e, desc: DESC[e.id] } : e));

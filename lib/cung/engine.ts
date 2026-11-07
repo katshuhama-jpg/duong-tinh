@@ -72,7 +72,9 @@ export function viewCard(c0: Card, l: Life): Card {
 
 /** chữ trong thẻ phần Nghiêm: {S:an1:tg} tên/dấu vết nghi phạm, {TAY:an1} tên tay sai thật */
 export function fillNg(x: string, l: Life) {
+  const bl = l.flags.find((f) => f.startsWith('balao_ten:'))?.slice(10) || 'Diệp';
   return x
+    .replace(/\{BALAO\}/g, bl)
     .replace(/\{S:(an\d+):(\w+)\}/g, (_m, an: string, k: string) => suspectName(l, an, k))
     .replace(/\{C:(a\d_\w+)\}/g, (_m, id: string) => {
       const an = id.startsWith('a1') ? 'an1' : id.startsWith('a2') ? 'an2' : id.startsWith('a3') ? 'an3' : 'an' + id[1];
@@ -334,7 +336,7 @@ export function nextCard(l: Life): string | null {
     return null;
   }
   let to = ch + 1;
-  if (to === 6 && !l.flags.includes('nhiep')) to = 7;
+  if (!isNg(l) && to === 6 && !l.flags.includes('nhiep')) to = 7;
   moveTo(l, to);
   return nextCard(l);
 }
@@ -353,6 +355,16 @@ function moveTo(l: Life, ch: number) {
   if (isNg(l)) {
     // sang chương mới: thời gian trôi, kẻ thủ ác lơi tay một chút
     l.n.hiem = Math.max(0, (l.n.hiem ?? 0) - 15);
+    // giữa các chương là nhiều năm: nhảy tới tuổi đầu chương
+    const a0 = chap(ch, l) as { age0?: number };
+    if (a0.age0 && l.age < a0.age0) {
+      const yrs = Math.floor(a0.age0) - Math.floor(l.age);
+      l.age = a0.age0;
+      l.n.tien = clamp('tien', l.n.tien + rankOf(l).luong * 0.4 * yrs);
+      l.log.push({ age: Math.floor(l.age), t: `${yrs} năm trôi qua.`, k: 'year' });
+    }
+    // chương 5: Thái y không còn bị nắm thóp (đã xử đúng án thuốc, đã cứu hay đã chết) thì vua chết vì bệnh thật
+    if (ch === 5 && ['an3_thang', 'cuu_thaiy', 'chet_thaiy', 'thaiy_on'].some((x) => l.flags.includes(x)) && !l.flags.includes('vua_benh')) l.flags.push('vua_benh');
     l.showCh = { to: ch, from, end, picks };
     l.chStart = snapOf(l);
     return;
@@ -393,7 +405,8 @@ export function autoEnding(l: Life) {
   if (isNg(l)) {
     const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
     if (kc && endingOf(kc.slice(3))) return kc.slice(3);
-    return 'n_tiep';
+    if (l.chapter < 7) return 'n_tiep';
+    return ngGrid(l);
   }
   // tuyến phụ tự đặt kết cục cuối đời bằng cờ kc_<id> (cờ đặt sau cùng thắng)
   const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
@@ -406,6 +419,16 @@ export function autoEnding(l: Life) {
   if (l.rank >= 9 && !f('con_dongcung')) return 'e_hoang_quy_phi';
   if (f('duoi_thucphi') && l.n.duc < 50) return 'e_lang_le';
   return 'e_hien_phi';
+}
+/** chương 7: lưới 6 vị trí cuối đời x 3 mức sự thật (kết 69-86) */
+export function ngGrid(l: Life) {
+  const f = (x: string) => l.flags.includes(x);
+  const POS = ['vt_ren', 'vt_lui', 'vt_thaiphi', 'vt_ni', 'vt_que', 'vt_lang'];
+  const pos = Math.max(0, POS.findIndex(f) >= 0 ? POS.findIndex(f) : 2);
+  const su = l.flags.filter((x) => /^su\d+$/.test(x)).length;
+  const biet = f('su11') || su >= 8;
+  const lv = !biet ? 0 : f('ch7_noi') ? 2 : 1;
+  return `n_${69 + pos * 3 + lv}`;
 }
 /** chỉ số chạm đáy: lần đầu hiện cảnh cảnh báo, lần sau thì khép đời */
 function zeroCheck(l: Life) {
@@ -459,6 +482,11 @@ export function choose(l0: Life, idx: number): Result {
   if (!card) return { life: l0, note: '', delta: '', ranked: false };
   const ch: Choice = card.choices[idx];
   const l: Life = JSON.parse(JSON.stringify({ ...l0, back: null }));
+  // đời cũ lưu trước khi có vụ án mới: bổ sung các vụ còn thiếu
+  if (isNg(l) && l.an) {
+    const add = initCases(l.seed);
+    for (const k of Object.keys(add)) if (!l.an[k]) l.an[k] = add[k];
+  }
   // trước mỗi ngã rẽ lớn: giữ một bản để chết thì quay lại
   l.back = card.big ? (JSON.parse(JSON.stringify({ ...l0, back: null, marks: undefined })) as Omit<Life, 'back'>) : l0.back;
   if (!ok(ch.need, l)) return { life: l0, note: '', delta: '', ranked: false };

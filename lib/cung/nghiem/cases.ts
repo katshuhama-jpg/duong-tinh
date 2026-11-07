@@ -34,6 +34,8 @@ export interface Case {
   suspects: Suspect[];
   tay: string[];
   clues: Clue[];
+  /** có cờ này thì vụ không có thủ phạm (vd vua chết vì bệnh thật): kết luận "không ai" mới là đúng */
+  none?: string;
 }
 
 export const KIND: Record<Clue['kind'], string> = { vat: 'Vật chứng', nhan: 'Nhân chứng', khai: 'Lời khai' };
@@ -99,6 +101,87 @@ export const CASES: Case[] = [
       { id: 'a3_tram', an: 'an3', kind: 'vat', t: 'Cây trâm lông công của Quý phi rơi ở cửa bếp', gai: 'un' },
     ],
   },
+  {
+    id: 'an4',
+    ch: 4,
+    title: 'Án tin đồn Đông cung',
+    sum: 'Khắp hậu cung truyền nhau một câu: Hoàng trưởng tử không giống ai trong nhà Lương. Ai đã thả câu ấy ra, và thả để thử ai?',
+    suspects: [
+      { k: 'tl', label: 'Bóng người áo lam đứng ngoài cổng', name: 'Thư lại phủ Thái sư' },
+      { k: 'cn', label: 'Bóng cô gái hay đứng ở hành lang Đông cung', name: 'Cung nữ Đông cung tên Nhạn' },
+      { k: 'mh', label: 'Bóng đàn bà đeo hương trầm', name: 'Ma ma hầu Hoàng hậu' },
+      { k: 'tg', label: 'Bóng người thấp, đi rất nhẹ', name: 'Tiểu thái giám hầu sách Đông cung' },
+    ],
+    tay: ['tl', 'cn'],
+    clues: [
+      { id: 'a4_chu', an: 'an4', kind: 'vat', t: 'Nét chữ trong thư không tên khớp một trang sổ chi tiêu', key: true },
+      { id: 'a4_giay', an: 'an4', kind: 'vat', t: 'Tờ thư viết trên giấy dó loại chỉ phủ lớn mới mua' },
+      { id: 'a4_cong', an: 'an4', kind: 'nhan', t: 'Lính gác cổng Đông cung nhớ một người ra vào lúc đổi phiên' },
+      { id: 'a4_bac', an: 'an4', kind: 'khai', t: 'Lời một cung nữ: có người vừa được thưởng bạc không rõ lý do' },
+      { id: 'a4_huong', an: 'an4', kind: 'vat', t: 'Thư không tên còn ám mùi trầm của cung Hoàng hậu', gai: 'mh' },
+    ],
+  },
+  {
+    id: 'an5',
+    ch: 5,
+    title: 'Án chén thuốc cuối',
+    sum: 'Ba ngày trước khi băng hà, Hoàng thượng còn ngồi dậy đọc tấu. Rồi một chén thuốc đêm, và sáng ra người không nói được nữa. Là bệnh, hay là chén thuốc?',
+    suspects: [
+      { k: 'ty', label: 'Bóng người cầm hộp thuốc', name: 'Ngự y trực đêm' },
+      { k: 'mm', label: 'Bóng đàn bà bưng khay', name: 'Ma ma dâng thuốc họ Tạ' },
+      { k: 'ng', label: 'Bóng người quen ở phủ nhà', name: 'Người nhà Nghiêm theo hầu' },
+      { k: 'ts', label: 'Người có lý do nhất', name: 'Thái sư Hà Tông Lộc', cast: 'thaisu' },
+    ],
+    tay: ['ty', 'mm'],
+    none: 'vua_benh',
+    clues: [
+      { id: 'a5_so', an: 'an5', kind: 'vat', t: 'Sổ thuốc ngự ba ngày cuối, một dòng viết bằng tay khác', key: true },
+      { id: 'a5_ba', an: 'an5', kind: 'vat', t: 'Bã thuốc đêm cuối còn trong ống nhổ' },
+      { id: 'a5_canh', an: 'an5', kind: 'nhan', t: 'Lính canh tẩm điện thấy người bưng thuốc đi vòng lối sau' },
+      { id: 'a5_khai', an: 'an5', kind: 'khai', t: 'Lời một tiểu thái giám: chén thuốc ấy đổi tay hai lần' },
+      { id: 'a5_an', an: 'an5', kind: 'vat', t: 'Ấn riêng của phủ Thái sư trên một gói thuốc lạ', gai: 'ts' },
+    ],
+  },
+  {
+    id: 'an6',
+    ch: 6,
+    title: 'Án Thượng thư Bộ Hình',
+    sum: 'Ngự sử hặc cha bạn tội biết chuyện năm Tân Dậu mà không tâu. Không ai hỏi cha có biết không. Người ta chỉ chờ bạn gọi tên tội của ông.',
+    suspects: [
+      { k: 'che', label: 'Cách gọi thứ nhất', name: 'Biết mà che án', cast: 'cha' },
+      { k: 'dong', label: 'Cách gọi thứ hai', name: 'Đồng mưu đại nghịch' },
+      { k: 'ep', label: 'Cách gọi thứ ba', name: 'Bị ép mà im' },
+      { k: 'oan', label: 'Cách gọi thứ tư', name: 'Không biết gì, bị vu' },
+    ],
+    tay: ['che'],
+    clues: [
+      { id: 'a6_thu', an: 'an6', kind: 'vat', t: 'Lá thư một chữ "Im" cha gửi chị Thanh', key: true },
+      { id: 'a6_dem', an: 'an6', kind: 'nhan', t: 'Người đánh xe nhớ đêm cha vào cung gặp riêng Thái hậu' },
+      { id: 'a6_so', an: 'an6', kind: 'vat', t: 'Hồ sơ vụ Đông cung năm ấy, có bút phê của cha xin hoãn' },
+      { id: 'a6_nm', an: 'an6', kind: 'khai', t: 'Lời nhũ mẫu: cha đọc thư chị xong, ngồi đến sáng' },
+      { id: 'a6_an', an: 'an6', kind: 'vat', t: 'Một tờ biên nhận vàng của nhà Lương, đề tên cha', gai: 'dong' },
+    ],
+  },
+  {
+    id: 'an7',
+    ch: 7,
+    title: 'Án chị Thanh',
+    sum: 'Năm Hưng Bình thứ tám, Chiêu nghi Nghiêm Thanh mất năm hai mươi tư tuổi, sổ ghi "bệnh". Hơn bốn mươi năm sau, người em đem hồ sơ ấy ra mở lần cuối.',
+    suspects: [
+      { k: 'th', label: 'Người ra lệnh', name: 'Thái hậu Lương', cast: 'thaihau' },
+      { k: 'ki', label: 'Người chuyển chén thuốc', name: 'Chưởng sự Kiệm', cast: 'kiem' },
+      { k: 'ty', label: 'Người kê đơn', name: 'Thái y Thẩm', cast: 'thaiy' },
+      { k: 'cha', label: 'Người biết mà im', name: 'Cha', cast: 'cha' },
+    ],
+    tay: ['th'],
+    clues: [
+      { id: 'a7_goc', an: 'an7', kind: 'vat', t: 'Bản gốc sổ đến thăm và sổ thuốc năm Hưng Bình thứ tám', key: true },
+      { id: 'a7_kiem', an: 'an7', kind: 'khai', t: 'Lời khai của Kiệm về chén thuốc đêm ấy' },
+      { id: 'a7_thaiy', an: 'an7', kind: 'khai', t: 'Lời khai của Thái y về đơn thuốc ông bị bắt kê' },
+      { id: 'a7_mo', an: 'an7', kind: 'nhan', t: 'Lời sư cô ở chùa biển về đêm chị bị gọi đi' },
+      { id: 'a7_im', an: 'an7', kind: 'vat', t: 'Lá thư "Im" đặt cạnh ngày chị mất', gai: 'cha' },
+    ],
+  },
 ];
 
 export const caseOf = (id: string) => CASES.find((c) => c.id === id)!;
@@ -126,6 +209,12 @@ export function clueSet(l: Life, clueId: string): string[] {
   if (!cl) return [];
   if (cl.gai) return [cl.gai];
   const c = caseOf(cl.an);
+  // vụ không có thủ phạm: mỗi manh mối thật trỏ về một người khác nhau, không ai đủ chứng
+  if (c.none && l.flags.includes(c.none)) {
+    const real0 = c.clues.filter((x) => !x.gai);
+    const off0 = Math.floor(rnd(l.seed, `none|${c.id}`) * c.suspects.length);
+    return [c.suspects[(real0.findIndex((x) => x.id === clueId) + off0) % c.suspects.length].k];
+  }
   const tay = l.an?.[c.id]?.tay ?? c.tay[0];
   const others = c.suspects.map((s) => s.k).filter((k) => k !== tay);
   const real = c.clues.filter((x) => !x.gai);
@@ -169,7 +258,11 @@ export function strength(l: Life, an: string, k: string) {
 /** xử án: trả về kiểu kết quả */
 export function judge(l: Life, an: string, who: string): { dung: boolean; du: boolean; kind: 'thang' | 'gai' | 'phancong' | 'gac' | 'tu' } {
   if (who === 'gac') return { dung: false, du: false, kind: 'gac' };
-  if (who === 'tu') return { dung: false, du: false, kind: 'tu' };
+  const c = caseOf(an);
+  const none = !!(c.none && l.flags.includes(c.none));
+  // vụ không có thủ phạm: kết luận "không ai" là đúng, buộc ai cũng là buộc oan
+  if (who === 'tu') return none ? { dung: true, du: true, kind: 'thang' } : { dung: false, du: false, kind: 'tu' };
+  if (none) return { dung: false, du: strength(l, an, who).du, kind: strength(l, an, who).du ? 'gai' : 'phancong' };
   const st = l.an?.[an];
   const dung = !!st && st.tay === who;
   const { du } = strength(l, an, who);
