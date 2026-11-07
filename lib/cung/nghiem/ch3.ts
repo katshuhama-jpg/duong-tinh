@@ -18,7 +18,7 @@ const THAI = { flags: [G, 'co_thai'] };
 /** lời kể trước các sự kiện lớn của chương 3 (gộp vào NG_TALES) */
 export const NG_TALES_CH3: Record<string, { t: string; lines: string[]; s?: TaleS }> = {
   n3_thai: {
-    t: 'Hỷ mạch',
+    t: 'Tin vui',
     s: { bg: 'vienchi', time: 'ngay', cast: [] },
     lines: [
       'Trong cung, một phi tần có thai là một tin vui được ghi vào sổ, báo lên Thái hậu, rồi truyền khắp các viện trước bữa trưa.',
@@ -31,7 +31,7 @@ export const NG_TALES_CH3: Record<string, { t: string; lines: string[]; s?: Tale
     s: { bg: 'thaiyvien', time: 'chieu', cast: [] },
     lines: [
       'Thuốc an thai cho phi tần do thái y viện kê đơn, bếp thuốc sắc, người hầu bưng đến tận viện. Một chén thuốc đi qua ít nhất bốn bàn tay.',
-      'Theo luật, kẻ mưu hại con vua bị chém bêu đầu, họ hàng bị lưu. Vì thế không ai trong bếp thuốc dám nhận mình từng chạm vào chén ấy.',
+      'Theo luật, kẻ mưu hại con vua bị chém bêu đầu, họ hàng bị đày đi xa. Vì thế không ai trong bếp thuốc dám nhận mình từng chạm vào chén ấy.',
       'Bạn có vài tháng, trước khi bụng lớn đến mức không còn đi lại được nữa.',
     ],
   },
@@ -91,7 +91,7 @@ export const NG_CH3: Card[] = [
     who: 'thaiy',
     beat: 'hook',
     title: 'Hỷ mạch',
-    text: ['Thái y Thẩm bắt mạch rất lâu, rồi rụt tay về nhanh đến mức làm rơi khăn.', '"Chúc mừng nương nương. Là hỷ mạch."'],
+    text: ['Thái y Thẩm bắt mạch rất lâu, rồi rụt tay về nhanh đến mức làm rơi khăn.', '"Chúc mừng nương nương. Là hỷ mạch, nương nương có thai rồi."'],
     choices: [
       { t: 'Thưởng Thái y 10 quan', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, an: 6, the: 4 }, flag: ['co_thai'], years: 0.25 }, note: 'Ông nhận tiền mà không dám nhìn bạn. Lúc cúi nhặt khăn, tay ông vẫn run.' },
       { t: 'Hỏi: "Sao tay Thái y run?"', fx: { d: { muu: 3, hiem: 4, the: 4 }, flag: ['co_thai', 'hoi_thaiy'], years: 0.25 }, note: '"Thần... trời lạnh." Ngoài kia đang giữa hè.' },
@@ -116,7 +116,7 @@ export const NG_CH3: Card[] = [
     title: 'Chén an thai',
     text: ['Chén thuốc an thai thứ mười hai được bưng lên. Nhũ mẫu nhấp thử, rồi nhổ ra: "Vị này lạ, tiểu thư."', 'Đơn vẫn là đơn cũ. Hôm nay thuốc đắng hơn.'],
     choices: [
-      { t: 'Giữ chén lại, trình xét thái y viện', fx: { mo: 'an3', flag: ['mo_an3'], d: { hiem: 8, muu: 3 }, years: 2 / 12 }, note: 'Kiệm nhận tờ trình, cười rất lễ: "Nương nương đang mang long thai, xin đừng nghĩ ngợi nhiều."' },
+      { t: 'Giữ chén lại, trình xét thái y viện', fx: { mo: 'an3', flag: ['mo_an3'], d: { hiem: 8, muu: 3 }, years: 2 / 12 }, note: 'Kiệm nhận tờ trình, cười rất lễ: "Nương nương đang mang con của Hoàng thượng, xin đừng nghĩ ngợi nhiều."' },
       { t: 'Đổ đi, im lặng mà dò', fx: { mo: 'an3', flag: ['mo_an3'], d: { muu: 5, hiem: 3 }, years: 2 / 12 }, note: 'Bạn đổ chén thuốc vào chậu lan. Ba ngày sau, cây lan vàng lá.' },
       {
         t: 'Uống cạn, cho khỏi mang tiếng đa nghi',
@@ -159,7 +159,7 @@ export const NG_CH3: Card[] = [
     cast: ['me'],
     mood: 'buon',
     title: 'Kho dược liệu',
-    text: ['Sổ thái y viện ghi: Thái y Thẩm, bạo bệnh. Vợ con ông đến cổng Bắc nhận xác, không ai cho vào.', 'Người cuối cùng ông nói chuyện là bạn.'],
+    text: ['Sổ thái y viện ghi: Thái y Thẩm, bệnh đột ngột. Vợ con ông đến cổng Bắc nhận xác, không ai cho vào.', 'Người cuối cùng ông nói chuyện là bạn.'],
     omen: 'Ép một người sợ tới cùng, thì người ấy chọn cái mình ít sợ hơn.',
     choices: [
       { t: 'Khép hồ sơ, xin dời ra viện vắng', fx: { end: 'n_25' }, note: 'Bạn không đào nữa. Đêm nào cũng nghe tiếng hai đứa trẻ khóc ở cổng Bắc, dù cổng Bắc cách viện bạn rất xa.' },
@@ -267,7 +267,7 @@ export const NG_CH3: Card[] = [
       text: ['Uyển Như dâng lên Thái hậu một tờ: con gái nhà Nghiêm tự bỏ thuốc vào chén mình, để vu cho người khác.', '"Nhà Nghiêm xét án giỏi lắm. Xét được cả người vô tội."'],
       omen: 'Người bị mình đổ oan không quên. Họ chỉ chờ đến lượt.',
       choices: [
-        { t: 'Xin Hoàng thượng xét', need: { flags: ['co_thai'], num: { vua: [25, 100] } }, lockHint: 'Cần Hoàng thượng từ 25, còn giữ thai', fx: { d: { vua: -6, thucphi: -10, hiem: 6 }, flag: ['n3_un_vu', 'un_han'] }, note: 'Hoàng thượng gạt tờ tố đi: "Người đang mang con trẫm, không ai được hỏi cung." Uyển Như đứng dậy, mặt trắng bệch.' },
+        { t: 'Xin Hoàng thượng xét', need: { flags: ['co_thai'], num: { vua: [25, 100] } }, lockHint: 'Cần Hoàng thượng từ 25, còn giữ thai', fx: { d: { vua: -6, thucphi: -10, hiem: 6 }, flag: ['n3_un_vu', 'un_han'] }, note: 'Hoàng thượng gạt tờ tố đi: "Người đang mang con trẫm, không ai được tra hỏi." Uyển Như đứng dậy, mặt trắng bệch.' },
         { t: 'Đưa bã thuốc trong lò ra', need: { flags: ['co_ba'] }, lockHint: 'Cần đã lấy được bã thuốc', fx: { d: { thucphi: -8, muu: 4, hiem: 4 }, flag: ['n3_un_vu', 'un_han'] }, note: 'Bã thuốc có vị không nằm trong đơn, và không ai tự bỏ thứ ấy vào bụng mình. Tờ tố bị trả về.' },
         { t: 'Cúi đầu chịu tiếng, xin xét sau', need: { num: { hiem: [0, 49] } }, lockHint: 'Cần Hiểm dưới 50: chưa ai muốn dồn bạn tới cùng', fx: { d: { an: -8, the: -4, hiem: 8 }, flag: ['n3_un_vu', 'un_han'] }, note: 'Thái hậu xoa đầu bạn: "Ta tin con." Bà cho cất tờ tố đi, nhưng cả hậu cung đã nghe.' },
         { t: 'Tố lại: người bỏ thuốc là người của Uyển Như', fx: { end: 'n_33' }, note: 'Hai con tin tố nhau đến tận khuya. Thái hậu nghe hết, rồi cho cả hai cùng về lãnh cung.' },
@@ -360,7 +360,7 @@ export const NG_CH3: Card[] = [
       },
       { t: 'Hứa đưa vợ con ông ra khỏi thành, rồi nghe ông nói', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, hiem: 6, duc: 2 }, clue: ['a3_don'], flag: ['cuu_thaiy'] }, note: 'Ông khóc như trẻ con, rồi kể: có người bắt ông thêm một vị vào đơn. Người bỏ vị ấy vào lò là {C:a3_don}. {GIA:a3_don}' },
       { t: 'Đỡ ông dậy, không hỏi nữa', fx: { d: { duc: 3 }, flag: ['giu_thaiy'] }, note: 'Ông vái ba vái rồi đi giật lùi ra cửa. Bạn biết mình vừa để vuột một người biết chuyện.' },
-      { t: 'Báo cho người của Thái sư', need: { flags: ['no_thaisu'] }, lockHint: 'Cần đã từng nợ nhà họ Hà', fx: { rank: 1, d: { the: 6, duc: -10 }, end: 'n_24' }, note: 'Thái sư cho bắt Thái y ngay trong đêm, lấy lời khai để hặc nhà Lương. Bạn được phong Phi. Không ai nhắc đến vợ con ông nữa.' },
+      { t: 'Báo cho người của Thái sư', need: { flags: ['no_thaisu'] }, lockHint: 'Cần đã từng nợ nhà họ Hà', fx: { rank: 1, d: { the: 6, duc: -10 }, end: 'n_24' }, note: 'Thái sư cho bắt Thái y ngay trong đêm, lấy lời khai để dâng sớ tố tội nhà Lương. Bạn được phong Phi. Không ai nhắc đến vợ con ông nữa.' },
     ],
   },
   {
@@ -419,7 +419,7 @@ export const NG_CH3: Card[] = [
     moods: { hoanghau: 'buon' },
     who: 'hoanghau',
     title: 'Bàn tay Hoàng hậu',
-    text: ['Hoàng hậu đặt tay lên bụng bạn, nhẹ như sợ vỡ: "Đêm ta lâm bồn, chị cô cũng ngồi bên giường, nắm tay ta thế này."', 'Rồi bà rụt tay lại, như vừa lỡ lời.'],
+    text: ['Hoàng hậu đặt tay lên bụng bạn, nhẹ như sợ vỡ: "Đêm ta sinh nở, chị cô cũng ngồi bên giường, nắm tay ta thế này."', 'Rồi bà rụt tay lại, như vừa lỡ lời.'],
     choices: [
       { t: 'Hỏi: "Đêm ấy chị con trực ở cung nương nương?"', fx: { d: { hiem: 8, hoanghau: -6, muu: 3 }, flag: ['su5'] }, note: '"Phải. Cả đêm." Hoàng hậu bảo bạn về. Ra đến cửa, bạn nghe bà dặn đóng hết cửa sổ, dù trời không có gió.' },
       { t: 'Nắm lại tay bà, không hỏi gì', fx: { d: { hoanghau: 10, duc: 2 } }, note: 'Hoàng hậu ngồi im rất lâu. Lúc bạn về, bà mới nói: "Giữ đứa bé cho chặt."' },
@@ -441,9 +441,9 @@ export const NG_CH3: Card[] = [
     title: 'Sổ thuốc năm Tân Dậu',
     text: ['Sổ thuốc thái y viện xếp theo năm. Cuốn năm Tân Dậu gáy sờn, như có người lật nhiều.', 'Thái y Thẩm đứng chắn trước giá, mặt tái đi.'],
     choices: [
-      { t: 'Biếu 20 quan, xin xem một trang', need: { num: { tien: [20, 99999] }, not: ['so_cao'] }, lockHint: 'Cần 20 quan, và sổ chưa bị cạo', fx: { d: { tien: -20, hiem: 8 }, flag: ['su6'] }, note: 'Một dòng mực đã nhòe, nét chữ của chính ông: "Chính cung lâm bồn. Con... mất." Ông gấp sổ lại trước khi bạn kịp đọc hết.' },
+      { t: 'Biếu 20 quan, xin xem một trang', need: { num: { tien: [20, 99999] }, not: ['so_cao'] }, lockHint: 'Cần 20 quan, và sổ chưa bị cạo', fx: { d: { tien: -20, hiem: 8 }, flag: ['su6'] }, note: 'Một dòng mực đã nhòe, nét chữ của chính ông: "Hoàng hậu trở dạ. Con... mất." Ông gấp sổ lại trước khi bạn kịp đọc hết.' },
       {
-        t: 'Hỏi thẳng: "Năm Tân Dậu, ai đỡ đẻ cho chính cung?"',
+        t: 'Hỏi thẳng: "Năm Tân Dậu, ai đỡ đẻ cho Hoàng hậu?"',
         need: { not: ['so_cao'] },
         lockHint: 'Sổ năm Tân Dậu đã bị cạo',
         fx: { d: { hiem: 12, muu: 3 }, flag: ['su6'] },
@@ -624,7 +624,7 @@ export const NG_CH3: Card[] = [
     title: 'Lệ hoãn hình',
     text: ['Ngự sử Lý Mặc vào cung tâu việc, dừng lại nói rất khẽ: "Luật có lệ: đàn bà có thai phạm tội thì hoãn hình đến khi sinh."', '"Nếu nương nương bị vu, lệ ấy là cái phao. Nhưng phao chỉ nổi được vài tháng."'],
     choices: [
-      { t: 'Nhờ ông chép vụ chén thuốc vào sổ Đô sát viện', fx: { d: { quan: 6, hiem: 6 }, flag: ['lm_chep'] }, note: 'Ông gật đầu: "Có tên trong sổ Đô sát, người ta sẽ ngại động vào nương nương hơn. Cũng sẽ để ý nương nương hơn."' },
+      { t: 'Nhờ ông chép vụ chén thuốc vào sổ Viện Ngự sử', fx: { d: { quan: 6, hiem: 6 }, flag: ['lm_chep'] }, note: 'Ông gật đầu: "Có tên trong sổ Viện Ngự sử, người ta sẽ ngại động vào nương nương hơn. Cũng sẽ để ý nương nương hơn."' },
       { t: 'Cảm ơn ông, không nhờ gì', fx: { d: { quan: 2, duc: 2 } }, note: 'Ông chắp tay rồi đi, bước rất thẳng, như cha bạn ngày còn làm Thị lang.' },
     ],
   },
@@ -670,9 +670,9 @@ export const NG_CH3: Card[] = [
     title: 'Lời khai',
     text: ['{TAY:an3} quỳ dưới thềm, khai không sót: "Thái y Thẩm đưa thêm một gói rễ, dặn bỏ vào lò sau canh hai."', '"Thái y cũng bị ép. Người ép ông ở cung trên, con không dám nhìn lên."'],
     choices: [
-      { t: 'Ghi tên Thái y Thẩm vào tờ trình', need: { not: ['chet_thaiy'] }, lockHint: 'Thái y đã không còn', fx: { d: { hiem: 12, muu: 4 }, flag: ['biet_thaiy', 'chet_thaiy', 'n3_khep'] }, note: 'Thái y bị giải vào ngục. Ba hôm sau sổ ngục ghi: Thẩm, bạo bệnh. Sợi dây dẫn lên cung trên đứt ở đó.' },
+      { t: 'Ghi tên Thái y Thẩm vào tờ trình', need: { not: ['chet_thaiy'] }, lockHint: 'Thái y đã không còn', fx: { d: { hiem: 12, muu: 4 }, flag: ['biet_thaiy', 'chet_thaiy', 'n3_khep'] }, note: 'Thái y bị giải vào ngục. Ba hôm sau sổ ngục ghi: Thẩm, bệnh đột ngột. Sợi dây dẫn lên cung trên đứt ở đó.' },
       { t: 'Che tên ông, giữ lời khai làm con bài', need: { not: ['chet_thaiy'] }, lockHint: 'Thái y đã không còn', fx: { d: { muu: 6, hiem: 4 }, flag: ['biet_thaiy', 'bai_thaiy', 'n3_khep'] }, note: 'Kẻ ra tay bị đánh đòn, đuổi khỏi cung. Thái y Thẩm nhìn bạn từ xa, như nhìn một người vừa cầm dây trói mình.' },
-      { t: 'Đứng ra nhận lỗi canh thuốc lơ là, che hẳn cho ông', need: { not: ['chet_thaiy'] }, lockHint: 'Thái y đã không còn', fx: { rank: -1, end: 'n_23' }, note: 'Bạn bị cách một bậc, dời ra viện nhỏ. Thái y Thẩm vẫn đến bắt mạch mỗi tháng, không bao giờ nhắc chuyện cũ.' },
+      { t: 'Đứng ra nhận lỗi canh thuốc lơ là, che hẳn cho ông', need: { not: ['chet_thaiy'] }, lockHint: 'Thái y đã không còn', fx: { rank: -1, end: 'n_23' }, note: 'Bạn bị hạ một bậc, dời ra viện nhỏ. Thái y Thẩm vẫn đến bắt mạch mỗi tháng, không bao giờ nhắc chuyện cũ.' },
       { t: 'Ghi lời khai vào rương, khép án', fx: { d: { muu: 3 }, flag: ['biet_thaiy', 'n3_khep'] }, note: 'Kẻ ra tay bị đánh đòn, đuổi khỏi cung. Bạn viết thêm vào hồ sơ ba chữ: "cung trên", rồi khóa rương.' },
     ],
   },
@@ -688,7 +688,7 @@ export const NG_CH3: Card[] = [
     moods: { vua: 'vui' },
     who: 'vua',
     title: 'Án khép',
-    text: ['Tờ trình được chuẩn ngay trong buổi chiều. {XU:an3} bị giải đi giữa sân.', 'Hoàng thượng thưởng bạn một đôi vòng ngọc. Cả hậu cung nói con gái ông Nghiêm xét án không sót.'],
+    text: ['Hoàng thượng duyệt tờ trình ngay trong buổi chiều. {XU:an3} bị giải đi giữa sân.', 'Hoàng thượng thưởng bạn một đôi vòng ngọc. Cả hậu cung nói con gái ông Nghiêm xét án không sót.'],
     choices: [
       { t: 'Nhận thưởng', fx: { d: { the: 4, vua: 4, duc: -2 }, flag: ['n3_khep'] }, note: 'Thái y viện lại kê đơn như mọi ngày. Không ai hỏi ai câu nào về người kê đơn.' },
       { t: 'Đứng nhìn người bị giải đi đến khi khuất', fx: { d: { the: 2, vua: 2, duc: 1 }, flag: ['n3_khep'] }, note: 'Người ấy không ngoái lại. Bạn đeo đôi vòng ngọc vào tay, thấy lạnh.' },
@@ -729,10 +729,10 @@ export const NG_CH3: Card[] = [
     choices: [
       { t: 'Sai người cầu Hoàng thượng che chở', need: { num: { vua: [25, 100] }, not: ['che_vua'] }, lockHint: 'Cần Hoàng thượng từ 25, chưa từng cầu', fx: { d: { vua: -10, an: -5 }, flag: ['che_vua', 'n3_khep'] }, note: 'Hoàng thượng cho ngự thiện phòng sắc thuốc riêng cho viện bạn. Chén kia bị đổ đi trước khi ai kịp nếm.' },
       { t: 'Nhờ Uyển Như sắc thuốc bên viện nàng', need: { num: { thucphi: [25, 100] }, not: ['che_un', 'un_han'] }, lockHint: 'Cần Quý phi Hà từ 25, chưa từng cầu, không mang hận', fx: { d: { thucphi: -5, hiem: 5 }, flag: ['che_un', 'n3_khep'] }, note: 'Uyển Như cho người mang sang một ấm thuốc: "Tôi nếm trước rồi. Lần sau tôi không nếm nữa đâu."' },
-      { t: 'Nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần quen Lý Mặc, chưa từng cầu', fx: { d: { quan: -10, hiem: 4 }, flag: ['che_lymac', 'n3_khep'] }, note: 'Sáng sớm, Lý Mặc dâng tờ xin xét bếp thuốc thái y viện. Chưa ai dám động vào bạn khi Đô sát viện đang nhìn.' },
+      { t: 'Nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần quen Lý Mặc, chưa từng cầu', fx: { d: { quan: -10, hiem: 4 }, flag: ['che_lymac', 'n3_khep'] }, note: 'Sáng sớm, Lý Mặc dâng tờ xin xét bếp thuốc thái y viện. Chưa ai dám động vào bạn khi Viện Ngự sử đang nhìn.' },
       { t: 'Nhắn Kiệm: lời khai năm xưa vẫn nằm trong rương', need: { flags: ['bai_kiem'], not: ['dung_bai_kiem', 'an3_nang'] }, lockHint: 'Cần đang giữ lời khai về Kiệm, chưa dùng, và Kiệm còn sợ nó', fx: { d: { hiem: 8, phuc: -10 }, flag: ['dung_bai_kiem', 'n3_khep'] }, note: 'Nửa đêm, chén thuốc trên bàn bị một tiểu thái giám lặng lẽ bưng đi. Kiệm biết bạn còn giữ thứ gì.' },
       { t: 'Nhắn lên cung trên: trang sổ năm Tân Dậu, ta đã đọc', need: { flags: ['su3'], not: ['dung_su3', 'an3_nang'] }, lockHint: 'Cần biết chuyện sổ năm Tân Dậu, chưa dùng, và người kia còn sợ điều ấy', fx: { d: { hiem: 12 }, flag: ['dung_su3', 'n3_khep'] }, note: 'Chén thuốc được người lạ bưng đi. Từ hôm ấy, có người ở cung trên biết bạn đã đọc tới đâu.' },
-      { t: 'Viết tờ xin tự giáng, ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Chẳng ai buồn hại một phi tần đã tự ngã, và chẳng ai còn nhắc đến chén thuốc ấy.' },
+      { t: 'Viết tờ xin tự giáng bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Chẳng ai buồn hại một phi tần đã tự ngã, và chẳng ai còn nhắc đến chén thuốc ấy.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { next: 'an3_pc2' }, note: 'Bạn đẩy chén thuốc ra xa, thổi tắt đèn. Ngoài kia có tiếng bước chân rất nhẹ.' },
     ],
   },
@@ -799,7 +799,7 @@ export const NG_CH3: Card[] = [
     cast: ['me'],
     mood: 'buon',
     title: 'Áo còn khâu dở',
-    text: ['Trong giỏ kim chỉ của nhũ mẫu còn một chiếc áo nhỏ khâu dở, mũi kim cắm nguyên chỗ bà dừng tay.', 'Sổ cung ghi: người hầu già, bạo bệnh.'],
+    text: ['Trong giỏ kim chỉ của nhũ mẫu còn một chiếc áo nhỏ khâu dở, mũi kim cắm nguyên chỗ bà dừng tay.', 'Sổ cung ghi: người hầu già, bệnh đột ngột.'],
     omen: 'Có người nếm thay bạn một lần. Lần sau không còn ai nếm nữa.',
     choices: [
       { t: 'Khâu nốt chiếc áo', fx: { d: { duc: 4, sac: -3 }, flag: ['n3_tang_nm'] }, note: 'Mũi kim của bạn thưa hơn mũi kim của bà. Bạn khâu đến sáng, không tháo lại mũi nào.' },
@@ -819,8 +819,8 @@ export const NG_CH3: Card[] = [
     mood: 'lo',
     moods: { uyennhu: 'gian' },
     who: 'uyennhu',
-    title: 'Sách ấn của Quý phi',
-    text: ['Uyển Như bị tước sách ấn, đưa về lãnh cung. Nàng không cúi đầu, tà áo xanh vẫn thẳng như ngày ra mắt.', 'Đi ngang bạn, nàng dừng lại: "Cô sẽ nhớ ngày hôm nay."'],
+    title: 'Ấn của Quý phi',
+    text: ['Uyển Như bị tước ngôi Quý phi, thu lại ấn, đưa về lãnh cung. Nàng không cúi đầu, tà áo xanh vẫn thẳng như ngày ra mắt.', 'Đi ngang bạn, nàng dừng lại: "Cô sẽ nhớ ngày hôm nay."'],
     omen: 'Đèn sáng chưa chắc là đúng người.',
     choices: [
       { t: 'Nhìn thẳng nàng, không đáp', fx: { d: { the: 4, thucphi: -20 }, flag: ['phe_un'] }, note: 'Uyển Như cười, rồi đi. Chiều ấy, phủ Thái sư đóng cổng, không tiếp ai.' },

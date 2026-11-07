@@ -50,8 +50,8 @@ export const NG_TALES_CH7: Record<string, { t: string; lines: string[]; s?: Tale
     t: 'Tông nhân phủ',
     s: { bg: 'tamphap', time: 'chieu', cast: [] },
     lines: [
-      'Án dính tới người trong hoàng tộc không ra công đường, mà lên Tông nhân phủ. Theo lệ nghị thân, không ai bị trói, không ai bị tra. Người có tội chỉ bị ghi tên vào một tờ án.',
-      'Nhưng một cái tên ghi sai thì luật cũng có lệ: phản tọa. Kẻ vu cáo chịu đúng mức hình của tội mình đã vu.',
+      'Án dính tới người trong hoàng tộc không ra công đường, mà lên Tông nhân phủ. Người nhà vua được xét riêng: không ai bị trói, không ai bị tra. Người có tội chỉ bị ghi tên vào một tờ án.',
+      'Nhưng ghi sai một cái tên thì luật cũng có lệ phản tọa: vu người tội gì thì chịu đúng tội ấy.',
       'Bà sáu mươi hai tuổi. Đây là tờ án cuối cùng bà còn đủ sức viết.',
     ],
   },
@@ -60,7 +60,7 @@ export const NG_TALES_CH7: Record<string, { t: string; lines: string[]; s?: Tale
     s: { bg: 'tamphap', time: 'chieu', cast: [] },
     lines: [
       'Án dính tới người trong hoàng tộc không ra công đường, mà lên Tông nhân phủ. Có người đã bị phế, nhưng tờ án vẫn cần một cái tên.',
-      'Một cái tên ghi sai thì luật có lệ: phản tọa. Kẻ vu cáo chịu đúng mức hình của tội mình đã vu.',
+      'Ghi sai một cái tên thì luật có lệ phản tọa: vu người tội gì thì chịu đúng tội ấy.',
       'Bà sáu mươi hai tuổi. Đây là tờ án cuối cùng bà còn đủ sức viết.',
     ],
   },
@@ -69,7 +69,7 @@ export const NG_TALES_CH7: Record<string, { t: string; lines: string[]; s?: Tale
     s: { bg: 'tamphap', time: 'chieu', cast: [] },
     lines: [
       'Người đã khuất không ra công đường. Nhưng tên họ vẫn nằm trong sử, và sử thì còn sửa được.',
-      'Một cái tên ghi sai cũng có lệ: phản tọa. Vu cho người đã chết cũng là vu.',
+      'Ghi sai một cái tên thì cũng chịu luật phản tọa: vu người tội gì thì chịu đúng tội ấy. Vu cho người đã chết cũng là vu.',
       'Bà sáu mươi hai tuổi. Đây là tờ án cuối cùng bà còn đủ sức viết.',
     ],
   },
@@ -208,7 +208,7 @@ export const NG_CH7: Card[] = [
         need: { flags: ['quen_lymac'], not: ['chet_lymac'] },
         lockHint: 'Cần quen Lý Mặc, và ông còn sống',
         fx: { flag: ['n7_vcx', 'bi_bit_mieng', 'lm_giu'], unflag: ['ch7_noi', 'n7_cong'], d: { quan: 4, hiem: 4 } },
-        note: 'Lý Mặc nhét bản sao vào giữa bó sổ Đô sát viện: "Không đọc được bây giờ thì đọc sau. Sổ của Đô sát viện sống lâu hơn người."',
+        note: 'Lý Mặc nhét bản sao vào giữa bó sổ Viện Ngự sử: "Không đọc được bây giờ thì đọc sau. Sổ của Viện Ngự sử sống lâu hơn người."',
       },
       { t: 'Đòi lại tờ sớ, đòi cho bằng được', fx: { flag: ['n7_vcx', 'bi_bit_mieng'], unflag: ['ch7_noi', 'n7_cong'], d: { hiem: 20, the: -6 } }, note: 'Bà đứng ở cổng Tông nhân phủ ba ngày. Ngày thứ tư có chỉ: Thái phi tuổi cao, cho nghỉ ngơi, không tiếp ai. Cổng viện bà có người đứng gác.' },
     ],
@@ -295,7 +295,7 @@ export const NG_CH7: Card[] = [
     who: 'me',
     beat: 'hook',
     title: 'Gói chè buộc lạt',
-    text: ['Một gói chè được gửi tới cổng, buộc bằng sợi lạt cũ, không đề tên người gửi.', 'Người mang tới là cháu bà lão bán chè {BALAO} thị ở cổng Bắc. Bà mất đã nhiều năm, gói này bà gói sẵn, dặn đúng năm con gái út nhà Nghiêm tóc bạc mới đưa.'],
+    text: ['Có người gửi tới cổng một gói chè, buộc bằng sợi lạt cũ, không đề tên người gửi.', 'Người mang tới là cháu bà lão bán chè {BALAO} thị ở cổng Bắc. Bà mất đã nhiều năm, gói này bà gói sẵn, dặn đúng năm con gái út nhà Nghiêm tóc bạc mới đưa.'],
     choices: cheChoices(
       'Dưới lớp chè có một mảnh giấy, nét chữ run: "Ở triều trước, ta đã thấy một đêm như thế. Cô đừng để nó thành hai đêm."',
       'Người cháu kể bà mất ở nhà, lúc ấy đã không còn gánh chè ra cổng được nữa. Bà dặn: gói này đưa cho cô gái giống một người bà từng gặp.',
@@ -458,7 +458,7 @@ export const NG_CH7: Card[] = [
         t: 'Lên đường tay không',
         fx: { clue: ['a7_mo'], flag: ['n7_chua', 'mo_tuchoi'], d: { hiem: 3, sac: -2 } },
         note: 'Sư cô kể đêm chị bị gọi đi: một ma ma cầm đèn lồng đứng ngoài cửa. Bà hỏi tới chiếc khăn, sư cô chỉ lắc đầu: "Chưa phải người này." {GIA:a7_mo}',
-        risk: { p: 0.3, fail: { flag: ['n7_chua', ...kcF(110)] }, failNote: 'Cổng chùa đóng, người trong chùa bảo sư cô đang nhập thất. Bà ngồi dưới gốc phi lao nghe chuông đến chiều, rồi quay về.' },
+        risk: { p: 0.3, fail: { flag: ['n7_chua', ...kcF(110)] }, failNote: 'Cổng chùa đóng, người trong chùa bảo sư cô đang tu kín, không gặp ai. Bà ngồi dưới gốc phi lao nghe chuông đến chiều, rồi quay về.' },
       },
       { t: 'Gửi thư trước, chờ hồi âm', fx: { flag: ['n7_chua', ...kcF(111)] }, note: 'Bà viết một lá thư dài, kể hết những gì bà biết về chị. Thư đi rồi, mùa này qua mùa khác, không có hồi âm.' },
       { t: 'Thôi, đường xa quá', fx: { d: { duc: 1 } }, note: 'Bà gấp tờ tin lại. Đêm ấy bà mơ thấy tiếng chuông, mà chùa trong cung không đánh chuông giờ ấy.' },
@@ -689,9 +689,9 @@ export const NG_CH7: Card[] = [
     moods: { lymac: 'binh' },
     who: 'lymac',
     title: 'Ông Ngự sử già',
-    text: ['Lý Mặc bảy mươi tư tuổi, chống gậy đến thăm, ôm theo một bó sổ Đô sát viện.', '"Lão còn đọc được một bản minh oan nữa. Bà cần thì gọi."'],
+    text: ['Lý Mặc bảy mươi tư tuổi, chống gậy đến thăm, ôm theo một bó sổ Viện Ngự sử.', '"Lão còn đọc được một bản minh oan nữa. Bà cần thì gọi."'],
     choices: [
-      { t: 'Nhờ ông giữ một bản sao hồ sơ', fx: { flag: ['lm_giu'], d: { quan: 4, hiem: 2 } }, note: 'Ông nhét bản sao vào giữa bó sổ: "Sổ Đô sát viện thì không ai dám đốt."' },
+      { t: 'Nhờ ông giữ một bản sao hồ sơ', fx: { flag: ['lm_giu'], d: { quan: 4, hiem: 2 } }, note: 'Ông nhét bản sao vào giữa bó sổ: "Sổ Viện Ngự sử thì không ai dám đốt."' },
       { t: 'Mời ông uống trà, không nhờ gì', fx: { d: { quan: 6, duc: 1 } }, note: 'Ông uống hết ấm trà, kể chuyện cha bà hồi còn làm Thị lang. Ông kể rất công bằng, không khen, không chê.' },
     ],
   },
@@ -900,7 +900,7 @@ export const NG_CH7: Card[] = [
     text: ['Kiệm mất đã mấy năm. Một thái giám trẻ từng hầu ông mang tới một cái hòm khóa đồng.', '"Sư phụ dặn: người nhà Nghiêm sẽ đến hỏi. Nhưng sư phụ không dặn là cho không."'],
     choices: [
       { t: 'Trả 40 quan', need: { num: { tien: [40, 99999] } }, lockHint: 'Cần 40 quan', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { tien: -40, hiem: 4 } }, note: 'Trong hòm có sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy. Một dòng ghi: trước ngày cha lên Thượng thư, cửa sau cung trên mở cho một cỗ xe họ Nghiêm. {GIA:a7_goc}' },
-      { t: 'Nhờ Lý Mặc thu làm vật chứng', need: { flags: ['quen_lymac'], not: ['chet_lymac'] }, lockHint: 'Cần quen Lý Mặc, và ông còn sống', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 6, quan: -4 } }, note: 'Lý Mặc niêm phong cái hòm bằng ấn Đô sát viện. Thằng bé khóc, không phải vì tiền. {GIA:a7_goc}' },
+      { t: 'Nhờ Lý Mặc thu làm vật chứng', need: { flags: ['quen_lymac'], not: ['chet_lymac'] }, lockHint: 'Cần quen Lý Mặc, và ông còn sống', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 6, quan: -4 } }, note: 'Lý Mặc niêm phong cái hòm bằng ấn Viện Ngự sử. Thằng bé khóc, không phải vì tiền. {GIA:a7_goc}' },
       {
         t: 'Hứa cho nó một chỗ làm ở viện mình',
         fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 6 } },
@@ -961,15 +961,15 @@ export const NG_CH7: Card[] = [
 
   /* ---------------- B3: xử án (ngã rẽ lớn) ---------------- */
   xuCard('n7_xu_song', { flags: [G, 'mo_an7'], not: ['xu_an7', 'chet_thaihau', 'phe_thaihau'] }, [
-    'Hồ sơ được dâng lên Tông nhân phủ. Theo lệ nghị thân, người trong hoàng tộc không bị gọi ra công đường, chỉ bị ghi tên vào tờ án.',
+    'Bà dâng hồ sơ lên Tông nhân phủ. Người trong hoàng tộc được xét riêng, không bị gọi ra công đường, chỉ bị ghi tên vào tờ án.',
     'Bà phải gọi một cái tên. Mở Sổ án để xem lại manh mối trước khi trả lời.',
   ]),
   xuCard('n7_xu_phe', { flags: [G, 'mo_an7', 'phe_thaihau'], not: ['xu_an7', 'chet_thaihau'] }, [
-    'Hồ sơ được dâng lên Tông nhân phủ. Có người đã bị phế, có người đã đi tu, nhưng tờ án vẫn cần một cái tên.',
+    'Bà dâng hồ sơ lên Tông nhân phủ. Có người đã bị phế, có người đã đi tu, nhưng tờ án vẫn cần một cái tên.',
     'Bà phải gọi một cái tên. Mở Sổ án để xem lại manh mối trước khi trả lời.',
   ]),
   xuCard('n7_xu_chet', { flags: [G, 'mo_an7', 'chet_thaihau'], not: ['xu_an7'] }, [
-    'Hồ sơ được dâng lên Tông nhân phủ. Người đã khuất không bị bắt, nhưng tên họ có thể bị ghi tội vào sử.',
+    'Bà dâng hồ sơ lên Tông nhân phủ. Người đã khuất không bị bắt, nhưng tên họ có thể bị ghi tội vào sử.',
     'Bà phải gọi một cái tên. Mở Sổ án để xem lại manh mối trước khi trả lời.',
   ]),
 
@@ -1012,7 +1012,7 @@ export const NG_CH7: Card[] = [
     mood: 'binh',
     who: 'me',
     title: 'Án khép',
-    text: ['Tờ án được chuẩn ngay trong ngày. Sử quán chép tên người phải chịu tội cái chết của Chiêu nghi Nghiêm Thanh: {XU:an7}.', 'Người ta bảo con gái út nhà Nghiêm xét án đến cùng, không nể cả người nhà.'],
+    text: ['Tờ án chuẩn ngay trong ngày. Sử quán chép tên người phải chịu tội cái chết của Chiêu nghi Nghiêm Thanh: {XU:an7}.', 'Người ta bảo con gái út nhà Nghiêm xét án đến cùng, không nể cả người nhà.'],
     choices: [
       { t: 'Thắp một nén hương trước bàn thờ chị', fx: { flag: ['ch7_noi', 'n7_loi_xong'], d: { duc: 2 } }, note: 'Khói hương bay thẳng. Bà tự nhủ chị ngủ được rồi.' },
       { t: 'Tự tay chép án vào gia phả nhà Nghiêm', fx: { flag: ['ch7_noi', 'n7_loi_xong'], d: { the: -4, muu: 2 } }, note: 'Bà chép từng chữ. Nét chữ của bà giống nét chữ cha đến lạ.' },
@@ -1056,7 +1056,7 @@ export const NG_CH7: Card[] = [
       { t: 'Cầu Hoàng thượng, con mình, che chở', need: { flags: ['canh_lenngoi'], not: ['che_canh'] }, lockHint: 'Chỉ khi con bà đang ngồi trên ngai', fx: { flag: ['che_canh', 'n7_pcxong'], d: { hiem: -10, duc: -4 } }, note: 'Cảnh xé tờ án trước mặt quan Tông nhân phủ. Từ hôm ấy, người ta nói Hoàng thượng thương mẹ hơn thương luật.' },
       { t: 'Nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['chet_lymac', 'che_lymac'] }, lockHint: 'Cần quen Lý Mặc, ông còn sống, chưa từng cầu', fx: { flag: ['che_lymac', 'n7_pcxong'], d: { quan: -10, hiem: -4 } }, note: 'Ông già bảy mươi tư tuổi ngồi trước cổng viện bà đến sáng, áo mũ Ngự sử chỉnh tề. Không ai dám bước qua ông.' },
       { t: 'Nhờ Uyển Như', need: { num: { thucphi: [25, 100] }, not: ['chet_uyennhu', 'di_uyennhu', 'un_han'] }, lockHint: 'Cần Quý phi Hà từ 25, nàng còn ở đây và không mang hận', fx: { end: 'n_88' }, note: 'Uyển Như sang viện bà, đổi áo, bảo bà ngủ bên viện nàng một đêm. Sáng ra người ta tìm thấy nàng ngồi đúng chỗ bà hay ngồi, chén trà còn ấm.' },
-      { t: 'Nhắn lên: lời khai năm ấy, ta vẫn giữ một bản', need: { flags: ['su11'], not: ['an7_nang', 'dung_su11'] }, lockHint: 'Cần nắm lời khai của hai trong ba người năm ấy', fx: { flag: ['dung_su11', 'n7_pcxong'], d: { hiem: 10 } }, note: 'Chén trà trên bàn được một tiểu thái giám lặng lẽ bưng đi. Từ hôm ấy, có người biết bà còn giữ thứ gì.' },
+      { t: 'Nhắn lên: lời khai năm ấy, ta vẫn giữ một bản', need: { flags: ['su11'], not: ['an7_nang', 'dung_su11'] }, lockHint: 'Cần nắm lời khai của hai trong ba người năm ấy', fx: { flag: ['dung_su11', 'n7_pcxong'], d: { hiem: 10 } }, note: 'Một tiểu thái giám lặng lẽ bưng chén trà trên bàn đi. Từ hôm ấy, có người biết bà còn giữ thứ gì.' },
       { t: 'Xin xuống tóc, ra chùa ngay đêm nay', fx: { flag: ['n7_xuongtoc', 'n7_pcxong'], d: { hiem: -20, the: -10 } }, note: 'Bà cắt tóc bằng chính chiếc kéo thêu. Sáng ra bà đã ở một ngôi chùa ngoài thành, và chẳng ai buồn hại một bà ni già.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { flag: ['n7_pc_cho'] }, note: 'Bà đẩy chén trà ra xa, thổi tắt đèn. Ngoài kia có tiếng bước chân rất nhẹ, rồi tắt.' },
     ],
@@ -1102,7 +1102,7 @@ export const NG_CH7: Card[] = [
         t: 'Dâng sớ kêu oan',
         need: { not: ['an7_nang'] },
         fx: { end: 'n_95' },
-        note: 'Sớ đi rồi, không có hồi âm. Chiều ấy, khay lụa, thuốc, gươm vẫn được bưng tới.',
+        note: 'Sớ đi rồi, không có hồi âm. Chiều ấy, người ta vẫn bưng tới khay lụa, thuốc, gươm.',
         risk: { p: 0.3, fail: { flag: ['n7_pc2', 'n7_pcxong', 'chet_thaihau'], d: { the: -10, hiem: -10 } }, failNote: 'Sớ đến tay Hoàng thượng đúng lúc tin bà Lương mất báo về. Người chết không còn ai đối chứng, tờ khai bị gác lại.' },
       },
     ],
@@ -1362,7 +1362,7 @@ export const NG_CH7: Card[] = [
     omen: 'Lá thư một chữ không phải là một chén thuốc.',
     choices: [
       { t: 'Tự dâng sớ nhận mình xử oan', fx: { flag: ['n7_lat'], unflag: ['ch7_noi'], d: { duc: 4, the: -10 } }, note: 'Bà bị tước hết phẩm hàm, sống nốt những năm cuối như một bà già không tên. Tên người bị oan được trả về chỗ cũ.' },
-      { t: 'Giữ nguyên án cũ', fx: { end: 'n_136' }, note: 'Bà không rút một chữ nào. Ngự sử xin xử theo lệ phản tọa, và triều đình chuẩn.' },
+      { t: 'Giữ nguyên án cũ', fx: { end: 'n_136' }, note: 'Bà không rút một chữ nào. Ngự sử xin xử theo luật phản tọa: vu người tội gì thì chịu đúng tội ấy. Triều đình chuẩn.' },
     ],
   },
 ];

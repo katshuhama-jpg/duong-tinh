@@ -52,7 +52,7 @@ const tyTen = (id: string, flags: string[], not: string[]): Card => ({
     {
       t: 'Nhận lời khai, rồi đưa ông ra khỏi kinh trước khi án mở',
       fx: { clue: ['a7_thaiy'], flag: ['ty_ten_xong', 'ty_tron', 'khai_thaiy'], d: { hiem: 6, duc: -8, the: -4 } },
-      note: 'Ông đi ngay trong đêm, xe không treo đèn. Lời khai ở lại, người thì không. Tông nhân phủ sẽ hỏi người khai đâu, và bà sẽ phải trả lời. {GIA:a7_thaiy}',
+      note: 'Ông đi ngay trong đêm, xe không treo đèn. Lời khai ở lại, người thì không. Tông nhân phủ, nơi xét việc họ nhà vua, sẽ hỏi người khai đâu, và bà sẽ phải trả lời. {GIA:a7_thaiy}',
     },
     { t: 'Từ chối, bảo ông về hiệu thuốc', fx: { flag: ['ty_ten_xong', 'ty_tha'], d: { duc: 2 } }, note: 'Ông đứng lặng rất lâu, rồi cúi đầu về. Hồ sơ của chị thiếu đúng một tờ, tờ ông đã cầm tới tận cửa.' },
   ],
@@ -77,7 +77,7 @@ export const NG_THAN47: Card[] = [
     text: ['Trước khi bị giải đi, ma ma Tạ xin nói riêng với bạn: "Chiều hôm ấy nô tì đã thưa với Quý phi. Quý phi chỉ bảo: cứ làm như người ta dặn."', '"Quý phi bảo, Hoàng thượng đi trong tay nhà Lương thì con của Quý phi mới có ngày ngồi lên ngai."'],
     omen: 'Người đứng gần nhất cũng là người cầm dao gần nhất.',
     choices: [
-      { t: 'Ký tờ án, ghi đủ tên người biết mà để chén thuốc đi', ...UN5_KY, note: 'Uyển Như bị tước sách ấn, đưa vào lãnh cung ngay trong tuần tang. Đi ngang bạn, nàng nói rất khẽ: "Cô bảo tôi đừng để con thành con cờ. Cô không bảo tôi đừng tự cầm cờ."' },
+      { t: 'Ký tờ án, ghi đủ tên người biết mà để chén thuốc đi', ...UN5_KY, note: 'Uyển Như bị tước ngôi phi, đưa vào lãnh cung ngay trong tuần tang. Đi ngang bạn, nàng nói rất khẽ: "Cô bảo tôi đừng để con thành con cờ. Cô không bảo tôi đừng tự cầm cờ."' },
       { t: 'Sang viện nàng trước, nghe nàng nói', fx: { next: 'ng_un_bat5b' }, note: 'Bạn đi qua sân trong áo tang. Cửa viện Uyển Như không cài then, như nàng biết bạn sẽ tới.' },
       { t: 'Đốt trang khai thứ hai', ...UN5_DOT, note: 'Trang khai cháy trong lò hương trước linh cữu. Ma ma Tạ bị giải đi một mình, không ngoái lại. Uyển Như không cảm ơn, nàng chỉ thôi nhìn thẳng vào mắt bạn.' },
     ],
@@ -118,7 +118,7 @@ export const NG_THAN47: Card[] = [
     moods: { luavang: 'so' },
     who: 'luavang',
     title: 'Gói than sau bếp',
-    text: ['Đêm thứ hai, bạn thấy Lụa Vàng đứng sau bếp ngự dược với ma ma của cung trên, tay nhận một gói gì đó.', 'Thấy bạn, nàng cười rất tươi: "Em xin thêm than cho viện mình, nương nương."'],
+    text: ['Đêm thứ hai, bạn thấy Lụa Vàng đứng sau bếp thuốc ngự với ma ma của cung trên, tay nhận một gói gì đó.', 'Thấy bạn, nàng cười rất tươi: "Em xin thêm than cho viện mình, nương nương."'],
     omen: 'Người đứng gần nhất cũng là người cầm dao gần nhất.',
     choices: [
       { t: 'Hỏi thẳng: "Năm ấy, vụ ấy, là em phải không?"', fx: { d: { hanh: -40, muu: 3, hiem: -4 }, flag: ['lv_lo', 'di_luavang'] }, note: 'Lụa Vàng quỳ xuống, gói than rơi vỡ: "Họ trả nợ cho em. Từ năm ấy em báo tin cho cung trên." Sáng ra bạn cho nàng ra khỏi cung. Viện bạn bớt một người, và bớt một đôi tai.' },
@@ -205,11 +205,11 @@ export const NG_THAN47: Card[] = [
     mood: 'buon',
     moods: { thaiy: 'binh' },
     who: 'me',
-    lead: 'Lời khai có chữ ký của Thái y nằm trong hồ sơ, và Tông nhân phủ đọc hết.',
+    lead: 'Lời khai có chữ ký của Thái y nằm trong hồ sơ, và Tông nhân phủ, nơi xét việc họ nhà vua, đọc hết.',
     title: 'Tên ông trong tờ án',
     text: ['Tông nhân phủ chép thêm một dòng: Thái y Thẩm, kê đơn thuốc giết người. Tờ án chờ chữ ký của người đứng đơn.', 'Ông quỳ dưới thềm, lưng còng, không nhìn bà. Năm ấy bà cứu vợ con ông bằng chính bàn tay đang cầm bút.'],
     choices: [
-      { t: 'Ký', fx: { d: { duc: -2, hiem: -4 }, flag: ['ty_an_xong', 'chet_thaiy'] }, note: 'Án đày ra biên. Ông mất trên đường, ở một trạm ngựa không tên. Người áp giải gửi về cho bà một tập đơn thuốc, trang cuối có một dòng: "Không oán."' },
+      { t: 'Ký', fx: { d: { duc: -2, hiem: -4 }, flag: ['ty_an_xong', 'chet_thaiy'] }, note: 'Án đày ra biên ải. Ông mất trên đường, ở một trạm ngựa không tên. Người áp giải gửi về cho bà một tập đơn thuốc, trang cuối có một dòng: "Không oán."' },
       {
         t: 'Xin giảm cho ông vì đã tự đến khai',
         need: { num: { duc: [45, 100] } },

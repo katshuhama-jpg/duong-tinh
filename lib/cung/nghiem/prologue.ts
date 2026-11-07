@@ -54,7 +54,7 @@ export const NG_PROLOGUE: Tale[] = [
     kicker: `${K} năm thứ bảy`,
     t: 'Ông Nghiêm sắt',
     s: { bg: 'trieu', time: 'ngay', cast: ['cha', 'thaisu'], imgs: { cha: 'cha0', thaisu: 'thaisu0' }, moods: { cha: 'gian', thaisu: 'dac' } },
-    lines: ['Cha quỳ giữa triều, giơ cao tờ sớ hặc Thái sư. Cả triều cúi đầu, chỉ cha ngẩng.', 'Từ đó người ta gọi cha là ông Nghiêm sắt.'],
+    lines: ['Cha quỳ giữa triều, giơ cao tờ sớ tố tội Thái sư. Cả triều cúi đầu, chỉ cha ngẩng.', 'Từ đó người ta gọi cha là ông Nghiêm sắt.'],
   },
   {
     kicker: `${K} năm thứ tám`,

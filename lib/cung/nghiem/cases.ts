@@ -69,7 +69,7 @@ export const CASES: Case[] = [
     title: 'Án đêm bị xóa',
     sum: 'Tài nhân viện Đông có thai, mà sổ đến thăm không có dòng nào ghi Hoàng thượng gọi nàng. Ở tháng Tư, giấy mỏng như vừa bị cạo. Ai đã cầm dao?',
     suspects: [
-      { k: 'tl', label: 'Bóng người gù lưng', name: 'Thư lại nội vụ Bảo' },
+      { k: 'tl', label: 'Bóng người gù lưng', name: 'Người chép sổ nội vụ Bảo' },
       { k: 'md', label: 'Bóng đàn bà đeo chùm chìa', name: 'Ma ma trực kho họ Đàm' },
       { k: 'lv', label: 'Bóng người trong viện mình', name: 'Lụa Vàng', cast: 'luavang' },
       { k: 'kt', label: 'Bóng người thấp nhỏ', name: 'Tiểu thái giám Khương' },
@@ -87,7 +87,7 @@ export const CASES: Case[] = [
     id: 'an3',
     ch: 3,
     title: 'Án thuốc an thai',
-    sum: 'Chén thuốc an thai thứ mười hai có vị lạ, nhũ mẫu nếm thử rồi nhổ ra. Thái y Thẩm run tay từ hôm báo hỷ mạch. Ai đã bỏ thêm vị thuốc vào lò?',
+    sum: 'Chén thuốc an thai thứ mười hai có vị lạ, nhũ mẫu nếm thử rồi nhổ ra. Thái y Thẩm run tay từ hôm báo tin có thai. Ai đã bỏ thêm vị thuốc vào lò?',
     suspects: [
       { k: 'ns', label: 'Bóng người ngồi bên lò', name: 'Người sắc thuốc Mùi' },
       { k: 'mb', label: 'Bóng đàn bà ở bếp thuốc', name: 'Ma ma bếp thuốc họ Đinh' },
@@ -109,7 +109,7 @@ export const CASES: Case[] = [
     title: 'Án tin đồn Đông cung',
     sum: 'Khắp hậu cung truyền nhau một câu: Hoàng trưởng tử không giống ai trong nhà Lương. Ai đã thả câu ấy ra, và thả để thử ai?',
     suspects: [
-      { k: 'tl', label: 'Bóng người áo lam đứng ngoài cổng', name: 'Thư lại phủ Thái sư' },
+      { k: 'tl', label: 'Bóng người áo lam đứng ngoài cổng', name: 'Người chép sổ phủ Thái sư' },
       { k: 'cn', label: 'Bóng cô gái hay đứng ở hành lang Đông cung', name: 'Cung nữ Đông cung tên Nhạn' },
       { k: 'mh', label: 'Bóng đàn bà đeo hương trầm', name: 'Ma ma hầu Hoàng hậu' },
       { k: 'tg', label: 'Bóng người thấp, đi rất nhẹ', name: 'Tiểu thái giám hầu sách Đông cung' },
@@ -148,10 +148,10 @@ export const CASES: Case[] = [
     id: 'an6',
     ch: 6,
     title: 'Án Thượng thư Bộ Hình',
-    sum: 'Ngự sử hặc cha bạn tội biết chuyện năm Tân Dậu mà không tâu. Không ai hỏi cha có biết không. Người ta chỉ chờ bạn gọi tên tội của ông.',
+    sum: 'Ngự sử dâng sớ tố cha bạn tội biết chuyện năm Tân Dậu mà không tâu. Không ai hỏi cha có biết không. Người ta chỉ chờ bạn gọi tên tội của ông.',
     suspects: [
       { k: 'che', label: 'Cách gọi thứ nhất', name: 'Biết mà che án', cast: 'cha' },
-      { k: 'dong', label: 'Cách gọi thứ hai', name: 'Đồng mưu đại nghịch' },
+      { k: 'dong', label: 'Cách gọi thứ hai', name: 'Đồng mưu phản nghịch' },
       { k: 'ep', label: 'Cách gọi thứ ba', name: 'Bị ép mà im' },
       { k: 'oan', label: 'Cách gọi thứ tư', name: 'Không biết gì, bị vu' },
     ],

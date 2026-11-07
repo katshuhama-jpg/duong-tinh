@@ -96,12 +96,12 @@ const lvBan = (id: string, when: Card['when']): Card => ({
   moods: { luavang: 'so', kiem: 'binh' },
   who: 'kiem',
   title: 'Chiếc vòng ngọc trong rương',
-  text: ['Kiệm dẫn người khám viện: kho đồ ngự ban vừa mất một chiếc vòng ngọc. Người ta lôi nó ra từ đáy rương của bạn.', 'Lụa Vàng quỳ, không nhìn bạn: "Con thấy nương nương cầm về hôm đi ngang kho."'],
+  text: ['Kiệm dẫn người khám viện: kho đồ vua ban vừa mất một chiếc vòng ngọc. Người ta lôi nó ra từ đáy rương của bạn.', 'Lụa Vàng quỳ, không nhìn bạn: "Con thấy nương nương cầm về hôm đi ngang kho."'],
   choices: [
-    { t: 'Không cãi, xin cấm túc chờ xét', fx: { d: { an: -6, duc: -3, hanh: -10 }, flag: ['lv_ban'] }, note: 'Chuyện được trình lên rồi chìm xuống, như mọi chuyện Kiệm muốn chìm. Lụa Vàng vẫn hầu bạn, và cả hai cùng biết.' },
+    { t: 'Không cãi, xin đóng cửa viện chờ xét', fx: { d: { an: -6, duc: -3, hanh: -10 }, flag: ['lv_ban'] }, note: 'Chuyện được trình lên rồi chìm xuống, như mọi chuyện Kiệm muốn chìm. Lụa Vàng vẫn hầu bạn, và cả hai cùng biết.' },
     { t: 'Hỏi Lụa Vàng: "Đôi giày vải mới ai cho em?"', need: { flags: ['biet_giay_lv'] }, lockHint: 'Cần biết chuyện đôi giày vải mới của Lụa Vàng', fx: { d: { hanh: -10, muu: 4, hiem: 6 }, flag: ['lv_ban'] }, note: 'Lụa Vàng tái mặt, lắp bắp nhận mình nhìn nhầm. Kiệm cho thu vòng về, coi như chưa có gì, và nhìn bạn không cười.' },
     { t: 'Sai người cầu Hoàng thượng', need: { flags: ['da_hau'], num: { vua: [15, 100] } }, lockHint: 'Cần đã hầu Hoàng thượng, Hoàng thượng từ 15', fx: { d: { vua: -6 }, flag: ['lv_ban'] }, note: 'Hoàng thượng phê một dòng: "Vòng ấy trẫm cho nàng." Kiệm thu tay. Từ đó, Lụa Vàng run mỗi khi bạn gọi tên nó.' },
-    { t: 'Cãi tới cùng, đòi tra khảo Lụa Vàng giữa sân', fx: { end: 'n_17' }, note: 'Tang vật nằm trong rương, nhân chứng là người của chính viện bạn. Không ai tra Lụa Vàng. Chiều ấy bạn bị tước bậc, sung làm tì ở hoán y cục.' },
+    { t: 'Cãi tới cùng, đòi tra khảo Lụa Vàng giữa sân', fx: { end: 'n_17' }, note: 'Tang vật nằm trong rương, nhân chứng là người của chính viện bạn. Không ai tra Lụa Vàng. Chiều ấy bạn bị tước bậc, đưa xuống làm nô tì giặt áo ở Hoán y cục.' },
   ],
 });
 
@@ -125,7 +125,7 @@ const chaGoi = (id: string, co: string): Card => ({
   choices: [
     { t: 'Thu xếp lên kiệu về phủ', fx: { next: 'n2_tang2' }, note: 'Bạn chỉ mang theo một chiếc rương nhỏ. Nhũ mẫu đi sau, không nói gì.' },
     { t: 'Hỏi nhũ mẫu bà nội có ốm không', fx: { d: { muu: 3, cha: -4 }, flag: ['cha_goi', 'biet_tang_gia'] }, note: 'Nhũ mẫu tái mặt: "Bà cụ vẫn khỏe, tháng trước còn gửi bánh vào." Tang là giả. Cha muốn bạn ra khỏi đây.' },
-    { t: 'Gửi đồ phúng về, xin ở lại hầu Thái hậu', fx: { d: { cha: -8, thaihau: 4 }, flag: ['cha_goi'] }, note: 'Kiệu về không. Cha không gửi thư vào nữa.' },
+    { t: 'Gửi đồ phúng viếng về, xin ở lại hầu Thái hậu', fx: { d: { cha: -8, thaihau: 4 }, flag: ['cha_goi'] }, note: 'Kiệu về không. Cha không gửi thư vào nữa.' },
   ],
 });
 
@@ -168,8 +168,8 @@ export const NG_CH2: Card[] = [
     mood: 'lo',
     moods: { uyennhu: 'gian' },
     who: 'uyennhu',
-    title: 'Ba mươi trượng',
-    text: ['Uyển Như chặn bạn ở hồ sen: "{XU:an1} bị đánh ba mươi trượng rồi đuổi về quê. Nó không biết viết tên mình, nói gì đến giết người."', '"Chiếc khăn ấy ai đặt, cô có từng hỏi không?"'],
+    title: 'Ba mươi gậy',
+    text: ['Uyển Như chặn bạn ở hồ sen: "{XU:an1} bị đánh ba mươi gậy rồi đuổi về quê. Nó không biết viết tên mình, nói gì đến giết người."', '"Chiếc khăn ấy ai đặt, cô có từng hỏi không?"'],
     omen: 'Một cái tên đổ oan sẽ có người nhớ thay cho mình.',
     choices: [
       { t: 'Cúi đầu xin lỗi', fx: { d: { thucphi: -15, duc: 3 }, flag: ['n2_hq', 'un_han'] }, note: 'Uyển Như nhìn bạn rất lâu: "Xin lỗi thì nó có lành chân không?" Rồi nàng đi, không ngoái lại.' },
@@ -452,12 +452,12 @@ export const NG_CH2: Card[] = [
     mood: 'lo',
     moods: { cungnu: 'so' },
     who: 'cungnu',
-    whoName: 'Thư lại già',
+    whoName: 'Ông chép sổ già',
     title: 'Sổ cung nữ',
     text: ['Viện bạn được thêm người hầu, nên bạn được xem sổ cung nữ ở nội vụ. Một trang năm Tân Dậu có dòng bị gạch bằng mực son.', 'Dưới vết son còn đọc được: "Đào, hầu trà. Có tháng."'],
     choices: [
       { t: 'Lặng lẽ chép lại cái tên ấy', fx: { d: { hiem: 8, muu: 2 }, flag: ['su4'] }, note: 'Không có ngày xuất cung, không có quê quán. Chỉ một cái tên, và một người đã mang thai rồi biến mất khỏi sổ.' },
-      { t: 'Hỏi thư lại dòng gạch ấy là ai', fx: { d: { hiem: 12, muu: 3 }, flag: ['su4'] }, note: 'Thư lại tái mặt: "Người ấy không còn trong sổ nữa, nương nương." Hôm sau, trang ấy bị xé mất.' },
+      { t: 'Hỏi ông chép sổ dòng gạch ấy là ai', fx: { d: { hiem: 12, muu: 3 }, flag: ['su4'] }, note: 'Ông chép sổ tái mặt: "Người ấy không còn trong sổ nữa, nương nương." Hôm sau, trang ấy bị xé mất.' },
       { t: 'Lật qua', fx: { d: { duc: 1 } }, note: 'Bạn chọn hai cung nữ mới, gấp sổ lại. Vệt son đỏ còn đọng trong mắt cả buổi chiều.' },
     ],
   },
@@ -479,8 +479,8 @@ export const NG_CH2: Card[] = [
     title: 'Ngự sử ở hành lang',
     text: ['Ngoài hành lang điện, một vị quan áo xanh đứng chờ dâng sớ, tay ôm chồng sổ án. Ông là Ngự sử Lý Mặc.', 'Ông cúi chào: "Nương nương là con gái ông Nghiêm? Tôi đọc án của cha nương nương từ hồi còn đi học."'],
     choices: [
-      { t: 'Hỏi: "Sửa sổ cung cấm thì xử thế nào?"', fx: { d: { quan: 10, muu: 3, hiem: 4 }, flag: ['quen_lymac'] }, note: '"Thắt cổ, nếu sổ ấy dùng để vu người. Kẻ vu ngược người phát giác thì chịu phản tọa." Ông nhìn bạn: "Có chuyện thì tìm tôi."' },
-      { t: 'Nói: "Cha tôi dạy luật đứng trên người"', fx: { d: { quan: 8, cha: 2 }, flag: ['quen_lymac'] }, note: 'Lý Mặc cười rất nhẹ: "Vậy mà ông ấy chưa từng hặc ai trong hậu cung." Ông cúi chào, đi vào điện.' },
+      { t: 'Hỏi: "Sửa sổ cung cấm thì xử thế nào?"', fx: { d: { quan: 10, muu: 3, hiem: 4 }, flag: ['quen_lymac'] }, note: '"Thắt cổ, nếu sổ ấy dùng để vu người. Ai vu ngược cho người tố ra thì chịu đúng cái tội mình đã vu." Ông nhìn bạn: "Có chuyện thì tìm tôi."' },
+      { t: 'Nói: "Cha tôi dạy luật đứng trên người"', fx: { d: { quan: 8, cha: 2 }, flag: ['quen_lymac'] }, note: 'Lý Mặc cười rất nhẹ: "Vậy mà ông ấy chưa từng dâng sớ tố ai trong hậu cung." Ông cúi chào, đi vào điện.' },
       { t: 'Cúi chào rồi đi, phi tần không nói chuyện với quan ngoài', fx: { d: { duc: 3 } }, note: 'Ông đứng nép sang một bên cho bạn qua. Chồng sổ án trên tay ông dày hơn cả sổ đến thăm.' },
     ],
   },
@@ -594,7 +594,7 @@ export const NG_CH2: Card[] = [
     moods: { nhumau: 'vui' },
     who: 'nhumau',
     title: 'Lụa ban',
-    text: ['Ngự tiền mang tới ba mươi quan và một xấp lụa màu thiên thanh: Hoàng thượng ban.', 'Người trong viện đứng chật bậc cửa, chờ xem bạn chia thế nào.'],
+    text: ['Thái giám hầu Hoàng thượng mang tới ba mươi quan và một xấp lụa màu thiên thanh: Hoàng thượng ban.', 'Người trong viện đứng chật bậc cửa, chờ xem bạn chia thế nào.'],
     choices: [
       { t: 'Chia cho cả viện', fx: { d: { tien: 10, hanh: 6, duc: 3 } }, note: 'Ai cũng được một phần. Từ hôm ấy, người hầu trong viện kín miệng hơn hẳn.' },
       { t: 'Cất cả vào rương', fx: { d: { tien: 30 } }, note: 'Rương đầy thêm. Người hầu cúi chào như cũ, chỉ có điều nói nhỏ hơn khi bạn đi qua.' },
@@ -706,7 +706,7 @@ export const NG_CH2: Card[] = [
     moods: { luavang: 'so', kiem: 'binh' },
     who: 'kiem',
     title: 'Lụa Vàng bị bắt',
-    text: ['Người của Kiệm lôi Lụa Vàng về sân viện: bắt được nó ngồi chiếu bạc sau bếp, tay còn nắm mấy quan tiền lẻ.', 'Kiệm thưa: "Nô tì đánh bạc trong cung, lệ là trượng một trăm. Ít ai chịu nổi quá sáu mươi."'],
+    text: ['Người của Kiệm lôi Lụa Vàng về sân viện: bắt được nó ngồi chiếu bạc sau bếp, tay còn nắm mấy quan tiền lẻ.', 'Kiệm thưa: "Nô tì đánh bạc trong cung, theo lệ phải đánh một trăm gậy. Ít ai chịu nổi quá sáu mươi."'],
     choices: [
       { t: 'Nộp 30 quan chuộc tội cho nó', need: { num: { tien: [30, 99999] } }, lockHint: 'Cần 30 quan', fx: { d: { tien: -30, hanh: 15, phuc: 4 }, unflag: ['lv_no'] }, note: 'Kiệm đếm tiền, cười: "Lần này thôi." Lụa Vàng khóc suốt đêm, sáng ra quét sân sạch nhất dãy.' },
       { t: 'Xin Hoàng hậu nói giúp', need: { num: { hoanghau: [8, 100] } }, lockHint: 'Cần Hoàng hậu từ 8', fx: { d: { hoanghau: -4, hanh: 10 } }, note: 'Hoàng hậu cho người nói một câu, Kiệm thả Lụa Vàng ngay. Bà không hỏi bạn vì sao.' },
@@ -757,7 +757,7 @@ export const NG_CH2: Card[] = [
     choices: [
       { t: 'Im lặng, không trả lời cũng không trả bạc', fx: { d: { hiem: 8, muu: 2 }, flag: ['ts_ghi'] }, note: 'Không ai đến đòi. Nhưng bạn biết ở phủ Thái sư, có người vừa gạch một dòng.' },
       { t: 'Trả lại cả hai túi bạc', need: { num: { tien: [50, 99999] } }, lockHint: 'Cần 50 quan', fx: { d: { tien: -50, thucphi: -6, hiem: 4 } }, note: 'Cung nữ cầm bạc về. Từ hôm ấy, người bên viện Quý phi gặp bạn là quay đi.' },
-      { t: 'Lẻn vào kho, chép trộm cho ông', fx: { end: 'n_13' }, note: 'Bạn chép xong trước canh tư. Mười ngày sau, Thái sư dâng sớ hặc nhà Lương, và Kiệm bắt đầu hỏi ai đã vào kho đêm ấy.' },
+      { t: 'Lẻn vào kho, chép trộm cho ông', fx: { end: 'n_13' }, note: 'Bạn chép xong trước canh tư. Mười ngày sau, Thái sư dâng sớ tố tội nhà Lương, và Kiệm bắt đầu hỏi ai đã vào kho đêm ấy.' },
     ],
   },
   chaGoi('n2_s_tang_a', 'ke_cha_so'),
@@ -799,7 +799,7 @@ export const NG_CH2: Card[] = [
     who: 'thaihau',
     title: 'Mười ngày',
     text: ['Hết hạn mười ngày. Thái hậu hỏi: "Ai đã cạo sổ? Hay sổ không sai, và đứa bé không phải con vua?"', 'Mở Sổ án để xem lại manh mối trước khi đặt bút.'],
-    omen: 'Luật có lệ phản tọa: gọi tên mà không giữ nổi tên ấy, thì chính mình chịu tội của tên ấy.',
+    omen: 'Luật phản tọa: vu người tội gì thì chịu đúng tội ấy. Gọi tên mà không giữ nổi, chính mình sẽ chịu tội của tên ấy.',
     choices: [
       { t: 'Trình: {S:an2:tl}', fx: { accuse: { an: 'an2', who: 'tl' } }, note: 'Bạn đặt bút. Từ giờ, cái tên ấy là của bạn.' },
       { t: 'Trình: {S:an2:md}', fx: { accuse: { an: 'an2', who: 'md' } }, note: 'Bạn đặt bút. Từ giờ, cái tên ấy là của bạn.' },
@@ -826,7 +826,7 @@ export const NG_CH2: Card[] = [
     title: 'Lời khai',
     text: ['{TAY:an2} quỳ trong kho sổ, khai không sót: "Có người đưa dao, bảo cạo một dòng, chép đè ngày khác. Người ấy giữ bản gốc."', '"Người ấy còn giữ cả một rương sổ cũ, trang nào cũng có vết cạo." Rồi nó liếc về phía Kiệm.'],
     choices: [
-      { t: 'Ghi tên Kiệm vào tờ trình', fx: { d: { hiem: 12, phuc: -15, muu: 4, duc: 3 }, flag: ['su3', 'biet_kiem', 'biet_ban_goc', 'cuu_tainhan', 'n2_khep'] }, note: 'Tài nhân viện Đông được thả, dòng sổ được ghi lại. Kiệm nhận phạt một năm bổng, vẫn cười. Bản gốc thì không ai tìm thấy.' },
+      { t: 'Ghi tên Kiệm vào tờ trình', fx: { d: { hiem: 12, phuc: -15, muu: 4, duc: 3 }, flag: ['su3', 'biet_kiem', 'biet_ban_goc', 'cuu_tainhan', 'n2_khep'] }, note: 'Tài nhân viện Đông được thả, dòng sổ được ghi lại. Kiệm chịu phạt một năm lương, vẫn cười. Bản gốc thì không ai tìm thấy.' },
       { t: 'Không ghi, đòi Kiệm bản gốc làm con bài', fx: { d: { muu: 6, hiem: 6 }, flag: ['su3', 'biet_kiem', 'biet_ban_goc', 'bai_kiem', 'cuu_tainhan', 'n2_khep'] }, note: 'Kẻ ra tay bị đuổi khỏi cung, Tài nhân được thả. Kiệm hứa "sẽ tìm", và nhìn bạn rất lâu, không cười.' },
     ],
   },
@@ -845,7 +845,7 @@ export const NG_CH2: Card[] = [
     text: ['{XU:an2} bị dẫn đi giữa sân nội vụ. Kiệm đóng sổ: "Nương nương sáng suốt. Tội sửa sổ cung cấm là thắt cổ."', 'Tài nhân viện Đông được thả. Cả hậu cung khen con gái ông Nghiêm đọc sổ như đọc án.'],
     choices: [
       { t: 'Để luật đi đúng đường của luật', fx: { d: { the: 4, duc: -2 }, flag: ['kiem_yen', 'cuu_tainhan', 'an2_treo', 'n2_khep'] }, note: 'Chiều ấy, sân sau nội vụ có một sợi dây được treo lên. Đêm ấy, kho sổ khóa thêm một lớp then.' },
-      { t: 'Xin nhẹ tội cho người bị dẫn đi', fx: { d: { duc: 4, the: 2 }, flag: ['kiem_yen', 'cuu_tainhan', 'n2_khep'] }, note: 'Án được giảm từ thắt cổ xuống đánh trượng, đuổi khỏi cung. Người ấy không ngoái lại nhìn bạn.' },
+      { t: 'Xin nhẹ tội cho người bị dẫn đi', fx: { d: { duc: 4, the: 2 }, flag: ['kiem_yen', 'cuu_tainhan', 'n2_khep'] }, note: 'Án được giảm từ thắt cổ xuống đánh đòn, đuổi khỏi cung. Người ấy không ngoái lại nhìn bạn.' },
     ],
   },
   /* Lụa Vàng bị kết án vụ 2 (bị gài): xử ngay trong chương, không để sang chương sau */
@@ -882,7 +882,7 @@ export const NG_CH2: Card[] = [
     moods: { luavang: 'buon' },
     who: 'luavang',
     title: 'Lụa Vàng ra cổng',
-    text: ['Lụa Vàng chịu hai mươi trượng rồi bị đuổi khỏi cung. Nó quỳ ở cổng viện, ôm một bọc áo nhỏ, không khóc.', 'Từ nay không còn ai chạy việc cho bạn.'],
+    text: ['Lụa Vàng chịu hai mươi gậy rồi bị đuổi khỏi cung. Nó quỳ ở cổng viện, ôm một bọc áo nhỏ, không khóc.', 'Từ nay không còn ai chạy việc cho bạn.'],
     omen: 'Hôm Lụa Vàng bị đuổi, có người đứng ở cửa kho sổ mỉm cười.',
     choices: [
       { t: 'Dúi cho nó 10 quan, hỏi nó lần cuối', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hanh: 10 }, flag: ['di_luavang', 'biet_giay_lv'] }, note: 'Nó ghé tai: "Đôi giày ấy người ta cho con trước hôm có vết giày ở kho." Rồi nó đi, không ngoái lại.' },
@@ -921,16 +921,16 @@ export const NG_CH2: Card[] = [
     mood: 'so',
     moods: { nhumau: 'so' },
     who: 'nhumau',
-    title: 'Tờ hặc trong đêm',
-    text: ['Tờ trình bị trả về: "Không đủ chứng." Đêm ấy nhũ mẫu nghe tin: sáng mai Kiệm dâng tờ hặc bạn tự ý vào kho sổ cung cấm, đánh tráo sổ.', '"Tiểu thư, dấu chân tiểu thư còn ở cửa kho. Họ có cả người làm chứng."'],
+    title: 'Tờ sớ tố tội trong đêm',
+    text: ['Tờ trình bị trả về: "Không đủ chứng." Đêm ấy nhũ mẫu nghe tin: sáng mai Kiệm sẽ dâng sớ tố bạn tự ý vào kho sổ cung cấm, đánh tráo sổ.', '"Tiểu thư, dấu chân tiểu thư còn ở cửa kho. Họ có cả người làm chứng."'],
     omen: 'Ai cầm sổ thì người ấy viết tội. Đừng bước vào kho sổ khi chưa có ai đứng sau mình.',
     choices: [
-      { t: 'Sai người cầu Hoàng thượng che chở', need: { flags: ['da_hau'], num: { vua: [15, 100] }, not: ['che_vua'] }, lockHint: 'Cần đã hầu Hoàng thượng, Hoàng thượng từ 15, chưa từng cầu', fx: { d: { vua: -10, an: -5 }, flag: ['che_vua', 'n2_khep'] }, note: 'Sáng ra, tờ hặc của Kiệm bị gạt sang một bên: "Phi tần trẫm cho xét sổ." Kiệm cúi đầu nhận lời, mặt không đổi.' },
-      { t: 'Chạy sang viện Uyển Như cầu cứu', need: { num: { thucphi: [20, 100] }, not: ['che_un', 'un_han'] }, lockHint: 'Cần Quý phi Hà từ 20, chưa từng cầu, không mang hận', fx: { d: { thucphi: -5, hiem: 5 }, flag: ['che_un', 'no_thaisu', 'n2_khep'] }, note: 'Uyển Như viết một lá thư ra phủ Thái sư ngay trong đêm. Tờ hặc không bao giờ được dâng. Bạn vừa nợ nhà họ Hà một lần.' },
-      { t: 'Nhờ người nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần đã quen Ngự sử Lý Mặc, chưa từng cầu', fx: { d: { quan: -5, hiem: 6 }, flag: ['che_lymac', 'n2_khep'] }, note: 'Lý Mặc dâng sớ xin đưa việc sửa sổ ra Tam pháp ty. Kiệm lặng lẽ rút tờ hặc về. Không ai muốn sổ cung cấm ra công đường.' },
+      { t: 'Sai người cầu Hoàng thượng che chở', need: { flags: ['da_hau'], num: { vua: [15, 100] }, not: ['che_vua'] }, lockHint: 'Cần đã hầu Hoàng thượng, Hoàng thượng từ 15, chưa từng cầu', fx: { d: { vua: -10, an: -5 }, flag: ['che_vua', 'n2_khep'] }, note: 'Sáng ra, tờ sớ tố tội của Kiệm bị gạt sang một bên: "Phi tần trẫm cho xét sổ." Kiệm cúi đầu nhận lời, mặt không đổi.' },
+      { t: 'Chạy sang viện Uyển Như cầu cứu', need: { num: { thucphi: [20, 100] }, not: ['che_un', 'un_han'] }, lockHint: 'Cần Quý phi Hà từ 20, chưa từng cầu, không mang hận', fx: { d: { thucphi: -5, hiem: 5 }, flag: ['che_un', 'no_thaisu', 'n2_khep'] }, note: 'Uyển Như viết một lá thư ra phủ Thái sư ngay trong đêm. Tờ sớ tố tội ấy không bao giờ được dâng. Bạn vừa nợ nhà họ Hà một lần.' },
+      { t: 'Nhờ người nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần đã quen Ngự sử Lý Mặc, chưa từng cầu', fx: { d: { quan: -5, hiem: 6 }, flag: ['che_lymac', 'n2_khep'] }, note: 'Lý Mặc dâng sớ xin đưa việc sửa sổ ra Tam pháp ty, nơi xử các án lớn. Kiệm lặng lẽ rút tờ sớ về. Không ai muốn sổ cung cấm ra công đường.' },
       { t: 'Nhắn Kiệm: lời khai đêm chái sau vẫn còn', need: { flags: ['bai_kiem'], not: ['dung_bai_kiem', 'an2_nang'] }, lockHint: 'Cần đang giữ lời khai làm con bài, và Kiệm còn sợ nó', fx: { d: { hiem: 8, phuc: -10 }, flag: ['dung_bai_kiem', 'n2_khep'] }, note: 'Gần sáng, có người đến trả lại tờ trình của bạn, kèm một câu: "Chưởng sự bảo việc này coi như chưa có." Con bài ấy đã dùng rồi.' },
-      { t: 'Nhắn Kiệm: trang Tân Dậu cũng có vết cạo', need: { flags: ['su3'], not: ['dung_su3', 'an2_nang'] }, lockHint: 'Cần biết sổ năm Tân Dậu bị xóa, và Kiệm còn sợ điều ấy', fx: { d: { hiem: 15, muu: 3 }, flag: ['dung_su3', 'n2_khep', 'kiem_biet_su3'] }, note: 'Tờ hặc không được dâng. Nhưng từ đêm ấy, viện bạn có người canh mà bạn không thuê.' },
-      { t: 'Viết tờ xin tự giáng, ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Không ai hại một phi tần đã tự ngã, và cũng không ai nhắc đến trang sổ tháng Tư nữa.' },
+      { t: 'Nhắn Kiệm: trang Tân Dậu cũng có vết cạo', need: { flags: ['su3'], not: ['dung_su3', 'an2_nang'] }, lockHint: 'Cần biết sổ năm Tân Dậu bị xóa, và Kiệm còn sợ điều ấy', fx: { d: { hiem: 15, muu: 3 }, flag: ['dung_su3', 'n2_khep', 'kiem_biet_su3'] }, note: 'Tờ sớ tố tội không được dâng. Nhưng từ đêm ấy, viện bạn có người canh mà bạn không thuê.' },
+      { t: 'Viết tờ xin tự giáng bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Không ai hại một phi tần đã tự ngã, và cũng không ai nhắc đến trang sổ tháng Tư nữa.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { next: 'an2_pc2' }, note: 'Bạn thổi tắt đèn. Ngoài kia, trống canh năm điểm sớm hơn mọi ngày.' },
     ],
   },
@@ -945,7 +945,7 @@ export const NG_CH2: Card[] = [
     mood: 'so',
     moods: { thaihau: 'buon', kiem: 'dac' },
     who: 'kiem',
-    title: 'Phản tọa',
+    title: 'Chịu ngược tội',
     text: ['Kiệm quỳ trước Thái hậu, dâng lên một trang sổ còn vết dao mới: "Phi tần họ Nghiêm vào kho cấm, tự cạo rồi tự tố."', 'Thái hậu thở dài: "Con bé giống chị nó quá."'],
     omen: 'Ai cầm sổ thì người ấy viết tội. Đừng bước vào kho sổ khi chưa có ai đứng sau mình.',
     choices: [
@@ -953,18 +953,18 @@ export const NG_CH2: Card[] = [
       {
         t: 'Cãi: "Sổ bị cạo trước khi con vào kho"',
         fx: { end: 'n_141' },
-        note: 'Không ai nghe. Luật phản tọa không cần nghe. Chiều ấy, một dải lụa trắng được đưa tới.',
-        risk: { p: 0.1, fail: { d: { an: -10, hiem: 5, duc: -5 }, rank: -1, flag: ['n2_khep', 'song_sot2'] }, failNote: 'Thái hậu nhìn bạn lâu, rồi phẩy tay: "Giáng một bậc, cấm túc ba tháng." Bạn sống, và Kiệm biết bạn đã nợ ai.' },
+        note: 'Không ai nghe. Vu người tội gì thì chịu đúng tội ấy, luật phản tọa không cần nghe thêm. Chiều ấy, một dải lụa trắng được đưa tới.',
+        risk: { p: 0.1, fail: { d: { an: -10, hiem: 5, duc: -5 }, rank: -1, flag: ['n2_khep', 'song_sot2'] }, failNote: 'Thái hậu nhìn bạn lâu, rồi phẩy tay: "Giáng một bậc, ba tháng không được ra khỏi viện." Bạn sống, và Kiệm biết bạn đã nợ ai.' },
       },
       {
         t: 'Xin Thái hậu cho đối chất với người bị mình gọi tên',
         need: { not: ['an2_nang'], num: { the: [30, 100], hiem: [0, 59] } },
         lockHint: 'Cần Thế từ 30, Hiểm dưới 60, và cái tên trong tờ trình đúng là người phải sợ đối chất',
         fx: { d: { an: -8, hiem: 8, duc: -3 }, rank: -1, flag: ['n2_khep', 'song_sot2'] },
-        note: 'Người bị gọi tên run đến mức đánh rơi chùm chìa. Thái hậu phẩy tay: "Nể ông Nghiêm. Giáng một bậc, cấm túc ba tháng."',
+        note: 'Người bị gọi tên run đến mức đánh rơi chùm chìa. Thái hậu phẩy tay: "Nể ông Nghiêm. Giáng một bậc, ba tháng không được ra khỏi viện."',
         risk: { p: 0.3, fail: { end: 'n_141' }, failNote: 'Người ấy đã được đưa ra khỏi cung từ đêm qua. Không còn ai để đối chất, chỉ còn một dải lụa trắng.' },
       },
-      { t: 'Quỳ xin chưởng sự tha, nhận mọi điều kiện', fx: { end: 'n_12' }, note: 'Kiệm rút tờ hặc, rồi ghi tên bạn vào một quyển sổ khác: sổ cung nữ. Bạn mất bậc, thành người hầu trong chính cung cấm.' },
+      { t: 'Quỳ xin chưởng sự tha, nhận mọi điều kiện', fx: { end: 'n_12' }, note: 'Kiệm rút tờ sớ tố tội, rồi ghi tên bạn vào một quyển sổ khác: sổ cung nữ. Bạn mất bậc, thành người hầu trong chính cung cấm.' },
     ],
   },
 ];
@@ -984,7 +984,7 @@ export const NG_TALES_CH2: Record<string, { t: string; lines: string[]; s?: Tale
     t: 'Lệ phản tọa',
     s: { bg: 'dien', time: 'dem', cast: [] },
     lines: [
-      'Luật có lệ phản tọa: kẻ vu cáo phải chịu đúng hình của tội mình đã vu cho người khác.',
+      'Luật có lệ phản tọa: vu người khác tội gì thì chính mình chịu đúng hình phạt của tội ấy.',
       'Sửa sổ cung cấm để vu người là tội thắt cổ. Nếu bạn gọi một cái tên mà không giữ được nó, người ta sẽ hỏi ai mới là kẻ đã vào kho sổ.',
     ],
   },

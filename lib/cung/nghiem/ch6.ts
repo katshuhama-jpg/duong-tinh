@@ -27,8 +27,8 @@ export const NG_TALES_CH6: Record<string, { t: string; lines: string[]; s?: Tale
     t: 'Tam pháp ty',
     s: { bg: 'tamphap', time: 'chieu', cast: [] },
     lines: [
-      'Án đại thần không xử ở Bộ Hình. Ba nha môn ngồi chung một sân: Bộ Hình, Đô sát viện, Đại lý tự. Người ta gọi là Tam pháp ty.',
-      'Luật Hồng Đức, điều bốn mươi, chương Đấu tụng: con tố cha mẹ thì lưu châu xa, trừ khi tội ấy là mưu phản.',
+      'Án của đại thần không xử riêng ở Bộ Hình. Ba cửa quan ngồi chung một sân: Bộ Hình, Viện Ngự sử, Đại lý tự. Người ta gọi là Tam pháp ty, nơi xử các án lớn.',
+      'Luật Hồng Đức, điều bốn mươi, chương Đấu tụng: con tố cha mẹ thì bị đày đi châu xa, trừ khi tội ấy là mưu phản.',
       'Năm mười tuổi, bạn chép điều luật ấy cho cha. Cha bảo: chép cho thuộc, sau này con sẽ cần.',
     ],
   },
@@ -47,12 +47,12 @@ const HAC: Choice[] = [
   {
     t: 'Hỏi: "Người ta muốn tôi gọi thế nào?"',
     fx: { mo: 'an6', flag: ['mo_an6'], d: { hiem: 6, muu: 2 } },
-    note: 'Có bốn cách gọi: thứ nhất, biết mà che án; thứ hai, đồng mưu đại nghịch; thứ ba, bị ép mà im; thứ tư, không biết gì, bị vu. Luật không hỏi cha có biết không. Luật hỏi bạn gọi tên gì.',
+    note: 'Có bốn cách gọi: thứ nhất, biết mà che án; thứ hai, đồng mưu phản nghịch; thứ ba, bị ép mà im; thứ tư, không biết gì, bị vu. Luật không hỏi cha có biết không. Luật hỏi bạn gọi tên gì.',
   },
   {
     t: 'Về phủ gặp cha ngay đêm nay',
     fx: { mo: 'an6', flag: ['mo_an6'], d: { hiem: 4, cha: 4 }, next: 'n6_cha_dem' },
-    note: 'Bạn ra cổng khi trời chưa tối. Trước cửa nhà cha đã có lính Đô sát viện đứng gác.',
+    note: 'Bạn ra cổng khi trời chưa tối. Trước cửa nhà cha đã có lính Viện Ngự sử đứng gác.',
   },
   {
     t: 'Đóng cửa, không tiếp ai',
@@ -60,7 +60,7 @@ const HAC: Choice[] = [
     note: 'Cửa đóng, tin vẫn lọt qua khe. Đến tối ai cũng biết con gái ông Nghiêm chưa nói câu nào.',
   },
 ];
-const HAC_BASE = { part: P, urgent: true, chapter: [6], place: 'dien' as const, img: 'trieu', time: 'ngay' as const, mood: 'so' as const, beat: 'hook' as const, title: 'Tờ hặc', choices: HAC };
+const HAC_BASE = { part: P, urgent: true, chapter: [6], place: 'dien' as const, img: 'trieu', time: 'ngay' as const, mood: 'so' as const, beat: 'hook' as const, title: 'Tờ sớ tố tội', choices: HAC };
 
 export const NG_CH6: Card[] = [
   /* ---------------- mở chương: tờ hặc (khẩn) ---------------- */
@@ -71,7 +71,7 @@ export const NG_CH6: Card[] = [
     cast: ['me', 'lymac'],
     moods: { lymac: 'binh' },
     who: 'lymac',
-    text: ['Giữa buổi chầu, Ngự sử Lý Mặc dâng tờ hặc Thượng thư Bộ Hình Nghiêm Chính Khanh: biết chuyện năm Tân Dậu mà không tâu.', 'Chiều ấy ông tìm đến bạn: "Thần hặc cha nương nương. Thần cũng cần nương nương gọi tên tội của ông."'],
+    text: ['Giữa buổi chầu, Ngự sử Lý Mặc dâng sớ tố tội Thượng thư Bộ Hình Nghiêm Chính Khanh: biết chuyện năm Tân Dậu mà không tâu.', 'Chiều ấy ông tìm đến bạn: "Thần tố cha nương nương. Thần cũng cần nương nương gọi tên tội của ông."'],
   },
   {
     ...HAC_BASE,
@@ -79,7 +79,7 @@ export const NG_CH6: Card[] = [
     when: { flags: [G, 'chet_lymac'], not: ['mo_an6', 'chet_cha', 'giu_lang', 'o_chua'] },
     cast: ['me'],
     who: 'me',
-    text: ['Ghế của Lý Mặc ở Đô sát viện giờ là của Ngự sử Đỗ Hành. Tờ hặc đầu tiên ông dâng có tên cha bạn: biết chuyện năm Tân Dậu mà không tâu.', 'Cả triều quay lại nhìn về phía bạn. Không ai hỏi cha có biết không.'],
+    text: ['Ghế của Lý Mặc ở Viện Ngự sử giờ là của Ngự sử Đỗ Hành. Tờ sớ tố tội đầu tiên ông dâng có tên cha bạn: biết chuyện năm Tân Dậu mà không tâu.', 'Cả triều quay lại nhìn về phía bạn. Không ai hỏi cha có biết không.'],
   },
   {
     ...HAC_BASE,
@@ -89,7 +89,7 @@ export const NG_CH6: Card[] = [
     img: 'lang_vua',
     cast: ['me'],
     who: 'me',
-    text: ['Tin về tới lăng chậm hơn tin trong kinh nửa tháng: Ngự sử hặc cha bạn tội biết chuyện năm Tân Dậu mà không tâu.', 'Chiếu gọi bạn về kinh, để đứng trước Tam pháp ty mà gọi tên tội của cha.'],
+    text: ['Tin về tới lăng chậm hơn tin trong kinh nửa tháng: Ngự sử dâng sớ tố cha bạn tội biết chuyện năm Tân Dậu mà không tâu.', 'Chiếu gọi bạn về kinh, ra Tam pháp ty, nơi xử các án lớn, để gọi tên tội của cha.'],
   },
   {
     ...HAC_BASE,
@@ -99,7 +99,7 @@ export const NG_CH6: Card[] = [
     img: 'chua',
     cast: ['me'],
     who: 'me',
-    text: ['Tin vào tới chùa chậm mất mấy hôm: Ngự sử hặc cha bạn tội biết chuyện năm Tân Dậu mà không tâu.', 'Tam pháp ty xin người con gái đã xuống tóc về kinh một lần, để gọi tên tội của cha.'],
+    text: ['Tin vào tới chùa chậm mất mấy hôm: Ngự sử dâng sớ tố cha bạn tội biết chuyện năm Tân Dậu mà không tâu.', 'Tam pháp ty, nơi xử các án lớn, xin người con gái đã xuống tóc về kinh một lần để gọi tên tội của cha.'],
   },
   {
     id: 'n6_cha_dem',
@@ -137,10 +137,10 @@ export const NG_CH6: Card[] = [
       mood: 'so',
       lead: 'Án chén thuốc cuối năm nào khép bằng một cái tên.',
       title: 'Án cũ lật lại',
-      text: ['Đô sát viện dâng tờ thứ hai: án chén thuốc cuối đã buộc oan {XU:an5}. Lệ phản tọa: kẻ vu người tội gì, chịu đúng tội ấy.', 'Chiều ấy Kiệm ôm một chồng sổ cũ đi về phía Tam pháp ty. Trong sổ có tên cả nhà Nghiêm.'],
+      text: ['Viện Ngự sử dâng tờ thứ hai: án chén thuốc cuối đã buộc oan {XU:an5}. Theo luật phản tọa, vu người tội gì thì chịu đúng tội ấy.', 'Chiều ấy Kiệm ôm một chồng sổ cũ đi về phía Tam pháp ty, nơi xử các án lớn. Trong sổ có tên cả nhà Nghiêm.'],
       omen: 'Một cái tên gọi sai, có ngày sẽ được gọi lại bằng tên mình.',
       choices: [
-        { t: 'Ra công đường nhận đã xét sai, xin chịu một mình', fx: { end: 'n_63' }, note: 'Tam pháp ty không cho bạn chịu một mình. Sổ của Kiệm có tên tất cả.' },
+        { t: 'Ra công đường nhận đã xét sai, xin chịu một mình', fx: { end: 'n_63' }, note: 'Công đường không cho bạn chịu một mình. Sổ của Kiệm có tên tất cả.' },
         {
           t: 'Mua Kiệm trước khi ông tới cửa, 80 quan',
           need: { num: { tien: [80, 99999] } },
@@ -149,9 +149,9 @@ export const NG_CH6: Card[] = [
           note: 'Kiệm dừng lại giữa đường, quay về. Chồng sổ vẫn nằm trong tay ông, chỉ là chưa đến lúc.',
           risk: { p: 0.5, fail: { d: { tien: -80 }, end: 'n_63' }, failNote: 'Kiệm nhận tiền, rồi vẫn đi tiếp. Ông chỉ cần bạn biết ông đã đi.' },
         },
-        { t: 'Giữ tờ sớ lại từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -25, hiem: 15, duc: -8 }, flag: ['n6_lat5'] }, note: 'Tờ sớ bị giữ lại. Đô sát viện quỳ trước cửa điện ba ngày, và cả kinh thành biết vì sao.' },
-        { t: 'Đưa ra điều mình biết về cung trên', need: { flags: ['su11'] }, lockHint: 'Cần biết ai ra lệnh, ai kê đơn, ai bưng chén năm xưa', fx: { d: { hiem: 20 }, flag: ['n6_lat5'] }, note: 'Tam pháp ty đọc xong, gác tờ phản tọa sang một bên. Họ có một án lớn hơn phải sợ.' },
-        { t: 'Im lặng chờ', fx: { end: 'n_63' }, note: 'Bạn chờ. Tam pháp ty thì không chờ.' },
+        { t: 'Giữ tờ sớ lại từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -25, hiem: 15, duc: -8 }, flag: ['n6_lat5'] }, note: 'Tờ sớ bị giữ lại. Các quan Viện Ngự sử quỳ trước cửa điện ba ngày, và cả kinh thành biết vì sao.' },
+        { t: 'Đưa ra điều mình biết về cung trên', need: { flags: ['su11'] }, lockHint: 'Cần biết ai ra lệnh, ai kê đơn, ai bưng chén năm xưa', fx: { d: { hiem: 20 }, flag: ['n6_lat5'] }, note: 'Công đường đọc xong, gác tờ sớ ấy sang một bên. Họ có một án lớn hơn phải sợ.' },
+        { t: 'Im lặng chờ', fx: { end: 'n_63' }, note: 'Bạn chờ. Công đường thì không chờ.' },
       ],
     },
     [
@@ -173,19 +173,19 @@ export const NG_CH6: Card[] = [
       mood: 'so',
       lead: 'Án chén thuốc cuối năm nào khép bằng một cái tên.',
       title: 'Án cũ lật lại',
-      text: ['Đô sát viện dâng tờ thứ hai: án chén thuốc cuối đã buộc oan {XU:an5}. Lệ phản tọa: kẻ vu người tội gì, chịu đúng tội ấy.', 'Chồng sổ Kiệm để lại trước khi mất được người ta mang ra Tam pháp ty. Trong sổ có tên cả nhà Nghiêm.'],
+      text: ['Viện Ngự sử dâng tờ thứ hai: án chén thuốc cuối đã buộc oan {XU:an5}. Theo luật phản tọa, vu người tội gì thì chịu đúng tội ấy.', 'Chồng sổ Kiệm để lại trước khi mất, người ta mang ra Tam pháp ty, nơi xử các án lớn. Trong sổ có tên cả nhà Nghiêm.'],
       omen: 'Một cái tên gọi sai, có ngày sẽ được gọi lại bằng tên mình.',
       choices: [
-        { t: 'Ra công đường nhận đã xét sai, xin chịu một mình', fx: { end: 'n_63' }, note: 'Tam pháp ty không cho bạn chịu một mình. Sổ của Kiệm có tên tất cả.' },
-        { t: 'Giữ tờ sớ lại từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -25, hiem: 15, duc: -8 }, flag: ['n6_lat5'] }, note: 'Tờ sớ bị giữ lại. Đô sát viện quỳ trước cửa điện ba ngày, và cả kinh thành biết vì sao.' },
-        { t: 'Đưa ra điều mình biết về cung trên', need: { flags: ['su11'] }, lockHint: 'Cần biết ai ra lệnh, ai kê đơn, ai bưng chén năm xưa', fx: { d: { hiem: 20 }, flag: ['n6_lat5'] }, note: 'Tam pháp ty đọc xong, gác tờ phản tọa sang một bên. Họ có một án lớn hơn phải sợ.' },
+        { t: 'Ra công đường nhận đã xét sai, xin chịu một mình', fx: { end: 'n_63' }, note: 'Công đường không cho bạn chịu một mình. Sổ của Kiệm có tên tất cả.' },
+        { t: 'Giữ tờ sớ lại từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -25, hiem: 15, duc: -8 }, flag: ['n6_lat5'] }, note: 'Tờ sớ bị giữ lại. Các quan Viện Ngự sử quỳ trước cửa điện ba ngày, và cả kinh thành biết vì sao.' },
+        { t: 'Đưa ra điều mình biết về cung trên', need: { flags: ['su11'] }, lockHint: 'Cần biết ai ra lệnh, ai kê đơn, ai bưng chén năm xưa', fx: { d: { hiem: 20 }, flag: ['n6_lat5'] }, note: 'Công đường đọc xong, gác tờ sớ ấy sang một bên. Họ có một án lớn hơn phải sợ.' },
         {
           t: 'Xin xét từng trang sổ, cãi từng dòng',
           fx: { d: { hiem: 15, muu: 3 }, flag: ['n6_lat5'] },
-          note: 'Bạn cãi đến dòng cuối. Người viết sổ đã chết, không ai đứng ra giữ lời trong sổ, và tờ phản tọa bị gác lại.',
-          risk: { p: 0.6, fail: { end: 'n_63' }, failNote: 'Sổ của người chết không cần ai giữ lời. Tam pháp ty đọc đến trang có tên bạn thì dừng.' },
+          note: 'Bạn cãi đến dòng cuối. Người viết sổ đã chết, không ai đứng ra giữ lời trong sổ, và tờ sớ ấy bị gác lại.',
+          risk: { p: 0.6, fail: { end: 'n_63' }, failNote: 'Sổ của người chết không cần ai giữ lời. Công đường đọc đến trang có tên bạn thì dừng.' },
         },
-        { t: 'Im lặng chờ', fx: { end: 'n_63' }, note: 'Bạn chờ. Tam pháp ty thì không chờ.' },
+        { t: 'Im lặng chờ', fx: { end: 'n_63' }, note: 'Bạn chờ. Công đường thì không chờ.' },
       ],
     },
     [
@@ -206,17 +206,17 @@ export const NG_CH6: Card[] = [
     mood: 'lo',
     lead: 'Án chén thuốc cuối năm nào khép khi chứng còn mỏng.',
     title: 'Tờ xin xét lại',
-    text: ['Đô sát viện xin xét lại án chén thuốc cuối: năm ấy buộc tội mà không đủ chứng.', 'Người bị buộc là {XU:an5}. Người buộc là bạn.'],
+    text: ['Viện Ngự sử xin xét lại án chén thuốc cuối: năm ấy buộc tội mà không đủ chứng.', 'Người bị buộc là {XU:an5}. Người buộc là bạn.'],
     omen: 'Một cái tên gọi sai, có ngày sẽ được gọi lại bằng tên mình.',
     choices: [
       {
         t: 'Xin chịu xét, không né',
         fx: { d: { hiem: 10, quan: 6 }, flag: ['n6_lat5'] },
-        note: 'Tam pháp ty đọc lại từng dòng, rồi gác hồ sơ: người bị buộc năm ấy không oan, chỉ là chứng chưa đủ.',
+        note: 'Công đường Tam pháp ty đọc lại từng dòng, rồi gác hồ sơ: người bị buộc năm ấy không oan, chỉ là chứng chưa đủ.',
         risk: { p: 0.25, fail: { end: 'n_63' }, failNote: 'Xét lại đến trang thứ ba thì Kiệm mang sổ tới. Án nhỏ thành án lớn trong một buổi chiều.' },
       },
       { t: 'Nhờ Lý Mặc gác tờ ấy', need: { flags: ['quen_lymac'], not: ['chet_lymac'] }, lockHint: 'Cần quen Lý Mặc, và ông còn sống', fx: { d: { quan: -8, hiem: 4 }, flag: ['n6_lat5'] }, note: 'Lý Mặc gác tờ xin xét lại: "Một năm chỉ nên mở một án lớn. Năm nay là án của cha nương nương."' },
-      { t: 'Giữ tờ ấy lại từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -15, hiem: 8 }, flag: ['n6_lat5'] }, note: 'Tờ xin xét lại nằm im trong hộp tấu. Đô sát viện ghi thêm một dòng vào sổ của họ.' },
+      { t: 'Giữ tờ ấy lại từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -15, hiem: 8 }, flag: ['n6_lat5'] }, note: 'Tờ xin xét lại nằm im trong hộp tấu. Viện Ngự sử ghi thêm một dòng vào sổ của họ.' },
     ],
   },
 
@@ -265,7 +265,7 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Chiếc hộp gỗ',
-    text: ['Đồ của chị cung trả về năm ấy nằm trong một chiếc hộp gỗ cha cất trên giá sách. Sáng mai Đô sát viện niêm phong chỗ ở của cha.', 'Đêm nay là đêm cuối còn vào được.'],
+    text: ['Đồ của chị cung trả về năm ấy nằm trong một chiếc hộp gỗ cha cất trên giá sách. Sáng mai Viện Ngự sử niêm phong chỗ ở của cha.', 'Đêm nay là đêm cuối còn vào được.'],
     choices: [
       { t: 'Tự vào lục, ngay đêm nay', fx: { d: { hiem: 10 }, clue: ['a6_thu'], flag: ['su9', 'co_thu_im', 'n6_thu'] }, note: 'Dưới đáy hộp có một tờ giấy gấp tư, chỉ một chữ, nét đậm như khắc: "Im." Nét chữ của cha. Trong Sổ án, lá thư khớp với {C:a6_thu}. {GIA:a6_thu}' },
       { t: 'Lấy đúng chỗ đã nhìn thấy hôm trước', need: { flags: ['thay_hop'] }, lockHint: 'Cần đã thấy chỗ cha cất hộp', fx: { d: { hiem: 4 }, clue: ['a6_thu'], flag: ['su9', 'co_thu_im', 'n6_thu'] }, note: 'Bạn với tay lên giá, không cần đèn. Tờ giấy gấp tư chỉ có một chữ "Im", nét của cha. Lá thư khớp với {C:a6_thu}. {GIA:a6_thu}' },
@@ -277,7 +277,7 @@ export const NG_CH6: Card[] = [
         note: 'Bà mang về tờ giấy gấp tư, tay run đến mức suýt làm rách. Một chữ "Im". Lá thư khớp với {C:a6_thu}. {GIA:a6_thu}',
         risk: { p: 0.35, fail: { d: { hiem: 6 }, flag: ['n6_thu'] }, failNote: 'Bà về tay không: chiếc hộp đã bị ai chuyển đi từ chiều.' },
       },
-      { t: 'Không đụng tới đồ của chị', fx: { d: { duc: 2 }, flag: ['n6_thu'] }, note: 'Bạn đứng ngoài cửa đến khi lính tới dán niêm. Giấy niêm đóng ấn Đô sát viện, đỏ như máu.' },
+      { t: 'Không đụng tới đồ của chị', fx: { d: { duc: 2 }, flag: ['n6_thu'] }, note: 'Bạn đứng ngoài cửa đến khi lính tới dán niêm. Giấy niêm đóng ấn Viện Ngự sử, đỏ như máu.' },
     ],
   },
   {
@@ -314,7 +314,7 @@ export const NG_CH6: Card[] = [
     text: ['Lão đánh xe cũ của phủ Nghiêm nay ngồi bán nước đầu ngõ. Lão nhận ra bạn trước khi bạn nhận ra lão.', '"Tiểu thư út. Lão chở ông vào cung nhiều đêm, nhưng có một đêm lão nhớ mãi."'],
     choices: [
       { t: 'Dúi 10 quan, nghe lão kể', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 5 }, clue: ['a6_dem'], flag: ['su10'] }, note: 'Mùa thu năm Hưng Bình thứ tám, đám tang cô Thanh vừa xong được mười hôm, ông vào cửa sau cung Thái hậu lúc canh hai, ra lúc gà gáy. Tháng sau ông nhận ấn Thượng thư. Lời lão khớp với {C:a6_dem}. {GIA:a6_dem}' },
-      { t: 'Đưa lão lên Tam pháp ty làm chứng', fx: { d: { hiem: 12, quan: 4, cha: -8 }, clue: ['a6_dem'], flag: ['su10'] }, note: 'Lão run trước công đường, nhưng khai đủ: một đêm thu, sau đám tang cô Thanh, cửa sau cung Thái hậu, canh hai. Lời lão khớp với {C:a6_dem}. {GIA:a6_dem}' },
+      { t: 'Đưa lão lên công đường Tam pháp ty làm chứng', fx: { d: { hiem: 12, quan: 4, cha: -8 }, clue: ['a6_dem'], flag: ['su10'] }, note: 'Lão run trước công đường, nhưng khai đủ: một đêm thu, sau đám tang cô Thanh, cửa sau cung Thái hậu, canh hai. Lời lão khớp với {C:a6_dem}. {GIA:a6_dem}' },
       { t: 'Mua một bát nước rồi đi', fx: { d: { duc: 1 } }, note: 'Lão nhìn theo bạn, như tiếc một câu chưa kịp nói.' },
     ],
   },
@@ -330,17 +330,17 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Kho Bộ Hình',
-    text: ['Hồ sơ vụ Đông cung năm Hưng Bình thứ tám nằm ở kho Bộ Hình, chính kho cha giữ chìa mười mấy năm.', 'Giờ chìa nằm trong tay Tam pháp ty.'],
+    text: ['Hồ sơ vụ Đông cung năm Hưng Bình thứ tám nằm ở kho Bộ Hình, chính kho cha giữ chìa mười mấy năm.', 'Giờ chìa nằm trong tay Tam pháp ty, nơi đang xử án cha.'],
     choices: [
       { t: 'Nhờ Lý Mặc cho xem', need: { flags: ['quen_lymac'], not: ['chet_lymac'] }, lockHint: 'Cần quen Lý Mặc, và ông còn sống', fx: { d: { hiem: 4, quan: -2 }, clue: ['a6_so'] }, note: 'Lý Mặc mở hồ sơ trước mặt bạn. Bên lề có bút phê của cha: "Xin hoãn." Bút phê ấy khớp với {C:a6_so}. {GIA:a6_so}' },
       { t: 'Ra lệnh mang hồ sơ tới, từ sau rèm', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { hiem: 8, quan: -6 }, clue: ['a6_so'] }, note: 'Hồ sơ tới trong ngày. Bên lề có hai chữ "Xin hoãn", nét của cha. Bút phê ấy khớp với {C:a6_so}. {GIA:a6_so}' },
       {
-        t: 'Đút lót thư lại giữ kho, 20 quan',
+        t: 'Đút lót người giữ kho, 20 quan',
         need: { num: { tien: [20, 99999] } },
         lockHint: 'Cần 20 quan',
         fx: { d: { tien: -20, hiem: 6 }, clue: ['a6_so'] },
-        note: 'Thư lại chép tay cho bạn một bản. Bên lề có bút phê của cha: "Xin hoãn." Bút phê ấy khớp với {C:a6_so}. {GIA:a6_so}',
-        risk: { p: 0.3, fail: { d: { tien: -20, hiem: 8 } }, failNote: 'Thư lại nhận tiền, rồi báo lên Tam pháp ty. Bạn không có bản chép nào.' },
+        note: 'Người giữ kho chép tay cho bạn một bản. Bên lề có bút phê của cha: "Xin hoãn." Bút phê ấy khớp với {C:a6_so}. {GIA:a6_so}',
+        risk: { p: 0.3, fail: { d: { tien: -20, hiem: 8 } }, failNote: 'Người giữ kho nhận tiền, rồi báo lên công đường. Bạn không có bản chép nào.' },
       },
       { t: 'Thôi, không lục hồ sơ của cha', fx: { d: { duc: 2 } }, note: 'Bạn đi ngang cửa kho. Ổ khóa mới, sáng bóng.' },
     ],
@@ -359,7 +359,7 @@ export const NG_CH6: Card[] = [
     moods: { nhumau: 'buon' },
     who: 'nhumau',
     title: 'Nhũ mẫu khóc',
-    text: ['Nhũ mẫu Tần đã ngoài sáu mươi, tay run không xâu nổi kim. Nghe tin cha bị hặc, bà khóc từ trưa.', '"Ông chỉ muốn giữ nhà, tiểu thư. Ông không có tội gì."'],
+    text: ['Nhũ mẫu Tần đã ngoài sáu mươi, tay run không xâu nổi kim. Nghe tin cha bị tố, bà khóc từ trưa.', '"Ông chỉ muốn giữ nhà, tiểu thư. Ông không có tội gì."'],
     choices: [
       { t: 'Hỏi nhẹ: "Năm ấy cha đọc thư chị xong thì sao?"', fx: { d: { hiem: 2 }, clue: ['a6_nm'], flag: ['nm_doi'] }, note: '"Ông đọc xong thì ngồi lặng đến sáng. Chắc có người ép ông, tiểu thư ạ, ông không muốn im đâu." Bà nói nhanh quá, mắt nhìn xuống đất. Lời bà khớp với {C:a6_nm}. {GIA:a6_nm}' },
       { t: 'Đặt lá thư "Im" trước mặt bà', need: { flags: ['co_thu_im'] }, lockHint: 'Cần đang cầm lá thư một chữ', fx: { d: { hiem: 6 }, clue: ['a6_nm'], flag: ['that_a6_nm'] }, note: 'Bà ôm mặt: "Ông đọc thư cô Thanh xong, ngồi đến sáng. Không ai ép ông cả. Sáng ra ông chỉ viết một chữ." Lời bà khớp với {C:a6_nm}. {GIA:a6_nm}' },
@@ -478,8 +478,8 @@ export const NG_CH6: Card[] = [
         t: 'Trả lại ngôi nhà cho ông, không đòi gì',
         need: { not: ['hua_kiem'] },
         fx: { d: { phuc: 15, the: -6, hiem: 4 }, flag: ['kiem_tha', 'khai_kiem'] },
-        note: 'Kiệm cầm tờ khế rất lâu. Rồi ông nói khẽ: "Đêm ấy nô tài bưng chén thuốc tới viện Chiêu nghi. Người sai nô tài ở cung trên."',
-        risk: { p: 0.4, fail: { d: { phuc: 10, the: -6 }, flag: ['kiem_tha'] }, failNote: 'Kiệm nhận tờ khế, vái một vái, rồi đi. Ông không nói thêm chữ nào.' },
+        note: 'Kiệm cầm tờ khế nhà rất lâu. Rồi ông nói khẽ: "Đêm ấy nô tài bưng chén thuốc tới viện Chiêu nghi. Người sai nô tài ở cung trên."',
+        risk: { p: 0.4, fail: { d: { phuc: 10, the: -6 }, flag: ['kiem_tha'] }, failNote: 'Kiệm nhận tờ khế nhà, vái một vái, rồi đi. Ông không nói thêm chữ nào.' },
       },
       { t: 'Trả nhà, rồi khép hết chuyện cũ', need: { num: { duc: [50, 100] } }, lockHint: 'Cần Đức từ 50', fx: { end: 'n_98' }, note: 'Kiệm về lại ngôi nhà cũ. Bạn đóng rương hồ sơ, và không mở lại nữa.' },
       { t: 'Mời ông về', fx: { d: { phuc: -6, hiem: 4 } }, note: 'Kiệm cười rất lễ. Đi tới cửa, ông dừng lại: "Án nào cũng có ngày lật, nương nương ạ."' },
@@ -607,16 +607,16 @@ export const NG_CH6: Card[] = [
     title: 'Sau rèm',
     text: ['Bạn ngồi sau rèm, nghe Tam pháp ty đọc tội danh của cha. Người đọc không dám ngẩng đầu.', 'Ngồi đây mà xét án cha, là vừa làm con vừa làm người xử.'],
     choices: [
-      { t: 'Giữ rèm, xét như mọi án', fx: { d: { quan: -6, hiem: 6, the: 4 } }, note: 'Không ai dám nói gì. Nhưng tờ sớ của Đô sát viện bắt đầu dày lên.' },
+      { t: 'Giữ rèm, xét như mọi án', fx: { d: { quan: -6, hiem: 6, the: 4 } }, note: 'Không ai dám nói gì. Nhưng tờ sớ của Viện Ngự sử bắt đầu dày lên.' },
       {
-        t: 'Giữ rèm, cho Đô sát viện khám am của Kiệm',
+        t: 'Giữ rèm, cho Viện Ngự sử khám am của Kiệm',
         need: { not: ['chet_kiem', 'khai_kiem'] },
         lockHint: 'Kiệm đã khai, hoặc không còn',
         fx: { d: { quan: -4, hiem: 12, phuc: -10 }, flag: ['khai_kiem', 'rem_kiem'] },
-        note: 'Lính Đô sát viện bê ra ba hòm sổ. Kiệm ngồi giữa sân am, nói với quan khám một câu rồi không nói nữa: "Đêm ấy nô tài bưng chén thuốc tới viện Chiêu nghi. Người sai nô tài ở cung trên."',
+        note: 'Lính Viện Ngự sử bê ra ba hòm sổ. Kiệm ngồi giữa sân am, nói với quan khám một câu rồi không nói nữa: "Đêm ấy nô tài bưng chén thuốc tới viện Chiêu nghi. Người sai nô tài ở cung trên."',
       },
       { t: 'Cuốn rèm, lui về cho đến khi án xong', fx: { d: { duc: 8, quan: 8, the: -6 }, flag: ['lui'], unflag: ['nhiep'] }, note: 'Rèm cuốn lên. Các quan thở phào, rồi bắt đầu nhìn nhau, đếm xem ai sẽ đứng vào chỗ trống ấy.' },
-      { t: 'Trao ấn cho Lý Mặc, lui hẳn', need: { not: ['chet_lymac'] }, lockHint: 'Lý Mặc không còn', fx: { flag: ['lui'], end: 'n_68' }, note: 'Bạn trao ấn cho người đang hặc cha mình. Lý Mặc quỳ nhận, tay không run.' },
+      { t: 'Trao ấn cho Lý Mặc, lui hẳn', need: { not: ['chet_lymac'] }, lockHint: 'Lý Mặc không còn', fx: { flag: ['lui'], end: 'n_68' }, note: 'Bạn trao ấn cho người đang tố cha mình. Lý Mặc quỳ nhận, tay không run.' },
     ],
   },
   {
@@ -632,7 +632,7 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Điều bốn mươi',
-    text: ['Bạn mở bộ luật cha từng bắt chép thuộc lòng. Điều bốn mươi: con tố cha mẹ thì lưu châu xa, trừ khi tội ấy là mưu phản.', 'Gọi là che án, cha được chết giữ thể diện, còn con mang tội tố cha. Gọi là đồng mưu, con vô tội, còn cha chết như kẻ phản.'],
+    text: ['Bạn mở bộ luật cha từng bắt chép thuộc lòng. Điều bốn mươi: con tố cha mẹ thì bị đày đi châu xa, trừ khi tội ấy là mưu phản.', 'Gọi là che án, cha được chết giữ thể diện, còn con mang tội tố cha. Gọi là đồng mưu, con vô tội, còn cha chết như kẻ phản.'],
     choices: [
       { t: 'Gấp sách lại', fx: { d: { muu: 2 } }, note: 'Bạn thuộc điều luật ấy từ năm mười tuổi. Đến giờ mới hiểu nó.' },
       { t: 'Chép lại điều luật một lần nữa', fx: { d: { duc: 2 } }, note: 'Nét chữ của bạn run ở chữ "cha".' },
@@ -654,11 +654,11 @@ export const NG_CH6: Card[] = [
     moods: { cha: 'binh' },
     who: 'me',
     title: 'Gọi tên tội',
-    text: ['Tam pháp ty mở cửa. Cha quỳ giữa sân, áo trắng, không đội mũ quan.', 'Quan chủ thẩm hỏi: "Tội của Nghiêm Chính Khanh, gọi là gì?" Mở Sổ án trước khi trả lời.'],
+    text: ['Tam pháp ty, nơi xử các án lớn, mở cửa. Cha quỳ giữa sân, áo trắng, không đội mũ quan.', 'Quan chủ thẩm hỏi: "Tội của Nghiêm Chính Khanh, gọi là gì?" Mở Sổ án trước khi trả lời.'],
     omen: 'Gọi tên tội là việc của người xử. Thương hay không là việc khác.',
     choices: [
       { t: 'Cách gọi thứ nhất: biết mà che án (cha chết giữ thể diện, con mang tiếng tố cha)', fx: { accuse: { an: 'an6', who: 'che' } }, note: 'Bạn gọi tên. Cha không ngẩng lên.' },
-      { t: 'Cách gọi thứ hai: đồng mưu đại nghịch (con được tố, cha chịu khung tội phản)', fx: { accuse: { an: 'an6', who: 'dong' }, flag: ['goi_dong'] }, note: 'Bạn gọi tên. Cả sân im phắc. Cha ngẩng lên nhìn bạn, lần đầu tiên trong buổi.' },
+      { t: 'Cách gọi thứ hai: đồng mưu phản nghịch (con được tố, cha chịu tội phản)', fx: { accuse: { an: 'an6', who: 'dong' }, flag: ['goi_dong'] }, note: 'Bạn gọi tên. Cả sân im phắc. Cha ngẩng lên nhìn bạn, lần đầu tiên trong buổi.' },
       { t: 'Cách gọi thứ ba: bị ép mà im', fx: { accuse: { an: 'an6', who: 'ep' } }, note: 'Bạn gọi tên. Quan chủ thẩm ghi lại, rồi hỏi: "Ai ép?"' },
       { t: 'Cách gọi thứ tư: không biết gì, bị vu', fx: { accuse: { an: 'an6', who: 'oan' } }, note: 'Bạn gọi tên. Cha nhắm mắt, như người vừa nghe con mình nói dối.' },
       { t: 'Xin theo lệ người thân được giấu cho nhau, không gọi tên nào', fx: { accuse: { an: 'an6', who: 'gac' }, d: { muu: 2 } }, note: 'Quan chủ thẩm gật đầu: luật cho phép. Án treo lại, cha vẫn quỳ đó.' },
@@ -682,9 +682,9 @@ export const NG_CH6: Card[] = [
     title: 'Lời khai của cha',
     text: ['Cha đứng dậy, tự tháo đai quan: "Ta biết. Năm Tân Dậu ta biết, năm Thanh viết thư ta biết. Ta chọn im."', '"Ta im để giữ hai đứa con còn lại. Một đứa vừa gọi đúng tên tội của ta."'],
     choices: [
-      { t: 'Để cha tự nhận trước Tam pháp ty, con không nói thêm', need: { num: { cha: [25, 100] } }, lockHint: 'Cần Lòng cha từ 25: cha phải tin con mới chịu tự đứng ra', fx: { flag: ['cha_tutan', 'cha_tu_nhan', 'su9'], next: 'n6_tutan' }, note: 'Cha nhận hết, từng chữ, như đọc một bản án tự tay viết. Dòng người tố trong tờ trình không còn tên bạn.' },
+      { t: 'Để cha tự nhận trước công đường Tam pháp ty, con không nói thêm', need: { num: { cha: [25, 100] } }, lockHint: 'Cần Lòng cha từ 25: cha phải tin con mới chịu tự đứng ra', fx: { flag: ['cha_tutan', 'cha_tu_nhan', 'su9'], next: 'n6_tutan' }, note: 'Cha nhận hết, từng chữ, như đọc một bản án tự tay viết. Dòng người tố trong tờ trình không còn tên bạn.' },
       { t: 'Giữ đúng tên tội: che án. Con chịu tiếng tố cha', fx: { d: { duc: -6 }, flag: ['cha_tutan', 'bat_hieu', 'su9'], next: 'n6_tutan' }, note: 'Án chuẩn: đại thần có công, cho tự tận tại nhà. Dòng người tố ghi tên bạn.' },
-      { t: 'Đẩy án lên khung phản, để con khỏi mang tội', fx: { d: { duc: -10, the: -6 }, flag: ['cha_chem', 'goi_dong', 'su9'], next: 'n6_chem' }, note: 'Tờ trình sửa lại: đồng mưu đại nghịch. Mười tội ác không được giảm. Cha nghe đọc, không đổi sắc mặt.' },
+      { t: 'Đẩy án lên tội phản nghịch, để con khỏi mang tội', fx: { d: { duc: -10, the: -6 }, flag: ['cha_chem', 'goi_dong', 'su9'], next: 'n6_chem' }, note: 'Tờ trình sửa lại: đồng mưu phản nghịch. Tội ấy nằm trong mười tội ác, không được giảm. Cha nghe đọc, không đổi sắc mặt.' },
       { t: 'Buông rèm xuống, xin ân cho cha', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { quan: -8, the: -10 }, flag: ['cha_doiho', 'cha_song', 'bat_hieu', 'su9'] }, note: 'Ân chỉ xuống: tha chết, cả nhà đổi họ, đuổi về quê. Tội tố cha của bạn thì không ai xóa được.' },
       { t: 'Quỳ xin Hoàng thượng ân cho cha', need: { num: { vua: [40, 100] }, not: ['chet_vua'] }, lockHint: 'Cần Hoàng thượng từ 40', fx: { d: { vua: -10, the: -10 }, flag: ['cha_doiho', 'cha_song', 'bat_hieu', 'su9'] }, note: 'Hoàng thượng chuẩn: tha chết, cả nhà đổi họ, đuổi về quê. Tội tố cha của bạn thì không ai xóa được.' },
       { t: 'Quỳ xin Hựu ân cho cha', need: { flags: ['huu_lenngoi', 'huu_hoi'] }, lockHint: 'Cần Hựu đã lên ngôi, và đã nghe bạn nói thật', fx: { d: { the: -10 }, flag: ['cha_doiho', 'cha_song', 'bat_hieu', 'su9'] }, note: 'Hựu chuẩn: tha chết, cả nhà đổi họ, đuổi về quê. Ngài nói: "Nương nương đã nói thật với trẫm một lần."' },
@@ -701,7 +701,7 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Án khép',
-    text: ['Tờ biên nhận vàng của nhà Lương được đọc to giữa sân. Tam pháp ty chuẩn ngay: đồng mưu đại nghịch.', 'Chiều ấy có người gửi lễ mừng tới chỗ bạn, không ghi tên.'],
+    text: ['Người ta đọc to tờ biên nhận vàng của nhà Lương giữa sân. Tam pháp ty, nơi xử các án lớn, chuẩn ngay tội đồng mưu phản nghịch.', 'Chiều ấy có người gửi lễ mừng tới chỗ bạn, không ghi tên.'],
     choices: [
       { t: 'Nhận lễ', fx: { d: { the: 4 }, flag: ['cha_chem'], next: 'n6_chem' }, note: 'Trong hộp lễ có một đôi vòng vàng. Vàng mới, như tờ biên nhận.' },
       { t: 'Trả lễ về', fx: { d: { duc: 2 }, flag: ['cha_chem'], next: 'n6_chem' }, note: 'Người đưa lễ cầm hộp về, không hỏi gì, như đã biết trước.' },
@@ -718,7 +718,7 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'buon',
     title: 'Cửa Nam',
-    text: ['Án chuẩn trong ba ngày: Nghiêm Chính Khanh đồng mưu đại nghịch, chém bêu đầu ở cửa Nam. Nhà Nghiêm bị tịch thu, gia nhân sung công.', 'Sáng hôm ấy, người ta hỏi con gái ông có ra cửa Nam không.'],
+    text: ['Án chuẩn trong ba ngày: Nghiêm Chính Khanh đồng mưu phản nghịch, chém bêu đầu ở cửa Nam. Nhà cửa họ Nghiêm bị tịch thu, gia nhân cũng bị bắt đi.', 'Sáng hôm ấy, người ta hỏi con gái ông có ra cửa Nam không.'],
     choices: [
       { t: 'Ra đứng ở cửa Nam đến cuối', fx: { d: { duc: 4, the: -4 }, flag: ['chet_cha'] }, note: 'Cha không nhìn đám đông. Cha nhìn về phía cổng cung, chỗ năm xưa kiệu chị đi qua.' },
       { t: 'Đóng cửa, đọc lại bộ luật cha viết', fx: { d: { muu: 3, duc: -2 }, flag: ['chet_cha'] }, note: 'Đến trưa có tiếng trống từ cửa Nam vọng vào. Bạn đọc đúng điều luật ấy, đến dòng cuối.' },
@@ -758,12 +758,12 @@ export const NG_CH6: Card[] = [
     mood: 'buon',
     moods: { cha: 'binh' },
     title: 'Án treo',
-    text: ['Không ai gọi tên tội. Tam pháp ty khép sổ, cha bị giam ở ngục Bộ Hình chờ xét.', 'Ngục ấy do chính cha cho xây lại năm cha nhận ấn.'],
+    text: ['Không ai gọi tên tội. Công đường Tam pháp ty khép sổ, cha bị giam ở ngục Bộ Hình chờ xét.', 'Ngục ấy do chính cha cho xây lại năm cha nhận ấn.'],
     choices: [
       { t: 'Để án treo, chờ', fx: { d: { duc: 2 }, flag: ['cha_nguc'] }, note: 'Mỗi tháng bạn gửi vào một gói chè. Gói nào cũng bị trả về, buộc lại cẩn thận.' },
       { t: 'Gửi 30 quan lo cho cha trong ngục', need: { num: { tien: [30, 99999] } }, lockHint: 'Cần 30 quan', fx: { d: { tien: -30, cha: 6 }, flag: ['cha_nguc'] }, note: 'Cai ngục nhận tiền, đổi cho cha một gian có cửa sổ. Cha nhắn ra một câu: "Đừng gửi nữa."' },
-      { t: 'Xin chỉ cho cha về hưu, giữ tiếng thanh quan', need: { flags: ['khep_chi'] }, lockHint: 'Cần chỉ của Hoàng thượng', fx: { d: { duc: -4, quan: -6 }, flag: ['cha_tha', 'cha_song'] }, note: 'Chỉ xuống: Thượng thư Nghiêm tuổi cao, cho về hưu. Không ai nhắc đến tờ hặc nữa.' },
-      { t: 'Dùng rèm xin cho cha về hưu', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { duc: -6, quan: -12 }, flag: ['cha_tha', 'cha_song'] }, note: 'Tờ hặc bị gác. Cha về quê, các quan không nói gì trước mặt, chỉ nói sau lưng.' },
+      { t: 'Xin chỉ cho cha về hưu, giữ tiếng thanh quan', need: { flags: ['khep_chi'] }, lockHint: 'Cần chỉ của Hoàng thượng', fx: { d: { duc: -4, quan: -6 }, flag: ['cha_tha', 'cha_song'] }, note: 'Chỉ xuống: Thượng thư Nghiêm tuổi cao, cho về hưu. Không ai nhắc đến tờ sớ tố tội nữa.' },
+      { t: 'Dùng rèm xin cho cha về hưu', need: { flags: ['nhiep'] }, lockHint: 'Chỉ khi đang buông rèm', fx: { d: { duc: -6, quan: -12 }, flag: ['cha_tha', 'cha_song'] }, note: 'Tờ sớ tố tội bị gác lại. Cha về quê, các quan không nói gì trước mặt, chỉ nói sau lưng.' },
     ],
   },
   {
@@ -777,13 +777,13 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'so',
     title: 'Cha phản công',
-    text: ['Tờ trình không đủ chứng bị trả về. Đêm ấy Tam pháp ty hỏi cung cha lần thứ hai.', 'Cha khai một câu: con gái út của ông biết chuyện năm Tân Dậu từ những năm đầu vào cung, mà cũng im.'],
+    text: ['Tờ trình không đủ chứng, bị trả về. Đêm ấy công đường Tam pháp ty hỏi cung cha lần thứ hai.', 'Cha khai một câu: con gái út của ông biết chuyện năm Tân Dậu từ những năm đầu vào cung, mà cũng im.'],
     omen: 'Người dạy bạn đọc án cũng biết đọc bạn.',
     choices: [
       { t: 'Cầu Hoàng thượng che chở', need: { num: { vua: [30, 100] }, not: ['che_vua', 'chet_vua'] }, lockHint: 'Cần Hoàng thượng từ 30, chưa từng cầu', fx: { d: { vua: -10, an: -5 }, flag: ['che_vua', 'cha_nguc'] }, note: 'Hoàng thượng cho gác lời khai ấy: "Người của trẫm, trẫm tự hỏi." Án cha thì không ai gác nữa.' },
       { t: 'Cầu Hựu che chở', need: { flags: ['huu_lenngoi', 'huu_nhin'], not: ['che_huu'] }, lockHint: 'Cần Hựu đã lên ngôi, và đang nhìn bạn xử', fx: { d: { duc: -4 }, flag: ['che_huu', 'cha_nguc'] }, note: 'Hựu cho gác lời khai ấy. Ngài nói: "Lần này thôi."' },
       { t: 'Nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['chet_lymac', 'che_lymac'] }, lockHint: 'Cần quen Lý Mặc, ông còn sống và chưa từng che cho bạn', fx: { flag: ['chet_lymac'], end: 'n_146' }, note: 'Lý Mặc dâng tờ nhận chính ông đã ép cha khai. Ba hôm sau người ta vớt ông dưới sông Lịch.' },
-      { t: 'Đưa lá thư "Im" ra: người viết chữ ấy là cha', need: { flags: ['co_thu_im'], not: ['an6_nang'] }, lockHint: 'Cần đang cầm lá thư, và tên tội bạn gọi đúng là tên cha phải giấu', fx: { d: { hiem: 12, cha: -20 }, flag: ['cha_nguc'] }, note: 'Tam pháp ty đọc chữ ấy, rồi gác lời khai của cha. Cha nhìn lá thư như nhìn một người lạ.' },
+      { t: 'Đưa lá thư "Im" ra: người viết chữ ấy là cha', need: { flags: ['co_thu_im'], not: ['an6_nang'] }, lockHint: 'Cần đang cầm lá thư, và tên tội bạn gọi đúng là tên cha phải giấu', fx: { d: { hiem: 12, cha: -20 }, flag: ['cha_nguc'] }, note: 'Công đường đọc chữ ấy, rồi gác lời khai của cha. Cha nhìn lá thư như nhìn một người lạ.' },
       {
         t: 'Để nhũ mẫu ra khai: bà mới là người đưa thư',
         need: { not: ['chet_nhumau'] },
@@ -792,7 +792,7 @@ export const NG_CH6: Card[] = [
         note: 'Nhũ mẫu khai bà tự ý giấu thư, tiểu thư không biết gì. Bà chết trong ngục trước khi án xong.',
         risk: { p: 0.5, fail: { flag: ['chet_nhumau'], next: 'an6_pc2' }, failNote: 'Nhũ mẫu khai, nhưng không ai tin một bà già. Bà chết trong ngục sau ba ngày, còn bạn vẫn bị gọi lên.' },
       },
-      { t: 'Viết tờ xin tự giáng', need: { num: { hiem: [50, 100] } }, lockHint: 'Chỉ khi Hiểm từ 50: đã có người muốn bạn ngã', fx: { end: 'n_147' }, note: 'Bạn xin dời ra một viện ẩm ở góc thành. Chẳng ai buồn kéo một người đã tự ngã vào án lớn.' },
+      { t: 'Viết tờ xin tự hạ bậc', need: { num: { hiem: [50, 100] } }, lockHint: 'Chỉ khi Hiểm từ 50: đã có người muốn bạn ngã', fx: { end: 'n_147' }, note: 'Bạn xin dời ra một viện ẩm ở góc thành. Chẳng ai buồn kéo một người đã tự ngã vào án lớn.' },
       { t: 'Ngồi chờ hỏi cung', fx: { next: 'an6_pc2' }, note: 'Bạn ngồi đến sáng. Tiếng bước chân lính đến từ phía cổng, rất đều.' },
     ],
   },
@@ -811,7 +811,7 @@ export const NG_CH6: Card[] = [
     text: ['Bạn bị giải vào ngục Bộ Hình, gian sát vách gian của cha. Qua khe tường nghe được cả tiếng cha thở.', 'Quan chủ thẩm cho bạn một đêm để nghĩ.'],
     omen: 'Người dạy bạn đọc án cũng biết đọc bạn.',
     choices: [
-      { t: 'Nhận hết, xin chịu án cùng cha', need: { not: ['an6_nang'] }, lockHint: 'Tên tội bạn gọi đã làm cha không còn đường lùi', fx: { flag: ['cha_nguc'], end: 'n_61' }, note: 'Hai cha con cùng bị kết che án. Bạn sống, vì luật không giết hai người vì một chữ "Im".' },
+      { t: 'Nhận hết, xin chịu án cùng cha', need: { not: ['an6_nang'] }, lockHint: 'Tên tội bạn gọi đã làm cha không còn đường lùi', fx: { flag: ['cha_nguc'], end: 'n_61' }, note: 'Hai cha con cùng bị kết tội che án. Bạn sống, vì luật không giết hai người vì một chữ "Im".' },
       { t: 'Gõ vào vách, gọi cha', fx: { flag: ['cha_nguc'], end: 'n_143' }, note: 'Cha không gõ lại. Cả đêm ấy, cả tháng ấy, cả năm ấy.' },
       {
         t: 'Cãi trước công đường: lời của người đang bị xét không buộc được ai',
@@ -827,7 +827,7 @@ export const NG_CH6: Card[] = [
         lockHint: 'Chỉ khi tên tội bạn gọi là sai',
         fx: { d: { hiem: 25, duc: -8 }, flag: ['cha_nguc'] },
         note: 'Không ai tin, nhưng cũng không ai đủ chứng. Bạn được thả, mang theo cái nhìn của cả triều.',
-        risk: { p: 0.9, fail: { flag: ['cha_nguc'], end: 'n_143' }, failNote: 'Bạn đã gọi sai tên tội, nên lời bạn không còn nặng hơn lời cha. Tam pháp ty kết cả hai.' },
+        risk: { p: 0.9, fail: { flag: ['cha_nguc'], end: 'n_143' }, failNote: 'Bạn đã gọi sai tên tội, nên lời bạn không còn nặng hơn lời cha. Công đường kết tội cả hai.' },
       },
     ],
   },
@@ -845,7 +845,7 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'buon',
     title: 'Tội tố cha',
-    text: ['Án cha khép, đến lượt án của bạn. Con tố cha là bất hiếu, một trong mười tội ác: lưu châu xa, không được chuộc.', 'Tên bạn bị gạch khỏi gia phả nhà Nghiêm, ngay dưới tên cha.'],
+    text: ['Án cha khép, đến lượt án của bạn. Con tố cha là bất hiếu, một trong mười tội ác: đày đi châu xa, không được chuộc tội.', 'Tên bạn bị gạch khỏi gia phả nhà Nghiêm, ngay dưới tên cha.'],
     choices: [
       { t: 'Nhận đày, đi không ngoái lại', fx: { end: 'n_60' }, note: 'Xe tù ra cửa Bắc lúc trời chưa sáng. Bạn không ngoái lại, vì phía sau không còn ai mang họ của bạn.' },
       { t: 'Ở châu xa, mở lớp dạy luật cho dân', need: { num: { muu: [40, 100] } }, lockHint: 'Cần Mưu từ 40', fx: { end: 'n_127' }, note: 'Ở châu xa không ai biết bạn là ai. Họ chỉ biết bà già ấy thuộc luật hơn cả quan huyện.' },
@@ -956,11 +956,11 @@ export const NG_CH6: Card[] = [
     cast: ['me'],
     mood: 'binh',
     title: 'Rèm năm thứ năm',
-    text: ['Án cha khép đã năm năm. Bạn vẫn ngồi sau rèm, nghe những tờ tấu không còn ai nhắc đến họ Nghiêm.', 'Hôm ấy Đô sát viện dâng tờ xin Thái hậu trả chính sự cho vua.'],
+    text: ['Án cha khép đã năm năm. Bạn vẫn ngồi sau rèm, nghe những tờ tấu không còn ai nhắc đến họ Nghiêm.', 'Hôm ấy Viện Ngự sử dâng tờ xin Thái hậu trả chính sự cho vua.'],
     choices: [
       { t: 'Giữ rèm', fx: { d: { quan: -8, the: 6 }, flag: ['n6_nam'], years: 5 }, note: 'Tờ tấu bị gác. Rèm vẫn buông, và năm năm nữa trôi qua như một buổi chầu dài.' },
       { t: 'Cuốn rèm, lui về cung sau, giữ hồ sơ', fx: { d: { duc: 6, quan: 8 }, flag: ['n6_nam', 'lui'], unflag: ['nhiep'], years: 5 }, note: 'Rèm cuốn lên. Bạn mang theo đúng một thứ: chiếc rương hồ sơ.' },
-      { t: 'Trao ấn cho Lý Mặc, lui hẳn', need: { not: ['chet_lymac'] }, lockHint: 'Lý Mặc không còn', fx: { flag: ['lui'], end: 'n_68' }, note: 'Lý Mặc quỳ nhận ấn: "Thần sẽ giữ cho luật đứng trên người." Bạn tin ông, vì ông từng hặc cả cha bạn.' },
+      { t: 'Trao ấn cho Lý Mặc, lui hẳn', need: { not: ['chet_lymac'] }, lockHint: 'Lý Mặc không còn', fx: { flag: ['lui'], end: 'n_68' }, note: 'Lý Mặc quỳ nhận ấn: "Thần sẽ giữ cho luật đứng trên người." Bạn tin ông, vì ông từng tố cả cha bạn.' },
     ],
   },
   {

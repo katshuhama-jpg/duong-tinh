@@ -625,7 +625,7 @@ export const NG_CH1: Card[] = [
     title: 'Lời khai',
     text: ['{TAY:an1} quỳ giữa sân, khai không sót: "Có người dặn dọn chái sau cho sạch. Con bé nhặt được đồ của người cũ."', '"Người dặn là ai?" Nó không trả lời, chỉ liếc về phía chưởng sự Kiệm.'],
     choices: [
-      { t: 'Ghi tên Kiệm vào tờ trình', fx: { d: { hiem: 12, phuc: -15, muu: 4 }, flag: ['biet_kiem', 'n1_khep'] }, note: 'Kiệm nhận phạt nửa năm bổng, vẫn cười. Bạn vừa có một kẻ thù biết giữ sổ.' },
+      { t: 'Ghi tên Kiệm vào tờ trình', fx: { d: { hiem: 12, phuc: -15, muu: 4 }, flag: ['biet_kiem', 'n1_khep'] }, note: 'Kiệm chịu phạt nửa năm lương, vẫn cười. Bạn vừa có một kẻ thù biết giữ sổ.' },
       { t: 'Không ghi, giữ lời khai làm con bài', fx: { d: { muu: 6, hiem: 4 }, flag: ['biet_kiem', 'bai_kiem', 'n1_khep'] }, note: 'Kẻ ra tay bị đánh đòn và đuổi khỏi cung. Kiệm nhìn bạn, lần đầu tiên không cười.' },
     ],
   },
@@ -682,7 +682,7 @@ export const NG_CH1: Card[] = [
       { t: 'Chạy sang viện Uyển Như xin ngủ nhờ', need: { num: { thucphi: [10, 100] }, not: ['che_un', 'un_han'] }, lockHint: 'Cần Quý phi Hà từ 10, chưa từng cầu, không mang hận', fx: { d: { thucphi: -5, hiem: 5 }, flag: ['che_un', 'n1_khep'] }, note: 'Uyển Như mở cửa, không hỏi gì, chỉ bảo người hầu chặn cổng. Sáng ra nàng nói: "Lần sau tôi không mở nữa đâu."' },
       { t: 'Đứng ở cửa nói to: "Chiếc lược đã gửi về phủ Nghiêm rồi"', need: { flags: ['co_luoc'], not: ['dung_luoc', 'an1_nang'] }, lockHint: 'Cần đang giữ chiếc lược của chị, và họ còn tin lời dọa', fx: { d: { hiem: 10, muu: 4 }, flag: ['dung_luoc', 'n1_khep'] }, note: 'Bóng người dừng lại rất lâu ngoài rèm, rồi đi. Họ không dám động vào bạn khi chưa biết thứ đó ở đâu.' },
       { t: 'Theo nhũ mẫu sang xin ngủ nhờ cung Hoàng hậu', need: { num: { hoanghau: [4, 100] }, not: ['an1_nang', 'nho_hh1'] }, lockHint: 'Cần Hoàng hậu từ 4, và cái tên trong tờ trình đúng là người họ sợ', fx: { d: { hoanghau: -3, hiem: 8 }, flag: ['nho_hh1', 'n1_khep', 'song_sot'] }, note: 'Hoàng hậu cho mở cửa sau, không hỏi một câu. Sáng ra bà chỉ nói: "Viện ấy, ngày trước chị cô cũng từng chạy sang đây một lần."' },
-      { t: 'Viết tờ xin tự giáng, ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Chẳng ai buồn hại một phi tần đã tự ngã, và cũng chẳng ai còn nhớ tên Hoa.' },
+      { t: 'Viết tờ xin tự giáng bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Chẳng ai buồn hại một phi tần đã tự ngã, và cũng chẳng ai còn nhớ tên Hoa.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { next: 'an1_pc2' }, note: 'Bạn thổi tắt đèn. Ngoài kia tiếng bước chân dừng ngay trước cửa.' },
     ],
   },

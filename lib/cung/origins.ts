@@ -62,7 +62,7 @@ export const ORIGINS: Origin[] = [
     flags: ['g_quan'],
     open: true,
     intro: [
-      'Bạn là con gái út của Thượng thư Bộ Hình Nghiêm Chính Khanh, người cả kinh gọi là ông Nghiêm sắt. Năm mười tám tuổi, bạn vào cung, thay chỗ người chị đã mất.',
+      'Bạn là con gái út của Thượng thư Bộ Hình Nghiêm Chính Khanh, người cả kinh thành gọi là ông Nghiêm sắt. Năm mười tám tuổi, bạn vào cung, thay chỗ người chị đã mất.',
       'Cha chỉ dặn một câu: "Giữ lễ. Giữ miệng. Đừng hỏi chuyện chị con."',
     ],
     place: 'phong',

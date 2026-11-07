@@ -29,7 +29,7 @@ export const NG_DESC_7: Record<string, string> = {
   n_92: 'Hựu đọc hồ sơ rồi tự viết chiếu nhường ngôi cho Cảnh, lấy cớ bệnh. Ông về một phủ nhỏ ngoài thành, trồng rau, lần đầu tiên hát câu ru ấy thành tiếng. Bà sống thêm mười năm, nhìn con mình ngồi lên chiếc ghế từng là của người khác.',
   n_93: 'Tội: làm loạn tông miếu. Hình: ban lụa trắng. Hựu đọc hết hồ sơ rồi gọi tội bà như thế, và dải lụa đến vào một buổi sáng đẹp trời. Bà không trách, vì bà hiểu một người vừa mất cả hai người mẹ thì cần một người để giận.',
   n_94: 'Bà Lương chín mươi tư tuổi nằm trên giường bệnh, nắm tay bà, nói một câu xin lỗi, gọi đủ tên chị. Bà không tha, cũng không giận. Bà ngồi đến khi bàn tay ấy lạnh, rồi về chép câu ấy vào hồ sơ, đúng từng chữ.',
-  n_95: 'Tội: đồng mưu che giấu chuyện tráo con. Hình: ban chết. Bà Lương nhận tội đêm Tân Dậu, và trước khi uống chén thuốc của mình, khai con gái út nhà Nghiêm cùng biết từ đầu. Cùng ngày, một khay lụa, thuốc, gươm được bưng tới viện bà, và bà chọn chén thuốc, như chị năm xưa.',
+  n_95: 'Tội: đồng mưu che giấu chuyện tráo con. Hình: ban chết. Bà Lương nhận tội đêm Tân Dậu, và trước khi uống chén thuốc của mình, khai con gái út nhà Nghiêm cùng biết từ đầu. Cùng ngày, người ta bưng tới viện bà một khay lụa, thuốc, gươm, và bà chọn chén thuốc, như chị năm xưa.',
 
   /* kết còn mở */
   n_105: 'Ở chái sau có một bà già giặt áo, đêm nào cũng hát khẽ một câu ru mà cả cung chỉ một người từng hát. Bà ngồi nghe qua vách nhiều đêm, chưa lần nào dám gõ cửa. Hồ sơ này còn tiếp ở phần Cung nữ.',
@@ -50,5 +50,5 @@ export const NG_DESC_7: Record<string, string> = {
   /* rẽ ra ngoài cung, kết đặc biệt */
   n_132: 'Bà xin cải táng chị về một gò đất có bóng cây, dựng nhà tranh bên mộ. Sáng quét lá, tối kể cho chị nghe chuyện trong cung. Người làng gọi bà là bà giữ mộ, không ai biết bà từng là ai.',
   n_135: 'Em ạ, đêm ấy mưa. Hoàng hậu sinh một bé gái, con bé chỉ thở được đến canh ba. Cùng đêm ấy, ở chái sau, một cung nữ hầu trà sinh cho Hoàng thượng một bé trai. Thái hậu bảo chị bế đứa bé qua cửa, quấn trong tấm khăn chàm còn hơi ấm của mẹ nó, và chị đã bế. Năm năm sau chị muốn nói, và người ta cho chị một chén thuốc. Em đã khép hồ sơ thay chị. Đứa bé sống. Người mẹ cũng sống. Bà ấy đang ở đâu đó, dưới một cái tên khác.',
-  n_136: 'Tội: vu cáo. Hình: ban chết, đục tên khỏi bia. Bà nói ra một cái tên khi chưa đủ sức giữ lời mình: có khi cái tên ấy sai, có khi đúng mà tai mắt người kia còn đủ quanh bà. Triều đình gọi đó là vu, vì không ai dám gọi khác, và một chén thuốc được đưa tới. Tên bà bị đục khỏi bia nhà Nghiêm, gạch khỏi gia phả và sổ cung, những hồ sơ bà giữ cả đời bị đốt cùng một mồi lửa.',
+  n_136: 'Tội: vu cáo. Hình: ban chết, đục tên khỏi bia. Bà nói ra một cái tên khi chưa đủ sức giữ lời mình: có khi cái tên ấy sai, có khi đúng mà tai mắt người kia còn đủ quanh bà. Triều đình gọi đó là vu, vì không ai dám gọi khác, và người ta đưa tới một chén thuốc. Tên bà bị đục khỏi bia nhà Nghiêm, gạch khỏi gia phả và sổ cung, những hồ sơ bà giữ cả đời bị đốt cùng một mồi lửa.',
 };
