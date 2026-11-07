@@ -87,6 +87,8 @@ export function lookOf(k: CastK, o: { robe?: string; phuong?: number; old?: bool
       return { robe: '#8a3a2a', collar: GOLD2, hat: 'tre', male: true, build: 'broad', pattern: 'rong', prop: 'kiem' };
     case 'con':
       return { robe: o.king ? '#d9a441' : '#c84a35', collar: GOLD2, hat: 'tre', scale: 0.62, pattern: o.king ? 'rong' : undefined };
+    default:
+      return { robe: '#5a6a7a', collar: GOLD2, hat: 'bun' };
   }
 }
 

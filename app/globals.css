@@ -338,7 +338,25 @@ a:hover { color: #6d1a11; }
 .c-tale .c-page { padding-top: 28px; }
 .c-tale-kicker { text-align: center; letter-spacing: 6px; text-transform: uppercase; font-size: 12px; color: var(--mute); margin: 0; }
 .c-tale-title { font-family: 'Playball', var(--serif); font-weight: 400; font-size: 44px; color: var(--son); text-align: center; margin: 6px 0 14px; line-height: 1.15; }
-.c-tale-art { margin-bottom: 14px; filter: sepia(0.25) saturate(0.85); }
+.c-tale-art { margin-bottom: 14px; filter: sepia(0.25) saturate(0.85); position: relative; }
+.c-tale-prop { position: absolute; left: 50%; bottom: 6%; width: 15%; transform: translateX(-50%); filter: drop-shadow(0 4px 6px rgba(0,0,0,.45)); pointer-events: none; }
+/* sổ án (phần Nghiêm) */
+.c-soan-strip { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin: 6px 0 2px; padding: 8px 10px; border: 1px solid var(--line, #c9b48a); border-radius: 10px; background: rgba(255,250,240,.6); font-size: 13px; cursor: pointer; width: 100%; text-align: left; color: inherit; }
+.c-soan-strip b { font-weight: 700; }
+.c-soan-strip .hiem { color: #9a2a1a; }
+.c-soan h3 { margin: 14px 0 6px; font-size: 15px; }
+.c-soan > p { padding: 0 16px; }
+.c-soan .sus { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.c-soan .sus div { border: 1px solid #d8c8a8; border-radius: 8px; padding: 6px 8px; font-size: 13px; background: #fffaf0; }
+.c-soan .sus div.known b { color: #6a2a14; }
+.c-soan .lamp { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; background: #bbb; vertical-align: middle; }
+.c-soan .lamp.vua { background: #e0a83a; }
+.c-soan .lamp.sang { background: #f4d23a; box-shadow: 0 0 6px #f4d23a; }
+.c-soan ul { margin: 0; padding-left: 18px; font-size: 13px; }
+.c-soan li { margin: 3px 0; }
+.c-soan .shadow { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #555 0 30%, #222 31%); display: inline-block; vertical-align: middle; margin-right: 6px; }
+.c-soan .face { width: 34px; height: 34px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
+
 .c-tale-line { opacity: 0; animation: c-rise 0.8s ease-out forwards; }
 p.c-tale-line { font-family: var(--serif); font-size: 18px; line-height: 1.65; margin: 0 0 12px; opacity: 0; animation: c-rise 0.8s ease-out forwards; }
 .c-tale-drop::first-letter { font-size: 2.2em; float: left; line-height: 0.9; padding: 4px 6px 0 0; color: var(--son); }

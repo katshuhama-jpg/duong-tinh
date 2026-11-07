@@ -11,7 +11,7 @@ import { rankOf } from '@/lib/cung/engine';
 import { originOf } from '@/lib/cung/origins';
 import { loadMe, type CMeta } from '@/lib/cung/save';
 import type { Life } from '@/lib/cung/types';
-import { ALL_ENDINGS as ENDINGS } from '@/lib/cung/world';
+import { ALL_ENDINGS as ENDINGS, NGHIEM_ENDINGS } from '@/lib/cung/world';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
 
 const tierOf = (e: { id: string; tier?: number }) => e.tier ?? ENDING_TIER[e.id] ?? 40;
@@ -21,6 +21,7 @@ export default function Home() {
   const { user, ready } = useAuth();
   const [me, setMe] = useState<{ meta: CMeta; life: Life | null } | null>(null);
   const [tab, setTab] = useState<'song' | 'chet' | 'cay'>('song');
+  const [part, setPart] = useState<'che' | 'nghiem'>('che');
   useEffect(() => playTrack(1), []);
   useEffect(() => {
     if (!ready) return;
@@ -28,7 +29,9 @@ export default function Home() {
   }, [ready, user]);
   const got = new Set(me?.meta.cung ?? []);
   const live = me?.life && !me.life.end ? me.life : null;
-  const list = ENDINGS.filter((e) => (tab === 'chet' ? e.dead : !e.dead)).sort((a, b) => tierOf(b) - tierOf(a));
+  const ALLE = part === 'nghiem' ? NGHIEM_ENDINGS.filter((e) => e.id !== 'n_tiep') : ENDINGS;
+  const gotN = ALLE.filter((e) => got.has(e.id)).length;
+  const list = ALLE.filter((e) => (tab === 'chet' ? e.dead : !e.dead)).sort((a, b) => tierOf(b) - tierOf(a));
 
   return (
     <main className="c-app">
@@ -44,7 +47,7 @@ export default function Home() {
         <h1 className="c-title c-brand">Chín Bậc Phượng</h1>
         <Scene bgImg="/bg/vien/dem.webp" imgs={{ me: { dir: '/nv/me2', face: 'r' }, hanh: { dir: '/nv/hanh', face: 'l' } }} place="vien" time="dem" cast={['me', 'hanh']} looks={{ me: lookOf('me', { robe: '#a8281d' }) }} label="Đêm ở sân viện, cô gái áo đỏ đứng dưới đèn lồng, thị nữ đứng bên" />
         <p className="c-prose">
-          Bốn con đường vào cung: gái làng chè được vua để mắt, con quan bị dâng làm con tin, cung nga giặt áo, và công chúa của triều đã mất. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
+          Mỗi thân phận là một câu chuyện riêng: gái làng chè được vua để mắt, và con gái nhà họ Nghiêm vào cung thay chỗ người chị đã chết. Cung nga giặt áo và nhà chùa đang được viết. Chín bậc hậu cung, một ngai vàng, và những chén trà không biết có độc hay không.
         </p>
         {live ? (
           <div className="c-row">
@@ -74,11 +77,20 @@ export default function Home() {
           <summary>
             <span>Sổ kết cục</span>
             <b>
-              {got.size}/{ENDINGS.length} đã mở
+              {got.size} kết cục đã mở
             </b>
             <small>Bấm để xem những đời đã sống, những cách chết và cây số phận</small>
           </summary>
         <section aria-label="Sổ kết cục" style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 10 }}>
+          <div className="c-tabs" role="tablist" aria-label="Phần chơi">
+            <button type="button" role="tab" aria-selected={part === 'che'} onClick={() => setPart('che')}>
+              Cô gái chè
+            </button>
+            <button type="button" role="tab" aria-selected={part === 'nghiem'} onClick={() => setPart('nghiem')}>
+              Con tin họ Nghiêm
+            </button>
+          </div>
+          <p className="c-note" style={{ margin: 0, textAlign: 'center' }}>{gotN}/{ALLE.length} kết cục của phần này đã mở</p>
           <div className="c-tabs" role="tablist">
             <button type="button" role="tab" aria-selected={tab === 'song'} onClick={() => setTab('song')}>
               Những đời sống
@@ -93,7 +105,7 @@ export default function Home() {
           {tab === 'cay' ? (
             <div className="c-treebox">
               <p className="c-note" style={{ margin: 0 }}>Mỗi nhánh là một chuỗi ngã rẽ bạn đã chọn, cuối nhánh là kết cục nó dẫn tới. Trong lúc chơi, mở Sổ hậu cung để quay lại một ngã rẽ và chọn khác.</p>
-              <FateTree paths={((me?.meta.tree as TreePath[] | undefined) ?? []).filter((x) => (x.o ?? 'dan') === 'dan')} life={null} />
+              <FateTree paths={((me?.meta.tree as TreePath[] | undefined) ?? []).filter((x) => (part === 'nghiem' ? x.o === 'quan' : (x.o ?? 'dan') === 'dan'))} life={null} />
             </div>
           ) : (
           <ul className="c-ends" style={{ margin: 0, padding: 0 }}>

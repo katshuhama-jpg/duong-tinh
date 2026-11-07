@@ -6,7 +6,7 @@ import MusicButton from '@/components/cung/MusicButton';
 import TopBar from '@/components/cung/TopBar';
 import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { alliesOf, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { alliesOf, chapOf, isNg, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
@@ -14,7 +14,9 @@ import { loadMe, saveLife, saveMeta, type CMeta } from '@/lib/cung/save';
 import type { CastK, Life, MoodK, NumK, PlaceK, RivalK, RivalState } from '@/lib/cung/types';
 import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
 import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
-import { ALL_ENDINGS, CAST_NAME, CHAPTERS, ERA, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone, guardsOf } from '@/lib/cung/world';
+import { ALL_ENDINGS, CAST_NAME, ERA, NGHIEM_ENDINGS, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone, guardsOf } from '@/lib/cung/world';
+import { NG_CAST_NAME, NG_ERA, NG_YEAR0 } from '@/lib/cung/nghiem/world';
+import SoAn, { SoAnStrip } from '@/components/cung/SoAn';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
@@ -28,8 +30,23 @@ const TIME_AT = { ngay: 'ngay lúc ấy', chieu: 'chiều hôm ấy', dem: 'đê
 const NUM_VI = ['', 'Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười'];
 
 /** chỗ diễn ra cảnh, nói thành chữ */
+const NG_WHERE: Record<string, string> = {
+  vienchi: 'trong viện cũ của chị',
+  chaisau: 'ở dãy chái sau',
+  khoso: 'trong kho sổ nội vụ',
+  thaiyvien: 'ở phòng thuốc Thái y viện',
+  tamphap: 'ở công đường Tam pháp ty',
+  trong: 'trước cửa khuyết, bên trống Đăng văn',
+  lang_vua: 'ở lăng vua',
+  chuabien: 'ở ngôi chùa ven biển',
+  congphu: 'trước cổng phủ Nghiêm',
+  thuphong: 'trong thư phòng của cha',
+  phonghoc: 'trong phòng học cũ ở phủ',
+};
 function whereOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string {
   if (card.where) return card.where;
+  if (isNg(l) && card.img && NG_WHERE[card.img]) return NG_WHERE[card.img];
+  if (isNg(l) && card.place === 'phong') return 'trong viện cũ của chị';
   const o = originOf(l.origin);
   const has = (k: CastK) => card.cast.includes(k);
   switch (card.place) {
@@ -72,20 +89,24 @@ const SEASON_K: SeasonK[][] = [
   ['xuan', 'ha'],
   ['thu', 'dong'],
 ];
-const seasonOf = (card: { id: string }, l: Life): SeasonK => SEASON_K[Math.round(l.age * 2) % 2][hash(card.id) % 2];
+const seasonOf = (card: { id: string }, l: Life): SeasonK => (isNg(l) ? (['xuan', 'ha', 'thu', 'dong'] as SeasonK[])[Math.floor((Math.floor(l.age * 12 + 0.01) % 12) / 3)] : SEASON_K[Math.round(l.age * 2) % 2][hash(card.id) % 2]);
 const windOf = (card: NonNullable<ReturnType<typeof cardOf>>) => /gió (to|lớn|thổi|rít|lùa|bấc|mùa|giật)|gió nổi|bão|lộng gió/.test(card.text.join(' ').toLowerCase());
 const rainOf = (card: NonNullable<ReturnType<typeof cardOf>>) => /mưa (to|lớn|rơi|dầm|ngâu|gió)|trời mưa|giữa mùa mưa|dưới mưa/.test(card.text.join(' ').toLowerCase());
 
 /** câu nối cảnh: bao lâu sau, mùa nào, giờ nào, ở đâu */
 function bridgeOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): string {
   const half = Math.round(l.age * 2) % 2;
-  const season = SEASONS[half][hash(card.id) % 2];
+  const mo = Math.floor(l.age * 12 + 0.01) % 12;
+  const season = isNg(l) ? ['đầu xuân', 'giữa xuân', 'cuối xuân', 'đầu hè', 'giữa hè', 'cuối hè', 'đầu thu', 'giữa thu', 'cuối thu', 'đầu đông', 'giữa đông', 'cuối đông'][mo] : SEASONS[half][hash(card.id) % 2];
   const when = `${TIME_OF[card.time ?? 'ngay']} ${season}`;
   const p = l.prev;
   if (l.chain) return `Hồi ${NUM_HOI[l.chain.hoi] ?? l.chain.hoi}. ${cap(TIME_AT[card.time ?? 'ngay'])}, ${p && p.place === card.place ? 'vẫn ' : ''}${whereOf(card, l)}.`;
   let gap = '';
   if (!p) gap = 'Những ngày đầu trong cung.';
-  else {
+  else if (isNg(l)) {
+    const m = Math.round((l.age - p.age) * 12);
+    gap = m <= 0 ? 'Mấy hôm sau.' : m < 12 ? `${NUM_VI[m] ?? m} tháng sau.` : m < 24 ? 'Một năm sau.' : `${NUM_VI[Math.floor(m / 12)] ?? Math.floor(m / 12)} năm sau.`;
+  } else {
     const d = Math.round((l.age - p.age) * 2) / 2;
     gap = d <= 0 ? 'Mấy hôm sau.' : d === 0.5 ? 'Nửa năm sau.' : d === 1 ? 'Một năm sau.' : `${NUM_VI[Math.floor(d)] ?? Math.floor(d)} năm sau.`;
   }
@@ -104,7 +125,8 @@ function feelOf(k: NumK, v: number): string {
   return 'Thù hằn';
 }
 const ageOf = (l: Life) => Math.floor(l.age);
-const yearOf = (l: Life) => ageOf(l) - 15;
+const yearOf = (l: Life) => (isNg(l) ? NG_YEAR0 + ageOf(l) - 18 : ageOf(l) - 15);
+const eraOf = (l: Life) => (isNg(l) ? NG_ERA : ERA);
 const hash = (s: string) => {
   let h = 0;
   for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0;
@@ -135,7 +157,38 @@ function meStage(l: Life): string {
   if (l.rank >= 3 || l.age >= 22) return 'me2';
   return o === 'quan' ? 'quan1' : o === 'cung' ? 'cung1' : o === 'chua' ? 'chua1' : 'me1';
 }
+/** phần Con tin họ Nghiêm: dàn vai riêng */
+function ngImgs(l: Life): Partial<Record<CastK, CastImg>> {
+  const f = (x: string) => l.flags.includes(x);
+  const L = (d: string): CastImg => ({ dir: `/nv/${d}`, face: 'l' });
+  const ch = l.chapter;
+  const me = l.age >= 60 ? 'hn4' : f('thai_hau') || f('nhiep') ? 'hn3' : f('thai_phi') || f('lui') ? 'hn3b' : f('hoang_hau') ? 'hn2b' : l.rank >= 5 || l.age >= 22 ? 'hn2' : 'hn1';
+  const kid = l.kids[l.kids.length - 1];
+  const kidAge = kid ? Math.floor(l.age) - kid.born : 0;
+  return {
+    me: { dir: `/nv/${me}`, face: 'r' },
+    vua: L(ch >= 4 ? 'vua_hb2' : 'vua_hb'),
+    thaihau: L(ch >= 5 ? 'thaihau_l2' : 'thaihau_l'),
+    hoanghau: L(ch >= 6 ? 'hoanghau_l2' : 'hoanghau_l'),
+    thanh: L('thanh2'),
+    cha: L(ch >= 6 ? 'cha2' : 'cha'),
+    thaisu: L(ch >= 5 ? 'thaisu2' : 'thaisu'),
+    lymac: L(ch >= 6 ? 'lymac2' : 'lymac'),
+    kiem: L(ch >= 6 ? 'kiem2' : 'kiem'),
+    thaiy: L(ch >= 6 ? 'thaiy2' : 'thaiy'),
+    nhumau: L(ch >= 5 ? 'nhumau2' : 'nhumau'),
+    luavang: L(ch >= 6 ? 'luavang2' : 'luavang'),
+    uyennhu: L(ch >= 5 ? 'uyennhu2' : 'uyennhu'),
+    huu: L(ch >= 6 && f('huu_lenngoi') ? 'huu2' : ch >= 5 ? 'huu' : 'huu0'),
+    con: L(f('canh_lenngoi') ? 'canh2' : kidAge >= 16 ? 'canh' : 'canh0'),
+    balao: L(f('balao_hau') ? 'balao_che_hau' : f('balao_su') ? 'balao_che_su' : 'balao_che'),
+    dao: L('dao_bong'),
+    mo: L('mo_bong'),
+    cungnu: L('cungnu'),
+  };
+}
 function imgsOf(l: Life): Partial<Record<CastK, CastImg>> {
+  if (isNg(l)) return ngImgs(l);
   const m: Partial<Record<CastK, CastImg>> = {};
   m.me = { dir: `/nv/${meStage(l)}`, face: 'r' };
   m.hanh = { dir: `/nv/${l.age >= 55 ? 'hanh3' : l.age >= 35 ? 'hanh2' : 'hanh'}`, face: 'l' };
@@ -193,6 +246,13 @@ const SHORT: Partial<Record<CastK, string>> = {
   mac: 'Mạc tướng quân',
 };
 function namesOf(card: NonNullable<ReturnType<typeof cardOf>>, l: Life): Partial<Record<CastK, string>> {
+  if (isNg(l)) {
+    const n: Partial<Record<CastK, string>> = { ...NG_CAST_NAME };
+    const con = l.kids[l.kids.length - 1];
+    if (con) n.con = `${con.sex === 'trai' ? 'Hoàng tử' : 'Công chúa'} ${con.name}`;
+    if (card.who && card.whoName) n[card.who] = card.whoName;
+    return n;
+  }
   const n: Partial<Record<CastK, string>> = { ...SHORT, meday: cap(originOf(l.origin).me) };
   const con = l.kids[l.kids.length - 1];
   n.con = con ? `${con.sex === 'trai' ? 'Hoàng tử' : 'Công chúa'} ${con.name}` : 'Hoàng tử';
@@ -210,6 +270,7 @@ export default function Play() {
   const [res, setRes] = useState<Result | null>(null);
   const [edict, setEdict] = useState<string | null>(null);
   const [book, setBook] = useState(false);
+  const [soan, setSoan] = useState(false);
   const [roll, setRoll] = useState(0);
   const [fresh, setFresh] = useState(false);
   const [tree, setTree] = useState(false);
@@ -342,14 +403,14 @@ export default function Play() {
         <TopBar back={{ label: 'Chọn thân phận', onClick: () => setOg(null) }} title={o.t} step={3} total={3} />
         <div className="c-page">
           <h1 className="c-title" style={{ fontSize: 28 }}>
-            {o.k === 'dan' ? 'Kiệu hoa qua cổng thành' : o.k === 'quan' ? 'Con tin của nhà họ Đoàn' : o.k === 'cung' ? 'Ba thúng thóc' : 'Công chúa của triều đã mất'}
+            {o.k === 'dan' ? 'Kiệu hoa qua cổng thành' : o.k === 'quan' ? 'Viện của chị' : o.k === 'cung' ? 'Ba thúng thóc' : 'Công chúa của triều đã mất'}
           </h1>
           <Scene
-            bgImg={`/bg/${o.place}/${o.k === 'quan' || o.k === 'chua' ? 'dem' : 'chieu'}.webp`}
+            bgImg={`/bg/${o.k === 'quan' ? 'thuphong' : o.place}/${o.k === 'quan' || o.k === 'chua' ? 'dem' : 'chieu'}.webp`}
             place={o.place}
             time={o.k === 'quan' || o.k === 'chua' ? 'dem' : 'chieu'}
-            cast={o.k === 'dan' ? ['me', 'meday'] : o.k === 'quan' ? ['me', 'quan'] : o.k === 'cung' ? ['me', 'mama'] : ['me', 'su']}
-            imgs={{ me: { dir: `/nv/${o.k === 'quan' ? 'quan1' : o.k === 'cung' ? 'cung1' : o.k === 'chua' ? 'chua1' : 'me1'}`, face: 'r' }, meday: { dir: '/nv/meday', face: 'l' }, quan: { dir: '/nv/quan', face: 'l' }, mama: { dir: '/nv/mama', face: 'l' }, su: { dir: '/nv/su', face: 'l' } }}
+            cast={o.k === 'dan' ? ['me', 'meday'] : o.k === 'quan' ? ['me', 'cha'] : o.k === 'cung' ? ['me', 'mama'] : ['me', 'su']}
+            imgs={{ cha: { dir: '/nv/cha', face: 'l' }, me: { dir: `/nv/${o.k === 'quan' ? 'hn1' : o.k === 'cung' ? 'cung1' : o.k === 'chua' ? 'chua1' : 'me1'}`, face: 'r' }, meday: { dir: '/nv/meday', face: 'l' }, quan: { dir: '/nv/quan', face: 'l' }, mama: { dir: '/nv/mama', face: 'l' }, su: { dir: '/nv/su', face: 'l' } }}
             looks={{ me: lookOf('me', { robe: o.k === 'cung' ? '#8a8f7a' : o.k === 'chua' ? '#c46a4a' : o.k === 'quan' ? '#6a9a6e' : undefined }) }}
             label={o.intro[0]}
           />
@@ -375,7 +436,17 @@ export default function Play() {
           <p className="c-note">
             Tên đặt theo lối thời Lý - Trần (như công chúa Phật Kim, Ngọc Kiều, Kiều Oanh). Trong cung không ai gọi tên thật, chỉ gọi theo họ: &quot;{o.ho} thị&quot;.
           </p>
-          <button type="button" className="c-btn" onClick={() => keep(newLife(name, o.k))}>
+          <button type="button" className="c-btn" onClick={() => {
+            const l = newLife(name, o.k);
+            if (o.k === 'quan') {
+              // bà lão chè đổi vai theo kết cục đã mở ở phần cô gái chè
+              const got = new Set((meta.cung as string[] | undefined) ?? []);
+              const hau = ['e_hoang_hau', 'e_mau_nghi', 'e_nhiep_mau', 'e_nu_de', 'e_thai_phi'].some((x) => got.has(x));
+              if (hau) l.flags.push('balao_hau');
+              else if (got.has('e_di_tu')) l.flags.push('balao_su');
+            }
+            keep(l);
+          }}>
             Bắt đầu: bước qua cổng thành
           </button>
         </div>
@@ -384,7 +455,7 @@ export default function Play() {
   }
 
   const rank = rankOf(life);
-  const chapter = CHAPTERS.find((c) => c.n === life.chapter)!;
+  const chapter = chapOf(life);
 
   /* ---------- hết đời: màn mở khóa kết cục ---------- */
   if (life.end && !res) {
@@ -419,7 +490,7 @@ export default function Play() {
             </div>
             <p className="c-sub">
               {e.dead ? 'Một cách chết' : e.tone === 'buon' ? 'Một kết buồn' : e.tone === 'vien' ? 'Một kết viên mãn' : 'Một đời người'}
-              {e.branch ? ' · ngõ cụt' : ''} · uy lực hạng {[...ALL_ENDINGS].sort((a, b) => (b.tier ?? ENDING_TIER[b.id] ?? 40) - (a.tier ?? ENDING_TIER[a.id] ?? 40)).findIndex((x) => x.id === e.id) + 1}/{ALL_ENDINGS.length} · {got.size} kết cục đã mở
+              {e.branch ? ' · ngõ cụt' : ''} · uy lực hạng {[...(isNg(life) ? NGHIEM_ENDINGS : ALL_ENDINGS)].sort((a, b) => (b.tier ?? ENDING_TIER[b.id] ?? 40) - (a.tier ?? ENDING_TIER[a.id] ?? 40)).findIndex((x) => x.id === e.id) + 1}/{(isNg(life) ? NGHIEM_ENDINGS : ALL_ENDINGS).length} · {got.size} kết cục đã mở
             </p>
             <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
             <p className="c-unlock-desc">{fillText(e.desc, life.origin)}</p>
@@ -478,12 +549,14 @@ export default function Play() {
   }
 
   /* ---------- màn chương: tổng kết chương vừa qua, mở màn chương mới ---------- */
-  if (life.showCh && !res) {
+  if (life.showCh && !res && !life.tales?.[0]?.skip) {
     const sc = life.showCh;
-    const next = CHAPTERS.find((c) => c.n === sc.to)!;
-    const prevCh = sc.from ? CHAPTERS.find((c) => c.n === sc.from!.ch) : null;
+    const next = chapOf(life, sc.to);
+    const prevCh = sc.from ? chapOf(life, sc.from.ch) : null;
     const go = () => keep({ ...life, showCh: undefined });
-    const REL: NumK[] = ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'];
+    const ng = isNg(life);
+    const REL: NumK[] = ng ? ['vua', 'cha', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc'] : ['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'];
+    const NG_REL: Partial<Record<NumK, [CastK, string]>> = { vua: ['vua', 'Hoàng thượng'], cha: ['cha', 'Cha'], thaihau: ['thaihau', 'Thái hậu'], hoanghau: ['hoanghau', 'Hoàng hậu'], thucphi: ['uyennhu', 'Quý phi Hà'], hanh: ['luavang', 'Lụa Vàng'], phuc: ['kiem', 'Chưởng sự Kiệm'] };
     const STAT: NumK[] = ['duc', 'sac', 'the', 'an', 'muu'];
     const looks = looksOf(life);
     return (
@@ -547,11 +620,11 @@ export default function Play() {
                   const a = sc.from!.n[k];
                   const b = sc.end!.n[k];
                   const d = b - a;
-                  const ck = k as CastK;
+                  const ck = ng ? NG_REL[k]![0] : (k as CastK);
                   return (
                     <div key={k} className={Math.abs(d) >= 8 ? 'big' : ''}>
                       <FaceImg dir={faceDir(ck, life)} size={54} mood={b >= 30 ? 'vui' : b <= -30 ? 'gian' : d <= -8 ? 'lo' : 'binh'} />
-                      <b>{k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]}</b>
+                      <b>{ng ? NG_REL[k]![1] : k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]}</b>
                       <small>
                         {feelOf(k, a) === feelOf(k, b) ? (
                           <>
@@ -611,24 +684,28 @@ export default function Play() {
     );
   }
 
-  if (life.tales?.length && !res && !life.showCh && !life.end) {
+  if (life.tales?.length && !res && (!life.showCh || life.tales[0].skip) && !life.end) {
     const tl = life.tales[0];
     const tc = tl.card ? cardOf(tl.card) : null;
     const rv = tl.riv ? RIVALS.find((x) => x.k === tl.riv) : null;
     const scene = tl.s
       ? { place: 'vien' as PlaceK, time: tl.s.time, cast: tl.s.cast, img: tl.s.bg, rain: tl.s.rain }
       : tc
-        ? { place: tc.place, time: tc.time ?? 'ngay', cast: tc.cast.filter((c) => c !== 'me').slice(0, 2) as CastK[], img: bgOf(tc) ?? tc.place, rain: false }
+        ? { place: tc.place, time: tc.time ?? 'ngay', cast: tc.cast.filter((c) => c !== 'me').slice(0, 2) as CastK[], img: tc.img ?? bgOf(tc) ?? tc.place, rain: false }
         : { place: 'vien' as PlaceK, time: 'chieu' as const, cast: rv ? [rv.cast as CastK] : ([] as CastK[]), img: 'vien', rain: false };
     const go = () => keep({ ...life, tales: life.tales!.slice(1) });
+    const skipAll = () => keep({ ...life, tales: life.tales!.filter((x) => !x.skip) });
+    const base = imgsOf(life);
+    const timgs = { ...base, ...Object.fromEntries(Object.entries(tl.s?.imgs ?? {}).map(([k, d]) => [k, { dir: `/nv/${d}`, face: k === 'me' ? 'r' : 'l' }])) } as Partial<Record<CastK, CastImg>>;
     return (
       <main className="c-app c-tale">
         <div className="c-band" aria-hidden="true" />
         <div className="c-page">
-          <p className="c-tale-kicker">Lời kể</p>
+          <p className="c-tale-kicker">{tl.kicker ?? 'Lời kể'}</p>
           <h2 className="c-tale-title">{tl.t}</h2>
           <div className="c-tale-art">
-            <Scene bgImg={`/bg/${scene.img}/${scene.rain ? 'mua' : scene.time}.webp`} place={scene.place} time={scene.time} cast={scene.cast} rain={scene.rain} mood={rv ? 'buon' : 'binh'} looks={looksOf(life)} imgs={imgsOf(life)} label={tl.t} />
+            <Scene bgImg={`/bg/${scene.img}/${scene.rain ? 'mua' : scene.time}.webp`} place={scene.place} time={scene.time} cast={scene.cast} rain={scene.rain} mood={rv ? 'buon' : 'binh'} moods={tl.s?.moods} looks={looksOf(life)} imgs={timgs} label={tl.t} />
+            {tl.s?.prop && <img className="c-tale-prop" src={`/prop/${tl.s.prop}.webp`} alt="" />}
           </div>
           {tl.lines.map((x, i) => (
             <p key={i} className={`c-tale-line ${i === 0 ? 'c-tale-drop' : ''}`} style={{ animationDelay: `${0.3 + i * 0.9}s` }}>
@@ -638,6 +715,11 @@ export default function Play() {
           <button type="button" className="c-btn c-tale-line" style={{ animationDelay: `${0.3 + tl.lines.length * 0.9}s` }} onClick={go}>
             Đọc tiếp
           </button>
+          {tl.skip && life.tales.filter((x) => x.skip).length > 1 && (
+            <button type="button" className="c-btn ghost c-tale-line" style={{ animationDelay: '0.3s' }} onClick={skipAll}>
+              Bỏ qua phần mở đầu
+            </button>
+          )}
         </div>
       </main>
     );
@@ -684,18 +766,18 @@ export default function Play() {
         <div className="c-when">
           <strong>{ageOf(life)} tuổi</strong>
           <small>
-            {ERA} năm {yearOf(life)}
+            {eraOf(life)} năm {yearOf(life)}
           </small>
           <small>{chapter.t}</small>
         </div>
       </div>
       <div className="c-stats">{(['duc', 'sac', 'the', 'an', 'muu'] as NumK[]).map(stat)}</div>
-      <ThreatStrip life={life} onOpen={() => setBook(true)} />
+      {isNg(life) ? <SoAnStrip life={life} onOpen={() => setSoan(true)} /> : <ThreatStrip life={life} onOpen={() => setBook(true)} />}
 
       {card && (
         <>
           <div className="c-scenebox" key={`s${card.id}${life.seen.length}`}>
-            <Scene bgImg={`/bg/${bgOf(card) ?? card.place}/${rainOf(card) ? 'mua' : card.time ?? 'ngay'}.webp`} place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} imgs={imgsOf(life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
+            <Scene bgImg={`/bg/${card.img ?? bgOf(card) ?? card.place}/${rainOf(card) ? 'mua' : card.time ?? 'ngay'}.webp`} place={card.place} time={card.time ?? 'ngay'} cast={card.cast} looks={looksOf(life)} mood={card.mood} moods={card.moods} names={namesOf(card, life)} imgs={imgsOf(life)} bg={bgOf(card)} season={seasonOf(card, life)} rain={rainOf(card)} wind={windOf(card)} label={fillText(`${card.title}. ${card.text.join(' ')}`, life.origin)} />
           </div>
           {!res && (
             <>
@@ -704,7 +786,7 @@ export default function Play() {
                 <div className="c-roll" />
                 <div className="c-sheet">
                   <div className="c-tag">
-                    <span>{card.who && card.who !== 'me' ? (card.whoName ?? (card.who === 'meday' ? cap(originOf(life.origin).me) : CAST_NAME[card.who])) : fillText(card.title, life.origin)}</span>
+                    <span>{card.who && card.who !== 'me' ? (card.whoName ?? (card.who === 'meday' ? cap(originOf(life.origin).me) : (isNg(life) ? NG_CAST_NAME[card.who] : undefined) ?? CAST_NAME[card.who])) : fillText(card.title, life.origin)}</span>
                     {card.who && card.who !== 'me' && <small>{fillText(card.title, life.origin)}</small>}
                   </div>
                   {card.lead && <p className="c-lead">{fillText(card.lead, life.origin)}</p>}
@@ -718,7 +800,7 @@ export default function Play() {
                 <div className="c-roll" />
               </div>
               <p className="c-ask c-in">
-                Năm {ERA} thứ {yearOf(life)}. Bạn sẽ làm gì?
+                Năm {eraOf(life)} thứ {yearOf(life)}. Bạn sẽ làm gì?
               </p>
               <div className="c-choices c-in" key={`c${card.id}${life.seen.length}`}>
                 {opts.map(({ c, open }, i) => (
@@ -750,6 +832,11 @@ export default function Play() {
           Trang đầu
         </Link>
         <MusicButton />
+        {isNg(life) && (
+          <button type="button" onClick={() => setSoan(true)}>
+            Sổ án
+          </button>
+        )}
         <button type="button" className="main" onClick={() => setBook(true)}>
           Sổ hậu cung
         </button>
@@ -766,6 +853,20 @@ export default function Play() {
             <button type="button" className="c-btn" onClick={() => setEdict(null)}>
               Tạ ơn
             </button>
+          </div>
+        </div>
+      )}
+
+      {soan && (
+        <div className="c-veil" onClick={() => setSoan(false)}>
+          <div className="c-panel c-soan" role="dialog" aria-modal="true" aria-label="Sổ án" onClick={(e) => e.stopPropagation()}>
+            <header>
+              <h2>Sổ án</h2>
+              <button type="button" onClick={() => setSoan(false)}>
+                Đóng
+              </button>
+            </header>
+            <SoAn life={life} faceOf={(k) => faceDir(k, life)} />
           </div>
         </div>
       )}
@@ -790,16 +891,20 @@ export default function Play() {
                 {life.kids.length ? life.kids.map((k) => `${k.sex === 'trai' ? 'Hoàng tử' : 'Công chúa'} ${k.name} (${ageOf(life) - k.born} tuổi)`).join(', ') : 'Chưa có con.'}
               </p>
             </section>
-            <section>
-              <h3>Bàn cờ mối nguy</h3>
-              <ThreatBoard life={life} />
-            </section>
+            {!isNg(life) && (
+              <section>
+                <h3>Bàn cờ mối nguy</h3>
+                <ThreatBoard life={life} />
+              </section>
+            )}
             <section>
               <h3>Lòng người</h3>
               <div className="c-rel">
-                {(['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as NumK[]).map((k) => (
-                  <FragmentRow key={k} label={k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]} v={life.n[k]} feel={feelOf(k, life.n[k])} />
-                ))}
+                {isNg(life)
+                  ? ([['vua', 'Hoàng thượng'], ['cha', 'Cha'], ['thaihau', 'Thái hậu'], ['hoanghau', 'Hoàng hậu'], ['thucphi', 'Quý phi Hà'], ['hanh', 'Lụa Vàng'], ['phuc', 'Chưởng sự Kiệm']] as [NumK, string][]).map(([k, t]) => <FragmentRow key={k} label={t} v={life.n[k]} feel={feelOf(k, life.n[k])} />)
+                  : (['vua', 'thaihau', 'hoanghau', 'thucphi', 'hanh', 'phuc', 'quan', 'tuong'] as NumK[]).map((k) => (
+                      <FragmentRow key={k} label={k === 'vua' ? 'Hoàng thượng' : NUM_LABEL[k]} v={life.n[k]} feel={feelOf(k, life.n[k])} />
+                    ))}
               </div>
             </section>
             <section>

@@ -17,7 +17,8 @@ export type RelK =
   | 'phuc' // Phúc, thái giám giữ sổ và treo đèn
   | 'quan' // phe quan văn
   | 'tuong'; // phe võ tướng
-export type NumK = StatK | RelK | 'tien';
+/** hiem: kẻ thủ ác biết bạn đào tới đâu (phần Con tin họ Nghiêm); cha: lòng tin của cha */
+export type NumK = StatK | RelK | 'tien' | 'hiem' | 'cha';
 /** mối nguy trên đường lên ngôi: Thục phi, Hoàng hậu (chắn ngôi hậu), Lệ tần (tân sủng), Thái phó Tôn (quyền thần), Hoàng tử Nghĩa (tranh ngôi Đông cung) */
 export type RivalK = 'thucphi' | 'hoanghau' | 'ninh' | 'hienphi' | 'uyentan' | 'letan' | 'thaipho' | 'nghia' | 'tao' | 'xuanlan' | 'mac';
 /** an: chưa lộ mặt; manh: đang lộng hành; yeu: thất thế; giang: bị giáng, bị đày; chet: đã chết; phuc: đã quy phục */
@@ -37,6 +38,20 @@ export type MoodK = 'vui' | 'binh' | 'lo' | 'buon' | 'gian' | 'so' | 'dac';
 /** ai đứng trong cảnh */
 export type CastK =
   | 'me' // nhân vật chính
+  // phần Con tin họ Nghiêm
+  | 'thanh' // chị Thanh
+  | 'cha' // Thượng thư Nghiêm
+  | 'thaisu' // Thái sư Hà
+  | 'lymac' // Ngự sử Lý Mặc
+  | 'kiem' // chưởng sự Kiệm
+  | 'thaiy' // Thái y Thẩm
+  | 'nhumau' // nhũ mẫu Tần
+  | 'luavang' // nữ tì Lụa Vàng
+  | 'uyennhu' // Quý phi Hà Uyển Như
+  | 'huu' // Hoàng trưởng tử Hựu
+  | 'balao' // bà lão chè
+  | 'dao' // bóng Đào
+  | 'mo' // sư cô Mơ
   | 'mama' // ma ma dạy lễ
   | 'vua'
   | 'thaihau'
@@ -99,6 +114,12 @@ export interface Fx {
   chapter?: number;
   /** đổi mối nguy: cộng uy hiếp/chứng cứ, hoặc đặt trạng thái (giang, chet, phuc...) */
   riv?: Partial<Record<RivalK, { th?: number; ev?: number; st?: RivalSt }>>;
+  /** phần Con tin họ Nghiêm: mở một vụ án */
+  mo?: string;
+  /** nhặt được manh mối (id manh mối) */
+  clue?: string[];
+  /** xử án: vụ nào, buộc tội ai (khóa nghi phạm); 'tu' = kết luận tự vẫn/không ai, 'gac' = gác án */
+  accuse?: { an: string; who: string };
   /** sự kiện nhiều hồi: hiện ngay thẻ hồi tiếp theo (id thẻ có step: true), thời gian không trôi trừ khi đặt years */
   next?: string;
 }
@@ -153,6 +174,10 @@ export interface Card {
   urgent?: boolean;
   /** thẻ là một hồi giữa sự kiện nhiều hồi: không rút ngẫu nhiên, chỉ tới bằng fx.next */
   step?: boolean;
+  /** thẻ thuộc phần chơi riêng (vd 'nghiem'); không ghi = phần cô gái chè */
+  part?: 'nghiem';
+  /** cảnh nền ảnh (thư mục trong /bg), đè lên cảnh đoán từ place/bg */
+  img?: string;
   /** được lặp lại trong một đời (mặc định không) */
   repeat?: boolean;
   /** ngã rẽ lớn của tuyến phụ: xếp ngay sau (hoặc trước) ngã rẽ có id này trong cùng chặng */
@@ -261,7 +286,9 @@ export interface Life {
   /** màn chương đang chờ hiện: tổng kết chương vừa xong (nếu có) và mở màn chương mới */
   showCh?: { to: number; from?: ChapterSnap; end?: ChapterSnap; picks?: string[] };
   /** lời kể đang chờ hiện (trang kể chuyện giữa hai cảnh) */
-  tales?: { t: string; lines: string[]; card?: string; riv?: RivalK; s?: { bg: string; time: TimeK; cast: CastK[]; rain?: boolean } }[];
+  tales?: { t: string; lines: string[]; card?: string; riv?: RivalK; kicker?: string; skip?: boolean; s?: { bg: string; time: TimeK; cast: CastK[]; rain?: boolean; imgs?: Partial<Record<CastK, string>>; moods?: Partial<Record<CastK, MoodK>>; prop?: string } }[];
+  /** phần Con tin họ Nghiêm: các vụ án (tay sai bốc lúc đầu đời, manh mối đã nhặt, đã xử chưa) */
+  an?: Record<string, { tay: string; mo?: number; clues: string[]; xu?: { who: string; dung: boolean; du: boolean } }>;
   /** bàn cờ mối nguy */
   riv?: Record<RivalK, RivalState>;
   /** kẻ thù chính của chương đang chơi (thẻ của họ ra dày hơn) */

@@ -88,6 +88,8 @@ export const NUM_LABEL: Record<NumK, string> = {
   quan: 'Quan văn',
   tuong: 'Võ tướng',
   tien: 'Tiền',
+  hiem: 'Hiểm',
+  cha: 'Lòng cha',
 };
 
 /** tên người trong cảnh (hiện trên thẻ người nói) */
@@ -140,7 +142,9 @@ import { ENDINGS_FACTION_HP } from './content/faction_hp';
 import { ENDINGS_BRANCH_B } from './content/branch_b';
 import { ENDINGS_FEUD } from './content/feud';
 export const ALL_ENDINGS: Ending[] = [...ENDINGS_FACTION_TP, ...ENDINGS_FACTION_HAU, ...ENDINGS_FACTION_HP, ...ENDINGS_RIVALS_A, ...ENDINGS_RIVALS_B, ...ENDINGS_RIVALS_C, ...ENDINGS_BRANCH_A, ...ENDINGS_BRANCH_B, ...ENDINGS_ARCS, ...ENDINGS_EVENTS, ...ENDINGS, ...ENDINGS_VN, ...ENDINGS_CN, ...ENDINGS_QUAN, ...ENDINGS_CUNG, ...ENDINGS_CHUA, ...ENDINGS_DAN, ...ENDINGS_FEUD];
-export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id);
+import { NGHIEM_ENDINGS } from './nghiem/endings';
+export { NGHIEM_ENDINGS };
+export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id) ?? NGHIEM_ENDINGS.find((e) => e.id === id);
 
 /** tên con */
 export const SON_NAMES = ['Khải', 'Hạo', 'Thuyên', 'Diễn', 'Tuấn', 'Lâm'];
