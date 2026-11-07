@@ -296,11 +296,11 @@ export const NG_CH3: Card[] = [
     title: 'Lò sắc thuốc',
     text: ['Lò sắc thuốc của viện bạn đặt ở bếp sau thái y viện. Tro chưa đổ, bã chưa vớt.', 'Nhũ mẫu níu áo: "Tiểu thư, đừng tự vào chỗ ấy."'],
     choices: [
-      { t: 'Tự vào bới lò, ngay đêm nay', fx: { d: { hiem: 10, sac: -2 }, clue: ['a3_ba'], flag: ['co_ba'] }, note: 'Trong bã có mấy lát rễ màu tím, không nằm trong đơn nào. Sổ bếp ghi đêm ấy chỉ {C:a3_ba} được chạm vào lò.' },
+      { t: 'Tự vào bới lò, ngay đêm nay', fx: { d: { hiem: 10, sac: -2 }, clue: ['a3_ba'], flag: ['co_ba'] }, note: 'Trong bã có mấy lát rễ màu tím, không nằm trong đơn nào. Sổ bếp ghi đêm ấy chỉ {C:a3_ba} được chạm vào lò. {GIA:a3_ba}' },
       {
         t: 'Nhờ nhũ mẫu giả đi xin than',
         fx: { d: { hiem: 5 }, clue: ['a3_ba'], flag: ['co_ba'] },
-        note: 'Bà mang về một gói bã có mấy lát rễ tím lạ. Bà còn hỏi được: đêm ấy chỉ {C:a3_ba} được chạm vào lò.',
+        note: 'Bà mang về một gói bã có mấy lát rễ tím lạ. Bà còn hỏi được: đêm ấy chỉ {C:a3_ba} được chạm vào lò. {GIA:a3_ba}',
         risk: { p: 0.3, fail: { d: { hiem: 6 } }, failNote: 'Nhũ mẫu về tay không: lò vừa được ai đó cọ sạch, tro còn ấm.' },
       },
       {
@@ -308,7 +308,7 @@ export const NG_CH3: Card[] = [
         need: { not: ['di_luavang', 'chet_luavang'] },
         lockHint: 'Lụa Vàng không còn ở đây',
         fx: { d: { hanh: 4, hiem: 4 }, clue: ['a3_ba'], flag: ['co_ba'] },
-        note: 'Lụa Vàng mang về một nắm bã còn ướt, có rễ tím lạ. Bạn dò sổ bếp: đêm ấy chỉ {C:a3_ba} được chạm vào lò.',
+        note: 'Lụa Vàng mang về một nắm bã còn ướt, có rễ tím lạ. Bạn dò sổ bếp: đêm ấy chỉ {C:a3_ba} được chạm vào lò. {GIA:a3_ba}',
         risk: { p: 0.25, fail: { d: { hanh: -6, hiem: 4 } }, failNote: 'Lụa Vàng về bảo lò đã sạch trơn. Nó nói nhanh quá, như đã tập trước.' },
       },
     ],
@@ -330,8 +330,8 @@ export const NG_CH3: Card[] = [
     title: 'Mùi hạt cau',
     text: ['Cung nữ quét bếp thuốc nói: đêm thuốc có vị lạ, cửa bếp còn nồng mùi hạt cau sống.', '"Trong bếp ai cũng ăn trầu, nhưng hạt cau sống thì..." Nó ngừng lại.'],
     choices: [
-      { t: 'Kín đáo dúi 10 quan, hỏi riêng', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 4 }, clue: ['a3_cau'] }, note: 'Canh hai có người vào bếp một mình, ở rất lâu, người nồng mùi cau. Mọi điều nó kể trỏ về {C:a3_cau}.' },
-      { t: 'Hỏi thẳng giữa sân', fx: { d: { hiem: 12, duc: -2 }, clue: ['a3_cau'] }, note: 'Nó lắp bắp kể về mùi cau sống, và trỏ về {C:a3_cau}. Cả bếp thuốc biết bạn đang hỏi.' },
+      { t: 'Kín đáo dúi 10 quan, hỏi riêng', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 4 }, clue: ['a3_cau'] }, note: 'Canh hai có người vào bếp một mình, ở rất lâu, người nồng mùi cau. Mọi điều nó kể trỏ về {C:a3_cau}. {GIA:a3_cau}' },
+      { t: 'Hỏi thẳng giữa sân', fx: { d: { hiem: 12, duc: -2 }, clue: ['a3_cau'] }, note: 'Nó lắp bắp kể về mùi cau sống, và trỏ về {C:a3_cau}. Cả bếp thuốc biết bạn đang hỏi. {GIA:a3_cau}' },
       { t: 'Để nó yên', fx: { d: { duc: 2 } }, note: 'Bạn đi qua. Nó cúi gằm, quét mãi một chỗ.' },
     ],
   },
@@ -355,10 +355,10 @@ export const NG_CH3: Card[] = [
       {
         t: 'Ép ông khai ngay tại đây',
         fx: { d: { hiem: 10, muu: 3 }, clue: ['a3_don'], flag: ['ep_thaiy'] },
-        note: 'Ông khai rất khẽ: có người bắt ông kê thêm một vị, còn người bỏ vị ấy vào lò là {C:a3_don}.',
+        note: 'Ông khai rất khẽ: có người bắt ông kê thêm một vị, còn người bỏ vị ấy vào lò là {C:a3_don}. {GIA:a3_don}',
         risk: { p: 0.3, fail: { d: { hiem: 8 }, flag: ['ep_thaiy', 'chet_thaiy'] }, failNote: 'Ông không khai. Đêm ấy người ta tìm thấy ông treo cổ trong kho dược liệu, áo vẫn mặc chỉnh tề.' },
       },
-      { t: 'Hứa đưa vợ con ông ra khỏi thành, rồi nghe ông nói', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, hiem: 6, duc: 2 }, clue: ['a3_don'], flag: ['cuu_thaiy'] }, note: 'Ông khóc như trẻ con, rồi kể: có người bắt ông thêm một vị vào đơn. Người bỏ vị ấy vào lò là {C:a3_don}.' },
+      { t: 'Hứa đưa vợ con ông ra khỏi thành, rồi nghe ông nói', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, hiem: 6, duc: 2 }, clue: ['a3_don'], flag: ['cuu_thaiy'] }, note: 'Ông khóc như trẻ con, rồi kể: có người bắt ông thêm một vị vào đơn. Người bỏ vị ấy vào lò là {C:a3_don}. {GIA:a3_don}' },
       { t: 'Đỡ ông dậy, không hỏi nữa', fx: { d: { duc: 3 }, flag: ['giu_thaiy'] }, note: 'Ông vái ba vái rồi đi giật lùi ra cửa. Bạn biết mình vừa để vuột một người biết chuyện.' },
       { t: 'Báo cho người của Thái sư', need: { flags: ['no_thaisu'] }, lockHint: 'Cần đã từng nợ nhà họ Hà', fx: { rank: 1, d: { the: 6, duc: -10 }, end: 'n_24' }, note: 'Thái sư cho bắt Thái y ngay trong đêm, lấy lời khai để hặc nhà Lương. Bạn được phong Phi. Không ai nhắc đến vợ con ông nữa.' },
     ],
@@ -380,8 +380,8 @@ export const NG_CH3: Card[] = [
     title: 'Nén bạc trong vạt áo',
     text: ['Cung nữ giặt áo bắt được một nén bạc khâu trong một vạt áo gửi giặt từ bếp thuốc.', 'Bạc mới, có dấu kho, không phải thứ người hầu nên có.'],
     choices: [
-      { t: 'Mua lại nén bạc, 15 quan', need: { num: { tien: [15, 99999] } }, lockHint: 'Cần 15 quan', fx: { d: { tien: -15, hiem: 4 }, clue: ['a3_bac'] }, note: 'Nén bạc lạnh và nặng, dấu kho nội phủ. Sổ gửi giặt ghi chiếc áo ấy của {C:a3_bac}.' },
-      { t: 'Bảo nó khâu lại như cũ, chỉ nhớ dấu kho', fx: { d: { muu: 3, hiem: 6 }, clue: ['a3_bac'] }, note: 'Nó khâu lại từng mũi. Sổ gửi giặt ghi chiếc áo ấy của {C:a3_bac}.' },
+      { t: 'Mua lại nén bạc, 15 quan', need: { num: { tien: [15, 99999] } }, lockHint: 'Cần 15 quan', fx: { d: { tien: -15, hiem: 4 }, clue: ['a3_bac'] }, note: 'Nén bạc lạnh và nặng, dấu kho nội phủ. Sổ gửi giặt ghi chiếc áo ấy của {C:a3_bac}. {GIA:a3_bac}' },
+      { t: 'Bảo nó khâu lại như cũ, chỉ nhớ dấu kho', fx: { d: { muu: 3, hiem: 6 }, clue: ['a3_bac'] }, note: 'Nó khâu lại từng mũi. Sổ gửi giặt ghi chiếc áo ấy của {C:a3_bac}. {GIA:a3_bac}' },
     ],
   },
   {

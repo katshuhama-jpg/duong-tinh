@@ -4,6 +4,7 @@ import type { CastK, Life } from '@/lib/cung/types';
 import { CASES, KIND, clueOf, clueSet, knows, strength, suspectName } from '@/lib/cung/nghiem/cases';
 import { TRUTHS } from '@/lib/cung/nghiem/world';
 import { dauMoi, vayCanh, VC_KHEP, VC_NOI } from '@/lib/cung/nghiem/daumoi';
+import { canDoubt } from '@/lib/cung/engine';
 
 const LAMP = { mo: 'Mờ', vua: 'Vừa', sang: 'Sáng' };
 
@@ -32,7 +33,7 @@ export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k
   const tr = truthsOf(life);
   const dm = dauMoi(life);
   const vc = vayCanh(life);
-  const VC = { con: 'còn', nho: 'đã nhổ', lat: 'đã lật, chịu khai', dut: 'đã chết trước khi kịp khai' };
+  const VC = { con: 'còn', nho: 'đã nhổ', lat: 'đã lật, chịu khai', dut: 'đã mất trước khi kịp dùng' };
   return (
     <>
       <p className="c-note">
@@ -46,14 +47,20 @@ export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k
         </p>
       </section>
       <section>
-        <h3>Vây cánh kẻ đứng sau · {Math.max(0, vc.diem)}/8</h3>
+        <h3>Những bàn tay quanh hồ sơ của chị · {Math.max(0, vc.diem)}/8</h3>
         <p className="c-note">
-          Nhổ được {VC_NOI} trụ thì nói ra sự thật mới còn đường sống, {VC_KHEP} trụ mới khép được án. Giết người trước khi họ kịp khai chỉ làm đứt đầu mối. Xử oan một người thì mất một trụ đã nhổ.
+          Người giết chị không đứng một mình. Nhổ được {VC_NOI} trụ thì lời bạn nói ra mới có người giữ, {VC_KHEP} trụ mới khép được án. Giết người trước khi họ kịp khai chỉ làm đứt đầu mối. Xử oan một người thì mất một trụ đã nhổ.
         </p>
         <ul>
-          {vc.list.map((x) => (
+          {vc.list.map((x, i) => (
             <li key={x.k} style={{ opacity: x.st === 'con' ? 0.6 : 1 }}>
-              {x.t}: {VC[x.st]}
+              {x.lo ? (
+                <>
+                  {x.t}: {VC[x.st]}
+                </>
+              ) : (
+                <>Trụ thứ {i + 1}: chưa rõ</>
+              )}
             </li>
           ))}
         </ul>
@@ -64,6 +71,7 @@ export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k
         .reverse()
         .map((c) => {
           const st = life.an![c.id];
+          const left = Math.max(0, dm.cap - (st.cd ?? 0));
           return (
             <section key={c.id}>
               <h3>
@@ -102,8 +110,8 @@ export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k
                         {tu && <> <small>Có qua tay kẻ thù, có thể giả.</small></>}
                         {nghi && <> <small>Bạn đang nghi, không tính.</small></>}
                         {!st.xu && onDoubt && (
-                          <button type="button" className="c-soan-nghi" onClick={() => onDoubt(id)}>
-                            {nghi ? 'Thôi nghi' : 'Nghi manh mối này'}
+                          <button type="button" className="c-soan-nghi" disabled={!canDoubt(life, id)} onClick={() => onDoubt(id)}>
+                            {nghi ? 'Thôi nghi' : 'Nghi manh mối này (tốn một lần dò)'}
                           </button>
                         )}
                       </li>
@@ -113,12 +121,14 @@ export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k
               ) : (
                 <p className="c-note">Chưa có manh mối nào.</p>
               )}
+              {!st.xu && left === 0 && <p className="c-note">Không còn ai để hỏi. Bạn chỉ còn những gì đã có trong tay.</p>}
               {!st.xu && <p className="c-note">Án vững khi có ít nhất hai loại chứng cùng trỏ về một người, và có chứng then chốt. Đèn sáng chưa chắc là đúng người: có thể bạn đang bị gài.</p>}
             </section>
           );
         })}
       <section>
         <h3>Hồ sơ chị Thanh · {tr.filter((x) => x.ok).length}/12</h3>
+        {tr.some((x) => !x.ok) && <p className="c-note">Còn {tr.filter((x) => !x.ok).length} mảnh chưa tìm được.</p>}
         <ul>
           {tr.map((x, i) => (
             <li key={i} style={{ opacity: x.ok ? 1 : 0.5 }}>

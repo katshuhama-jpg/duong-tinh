@@ -6,7 +6,7 @@ import MusicButton from '@/components/cung/MusicButton';
 import TopBar from '@/components/cung/TopBar';
 import Scene, { Person, lookOf, type BgK, type CastImg, type Look, type SeasonK } from '@/components/cung/Scene';
 import { fanfare, playTrack, trackFor } from '@/lib/cung/music';
-import { alliesOf, chapOf, isNg, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
+import { alliesOf, chapOf, doubt, isNg, viewCard, cardOf, choicesOf, choose, newLife, rankOf, rewind, rewindTo, sons, type Result } from '@/lib/cung/engine';
 import { FateTree, LifeMarks, type TreePath } from '@/components/cung/Tree';
 import { artOf } from '@/lib/cung/art';
 import { ENDING_TIER } from '@/lib/cung/ending_tier';
@@ -495,7 +495,7 @@ export default function Play() {
               {e.branch ? ' · ngõ cụt' : ''} · uy lực hạng {[...(isNg(life) ? NGHIEM_ENDINGS : ALL_ENDINGS)].sort((a, b) => (b.tier ?? ENDING_TIER[b.id] ?? 40) - (a.tier ?? ENDING_TIER[a.id] ?? 40)).findIndex((x) => x.id === e.id) + 1}/{(isNg(life) ? NGHIEM_ENDINGS : ALL_ENDINGS).length} · {got.size} kết cục đã mở
             </p>
             <h2 className={e.dead ? 'dead' : ''}>{fillText(e.name, life.origin)}</h2>
-            <p className="c-unlock-desc">{fillText(e.desc, life.origin)}</p>
+            <p className="c-unlock-desc">{fillText(life.endDesc ?? e.desc, life.origin)}</p>
             {art?.story && <p className="c-prose c-unlock-story">{fillText(art.story, life.origin)}</p>}
             <p className="c-note">
               {rank.t} {originOf(life.origin).ho} thị ({life.name}), {ageOf(life)} tuổi · {sons(life) ? `${sons(life)} hoàng tử` : 'không có hoàng tử'}
@@ -876,9 +876,9 @@ export default function Play() {
               life={life}
               faceOf={(k) => faceDir(k, life)}
               onDoubt={(id) => {
-                // nghi / thôi nghi một manh mối: không tính nó vào cán cân xử án
-                const f = `nghi_${id}`;
-                keep({ ...life, flags: life.flags.includes(f) ? life.flags.filter((x) => x !== f) : [...life.flags, f] });
+                // nghi một manh mối tốn một lượt dò của vụ; thôi nghi không trả lại lượt
+                const nx = doubt(life, id);
+                if (nx) keep(nx);
               }}
             />
           </div>

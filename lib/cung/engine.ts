@@ -10,10 +10,10 @@ import { CRISIS } from './content/big';
 import { ALL_BIG, BRANCH_CARDS, SMALL, bigsOf } from './content/index';
 import { fillText, originOf } from './origins';
 import { NG_CARDS, ngBigsOf, NG_WRITTEN } from './nghiem/index';
-import { CASES, initCases, judge, suspectName, caseOf, clueSet } from './nghiem/cases';
+import { CASES, initCases, judge, suspectName, caseOf, clueSet, clueOf, isGia } from './nghiem/cases';
 import { NG_CHAPTERS, NG_ERA, NG_HIEM_END, NG_YEAR0, NG_ZERO_END } from './nghiem/world';
 import { NG_PROLOGUE, NG_TALES } from './nghiem/prologue';
-import { dauMoi, vayCanh, VC_NOI } from './nghiem/daumoi';
+import { dauMoi, vayCanh } from './nghiem/daumoi';
 
 /** phần Con tin họ Nghiêm (đường con quan) dùng kho thẻ riêng */
 export const isNg = (l: Pick<Life, 'origin'>) => l.origin === 'quan';
@@ -71,10 +71,24 @@ export function viewCard(c0: Card, l: Life): Card {
   };
 }
 
-/** chữ trong thẻ phần Nghiêm: {S:an1:tg} tên/dấu vết nghi phạm, {TAY:an1} tên tay sai thật */
+/** manh mối giả có một chi tiết lệch nhỏ, đọc kỹ thì thấy (theo loại chứng, chọn theo hạt giống) */
+const GIA_HINT: Record<'vat' | 'nhan' | 'khai', string[]> = {
+  vat: ['Có điều nó nằm ở chỗ quá dễ thấy, như có người muốn bạn thấy.', 'Có điều vết bẩn trên đó còn mới, mới hơn chuyện đã cũ.', 'Có điều nó sạch quá, như vừa được ai lau trước khi đặt xuống.'],
+  nhan: ['Người ấy kể trơn tru quá, như đã kể với ai đó mấy lần rồi.', 'Lúc kể, người ấy liếc ra cửa một lần, rồi nói nhanh hơn.', 'Người ấy nhớ rõ cả màu áo, rõ hơn người ta thường nhớ một đêm tối.'],
+  khai: ['Lời ấy đến tai bạn hơi nhanh, như có người dọn sẵn đường.', 'Người nói nhớ đúng từng chữ, như học thuộc.', 'Người nói không dám nhìn bạn ở chữ cuối.'],
+};
+function giaHint(l: Life, id: string) {
+  const cl = clueOf(id);
+  if (!cl || !l.an?.[cl.an]?.clues.includes(id) || !isGia(l, id)) return '';
+  const pool = GIA_HINT[cl.kind];
+  return pool[Math.floor(rand(l.seed, `giahint|${id}`) * pool.length)];
+}
+
+/** chữ trong thẻ phần Nghiêm: {S:an1:tg} tên/dấu vết nghi phạm, {TAY:an1} tên tay sai thật, {GIA:a1_hai} câu lệch khi manh mối ấy giả (rỗng khi thật hoặc chưa nhặt) */
 export function fillNg(x: string, l: Life) {
   const bl = l.flags.find((f) => f.startsWith('balao_ten:'))?.slice(10) || 'Diệp';
-  return x
+  const y = x.includes('{GIA:') ? x.replace(/\s*\{GIA:(a\d_\w+)\}/g, (_m, id: string) => { const h = giaHint(l, id); return h ? ' ' + h : ''; }) : x;
+  return y
     .replace(/\{BALAO\}/g, bl)
     .replace(/\{S:(an\d+):(\w+)\}/g, (_m, an: string, k: string) => suspectName(l, an, k))
     .replace(/\{C:(a\d_\w+)\}/g, (_m, id: string) => {
@@ -260,6 +274,7 @@ export function ok(c: Cond | undefined, l: Life) {
   if (c.sons != null && (c.sons === 0 ? sons(l) !== 0 : sons(l) < c.sons)) return false;
   if (c.kids != null && l.kids.length < c.kids) return false;
   if (c.vc != null && vayCanh(l).diem < c.vc) return false;
+  if (c.vcMax != null && vayCanh(l).diem > c.vcMax) return false;
   if (c.num) for (const [k, [a, b]] of Object.entries(c.num) as [NumK, [number, number]][]) if (l.n[k] < a || l.n[k] > b) return false;
   if (c.riv) {
     const rv = l.riv ?? rivInit(l.chapter);
@@ -445,13 +460,8 @@ export function ngGrid(l: Life) {
   const pos = Math.max(0, POS.findIndex(f) >= 0 ? POS.findIndex(f) : 2);
   const su = l.flags.filter((x) => /^su\d+$/.test(x)).length;
   const biet = f('su11') || su >= 8;
-  let lv = !biet ? 0 : f('ch7_noi') ? 2 : 1;
-  // nói ra sự thật khi vây cánh còn đông: bị bịt miệng, hoặc bị diệt khẩu
-  if (lv === 2) {
-    const vc = vayCanh(l).diem;
-    if (vc < 3) return 'n_136';
-    if (vc < VC_NOI) lv = 1;
-  }
+  // vây cánh còn đông thì cái giá được kể ngay trong chương 7 (thẻ khẩn), không đổi kết sau lưng người chơi
+  const lv = !biet ? 0 : f('ch7_noi') ? 2 : 1;
   return `n_${69 + pos * 3 + lv}`;
 }
 /** chỉ số chạm đáy: lần đầu hiện cảnh cảnh báo, lần sau thì khép đời */
@@ -459,14 +469,20 @@ function zeroCheck(l: Life) {
   if (l.end || !l.card || cardOf(l.card)?.step) return;
   if (isNg(l)) {
     const hit = (Object.keys(NG_ZERO_END) as NumK[]).find((k) => l.n[k] <= 0 && !(k === 'an' && l.chapter >= 5) && !(k === 'sac' && l.age >= 45));
-    const k = l.n.hiem >= 100 ? 'hiem' : hit;
+    // Hiểm: cảnh báo từ 85, chưa đợi đầy; đầy (100) sau khi đã được cảnh báo thì khép đời
+    const hw = l.flags.includes('canh0_hiem');
+    const k = (!hw && l.n.hiem >= HIEM_WARN) || l.n.hiem >= 100 ? 'hiem' : hit;
     if (!k) return;
     const warned = `canh0_${k}`;
     if (!l.flags.includes(warned)) {
       l.flags.push(warned);
       l.card = `w0n_${k}`;
       l.chain = { kind: 'small', hoi: 1 };
-    } else finish(l, k === 'hiem' ? NG_HIEM_END : NG_ZERO_END[k]!);
+    } else if (k === 'hiem') {
+      if (l.n.hiem < 100) return;
+      finish(l, NG_HIEM_END);
+      hiemEnd(l);
+    } else finish(l, NG_ZERO_END[k]!);
     return;
   }
   for (const k of Object.keys(ZERO_END) as NumK[]) {
@@ -481,6 +497,20 @@ function zeroCheck(l: Life) {
     } else finish(l, ZERO_END[k]!);
     return;
   }
+}
+/** Hiểm từ mức này thì hiện cảnh báo (một lần mỗi đời) */
+export const HIEM_WARN = 85;
+/** chết vì Hiểm: lời kể theo chương, điềm trỏ về lần dò cuối */
+function hiemEnd(l: Life) {
+  const ch = l.chapter;
+  l.endDesc =
+    ch <= 3
+      ? 'Bà đào quá sâu, quá nhanh, khi còn chưa biết ai đứng sau ai. Một đêm, chén trà trên bàn đã có người rót sẵn. Sổ cung ghi một chữ: bệnh. Như chị.'
+      : ch <= 6
+        ? 'Bà hỏi thêm một câu, mở thêm một hòm sổ, và người ta đếm được từng bước bà đi. Họ không cần công đường: một cơn sốt rét giữa mùa hè là đủ. Sổ cung ghi: cảm mạo, mất trong đêm.'
+        : 'Đến tuổi ấy bà vẫn còn hỏi. Người ta để bà ngủ một giấc dài, không ai đánh thức. Sổ cung ghi: thọ chung, và không ai đọc sổ của một bà già.';
+  const last = [...l.seen].reverse().map((id) => cardOf(id)).find((c) => c && clueCase(c));
+  l.omen = last ? `Lần dò cuối, "${fillNg(last.title, l)}", có người đứng ngoài cửa nghe hết.` : 'Bạn đã đào quá nhanh, và có người đếm từng bước.';
 }
 function finish(l: Life, id: string) {
   l.end = id === 'auto' ? autoEnding(l) : id;
@@ -524,12 +554,15 @@ export function choose(l0: Life, idx: number): Result {
   }
   let fx: Fx = ch.fx;
   let note = viewCard(card, l0).choices[idx].note ?? '';
+  // phần Nghiêm: chữ ghi chú điền sau khi đã nhặt manh mối (tên nghi phạm, câu lệch của manh mối giả)
+  let noteRaw = ch.note ?? '';
   if (['b5_bang', 'b5_bang2', 'b5_sung', 'b5_bang_x'].includes(card.id) && !l.flags.includes('vua_bang')) l.flags.push('vua_bang');
   // đã được gọi hầu vua: có thì mới có thể mang thai
   if (!l.flags.includes('da_hau') && (SUMMONED.has(card.id) || (card.cast.includes('vua') && /đèn đỏ|thị tẩm|ngủ lại/.test(card.text.join(' '))))) l.flags.push('da_hau');
   if (ch.risk && rand(l.seed, `risk|${card.id}|${idx}|${l.age}`) < ch.risk.p) {
     fx = ch.risk.fail;
     note = ch.risk.failNote;
+    noteRaw = ch.risk.failNote;
   }
   const before = { ...l.n };
   const rank0 = l.rank;
@@ -553,6 +586,13 @@ export function choose(l0: Life, idx: number): Result {
         l.an[fx.mo].tay = 'lv';
         l.flags.push('lv_tay');
       }
+      // Uyển Như là bạn, có con trai, phủ Hà còn giữ ấn: ma ma dâng thuốc đêm ấy cũng là người nàng cài vào.
+      // Thái hậu vẫn là người ra lệnh; Uyển Như biết mà để chén thuốc đi qua, chờ nhà Lương mang tội.
+      const unOk = f('dm_un') && f('un_con') && !f('thaisu_nga') && !f('vua_benh') && !['un_han', 'phe_un', 'chet_uyennhu', 'di_uyennhu'].some(f);
+      if (fx.mo === 'an5' && unOk && rand(l.seed, 'untay|an5') < 0.4) {
+        l.an.an5.tay = 'mm';
+        l.flags.push('un_tay');
+      }
     }
     // dò manh mối bằng thẻ nhỏ: tốn một lượt đầu mối; có kẻ thù trong số đầu mối thì họ cũng biết
     const cc = clueCase(card);
@@ -560,7 +600,7 @@ export function choose(l0: Life, idx: number): Result {
       l.an[cc].cd = (l.an[cc].cd ?? 0) + 1;
       const thu = dauMoi(l).thu.length;
       if (thu) {
-        l.n.hiem = clamp('hiem', (l.n.hiem ?? 0) + 2 + 2 * thu);
+        l.n.hiem = clamp('hiem', (l.n.hiem ?? 0) + 1 + thu);
         // qua tay kẻ thù: manh mối có thể là giả (trỏ sai người), người chơi không biết trừ khi tự nghi
         const st = l.an[cc];
         for (const id of fx.clue) {
@@ -572,7 +612,14 @@ export function choose(l0: Life, idx: number): Result {
     }
     for (const id of fx.clue ?? []) {
       const an = CASES.find((c) => c.clues.some((x) => x.id === id));
-      if (an && !l.an[an.id].clues.includes(id)) l.an[an.id].clues.push(id);
+      if (an && !l.an[an.id].clues.includes(id)) {
+        l.an[an.id].clues.push(id);
+        // nhũ mẫu Tần nói dối để che cha (kinh thánh 8.2.6): lời bà có khi kéo về phía nhẹ tội
+        if (id === 'a6_nm' && !l.an[an.id].gia?.includes(id) && rand(l.seed, 'nmdoi') < 0.5) {
+          l.an[an.id].gia = [...(l.an[an.id].gia ?? []), id];
+          l.flags.push('nm_noi_doi');
+        }
+      }
     }
     if (fx.accuse && l.an[fx.accuse.an] && !l.an[fx.accuse.an].xu) {
       const { an, who } = fx.accuse;
@@ -581,8 +628,17 @@ export function choose(l0: Life, idx: number): Result {
       l.flags.push(`xu_${an}`, `${an}_${j.kind}`);
       if (j.kind === 'thang') {
         caseNext = `${an}_khai`;
-        if (who === 'lv') l.flags.push(`lv_bi_bat_${an}`);
+        // người thân cận là tay sai: không có thẻ lời khai chung, thẻ riêng (than.ts) kể lời khai
+        if (who === 'lv') {
+          l.flags.push(`lv_bi_bat_${an}`);
+          caseNext = undefined;
+        }
+        if (an === 'an5' && who === 'mm' && l.flags.includes('un_tay')) l.flags.push('un_bi_bat_an5');
         l.n.hiem = Math.max(0, (l.n.hiem ?? 0) - 15);
+      } else if (j.kind === 'sot') {
+        // gọi đúng kẻ làm, chưa tới người ra lệnh: không phản công nặng, không đóng chữ vu
+        caseNext = `${an}_sot`;
+        l.n.hiem = clamp('hiem', l.n.hiem + 5);
       }
       else if (j.kind === 'phancong') {
         caseNext = `${an}_pc1`;
@@ -598,6 +654,7 @@ export function choose(l0: Life, idx: number): Result {
       if (caseNext && !cardOf(caseNext)) caseNext = undefined;
     }
   }
+  if (isNg(l)) note = fillNg(noteRaw, l);
   if (fx.rank) promote(l, fx.rank);
   const riv0 = JSON.stringify(l.riv ?? null);
   applyRiv(l, fx.riv);
@@ -665,7 +722,7 @@ export function choose(l0: Life, idx: number): Result {
     zeroCheck(l);
   }
   queueTale(l);
-  if (l.end && endingOf(l.end)?.dead) l.omen = card.omen ?? 'Có những điềm báo chỉ nhìn lại mới thấy.';
+  if (l.end && endingOf(l.end)?.dead) l.omen = l.omen || card.omen || 'Có những điềm báo chỉ nhìn lại mới thấy.';
 
   // hệ quả nhìn thấy được
   const parts: string[] = [];
@@ -691,6 +748,27 @@ export function choose(l0: Life, idx: number): Result {
   return { life: l, note: fillText(note, l.origin), delta: parts.slice(0, 5).join(' · '), ranked: l.rank > rank0 || (l0.flags.includes('cung_nga') && !l.flags.includes('cung_nga')) };
 }
 
+/**
+ * Nghi một manh mối (phần Nghiêm): tốn một lượt dò của vụ. Hết lượt thì không nghi được.
+ * Thôi nghi không trả lại lượt. Trả về null nếu không làm được.
+ */
+export function canDoubt(l: Life, id: string): boolean {
+  const cl = clueOf(id);
+  const st = cl ? l.an?.[cl.an] : undefined;
+  if (!cl || !st || st.xu || !st.clues.includes(id)) return false;
+  if (l.flags.includes(`nghi_${id}`)) return true;
+  return (st.cd ?? 0) < dauMoi(l).cap;
+}
+export function doubt(l: Life, id: string): Life | null {
+  if (!canDoubt(l, id)) return null;
+  const f = `nghi_${id}`;
+  if (l.flags.includes(f)) return { ...l, flags: l.flags.filter((x) => x !== f) };
+  const cl = clueOf(id)!;
+  const an = { ...l.an! };
+  an[cl.an] = { ...an[cl.an], cd: (an[cl.an].cd ?? 0) + 1 };
+  return { ...l, an, flags: [...l.flags, f] };
+}
+
 /** quay lại ngã rẽ thứ i trong cây số phận của đời này (chọn lại từ đó) */
 export function rewindTo(l: Life, i: number): Life | null {
   const m = l.marks?.[i];
@@ -701,6 +779,7 @@ export function rewindTo(l: Life, i: number): Life | null {
   b.back = null;
   b.end = null;
   b.omen = undefined;
+  b.endDesc = undefined;
   b.log.push({ age: Math.floor(b.age), t: 'Quay lại ngã rẽ, chọn lại một lần nữa.', k: 'note' });
   b.tales = undefined;
   return b;
@@ -714,6 +793,7 @@ export function rewind(l: Life): Life | null {
   b.back = null;
   b.end = null;
   b.omen = undefined;
+  b.endDesc = undefined;
   b.log.push({ age: Math.floor(b.age), t: 'Quay lại ngã rẽ. Lần này, nhớ lấy điềm báo.', k: 'note' });
   b.tales = undefined;
   return b;

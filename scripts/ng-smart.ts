@@ -1,5 +1,5 @@
 // người chơi "khéo": đào manh mối, chỉ xử khi đèn sáng, không thì gác án
-import { newLife, choose, cardOf, choicesOf } from '../lib/cung/engine';
+import { newLife, choose, cardOf, choicesOf, doubt } from '../lib/cung/engine';
 import { strength } from '../lib/cung/nghiem/cases';
 import { vayCanh, VC_NOI } from '../lib/cung/nghiem/daumoi';
 const N = Number(process.argv[2] ?? 1000);
@@ -17,7 +17,8 @@ for (let i = 0; i < N; i++) {
       // người chơi khéo: chưa ai sáng đèn thì thử nghi từng manh mối có qua tay kẻ thù
       const an = acc[0].x.fx.accuse!.an;
       const anyDu = () => acc.some((x) => !['tu', 'gac'].includes(x.x.fx.accuse!.who) && strength(l, an, x.x.fx.accuse!.who).du);
-      for (const id of l.an?.[an]?.tu ?? []) if (!anyDu() && !l.flags.includes(`nghi_${id}`)) l = { ...l, flags: [...l.flags, `nghi_${id}`] };
+      // nghi tốn một lượt dò: hết lượt thì thôi
+      for (const id of l.an?.[an]?.tu ?? []) if (!anyDu() && !l.flags.includes(`nghi_${id}`)) l = doubt(l, id) ?? l;
       pick = acc.find((x) => !['tu', 'gac'].includes(x.x.fx.accuse!.who) && strength(l, x.x.fx.accuse!.an, x.x.fx.accuse!.who).du) ?? acc.find((x) => x.x.fx.accuse!.who === 'gac');
     }
     // vây cánh còn đông thì không nói ra sự thật
@@ -26,7 +27,7 @@ for (let i = 0; i < N; i++) {
     l = choose(l, pick.j).life; t++;
   }
   ends[l.end!] = (ends[l.end!] ?? 0) + 1;
-  for (const f of l.flags) if (/^an\d_(thang|gai|phancong|gac|tu)$/.test(f)) kinds[f] = (kinds[f] ?? 0) + 1;
+  for (const f of l.flags) if (/^an\d_(thang|gai|phancong|gac|tu|sot)$/.test(f)) kinds[f] = (kinds[f] ?? 0) + 1;
   truths += l.flags.filter((f) => /^su\d+$/.test(f)).length; sons += l.kids.length;
 }
 console.log(Object.entries(ends).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${((100 * v) / N).toFixed(1)}%`).join('  '));

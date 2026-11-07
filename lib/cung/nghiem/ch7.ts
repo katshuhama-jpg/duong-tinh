@@ -20,6 +20,7 @@
  * chet_huu, thai_hau, nhiep, giu_lang, o_chua, mat_so_tandau, su1..su11, balao_hau, balao_su.
  */
 import type { Card, Life } from '../types';
+import { VC_KHEP, VC_NOI } from './daumoi';
 type TaleS = NonNullable<NonNullable<Life['tales']>[number]['s']>;
 
 const P = 'nghiem' as const;
@@ -164,6 +165,79 @@ const cuoiCard = (id: string, when: Card['when'], place: Card['place'], img: str
 });
 
 export const NG_CH7: Card[] = [
+  /* ---------------- luật vây cánh, kể thành chữ: nói ra sự thật khi những bàn tay quanh hồ sơ còn đông ----------------
+   * Ba thẻ khẩn đứng đầu chương để bật ngay khi bà vừa nói ra (ch7_noi). Thứ tự trong mảng là thứ tự xét:
+   * đủ vây cánh (từ VC_NOI) thì tờ sớ qua cửa; từ 3 đến dưới VC_NOI thì tờ sớ bị giữ lại; dưới 3 thì bị diệt khẩu. */
+  {
+    id: 'n7_vc_ok',
+    part: P,
+    urgent: true,
+    chapter: [7],
+    when: { flags: [G, 'ch7_noi'], not: ['n7_vcx'], vc: VC_NOI },
+    place: 'dien',
+    img: 'tamphap',
+    time: 'ngay',
+    cast: ['me'],
+    mood: 'binh',
+    who: 'me',
+    title: 'Tờ sớ qua cửa',
+    text: ['Điều bà nói ra đi qua ba cửa, không ai giữ lại. Những bàn tay từng giữ hồ sơ của chị, người đã khai, người đã ngã, người đã đi.', 'Lần đầu sau bốn mươi năm, không còn ai đủ sức bắt bà im.'],
+    choices: [
+      { t: 'Đứng nghe người ta đọc đến chữ cuối', fx: { flag: ['n7_vcx'], d: { duc: 2 } }, note: 'Quan đọc chậm, rõ từng chữ. Đến tên chị thì ông dừng một nhịp, như để ai cũng kịp nghe.' },
+      { t: 'Về viện, thắp hương cho chị', fx: { flag: ['n7_vcx'], d: { hiem: -6 } }, note: 'Khói hương thẳng. Ngoài cổng có tiếng người bàn tán, mà không ai đến gõ cửa viện bà.' },
+    ],
+  },
+  {
+    id: 'n7_vc_giu',
+    part: P,
+    urgent: true,
+    chapter: [7],
+    when: { flags: [G, 'ch7_noi'], not: ['n7_vcx'], vc: 3 },
+    place: 'phong',
+    img: 'thuphong',
+    time: 'dem',
+    cast: ['me'],
+    mood: 'lo',
+    who: 'me',
+    title: 'Tờ sớ bị giữ lại',
+    text: ['Điều bà vừa nói, Tông nhân phủ không chép vào sổ. Tờ sớ bị giữ lại, người giữ không ký tên, chỉ trả về một câu: "Chờ xét."', 'Quanh hồ sơ của chị vẫn còn những bàn tay chưa ai chặt. Bà đọc to đến đâu, họ cũng gấp lại được đến đó.'],
+    choices: [
+      { t: 'Gấp hồ sơ lại, chờ', fx: { flag: ['n7_vcx', 'bi_bit_mieng'], unflag: ['ch7_noi', 'n7_cong'], d: { hiem: -6 } }, note: '"Chờ xét" kéo dài đến hết đời bà. Điều bà đã nói ra trước Tông nhân phủ, sử quán không chép một chữ.' },
+      {
+        t: 'Gửi một bản sao cho Lý Mặc giữ',
+        need: { flags: ['quen_lymac'], not: ['chet_lymac'] },
+        lockHint: 'Cần quen Lý Mặc, và ông còn sống',
+        fx: { flag: ['n7_vcx', 'bi_bit_mieng', 'lm_giu'], unflag: ['ch7_noi', 'n7_cong'], d: { quan: 4, hiem: 4 } },
+        note: 'Lý Mặc nhét bản sao vào giữa bó sổ Đô sát viện: "Không đọc được bây giờ thì đọc sau. Sổ của Đô sát viện sống lâu hơn người."',
+      },
+      { t: 'Đòi lại tờ sớ, đòi cho bằng được', fx: { flag: ['n7_vcx', 'bi_bit_mieng'], unflag: ['ch7_noi', 'n7_cong'], d: { hiem: 20, the: -6 } }, note: 'Bà đứng ở cổng Tông nhân phủ ba ngày. Ngày thứ tư có chỉ: Thái phi tuổi cao, cho nghỉ ngơi, không tiếp ai. Cổng viện bà có người đứng gác.' },
+    ],
+  },
+  {
+    id: 'n7_vc_chet',
+    part: P,
+    urgent: true,
+    chapter: [7],
+    when: { flags: [G, 'ch7_noi'], not: ['n7_vcx'] },
+    place: 'phong',
+    img: 'vienchi',
+    time: 'dem',
+    cast: ['me'],
+    mood: 'so',
+    who: 'me',
+    title: 'Chén trà an thần',
+    text: ['Lời đã nói ra rồi. Đêm ấy viện bà bỗng vắng người hầu, ai cũng có việc phải đi.', 'Trên bàn có một chén trà an thần còn ấm. Không ai nhận đã mang tới.'],
+    omen: 'Có những lời nói ra khi tai mắt của người kia còn đủ quanh mình.',
+    choices: [
+      { t: 'Uống chén trà, cho qua đêm', fx: { end: 'n_136' }, note: 'Trà ấm, thơm mùi táo. Bà ngủ thiếp đi trên bàn giấy, tay còn đặt lên hồ sơ của chị.' },
+      {
+        t: 'Đổ chén trà, viết tờ rút sớ: già rồi, nhớ lẫn',
+        fx: { flag: ['n7_vcx', 'bi_bit_mieng'], unflag: ['ch7_noi', 'n7_cong'], d: { duc: -6, hiem: 10 } },
+        note: 'Bà viết tờ rút sớ bằng nét run nhất đời mình. Sáng ra có người đến lấy, gật đầu rất lễ. Từ đó người ta gọi bà là bà già lẫn.',
+        risk: { p: 0.6, fail: { end: 'n_136' }, failNote: 'Tờ rút sớ chưa kịp gửi đi thì đèn tắt. Có tiếng bước chân rất nhẹ sau bình phong.' },
+      },
+    ],
+  },
   /* ---------------- móc chương: gói chè (khẩn) ---------------- */
   {
     id: 'n7_che_hau',
@@ -181,10 +255,10 @@ export const NG_CH7: Card[] = [
     whoName: 'Cung nữ già cung cũ phía Bắc',
     beat: 'hook',
     title: 'Gói chè buộc lạt',
-    text: ['Một cung nữ già từ cung cũ phía Bắc mang tới một gói chè, buộc bằng sợi lạt cũ, không đề tên người gửi.', '"Thái hoàng thái hậu {BALAO} thị mất từ mùa đông. Người dặn gói này phải đến tay con gái út nhà Nghiêm."'],
+    text: ['Một cung nữ già từ cung cũ phía Bắc mang tới một gói chè, buộc bằng sợi lạt cũ, không đề tên người gửi.', '"Bà {BALAO} ở cung cũ mất đã nhiều năm. Người gói sẵn gói này, dặn đúng năm con gái út nhà Nghiêm tóc bạc mới được đưa."'],
     choices: cheChoices(
       'Dưới lớp chè có một mảnh giấy, nét chữ run: "Ở triều trước, ta đã thấy một đêm như thế. Con đừng để nó thành hai đêm."',
-      'Cung nữ già kể người mất trong giấc ngủ, tay còn đặt trên ấm chè. Người dặn lại một câu: "Con bé ấy giờ chắc cũng già rồi."',
+      'Cung nữ già kể bà {BALAO} mất trong giấc ngủ, tay còn đặt trên ấm chè. Trước đó bà dặn: "Đợi con bé ấy già đi đã. Già rồi mới đọc được."',
     ),
   },
   {
@@ -201,10 +275,10 @@ export const NG_CH7: Card[] = [
     who: 'me',
     beat: 'hook',
     title: 'Gói chè buộc lạt',
-    text: ['Một tiểu ni trên núi xuống, đưa tận tay bà một gói chè buộc lạt cũ, không đề tên người gửi.', '"Sư bà {BALAO} viên tịch từ mùa đông. Sư bà dặn gói này để dành cho con gái út nhà Nghiêm."'],
+    text: ['Một tiểu ni trên núi xuống, đưa tận tay bà một gói chè buộc lạt cũ, không đề tên người gửi.', '"Sư bà {BALAO} viên tịch đã nhiều năm. Sư bà gói sẵn gói này, dặn đúng năm con gái út nhà Nghiêm tóc bạc mới đem xuống."'],
     choices: cheChoices(
       'Dưới lớp chè có một mảnh giấy, nét chữ run: "Ở triều trước, ta đã thấy một đêm như thế. Con đừng để nó thành hai đêm."',
-      'Tiểu ni kể sư bà ngồi thiền mà đi, tay còn lần tràng hạt. Trước đó mấy hôm, sư bà hỏi đi hỏi lại: "Con bé nhà Nghiêm còn sống không?"',
+      'Tiểu ni kể sư bà ngồi thiền mà đi, tay còn lần tràng hạt. Trước đó mấy hôm, sư bà hỏi đi hỏi lại: "Con bé nhà Nghiêm còn sống không?" Gói chè nằm trên bàn thờ sư bà từ đó đến nay.',
     ),
   },
   {
@@ -221,10 +295,10 @@ export const NG_CH7: Card[] = [
     who: 'me',
     beat: 'hook',
     title: 'Gói chè buộc lạt',
-    text: ['Một gói chè được gửi tới cổng, buộc bằng sợi lạt cũ, không đề tên người gửi.', 'Người gác cổng bảo bà lão bán chè {BALAO} thị ở cổng Bắc mất từ mùa đông. Gói này bà gói sẵn từ lâu, dặn đưa cho con gái út nhà Nghiêm.'],
+    text: ['Một gói chè được gửi tới cổng, buộc bằng sợi lạt cũ, không đề tên người gửi.', 'Người mang tới là cháu bà lão bán chè {BALAO} thị ở cổng Bắc. Bà mất đã nhiều năm, gói này bà gói sẵn, dặn đúng năm con gái út nhà Nghiêm tóc bạc mới đưa.'],
     choices: cheChoices(
       'Dưới lớp chè có một mảnh giấy, nét chữ run: "Ở triều trước, ta đã thấy một đêm như thế. Cô đừng để nó thành hai đêm."',
-      'Thằng cháu bà lão kể bà mất ngay ở gánh chè, mắt còn nhìn về phía cổng cung. Bà dặn: gói này đưa cho cô gái giống một người bà từng gặp.',
+      'Người cháu kể bà mất ở nhà, lúc ấy đã không còn gánh chè ra cổng được nữa. Bà dặn: gói này đưa cho cô gái giống một người bà từng gặp.',
     ),
   },
 
@@ -321,11 +395,11 @@ export const NG_CH7: Card[] = [
     title: 'Kho sổ thái y viện',
     text: ['Thái y trẻ giữ kho sổ nói nhỏ: cuốn năm Hưng Bình thứ tám vẫn còn trên giá cao nhất, chưa ai rút ra.', '"Chỉ là ai rút nó ra thì cả viện sẽ biết."'],
     choices: [
-      { t: 'Biếu 30 quan, xin chép một trang', need: { num: { tien: [30, 99999] } }, lockHint: 'Cần 30 quan', fx: { clue: ['a7_goc'], flag: ['co_goc'], d: { tien: -30, hiem: 6 } }, note: 'Bà chép tận tay, đối từng nét với bản gốc. Ngày chị mất có một dòng đơn thuốc, mực khác hẳn những dòng quanh nó.' },
+      { t: 'Biếu 30 quan, xin chép một trang', need: { num: { tien: [30, 99999] } }, lockHint: 'Cần 30 quan', fx: { clue: ['a7_goc'], flag: ['co_goc'], d: { tien: -30, hiem: 6 } }, note: 'Bà chép tận tay, đối từng nét với bản gốc. Ngày chị mất có một dòng đơn thuốc, mực khác hẳn những dòng quanh nó. {GIA:a7_goc}' },
       {
         t: 'Tự vào kho lúc đêm',
         fx: { clue: ['a7_goc'], flag: ['co_goc'], d: { hiem: 10 } },
-        note: 'Bà rút cuốn sổ ra dưới ánh đèn dầu. Ngày chị mất có một dòng đơn thuốc, mực khác hẳn những dòng quanh nó.',
+        note: 'Bà rút cuốn sổ ra dưới ánh đèn dầu. Ngày chị mất có một dòng đơn thuốc, mực khác hẳn những dòng quanh nó. {GIA:a7_goc}',
         risk: { p: 0.45, fail: { d: { hiem: 14 } }, failNote: 'Giá cao nhất trống trơn, bụi còn in hình một cuốn sổ. Có người đã rút nó đi trước bà.' },
       },
       { t: 'Thôi, để cậu ấy yên', fx: { d: { duc: 2 } }, note: 'Thái y trẻ thở ra, cúi chào rất sâu.' },
@@ -350,7 +424,7 @@ export const NG_CH7: Card[] = [
       {
         t: 'Đến am ngoài cửa Tây',
         fx: { clue: ['a7_kiem'], flag: ['n7_hoikiem', 'su10'], d: { hiem: 8, phuc: 4 } },
-        note: 'Kiệm kể chậm, như đọc sổ: đêm ấy ông bưng một chén thuốc tới viện chị, theo lời dặn ông không dám cãi. Ông còn kể một đêm khác, trước ngày cha bà lên Thượng thư, cửa sau cung trên mở cho một cỗ xe họ Nghiêm.',
+        note: 'Kiệm kể chậm, như đọc sổ: đêm ấy ông bưng một chén thuốc tới viện chị, theo lời cung trên, như bưng mọi chén khác. Ông còn kể một đêm khác, sau đám tang chị, trước ngày cha bà lên Thượng thư: cửa sau cung trên mở cho một cỗ xe họ Nghiêm. {GIA:a7_kiem}',
       },
       { t: 'Không đến', fx: { flag: ['n7_hoikiem'], d: { duc: 1 } }, note: 'Người đưa tin đứng chờ đến tối rồi về. Bà nghe bảo Kiệm cười rất lâu khi nghe tin.' },
     ],
@@ -378,12 +452,12 @@ export const NG_CH7: Card[] = [
         need: { flags: ['su1'] },
         lockHint: 'Cần chiếc lược ngà của chị',
         fx: { clue: ['a7_mo'], flag: ['su12', 'n7_chua', 'nguoi_thu3'], d: { hiem: 4, sac: -2 } },
-        note: 'Sư cô Mơ cầm chiếc lược, khóc không thành tiếng. Rồi sư cô lấy trong tay áo ra một chiếc khăn quấn trẻ con màu chàm, góc thêu một chữ: Đào.',
+        note: 'Sư cô Mơ cầm chiếc lược, khóc không thành tiếng. Rồi sư cô lấy trong tay áo ra một chiếc khăn quấn trẻ con màu chàm, góc thêu một chữ: Đào. {GIA:a7_mo}',
       },
       {
         t: 'Lên đường tay không',
         fx: { clue: ['a7_mo'], flag: ['n7_chua', 'mo_tuchoi'], d: { hiem: 3, sac: -2 } },
-        note: 'Sư cô kể đêm chị bị gọi đi: một ma ma cầm đèn lồng đứng ngoài cửa. Bà hỏi tới chiếc khăn, sư cô chỉ lắc đầu: "Chưa phải người này."',
+        note: 'Sư cô kể đêm chị bị gọi đi: một ma ma cầm đèn lồng đứng ngoài cửa. Bà hỏi tới chiếc khăn, sư cô chỉ lắc đầu: "Chưa phải người này." {GIA:a7_mo}',
         risk: { p: 0.3, fail: { flag: ['n7_chua', ...kcF(110)] }, failNote: 'Cổng chùa đóng, người trong chùa bảo sư cô đang nhập thất. Bà ngồi dưới gốc phi lao nghe chuông đến chiều, rồi quay về.' },
       },
       { t: 'Gửi thư trước, chờ hồi âm', fx: { flag: ['n7_chua', ...kcF(111)] }, note: 'Bà viết một lá thư dài, kể hết những gì bà biết về chị. Thư đi rồi, mùa này qua mùa khác, không có hồi âm.' },
@@ -407,7 +481,7 @@ export const NG_CH7: Card[] = [
       moods: { dao: 'binh' },
       who: 'me',
       title: 'Bà lão quét sân',
-      text: ['Ở cổng Bắc có một bà lão quét sân, lưng còng, quét rất chậm. Bà ấy vừa quét vừa hát khẽ một câu, gió thổi bạt mất nửa.', 'Bà lão không quay lại.'],
+      text: ['Ở sân trong cổng Bắc, chỗ năm xưa gánh chè hay đỗ, giờ có một bà lão khác quét sân, lưng còng, quét rất chậm. Bà ấy vừa quét vừa hát khẽ một câu, gió thổi bạt mất nửa.', 'Không phải giọng bà lão bán chè. Bà lão quét sân không quay lại.'],
       choices: [
         { t: 'Đứng nhìn bóng lưng ấy đến tối', fx: { flag: ['n7_s_dao', ...kcF(108)] }, note: 'Bà đứng đến khi đèn cổng thắp. Câu muốn hỏi nằm trên đầu lưỡi, mà không ra được.' },
         { t: 'Đi tiếp, việc còn nhiều', fx: { flag: ['n7_s_dao'], d: { muu: 1 } }, note: 'Bà đi qua. Đến góc tường thì tiếng chổi dừng lại, rồi lại tiếp.' },
@@ -626,7 +700,7 @@ export const NG_CH7: Card[] = [
     part: P,
     chapter: [7],
     weight: 2,
-    when: { flags: [G], sons: 1 },
+    when: { flags: [G], not: ['canh_lenngoi'], sons: 1 },
     place: 'phong',
     img: 'phong',
     time: 'chieu',
@@ -638,7 +712,27 @@ export const NG_CH7: Card[] = [
     text: ['Cảnh đến thăm mẹ, ngồi bóc quýt, đặt từng múi vào tay bà như cha nó năm xưa.', '"Mẹ đang xem lại hồ sơ của dì Thanh à? Con giúp được gì không?"'],
     choices: [
       { t: 'Bảo con đừng dính vào', fx: { d: { duc: 2 } }, note: 'Cảnh gật đầu, nhưng trước khi về nó lặng lẽ để lại một xâu tiền dưới đáy đĩa quýt.' },
-      { t: 'Nhờ con tìm sổ cũ ở Tông nhân phủ', fx: { d: { hiem: 6, muu: 3, tien: 10 } }, note: 'Ba hôm sau Cảnh mang về một tờ chép tay: danh sách người hầu trực đêm năm Hưng Bình thứ tám. Mấy cái tên đã bị khoanh.' },
+      { t: 'Nhờ con tìm sổ cũ ở Tông nhân phủ', fx: { d: { hiem: 6, muu: 3 } }, note: 'Ba hôm sau Cảnh mang về một tờ chép tay: danh sách người hầu trực đêm năm Hưng Bình thứ tám. Mấy cái tên đã bị khoanh.' },
+    ],
+  },
+  {
+    id: 'n7_s_con_vua',
+    part: P,
+    chapter: [7],
+    weight: 2,
+    when: { flags: [G, 'canh_lenngoi'], sons: 1 },
+    place: 'phong',
+    img: 'phong',
+    time: 'chieu',
+    cast: ['me', 'con'],
+    mood: 'binh',
+    moods: { con: 'lo' },
+    who: 'con',
+    title: 'Hoàng thượng đến thỉnh an',
+    text: ['Cảnh đã ngoài bốn mươi, long bào sờn ở cổ tay vì ngồi phê tấu. Ông cho lui hết người hầu rồi mới ngồi xuống cạnh mẹ.', '"Mẹ đang mở lại hồ sơ của dì Thanh. Trẫm nên giúp, hay nên không biết gì?"'],
+    choices: [
+      { t: 'Bảo con: vua thì không nên biết', fx: { d: { duc: 2 } }, note: 'Cảnh gật đầu, nhẹ nhõm mà cũng buồn. Lúc về, ông dặn người gác cổng viện mẹ đổi sang người của ông.' },
+      { t: 'Xin Hoàng thượng cho người chép sổ Tông nhân phủ', fx: { d: { hiem: 8, muu: 3 } }, note: 'Ba hôm sau có một hòm sổ chép tay gửi tới, niêm ấn rồng. Danh sách người hầu trực đêm năm Hưng Bình thứ tám, mấy cái tên đã bị khoanh. Cả cung biết Hoàng thượng vừa sai chép sổ cho ai.' },
     ],
   },
   {
@@ -694,9 +788,9 @@ export const NG_CH7: Card[] = [
     mood: 'lo',
     who: 'me',
     title: 'Những hồ sơ cũ',
-    text: ['Bà xếp các hồ sơ cũ thành hàng trên sàn, vụ nào cũng dày hơn bà nhớ.', 'Hồ sơ nào cũng có một chỗ để trống, ghi: "Người đứng sau".'],
+    text: ['Bà xếp các hồ sơ cũ thành hàng trên sàn, vụ nào cũng dày hơn bà nhớ.', 'Phần lớn hồ sơ có một chỗ để trống, ghi: "Người đứng sau".'],
     choices: [
-      { t: 'Nối các chỗ trống bằng một sợi chỉ đỏ', fx: { d: { muu: 4, hiem: 3 } }, note: 'Sợi chỉ đi một vòng rồi quay về đúng chỗ bắt đầu. Bà buộc nút, cắt chỉ, không ngủ được nữa.' },
+      { t: 'Nối các chỗ trống bằng một sợi chỉ đỏ', fx: { d: { muu: 4, hiem: 3 } }, note: 'Sợi chỉ nối năm hồ sơ về cùng một chỗ. Hồ sơ lời đồn Đông cung nằm riêng, sợi chỉ không tới. Bà buộc nút, cắt chỉ, không ngủ được nữa.' },
       { t: 'Đọc lại hồ sơ đầu tiên, của con bé tú nữ', fx: { d: { duc: 3 } }, note: 'Con bé ấy chết năm mười tám tuổi, chân còn đi hài. Bốn mươi bốn năm rồi, chưa ai thắp cho nó một nén hương.' },
     ],
   },
@@ -736,8 +830,8 @@ export const NG_CH7: Card[] = [
     title: 'Hòm sổ còn lại',
     text: ['Cuốn sổ năm Tân Dậu mất từ năm ấy, không ai biết về đâu. Nhưng hòm sổ của Kiệm vẫn còn mấy cuốn khác.', 'Cuốn năm Hưng Bình thứ tám nằm dưới cùng, gáy chưa sờn.'],
     choices: [
-      { t: 'Lấy cuốn năm Hưng Bình thứ tám, đủ dùng rồi', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 8 } }, note: 'Ngày chị mất có một dòng đơn thuốc mực khác màu. Sổ ra vào cung còn ghi: trước ngày cha lên Thượng thư, cửa sau cung trên mở cho một cỗ xe họ Nghiêm.' },
-      { t: 'Lần theo người đã lấy cuốn Tân Dậu', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', ...kcF(115)], d: { hiem: 10 } }, note: 'Bà cầm cuốn còn lại, rồi lần theo cuốn đã mất. Dấu tay trên lớp bụi dẫn bà đi xa hơn bà nghĩ.' },
+      { t: 'Lấy cuốn năm Hưng Bình thứ tám, đủ dùng rồi', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 8 } }, note: 'Ngày chị mất có một dòng đơn thuốc mực khác màu. Sổ ra vào cung còn ghi: trước ngày cha lên Thượng thư, cửa sau cung trên mở cho một cỗ xe họ Nghiêm. {GIA:a7_goc}' },
+      { t: 'Lần theo người đã lấy cuốn Tân Dậu', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', ...kcF(115)], d: { hiem: 10 } }, note: 'Bà cầm cuốn còn lại, rồi lần theo cuốn đã mất. Dấu tay trên lớp bụi dẫn bà đi xa hơn bà nghĩ. {GIA:a7_goc}' },
       { t: 'Để hòm sổ yên', fx: { flag: ['n7_b1'], d: { duc: 2 } }, note: 'Bà đóng nắp hòm. Có những cuốn sổ đọc xong thì không đóng lại được nữa.' },
     ],
   },
@@ -746,7 +840,7 @@ export const NG_CH7: Card[] = [
     part: P,
     big: true,
     chapter: [7],
-    when: { flags: [G, 'mo_an7'], not: ['xu_an7', 'n7_b1', 'co_goc', 'mat_so_tandau'] },
+    when: { flags: [G, 'mo_an7'], not: ['xu_an7', 'n7_b1', 'co_goc', 'mat_so_tandau', 'chet_kiem'] },
     place: 'vien',
     img: 'cong',
     time: 'chieu',
@@ -757,12 +851,12 @@ export const NG_CH7: Card[] = [
     title: 'Cái hòm khóa đồng',
     text: ['Kiệm đã ngoài tám mươi, mắt đục như nước vo gạo, ở một am nhỏ ngoài cửa Tây. Dưới gầm giường ông có một cái hòm khóa đồng.', '"Bản gốc à? Nô tài giữ năm mươi năm, để chờ người nhà Nghiêm đến hỏi."'],
     choices: [
-      { t: 'Hứa trả lại tên họ cho nhà ông', fx: { clue: ['a7_goc'], flag: ['co_goc', 'hua_kiem', 'n7_b1', 'su10'], d: { hiem: 6, phuc: 10 } }, note: 'Kiệm cười khùng khục, run tay mở khóa: "Nhà Nghiêm cũng có ngày phải xin nhà tôi." Trong hòm có sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy, mép giấy còn nguyên.' },
-      { t: 'Trả ông 60 quan', need: { num: { tien: [60, 99999] } }, lockHint: 'Cần 60 quan', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { tien: -60, hiem: 4 } }, note: 'Ông đếm tiền bằng đầu ngón tay, rất lâu. Rồi đẩy cái hòm ra: "Tiền thì không ai hỏi từ đâu ra. Bà cầm đi."' },
+      { t: 'Hứa trả lại tên họ cho nhà ông', fx: { clue: ['a7_goc'], flag: ['co_goc', 'hua_kiem', 'n7_b1', 'su10'], d: { hiem: 6, phuc: 10 } }, note: 'Kiệm cười khùng khục, run tay mở khóa: "Nhà Nghiêm cũng có ngày phải xin nhà tôi." Trong hòm có sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy, mép giấy còn nguyên. {GIA:a7_goc}' },
+      { t: 'Trả ông 60 quan', need: { num: { tien: [60, 99999] } }, lockHint: 'Cần 60 quan', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { tien: -60, hiem: 4 } }, note: 'Ông đếm tiền bằng đầu ngón tay, rất lâu. Rồi đẩy cái hòm ra: "Tiền thì không ai hỏi từ đâu ra. Bà cầm đi." {GIA:a7_goc}' },
       {
         t: 'Sai người lấy hòm trong đêm',
         fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 12, phuc: -10 } },
-        note: 'Người của bà ôm cái hòm về lúc canh tư. Sáng ra Kiệm ngồi ở cửa am, nhìn về phía cung, không đi báo ai.',
+        note: 'Người của bà ôm cái hòm về lúc canh tư. Sáng ra Kiệm ngồi ở cửa am, nhìn về phía cung, không đi báo ai. {GIA:a7_goc}',
         risk: { p: 0.4, fail: { flag: ['n7_b1', 'kiem_gian'], d: { hiem: 15, phuc: -15 } }, failNote: 'Người của bà về tay không. Cái hòm đã được dời đi, gầm giường chỉ còn vết bụi hình chữ nhật.' },
       },
       { t: 'Để ông giữ, không động vào', fx: { flag: ['n7_b1'], d: { duc: 2 } }, note: 'Kiệm gật gù: "Bà giống cha bà." Bà không biết câu ấy là khen hay chê.' },
@@ -785,12 +879,12 @@ export const NG_CH7: Card[] = [
     title: 'Hòm của người đã khuất',
     text: ['Kiệm mất đã mấy năm. Một thái giám trẻ từng hầu ông mang tới một cái hòm khóa đồng.', '"Sư phụ dặn: người nhà Nghiêm sẽ đến hỏi. Nhưng sư phụ không dặn là cho không."'],
     choices: [
-      { t: 'Trả 40 quan', need: { num: { tien: [40, 99999] } }, lockHint: 'Cần 40 quan', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { tien: -40, hiem: 4 } }, note: 'Trong hòm có sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy. Một dòng ghi: trước ngày cha lên Thượng thư, cửa sau cung trên mở cho một cỗ xe họ Nghiêm.' },
-      { t: 'Nhờ Lý Mặc thu làm vật chứng', need: { flags: ['quen_lymac'], not: ['chet_lymac'] }, lockHint: 'Cần quen Lý Mặc, và ông còn sống', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 8, quan: -4 } }, note: 'Lý Mặc niêm phong cái hòm bằng ấn Đô sát viện. Thằng bé khóc, không phải vì tiền.' },
+      { t: 'Trả 40 quan', need: { num: { tien: [40, 99999] } }, lockHint: 'Cần 40 quan', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { tien: -40, hiem: 4 } }, note: 'Trong hòm có sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy. Một dòng ghi: trước ngày cha lên Thượng thư, cửa sau cung trên mở cho một cỗ xe họ Nghiêm. {GIA:a7_goc}' },
+      { t: 'Nhờ Lý Mặc thu làm vật chứng', need: { flags: ['quen_lymac'], not: ['chet_lymac'] }, lockHint: 'Cần quen Lý Mặc, và ông còn sống', fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 8, quan: -4 } }, note: 'Lý Mặc niêm phong cái hòm bằng ấn Đô sát viện. Thằng bé khóc, không phải vì tiền. {GIA:a7_goc}' },
       {
         t: 'Hứa cho nó một chỗ làm ở viện mình',
         fx: { clue: ['a7_goc'], flag: ['co_goc', 'n7_b1', 'su10'], d: { hiem: 6 } },
-        note: 'Nó nhận lời ngay. Trong hòm có đủ sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy.',
+        note: 'Nó nhận lời ngay. Trong hòm có đủ sổ đến thăm, sổ thuốc và sổ ra vào cung năm ấy. {GIA:a7_goc}',
         risk: { p: 0.3, fail: { flag: ['n7_b1'], d: { hiem: 10 } }, failNote: 'Hôm sau nó không đến. Người ta bảo có người trả giá cao hơn, từ một cung rất xa viện bà.' },
       },
       { t: 'Thôi, để người chết yên', fx: { flag: ['n7_b1'], d: { duc: 2 } }, note: 'Thằng bé ôm hòm về. Bà nghe bảo đêm ấy nó đốt một đống giấy sau am.' },
@@ -818,20 +912,20 @@ export const NG_CH7: Card[] = [
         need: { not: ['chet_kiem'] },
         lockHint: 'Kiệm đã mất',
         fx: { clue: ['a7_kiem'], flag: ['n7_b2', 'su10'], d: { hiem: 10 } },
-        note: 'Kiệm kể chậm, như đọc sổ: đêm ấy ông bưng một chén thuốc tới viện chị, theo lời dặn ông không dám cãi. "Nhà tôi mất cả họ vì một tờ án của cha bà. Tôi bưng chén ấy không run tay."',
+        note: 'Kiệm kể chậm, như đọc sổ: đêm ấy ông bưng một chén thuốc tới viện chị, theo lời cung trên, như bưng mọi chén khác. "Nhà tôi mất cả họ vì một tờ án của cha bà. Tôi bưng chén ấy không run tay." {GIA:a7_kiem}',
       },
       {
         t: 'Tìm Thái y Thẩm',
         need: { not: ['chet_thaiy'] },
         lockHint: 'Thái y đã mất',
         fx: { clue: ['a7_thaiy'], flag: ['n7_b2'], d: { hiem: 8 } },
-        note: 'Thái y bảy mươi chín tuổi, ngồi giữa những ngăn thuốc, khai một mạch: đơn thuốc cho chị là ông kê, theo lời dặn ông không dám cãi. Ông kê xong, về nhà nôn suốt đêm.',
-        risk: { p: 0.25, fail: { clue: ['a7_thaiy'], flag: ['n7_b2', 'chet_thaiy', 'thaiy_kedo'], d: { hiem: 8 } }, failNote: 'Ông khai xong đơn thuốc, rồi kể sang đêm Tân Dậu. Kể được nửa thì ông ôm ngực ngã xuống, chữ cuối cùng là "mưa".' },
+        note: 'Thái y bảy mươi chín tuổi, ngồi giữa những ngăn thuốc, khai một mạch: đơn thuốc cho chị là ông kê, theo lời dặn ông không dám cãi. Ông kê xong, về nhà nôn suốt đêm. {GIA:a7_thaiy}',
+        risk: { p: 0.25, fail: { clue: ['a7_thaiy'], flag: ['n7_b2', 'chet_thaiy', 'thaiy_kedo'], d: { hiem: 8 } }, failNote: 'Ông khai xong đơn thuốc, rồi kể sang đêm Tân Dậu. Kể được nửa thì ông ôm ngực ngã xuống, chữ cuối cùng là "mưa". {GIA:a7_thaiy}' },
       },
       {
         t: 'Ra chùa ven biển, hỏi thị nữ năm xưa của chị',
         fx: { clue: ['a7_mo'], flag: ['n7_b2', 'n7_chua'], d: { hiem: 4, sac: -2 } },
-        note: 'Sư cô Mơ nhận ra bà ngay ở cổng chùa. Sư cô kể đêm chị bị gọi đi: một ma ma đứng ngoài cửa, tay cầm đèn lồng có dấu cung trên.',
+        note: 'Sư cô Mơ nhận ra bà ngay ở cổng chùa. Sư cô kể đêm chị bị gọi đi: một ma ma đứng ngoài cửa, tay cầm đèn lồng có dấu cung trên. {GIA:a7_mo}',
         risk: { p: 0.2, fail: { flag: ['n7_b2', 'n7_chua', ...kcF(112)], d: { sac: -2 } }, failNote: 'Sư cô đi vắng. Trong sân chỉ có một ni cô quét lá, quay lưng lại, không ngẩng lên dù bà gọi.' },
       },
       {
@@ -839,7 +933,7 @@ export const NG_CH7: Card[] = [
         need: { flags: ['su1'] },
         lockHint: 'Cần chiếc lược ngà của chị',
         fx: { clue: ['a7_mo'], flag: ['n7_b2', 'n7_chua', 'su12', 'nguoi_thu3'], d: { hiem: 4, sac: -2 } },
-        note: 'Sư cô Mơ cầm chiếc lược, kể hết đêm chị bị gọi đi. Rồi sư cô lấy trong tay áo ra một chiếc khăn quấn trẻ con màu chàm, góc thêu một chữ: Đào.',
+        note: 'Sư cô Mơ cầm chiếc lược, kể hết đêm chị bị gọi đi. Rồi sư cô lấy trong tay áo ra một chiếc khăn quấn trẻ con màu chàm, góc thêu một chữ: Đào. {GIA:a7_mo}',
       },
       { t: 'Không gõ cửa ai nữa', fx: { flag: ['n7_b2'], d: { duc: 2 } }, note: 'Bà ngồi một mình với hồ sơ. Giấy không nói được, nhưng giấy cũng không nói dối.' },
     ],
@@ -872,12 +966,12 @@ export const NG_CH7: Card[] = [
     mood: 'gian',
     who: 'me',
     title: 'Lời khai cuối',
-    text: ['Các lời khai ghép lại thành một câu không thể đọc khác: {TAY:an7} ra lệnh, Kiệm bưng chén, Thái y kê đơn.', 'Và đằng sau chén thuốc ấy là một đêm mưa năm Tân Dậu, một đứa bé được bế qua cửa.'],
+    text: ['Các lời khai và sổ sách ghép lại thành một câu không thể đọc khác: {TAY:an7} ra lệnh, Kiệm bưng chén, đơn thuốc trong sổ mang nét chữ Thái y.', 'Và đằng sau chén thuốc ấy là một đêm mưa năm Tân Dậu, một đứa bé được bế qua cửa.'],
     choices: [
       {
         t: 'Khép hồ sơ đúng như nó là: người ra lệnh, chén thuốc, và đứa bé còn sống',
-        need: { flags: SU135 },
-        lockHint: 'Cần đủ mười hai sự thật',
+        need: { flags: SU135, vc: VC_KHEP },
+        lockHint: 'Cần đủ mười hai sự thật, và đã nhổ gần hết những bàn tay quanh hồ sơ của chị',
         fx: { flag: ['su11', 'ch7_noi'], end: 'n_135' },
         note: 'Bà viết dòng cuối cùng vào hồ sơ, rồi gấp lại. Đêm ấy, lần đầu tiên sau bốn mươi bốn năm, bà mơ thấy chị đứng ở cửa viện, mỉm cười.',
       },
@@ -947,6 +1041,25 @@ export const NG_CH7: Card[] = [
       { t: 'Cài then, ngồi chờ sáng', fx: { flag: ['n7_pc_cho'] }, note: 'Bà đẩy chén trà ra xa, thổi tắt đèn. Ngoài kia có tiếng bước chân rất nhẹ, rồi tắt.' },
     ],
   },
+  /** xử sót: gọi tên kẻ bưng chén hay kẻ kê đơn. Họ có tội thật, nhưng ô người ra lệnh vẫn trống (bộ máy đưa tới bằng kind 'sot') */
+  {
+    id: 'an7_sot',
+    part: P,
+    step: true,
+    chapter: [7],
+    place: 'dien',
+    img: 'tamphap',
+    time: 'chieu',
+    cast: ['me'],
+    mood: 'lo',
+    who: 'me',
+    title: 'Ô phía trên vẫn trống',
+    text: ['Tông nhân phủ chép tên {XU:an7} vào tờ án: có nhúng tay vào cái chết của Chiêu nghi Nghiêm Thanh. Người ấy không chối.', 'Nhưng trên tờ án, ô "người ra lệnh" vẫn để trống. Quan chép án nhìn bà, chờ, rồi gấp lại.'],
+    choices: [
+      { t: 'Để tờ án như thế', fx: { flag: ['n7_sot', 'n7_loi_xong'], d: { duc: 2 } }, note: 'Người bị chép tên được tha tội chết vì tuổi già, đày ra một am xa. Ô trống trên tờ án, bà mang theo đến cuối đời.' },
+      { t: 'Hỏi lần cuối: ai bảo làm', fx: { flag: ['n7_sot', 'n7_loi_xong', 'n7_sot_hoi'], d: { hiem: 10, muu: 2 } }, note: '"Người ở cung trên." Chỉ thế, không thêm chữ nào. Bà biết rồi, mà tờ án thì không biết.' },
+    ],
+  },
   /** hồi 2 phản công: Thái hậu còn sống thì kéo bà đi cùng, đã mất thì họ Lương xóa tên bà */
   {
     id: 'n7_pc2_th',
@@ -1007,7 +1120,7 @@ export const NG_CH7: Card[] = [
     part: P,
     urgent: true,
     chapter: [7],
-    when: { flags: [G, 'an7_thang'], not: ['chet_thaihau', 'n7_thg', 'n7_kcE'], num: { thaihau: [15, 100] } },
+    when: { flags: [G, 'an7_thang'], not: ['chet_thaihau', 'n7_thg', 'n7_kcE', 'n7_cong', 'ch7_noi'], num: { thaihau: [15, 100] } },
     place: 'phong',
     img: 'tam',
     time: 'dem',
@@ -1021,6 +1134,28 @@ export const NG_CH7: Card[] = [
     choices: [
       { t: 'Đứng ngoài rèm, không vào', fx: { flag: ['n7_thg', 'chet_thaihau'], d: { duc: -2 } }, note: 'Bà đứng nghe tiếng thở sau rèm đến khi tắt. Lời bà Lương định nói, bà không nghe, và không tiếc.' },
       { t: 'Ngồi xuống, để bà nói hết', fx: { flag: ['n7_thg', 'chet_thaihau', ...kcE(94)] }, note: 'Bà Lương nói một câu xin lỗi, gọi đủ tên chị. Rồi bà nắm tay bà Lương, đến khi bàn tay ấy lạnh.' },
+    ],
+  },
+  {
+    id: 'n7_th_giuong_c',
+    part: P,
+    urgent: true,
+    chapter: [7],
+    when: { flags: [G, 'an7_thang', 'n7_cong'], not: ['chet_thaihau', 'n7_thg'] },
+    place: 'phong',
+    img: 'tam',
+    time: 'dem',
+    cast: ['me', 'thaihau'],
+    mood: 'buon',
+    moods: { thaihau: 'buon' },
+    who: 'thaihau',
+    whoName: 'Bà Lương',
+    lead: 'Hồ sơ đã đọc trước triều. Cả kinh thành biết tên người ra lệnh.',
+    title: 'Bên giường bệnh',
+    text: ['Bà Lương cho gọi bà tới. Chín mươi tư tuổi, bà nằm thiêm thiếp, ngoài cửa có lính Tông nhân phủ đứng canh.', '"Con đọc to lắm. Ta nằm đây mà cũng nghe thấy."'],
+    choices: [
+      { t: 'Đứng ngoài rèm, không vào', fx: { flag: ['n7_thg', 'chet_thaihau'], d: { duc: -2 } }, note: 'Bà đứng nghe tiếng thở sau rèm đến khi tắt. Tờ án của Tông nhân phủ đến muộn một ngày.' },
+      { t: 'Ngồi xuống, để bà nói hết', fx: { flag: ['n7_thg', 'chet_thaihau', 'th_xinloi'] }, note: 'Bà Lương xin lỗi, gọi đủ tên chị. Rồi bà hỏi: "Hựu biết chưa?" Bà nắm tay bà Lương đến khi bàn tay ấy lạnh, và không trả lời.' },
     ],
   },
   {
@@ -1182,7 +1317,7 @@ export const NG_CH7: Card[] = [
     cuoi132,
   ]),
   cuoiCard('n7_cuoi_phi', { flags: [G], not: ['n7_cuoi'] }, 'phong', 'vienchi', 'Những năm còn lại', ['Người trong cung giờ gọi bà là bà Thái phi, dù bà chưa từng nghĩ mình sống tới cái tên ấy.', 'Đã đến lúc định chỗ ngồi cho những năm còn lại.'], [
-    { t: 'Ở lại cung, đứng sau Thái hậu một bước', fx: vt('vt_thaiphi'), note: 'Bà ở lại, dự đủ mọi lễ lớn, đứng đúng chỗ của mình. Chiều nào cũng về viện cũ của chị ngồi một lúc.' },
+    { t: 'Ở lại cung, đứng đúng chỗ của mình', fx: vt('vt_thaiphi'), note: 'Bà ở lại, dự đủ mọi lễ lớn, đứng đúng chỗ của mình. Chiều nào cũng về viện cũ của chị ngồi một lúc.' },
     { t: 'Xin xuống tóc', fx: vt('vt_ni'), note: 'Bà xin ra chùa. Hoàng thượng chuẩn ngay, như đã chờ lời xin ấy từ lâu.' },
     { t: 'Xin về quê nhà Nghiêm', fx: vt('vt_que'), note: 'Bà về quê, sống bên ao sen hai chị em từng thả thuyền giấy.' },
     cuoi132,

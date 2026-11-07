@@ -13,7 +13,31 @@
  * chet_hoanghau | phe_hoanghau; su7, su8, su9; dm_hoanghau, dm_un, dm_lymac, dm_vua; un_con, nuoi_un, nuoi_huu, theo_ts, lm_than.
  * Thẻ mở chương bỏ cờ co_thai (đã sinh xong ở chương 3), nên thẻ n3_s_huu cũ (chương 4, cần co_thai) không còn hiện.
  */
-import type { Card } from '../types';
+import type { Card, Life } from '../types';
+type TaleS = NonNullable<NonNullable<Life['tales']>[number]['s']>;
+
+/** lời kể chuyển cảnh chương 4, giọng chị Thanh trong mơ (cần gộp vào NG_TALES ở prologue.ts) */
+const TALE_LAP = {
+  t: 'Giấc mơ thứ năm',
+  s: { bg: 'vienchi', time: 'dem' as const, cast: [] },
+  lines: [
+    'Đêm trước ngày chiếu lập Đông cung, em mơ thấy chị ngồi ở mép giường, tay cầm chiếc lược ngà còn đủ răng.',
+    'Chị bảo: năm ấy chị cũng đứng trước một chiếc ghế như thế, và chị đã chọn nói. Em không cần chọn giống chị. Em chỉ cần biết mình đang chọn cho ai.',
+  ],
+};
+export const NG_TALES_CH4: Record<string, { t: string; lines: string[]; s?: TaleS }> = {
+  n4_thu: {
+    t: 'Giấc mơ thứ tư',
+    s: { bg: 'vienchi', time: 'dem', cast: [] },
+    lines: [
+      'Bốn năm trôi qua. Cảnh đã biết gọi mẹ, Hựu đã cao gần bằng cửa sổ Đông cung.',
+      'Đêm ấy em mơ thấy chị đứng ở hành lang Đông cung, ngón tay đặt lên môi. Chị không nói gì. Sáng ra, có một lá thư nằm dưới cửa.',
+    ],
+  },
+  n4_lap: TALE_LAP,
+  n4_lap_un: TALE_LAP,
+  n4_lap_ts: TALE_LAP,
+};
 
 const P = 'nghiem' as const;
 const G = 'g_quan';
@@ -65,18 +89,18 @@ export const NG_CH4: Card[] = [
     cast: ['me'],
     mood: 'lo',
     title: 'Nét chữ',
-    text: ['Nét chữ trong lá thư không phải chữ của người trong cung. Nét ngang kéo dài, nét móc gãy gọn, như tay quen chép sổ sách.', 'Năm mười tuổi, bạn đã chép sổ cho cha. Bạn biết loại chữ này hay nằm ở đâu.'],
+    text: ['Nét chữ trong lá thư không phải chữ của người trong cung. Nét ngang kéo dài, nét móc gãy gọn, viết nhanh mà không run.', 'Năm mười tuổi, bạn đã chép sổ cho cha. Bạn biết loại chữ này hay nằm ở đâu.'],
     choices: [
-      { t: 'Viết thư nhờ cha gửi vào bản sao sổ chi tiêu các phủ lớn', fx: { d: { cha: -4, hiem: 4 }, clue: ['a4_chu'], flag: ['co_chu'] }, note: 'Mười ngày sau, một chồng sổ sao lọt vào cung trong rương lụa. Nét chữ khớp một trang chi tiêu: "trả công chép thư", người nhận là {C:a4_chu}.' },
+      { t: 'Viết thư nhờ cha gửi vào bản sao sổ chi tiêu các phủ lớn', fx: { d: { cha: -4, hiem: 4 }, clue: ['a4_chu'], flag: ['co_chu'] }, note: 'Mười ngày sau, một chồng sổ sao lọt vào cung trong rương lụa. Nét chữ khớp một trang chi tiêu: "trả công chép thư", người nhận là {C:a4_chu}. {GIA:a4_chu}' },
       {
         t: 'Nhờ Uyển Như mượn sổ chi tiêu bên ngoại',
         need: { num: { thucphi: [0, 100] }, not: ['un_han', 'phe_un'] },
         lockHint: 'Cần Quý phi Hà không ghét bạn, và nàng còn ở cung',
         fx: { d: { thucphi: 4, hiem: 4 }, clue: ['a4_chu'], flag: ['co_chu'] },
-        note: 'Uyển Như mang sang một trang sổ, không hỏi gì. Nét chữ khớp dòng "trả công chép thư", người nhận là {C:a4_chu}.',
-        risk: { p: 0.35, fail: { d: { thucphi: -8, hiem: 8 } }, failNote: 'Uyển Như trả lời qua người hầu: sổ nhà nàng không cho ai mượn. Hôm sau, phủ bên ngoại đổi người giữ sổ.' },
+        note: 'Uyển Như mang sang một trang sổ, không hỏi gì. Nét chữ khớp dòng "trả công chép thư", người nhận là {C:a4_chu}. {GIA:a4_chu}',
+        risk: { p: 0.35, fail: { d: { thucphi: -8, hiem: 6 } }, failNote: 'Uyển Như trả lời qua người hầu: sổ nhà nàng không cho ai mượn. Hôm sau, phủ bên ngoại đổi người giữ sổ.' },
       },
-      { t: 'Tự so với sổ lễ vật các phủ dâng vào cung', fx: { d: { hiem: 10, muu: 3 }, clue: ['a4_chu'], flag: ['co_chu'] }, note: 'Bạn thức ba đêm trong kho lễ vật. Đến đêm thứ ba, một dòng "trả công chép thư" có cùng nét móc, người nhận là {C:a4_chu}.' },
+      { t: 'Tự so với sổ lễ vật các phủ dâng vào cung', fx: { d: { hiem: 6, muu: 3 }, clue: ['a4_chu'], flag: ['co_chu'] }, note: 'Bạn thức ba đêm trong kho lễ vật. Đến đêm thứ ba, một dòng "trả công chép thư" có cùng nét móc, người nhận là {C:a4_chu}. {GIA:a4_chu}' },
     ],
   },
   {
@@ -96,8 +120,8 @@ export const NG_CH4: Card[] = [
     title: 'Giấy dó',
     text: ['Cung nữ giữ kho giấy soi lá thư ra nắng: "Giấy dó hai lớp, thớ dài. Trong cung không cấp loại này."', '"Chỉ mấy phủ lớn mới mua được. Tháng trước có người mang vào một xấp."'],
     choices: [
-      { t: 'Hỏi sổ nhận giấy tháng trước', fx: { d: { hiem: 5 }, clue: ['a4_giay'] }, note: 'Sổ ghi xấp giấy ấy qua tay hai người trước khi vào cung: {C:a4_giay}.' },
-      { t: 'Dúi 10 quan, xin nàng giữ kín', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 2 }, clue: ['a4_giay'] }, note: 'Nàng cất tiền, nói rất khẽ: xấp giấy ấy chỉ {C:a4_giay} được chạm vào.' },
+      { t: 'Hỏi sổ nhận giấy tháng trước', fx: { d: { hiem: 5 }, clue: ['a4_giay'] }, note: 'Sổ ghi xấp giấy ấy qua tay hai người trước khi vào cung: {C:a4_giay}. {GIA:a4_giay}' },
+      { t: 'Dúi 10 quan, xin nàng giữ kín', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 2 }, clue: ['a4_giay'] }, note: 'Nàng cất tiền, nói rất khẽ: xấp giấy ấy chỉ {C:a4_giay} được chạm vào. {GIA:a4_giay}' },
       { t: 'Cảm ơn, rồi đi', fx: { d: { duc: 1 } }, note: 'Bạn cuộn lá thư lại. Thớ giấy dài, mịn, không giống giấy của ai trong cung.' },
     ],
   },
@@ -116,11 +140,11 @@ export const NG_CH4: Card[] = [
     moods: { huu: 'vui' },
     who: 'huu',
     title: 'Lính gác đổi phiên',
-    text: ['Hựu lon ton chạy theo bạn ra cổng Đông cung: "Nương nương tìm người nhét thư hả? Con quen chú gác cổng."', '"Chú ấy hay cho con kẹo mạch nha."'],
+    text: ['Hựu chạy theo bạn ra cổng Đông cung, giọng đang vỡ: "Nương nương tìm người nhét thư phải không? Con quen chú gác cổng."', '"Chú ấy hay cho con mượn cung tập bắn."'],
     choices: [
-      { t: 'Để Hựu đi hỏi giúp', fx: { d: { hoanghau: 4, hiem: 4 }, clue: ['a4_cong'] }, note: 'Hựu về, miệng còn ngậm kẹo: "Chú bảo lúc đổi phiên có người đi ra, áo lam, không cúi chào." Chú gác nhớ người ấy là {C:a4_cong}.', risk: { p: 0.3, fail: { d: { hoanghau: -6, hiem: 10 }, clue: ['a4_cong'] }, failNote: 'Hựu hỏi to giữa sân. Chú gác nhớ ra {C:a4_cong}, và cả Đông cung biết bạn đang tìm ai.' } },
-      { t: 'Tự hỏi lính gác, dúi 10 quan', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 6 }, clue: ['a4_cong'] }, note: 'Lính gác nhận tiền, nhìn quanh rồi nói: lúc đổi phiên, chỉ {C:a4_cong} đi qua cổng này.' },
-      { t: 'Dắt Hựu về, không cho trẻ con dính vào', fx: { d: { duc: 3, hoanghau: 4 } }, note: 'Hựu phụng phịu suốt dọc đường. Đến cửa, nó lại hỏi: "Sao người lớn hay giấu thư thế?"' },
+      { t: 'Để Hựu đi hỏi giúp', fx: { d: { hoanghau: 4, hiem: 4 }, clue: ['a4_cong'] }, note: 'Hựu về, mặt còn đỏ vì chạy: "Chú bảo lúc đổi phiên có người đi ra, không cúi chào, đi rất vội." Chú gác nhớ người ấy là {C:a4_cong}. {GIA:a4_cong}', risk: { p: 0.3, fail: { d: { hoanghau: -6, hiem: 6 }, clue: ['a4_cong'] }, failNote: 'Hựu hỏi to giữa sân. Chú gác nhớ ra {C:a4_cong}, và cả Đông cung biết bạn đang tìm ai. {GIA:a4_cong}' } },
+      { t: 'Tự hỏi lính gác, dúi 10 quan', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 6 }, clue: ['a4_cong'] }, note: 'Lính gác nhận tiền, nhìn quanh rồi nói: lúc đổi phiên, chỉ {C:a4_cong} đi qua cổng này. {GIA:a4_cong}' },
+      { t: 'Dắt Hựu về, không cho trẻ con dính vào', fx: { d: { duc: 3, hoanghau: 4 } }, note: 'Hựu lầm lì suốt dọc đường. Đến cửa, nó mới hỏi: "Sao người lớn hay giấu thư thế?"' },
     ],
   },
   {
@@ -139,8 +163,8 @@ export const NG_CH4: Card[] = [
     title: 'Bạc không rõ lý do',
     text: ['Cung nữ giặt áo vừa vò áo vừa kể: tháng này có người được thưởng bạc mà không ai biết vì sao.', '"Bạc mới, nương nương ạ. Người hầu như bọn em thì cả năm không thấy."'],
     choices: [
-      { t: 'Hỏi tiếp, nhưng giả như chuyện phiếm', fx: { d: { muu: 2, hiem: 3 }, clue: ['a4_bac'] }, note: 'Nó kể một lèo. Người được bạc là {C:a4_bac}, nó không chắc người nào.' },
-      { t: 'Hỏi thẳng, ghi vào tờ trình', fx: { d: { hiem: 9 }, clue: ['a4_bac'] }, note: 'Nó tái mặt, nói ra hai cái tên: {C:a4_bac}. Chiều ấy cả viện giặt biết bạn đã hỏi.' },
+      { t: 'Hỏi tiếp, nhưng giả như chuyện phiếm', fx: { d: { muu: 2, hiem: 3 }, clue: ['a4_bac'] }, note: 'Nó kể một lèo. Người được bạc là {C:a4_bac}, nó không chắc người nào. {GIA:a4_bac}' },
+      { t: 'Hỏi thẳng, ghi vào tờ trình', fx: { d: { hiem: 6 }, clue: ['a4_bac'] }, note: 'Nó tái mặt, nói ra hai cái tên: {C:a4_bac}. Chiều ấy cả viện giặt biết bạn đã hỏi. {GIA:a4_bac}' },
       { t: 'Bảo nó đừng nói chuyện người khác', fx: { d: { duc: 2 } }, note: 'Nó cúi đầu vò áo. Bạn đi được mấy bước thì nghe nó kể tiếp với người khác.' },
     ],
   },
@@ -181,7 +205,7 @@ export const NG_CH4: Card[] = [
     moods: { huu: 'vui' },
     who: 'huu',
     title: 'Câu ru lạ',
-    text: ['Hựu ngồi vắt vẻo trên lan can hồ sen, vừa đung đưa chân vừa hát một câu ru, giọng còn ngọng.', 'Câu ru ấy không phải giọng kinh thành. Bạn chưa từng nghe ai trong cung hát nó.'],
+    text: ['Hựu ngồi vắt vẻo trên lan can hồ sen, vừa đung đưa chân vừa hát một câu ru, giọng vỡ chưa xong.', 'Câu ru ấy không phải giọng kinh thành. Bạn chưa từng nghe ai trong cung hát nó.'],
     choices: [
       { t: 'Hỏi: "Ai dạy con câu ấy?"', fx: { d: { muu: 3, hiem: 6 }, flag: ['nghe_ru', 'su8'] }, note: 'Hựu nghĩ rất lâu: "Con không biết. Con biết từ hồi con còn bé tí." Rồi nó hỏi lại: "Sao mẫu hậu không biết câu này?"' },
       { t: 'Ngồi xuống hát theo', fx: { d: { hoanghau: 4, duc: 2 }, flag: ['nghe_ru'] }, note: 'Bạn hát sai một chữ, Hựu cười ngặt nghẽo sửa lại. Nó thuộc câu ấy kỹ hơn mọi bài trong sách.' },
@@ -205,7 +229,7 @@ export const NG_CH4: Card[] = [
     title: 'Sốt mê',
     text: ['Hựu sốt cao, nằm mê man. Trong mơ nó lại hát câu ru ấy, rồi gọi một tiếng "mẹ" không giống tiếng gọi mẫu hậu.', 'Trên cổ nó vẫn đeo chiếc khóa trường mệnh bằng ngọc, đuôi mắt phải có một nốt ruồi nhỏ.'],
     choices: [
-      { t: 'Ghi câu ru vào sổ riêng, từng chữ một', fx: { d: { muu: 3, hiem: 6 }, flag: ['su8'] }, note: 'Bạn chép lại câu ru. Giọng ấy là giọng miền biển, không phải giọng nhà Lương.' },
+      { t: 'Ghi câu ru vào sổ riêng, từng chữ một', fx: { d: { muu: 3, hiem: 6 }, flag: ['su8'] }, note: 'Bạn chép lại câu ru. Giọng ấy không phải giọng kinh thành, càng không phải giọng nhà Lương.' },
       { t: 'Lau trán cho nó đến sáng', fx: { d: { duc: 3, hoanghau: 6, hiem: -4 } }, note: 'Gần sáng Hựu hạ sốt, mở mắt nhìn bạn: "Nương nương ở đây cả đêm à?" Bạn không nhắc gì đến câu ru.' },
     ],
   },
@@ -327,7 +351,7 @@ export const NG_CH4: Card[] = [
       moods: { thaihau: 'vui', con: 'vui' },
       who: 'thaihau',
       title: 'Cảnh trên gối Thái hậu',
-      text: ['Thái hậu bế Cảnh trên gối, đút cho nó miếng bánh đậu: "Đứa trẻ nào cũng cần một người im lặng giữ cho nó."', '"Con im, thì ghế Đông cung cũng có thể là của Cảnh."'],
+      text: ['Thái hậu bế Cảnh trên gối, đút cho nó miếng bánh đậu: "Đứa trẻ nào cũng cần một người im lặng giữ cho nó."', '"Con im, thì Cảnh lớn lên yên ổn, được phong vương, có đất riêng."'],
       choices: [
         { t: 'Cúi đầu nhận lời', fx: { end: 'n_26' }, note: 'Thái hậu xoa đầu Cảnh, cười hiền như mọi khi. Bạn biết mình vừa bán một thứ, chỉ không biết bán cho ai.' },
         { t: 'Thưa: "Thần thiếp không hiểu ý Thái hậu"', fx: { d: { thaihau: -4, hiem: 5, duc: 2 } }, note: 'Thái hậu vẫn cười: "Không hiểu cũng tốt." Bà trả Cảnh lại cho bạn, tay hơi chặt hơn lúc nhận.' },
@@ -428,6 +452,47 @@ export const NG_CH4: Card[] = [
       { t: 'Đóng rương, đi ngủ sớm', fx: { d: { hiem: -6, sac: 2 } }, note: 'Bạn ngủ một giấc dài. Sáng ra, viện yên đến lạ, như người ta tạm quên bạn.' },
     ],
   },
+  // quãng lặng giữa lúc án mở: cho người chơi một chỗ thở, Hiểm hạ
+  {
+    id: 'n4_l_mua',
+    part: P,
+    chapter: [4],
+    weight: 3,
+    beat: 'lang',
+    when: OPEN,
+    place: 'phong',
+    img: 'vienchi',
+    time: 'chieu',
+    cast: ['me'],
+    mood: 'binh',
+    title: 'Mưa dầm',
+    text: ['Mưa dầm bảy ngày. Cả hậu cung đóng cửa, người đưa tin cũng ngại lội nước.', 'Lá thư không tên nằm trong rương, không ai hỏi đến nó.'],
+    choices: [
+      { t: 'Thôi dò hỏi mấy hôm, ngồi khâu áo', fx: { d: { hiem: -8, duc: 2 } }, note: 'Bảy ngày không ai thấy bạn ra khỏi viện. Người đang canh chừng bạn cũng bắt đầu ngáp.' },
+      { t: 'Chép lại lá thư, so từng nét dưới đèn', fx: { d: { muu: 3, hiem: -3 } }, note: 'Bạn chép đến khi thuộc từng nét móc. Ngoài kia mưa che hết tiếng chân, kể cả chân người đang đứng nghe.' },
+    ],
+  },
+  // điềm cho vụ 5: Uyển Như đưa người nuôi mình vào hầu thuốc ngự
+  {
+    id: 'n4_s_un_ta',
+    part: P,
+    chapter: [4],
+    weight: 3,
+    when: { flags: [G, 'dm_un'], not: ['phe_un', 'un_han', 'un_ta'] },
+    place: 'vuon',
+    time: 'chieu',
+    cast: ['me', 'uyennhu'],
+    mood: 'binh',
+    moods: { uyennhu: 'lo' },
+    who: 'uyennhu',
+    title: 'Ma ma họ Tạ',
+    text: ['Uyển Như dắt theo một ma ma tóc đã hoa râm: "Ma ma Tạ nuôi tôi từ lúc lọt lòng. Ngự dược phòng đang thiếu người dâng thuốc."', '"Cô nói một lời với Hoàng thượng được không? Tôi muốn có một người của mình đứng gần ngài."'],
+    choices: [
+      { t: 'Nhận lời tiến cử', fx: { d: { thucphi: 8, vua: -2 }, flag: ['un_ta', 'tien_ta'] }, note: 'Tháng sau, ma ma Tạ bưng khay thuốc ngự. Lần nào đi ngang viện bạn, bà cũng cúi chào rất thấp.' },
+      { t: 'Hỏi: "Sao lại là chỗ thuốc ngự?"', fx: { d: { thucphi: -2, muu: 3 }, flag: ['un_ta'] }, note: 'Uyển Như cười: "Vì ở đó người ta chết vì bệnh dễ nhất." Rồi nàng bảo chỉ đùa. Tháng sau, ma ma Tạ vẫn vào được ngự dược phòng, qua tay một người khác.' },
+      { t: 'Từ chối: việc thuốc ngự không phải việc của phi tần', fx: { d: { duc: 2, thucphi: -4 }, flag: ['un_ta'] }, note: 'Uyển Như không giận. Tháng sau, ma ma Tạ vẫn vào được ngự dược phòng. Bạn không biết ai đã nói lời ấy thay mình.' },
+    ],
+  },
 
   /* ---------------- xử án (ngã rẽ lớn) ---------------- */
   {
@@ -509,7 +574,7 @@ export const NG_CH4: Card[] = [
     choices: [
       { t: 'Ghi vào hồ sơ: "tự sinh", rồi khóa rương', need: { flags: ['an4_tu'] }, lockHint: 'Chỉ khi đã tâu lời đồn tự sinh', fx: { d: { duc: 2 }, flag: ['n4_khep', 'tin_don'] }, note: 'Bạn viết hai chữ ấy, rồi biết mình đã viết sai. Phủ Thái sư gửi vào một hộp trà ngon.' },
       { t: 'Giữ hồ sơ mở, đợi người viết thư sơ ý', need: { flags: ['an4_gac'] }, lockHint: 'Chỉ khi đã gác án', fx: { d: { muu: 3 }, flag: ['n4_khep', 'tin_don'] }, note: 'Bạn đặt lá thư lên trên cùng rương. Người viết nó chưa sơ ý lần nào.' },
-      { t: 'Sang cung chính, ngồi với Hoàng hậu một lúc', need: { not: ['phe_hoanghau'] }, lockHint: 'Hoàng hậu không còn ở cung chính', fx: { d: { hoanghau: 8, hiem: 3 }, flag: ['n4_khep', 'tin_don'] }, note: 'Hoàng hậu không hỏi gì về lá thư. Bà chỉ hỏi Cảnh đã biết đi chưa, rồi lặng im nhìn ra vườn.' },
+      { t: 'Sang cung chính, ngồi với Hoàng hậu một lúc', need: { not: ['phe_hoanghau'] }, lockHint: 'Hoàng hậu không còn ở cung chính', fx: { d: { hoanghau: 8, hiem: 3 }, flag: ['n4_khep', 'tin_don'] }, note: 'Hoàng hậu không hỏi gì về lá thư. Bà chỉ hỏi bạn dạo này ăn ngủ thế nào, rồi lặng im nhìn ra vườn.' },
     ],
   },
   {
@@ -584,7 +649,7 @@ export const NG_CH4: Card[] = [
     moods: { thaihau: 'binh', thaisu: 'dac' },
     who: 'thaisu',
     title: 'Ba cái nôi',
-    text: ['Một năm sau, Quý phi Hà sinh hoàng tử. Tiệc đầy tháng, Thái sư nâng chén: "Ngôi Đông cung nên chọn người có cả mẹ lẫn họ ngoại vững vàng."', 'Hựu mười một tuổi, ngồi cạnh Thái hậu, không hiểu vì sao cả điện im phăng phắc.'],
+    text: ['Quý phi Hà sinh hoàng tử. Tiệc đầy tháng, Thái sư nâng chén: "Ngôi Đông cung nên chọn người có cả mẹ lẫn họ ngoại vững vàng."', 'Hựu ngồi cạnh Thái hậu, không hiểu vì sao cả điện im phăng phắc.'],
     choices: [
       { t: 'Nói đỡ cho Hựu: lập trưởng là lệ cũ', fx: { d: { thaihau: 8, hoanghau: 8, hiem: 4 }, flag: ['n4_trieu', 'un_con', 'ung_huu'], years: 1 }, note: 'Thái hậu gật đầu. Thái sư đặt chén xuống, nhìn bạn lâu hơn một cái nhìn.' },
       { t: 'Im lặng, rót trà cho Thái hậu', fx: { d: { duc: 3, hiem: -5 }, flag: ['n4_trieu', 'un_con'], years: 1 }, note: 'Tiệc tan trong tiếng cười gượng. Không ai nhớ bạn đã ngồi ở đó.' },
@@ -607,10 +672,10 @@ export const NG_CH4: Card[] = [
     who: 'thaisu',
     lead: 'Quý phi Hà vẫn ở lãnh cung, từ năm bạn gọi tên nàng.',
     title: 'Sớ của Thái sư',
-    text: ['Một năm sau, Thái sư dâng sớ: "Con của phi tần từng vu oan cho cháu gái thần thì không được đứng gần ngôi trữ."', 'Hựu mười một tuổi đứng hầu bên ngai, nhìn bạn rồi nhìn Thái sư, không hiểu vì sao người lớn giận nhau.'],
+    text: ['Thái sư dâng sớ: "Con của phi tần từng vu oan cho cháu gái thần thì không được đứng gần ngôi trữ."', 'Hựu đứng hầu bên ngai, nhìn bạn rồi nhìn Thái sư, không hiểu vì sao người lớn giận nhau.'],
     omen: 'Người bị mình đổ oan không quên. Họ chỉ chờ đến lượt.',
     choices: [
-      { t: 'Cúi đầu, không cãi', fx: { d: { duc: 3, the: -6 }, flag: ['n4_trieu', 'ts_chan_canh'], years: 1 }, note: 'Hoàng thượng gác tờ sớ lại, không phê. Từ hôm ấy, tên Cảnh không còn được nhắc ở triều.' },
+      { t: 'Cúi đầu, không cãi', fx: { d: { duc: 3, the: -6 }, flag: ['n4_trieu', 'ts_chan_canh'], years: 1 }, note: 'Hoàng thượng gác tờ sớ lại, không phê. Từ hôm ấy, ở triều không ai nhắc tới viện của bạn nữa.' },
       { t: 'Nhờ Lý Mặc tâu lại', need: { flags: ['quen_lymac'] }, lockHint: 'Cần đã quen Lý Mặc', fx: { d: { quan: 6, hiem: 8 }, flag: ['n4_trieu', 'dm_lymac'], years: 1 }, note: 'Lý Mặc tâu: luật không bắt con chịu tội mẹ. Thái sư cười, nhưng tờ sớ bị trả về.' },
       { t: 'Đến phủ Thái sư xin lỗi', fx: { d: { the: 4, duc: -6, hiem: 4 }, flag: ['n4_trieu', 'theo_ts'], years: 1 }, note: 'Thái sư nhận lời xin lỗi, rót cho bạn chén trà: "Biết sai là tốt. Từ nay nhà Nghiêm đứng cạnh nhà Hà."' },
     ],
@@ -670,6 +735,29 @@ export const NG_CH4: Card[] = [
     ],
   },
 
+  /* ---------------- Hoàng hậu xin xuất gia (cùng giữ bí mật mộ nhỏ mà không chịu nổi) ---------------- */
+  {
+    id: 'n4_hh_tu',
+    part: P,
+    big: true,
+    chapter: [4],
+    when: { flags: [G, 'su7', 'dm_hoanghau', 'n4_venha'], not: ['n4_hh_tu', 'chet_hoanghau', 'phe_hoanghau', 'buoc_mh'] },
+    place: 'vuon',
+    time: 'dem',
+    cast: ['me', 'hoanghau'],
+    mood: 'buon',
+    moods: { hoanghau: 'buon' },
+    who: 'hoanghau',
+    title: 'Bó hương cuối cùng',
+    text: ['Đêm rằm, Hoàng hậu thắp hương ở nấm đất sau hòn non bộ, rồi đưa bạn xem một tờ xin xuất gia đã viết sẵn.', '"Mười mấy năm ta làm mẹ một đứa trẻ, và thắp hương cho một đứa khác không có tên. Ta mệt rồi. Cô giúp ta dâng tờ này."'],
+    omen: 'Người cùng giữ một bí mật, đến lúc mỏi tay, sẽ trao nó cho người đứng gần nhất.',
+    choices: [
+      { t: 'Giúp bà dâng tờ xin', fx: { d: { hoanghau: 10, thaihau: -6, hiem: 4 }, flag: ['n4_hh_tu', 'phe_hoanghau', 'hh_tu'], unflag: ['dm_hoanghau'], years: 0.5 }, note: 'Ba tháng sau, bà Lương Thục Nghi ra chùa ngoài thành. Hựu tiễn mẹ tới cổng, không khóc. Ghế chính cung để trống.' },
+      { t: 'Giữ bà lại: "Hựu còn cần mẹ"', fx: { d: { hoanghau: 6, duc: 2 }, flag: ['n4_hh_tu'], years: 0.5 }, note: 'Hoàng hậu gấp tờ xin lại, cất vào tay áo. Bà ở lại, nhưng từ đêm ấy bà ít nói hẳn.' },
+      { t: 'Hỏi: "Nương nương muốn đi, hay có người muốn nương nương đi?"', fx: { d: { muu: 3, hiem: 6 }, flag: ['n4_hh_tu'], years: 0.5 }, note: 'Hoàng hậu nhìn về phía cung Thái hậu rất lâu. Rồi bà đốt tờ xin trong lư hương: "Cô nói đúng. Ta đi thì người ta được yên."' },
+    ],
+  },
+
   /* ---------------- ngôi chính cung bỏ trống (hiếm) ---------------- */
   ...either(
     {
@@ -687,7 +775,7 @@ export const NG_CH4: Card[] = [
       title: 'Ngôi chính cung',
       text: ['Ngôi chính cung bỏ trống đã nửa năm. Thái hậu muốn một người họ Lương, Thái sư muốn một người họ Hà.', 'Hoàng thượng hỏi bạn: "Còn nàng thì sao?"'],
       choices: [
-        { t: 'Thưa: "Nếu ngài cần một người nói thật"', need: { flags: ['dm_vua'], num: { vua: [25, 100], the: [35, 100] } }, lockHint: 'Cần Hoàng thượng tin bạn (từ 25) và Thế từ 35', fx: { d: { the: 10, thaihau: -10, hiem: 10 }, flag: ['n4_hau', 'hoang_hau'], years: 0.5 }, note: 'Ba tháng sau, sách ấn chính cung được trao vào tay bạn. Thái hậu dự lễ, cười hiền, và không chạm vào bạn một lần nào.' },
+        { t: 'Thưa: "Nếu ngài cần một người nói thật"', need: { flags: ['dm_vua'], num: { vua: [20, 100], the: [30, 100] } }, lockHint: 'Cần Hoàng thượng tin bạn (từ 20) và Thế từ 30', fx: { d: { the: 10, thaihau: -10, hiem: 10 }, flag: ['n4_hau', 'hoang_hau'], years: 0.5 }, note: 'Ba tháng sau, sách ấn chính cung được trao vào tay bạn. Thái hậu dự lễ, cười hiền, và không chạm vào bạn một lần nào.' },
         { t: 'Tiến cử một người nhà Lương', fx: { d: { thaihau: 10, duc: 2 }, flag: ['n4_hau'], years: 0.5 }, note: 'Thái hậu cảm ơn bạn bằng một chuỗi hạt. Người được tiến cử mới mười tám tuổi, sợ cả bóng mình.' },
         { t: 'Xin để ngôi trống, chờ người xứng', fx: { d: { duc: 4, vua: 2 }, flag: ['n4_hau'], years: 0.5 }, note: 'Hoàng thượng cười buồn: "Trong cung này ai cũng xin trẫm một thứ. Nàng xin trẫm đừng cho ai."' },
       ],

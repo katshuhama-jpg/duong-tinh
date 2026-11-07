@@ -36,6 +36,8 @@ export interface Case {
   clues: Clue[];
   /** có cờ này thì vụ không có thủ phạm (vd vua chết vì bệnh thật): kết luận "không ai" mới là đúng */
   none?: string;
+  /** người có nhúng tay thật nhưng không phải người ra lệnh: buộc họ là "xử sót", không phải vu */
+  sot?: string[];
 }
 
 export const KIND: Record<Clue['kind'], string> = { vat: 'Vật chứng', nhan: 'Nhân chứng', khai: 'Lời khai' };
@@ -156,7 +158,7 @@ export const CASES: Case[] = [
     tay: ['che'],
     clues: [
       { id: 'a6_thu', an: 'an6', kind: 'vat', t: 'Lá thư một chữ "Im" cha gửi chị Thanh', key: true },
-      { id: 'a6_dem', an: 'an6', kind: 'nhan', t: 'Người đánh xe nhớ đêm cha vào cung gặp riêng Thái hậu' },
+      { id: 'a6_dem', an: 'an6', kind: 'nhan', t: 'Người đánh xe nhớ đêm cha vào cung gặp riêng Thái hậu, sau tang chị' },
       { id: 'a6_so', an: 'an6', kind: 'vat', t: 'Hồ sơ vụ Đông cung năm ấy, có bút phê của cha xin hoãn' },
       { id: 'a6_nm', an: 'an6', kind: 'khai', t: 'Lời nhũ mẫu: cha đọc thư chị xong, ngồi đến sáng' },
       { id: 'a6_an', an: 'an6', kind: 'vat', t: 'Một tờ biên nhận vàng của nhà Lương, đề tên cha', gai: 'dong' },
@@ -174,6 +176,7 @@ export const CASES: Case[] = [
       { k: 'cha', label: 'Người biết mà im', name: 'Cha', cast: 'cha' },
     ],
     tay: ['th'],
+    sot: ['ki', 'ty'],
     clues: [
       { id: 'a7_goc', an: 'an7', kind: 'vat', t: 'Bản gốc sổ đến thăm và sổ thuốc năm Hưng Bình thứ tám', key: true },
       { id: 'a7_kiem', an: 'an7', kind: 'khai', t: 'Lời khai của Kiệm về chén thuốc đêm ấy' },
@@ -203,6 +206,13 @@ export function initCases(seed: number): NonNullable<Life['an']> {
   return an;
 }
 
+/** manh mối này có phải giả không (cờ that_<id>: đã ép ra lời thật thì thôi giả) */
+export function isGia(l: Life, clueId: string): boolean {
+  const cl = clueOf(clueId);
+  if (!cl || cl.gai) return false;
+  return !!l.an?.[cl.an]?.gia?.includes(clueId) && !l.flags.includes(`that_${clueId}`);
+}
+
 /** manh mối này nói thủ phạm là một trong những ai */
 export function clueSet(l: Life, clueId: string): string[] {
   const cl = clueOf(clueId);
@@ -216,8 +226,10 @@ export function clueSet(l: Life, clueId: string): string[] {
     return [c.suspects[(real0.findIndex((x) => x.id === clueId) + off0) % c.suspects.length].k];
   }
   const tay = l.an?.[c.id]?.tay ?? c.tay[0];
-  // manh mối giả (có qua tay kẻ thù): trỏ về hai người, không có thủ phạm thật
-  if (l.an?.[c.id]?.gia?.includes(clueId)) {
+  // manh mối giả (có qua tay kẻ thù, hay người khai nói dối): trỏ về hai người, không có thủ phạm thật
+  if (isGia(l, clueId)) {
+    // nhũ mẫu nói dối để che cha: lời bà luôn kéo về phía nhẹ tội
+    if (clueId === 'a6_nm') return ['ep', 'oan'];
     const sus = c.suspects.map((s) => s.k).filter((k) => k !== tay);
     const o = Math.floor(rnd(l.seed, `gia|${clueId}`) * sus.length);
     return [sus[o % sus.length], sus[(o + 1) % sus.length]];
@@ -264,7 +276,8 @@ export function strength(l: Life, an: string, k: string) {
 }
 
 /** xử án: trả về kiểu kết quả */
-export function judge(l: Life, an: string, who: string): { dung: boolean; du: boolean; kind: 'thang' | 'gai' | 'phancong' | 'gac' | 'tu' } {
+export type JudgeKind = 'thang' | 'gai' | 'phancong' | 'gac' | 'tu' | 'sot';
+export function judge(l: Life, an: string, who: string): { dung: boolean; du: boolean; kind: JudgeKind } {
   if (who === 'gac') return { dung: false, du: false, kind: 'gac' };
   const c = caseOf(an);
   const none = !!(c.none && l.flags.includes(c.none));
@@ -274,6 +287,8 @@ export function judge(l: Life, an: string, who: string): { dung: boolean; du: bo
   const st = l.an?.[an];
   const dung = !!st && st.tay === who;
   const { du } = strength(l, an, who);
+  // gọi tên kẻ làm (bưng chén, kê đơn) mà chưa tới người ra lệnh: xử sót, không phải vu
+  if (!dung && c.sot?.includes(who)) return { dung, du, kind: 'sot' };
   if (dung && du) return { dung, du, kind: 'thang' };
   if (!dung && du) return { dung, du, kind: 'gai' };
   return { dung, du, kind: 'phancong' };

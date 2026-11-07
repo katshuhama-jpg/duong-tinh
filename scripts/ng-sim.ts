@@ -22,7 +22,9 @@ for (let i = 0; i < N; i++) {
       if (!open.length) throw new Error('no open choice at ' + c.id);
       const j = open[Math.floor(Math.random() * open.length)];
       const r = choose(l, j);
-      for (const f of r.life.flags) if (/^an\d_(thang|gai|phancong|gac|tu)$/.test(f) && !l.flags.includes(f)) kinds.push(f);
+      // ghi chú sau khi chọn (cả failNote của rủi ro) cũng không được sót chữ giữ chỗ
+      if (/\{[A-Z]+:/.test(r.note)) bad.push(c.id + ' (note): ' + r.note);
+      for (const f of r.life.flags) if (/^an\d_(thang|gai|phancong|gac|tu|sot)$/.test(f) && !l.flags.includes(f)) kinds.push(f);
       l = r.life;
       t++;
     }

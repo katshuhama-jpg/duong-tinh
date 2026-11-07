@@ -96,6 +96,8 @@ export interface Cond {
   riv?: Partial<Record<RivalK, { st?: RivalSt[]; th?: [number, number]; ev?: [number, number] }>>;
   /** phần Nghiêm: điểm vây cánh đã nhổ tối thiểu (xem nghiem/daumoi.ts) */
   vc?: number;
+  /** phần Nghiêm: điểm vây cánh tối đa (dùng cho "vây cánh còn đông": vcMax 4, hoặc vcMax 2) */
+  vcMax?: number;
 }
 
 /** hệ quả của một lựa chọn */
@@ -278,6 +280,8 @@ export interface Life {
   back: Omit<Life, 'back'> | null;
   /** câu điềm báo của thẻ gây ra cái chết */
   omen?: string;
+  /** lời kể kết cục riêng của đời này (thay desc cố định, vd chết vì Hiểm theo chương) */
+  endDesc?: string;
   startedAt: number;
   /** 2 = quan hệ theo thang -100..100 */
   relV?: number;

@@ -6,6 +6,8 @@
 import type { Life } from '../types';
 import { NG_TALES_CH3 } from './ch3';
 import { NG_TALES_CH2 } from './ch2';
+import { NG_TALES_CH4 } from './ch4';
+import { NG_TALES_CH5 } from './ch5';
 import { NG_TALES_CH6 } from './ch6';
 import { NG_TALES_CH7 } from './ch7';
 type Tale = NonNullable<Life['tales']>[number];
@@ -89,6 +91,8 @@ export const NG_TALES: Record<string, { t: string; lines: string[]; s?: Tale['s'
     ],
   },
   ...NG_TALES_CH3,
+  ...NG_TALES_CH4,
+  ...NG_TALES_CH5,
   ...NG_TALES_CH6,
   ...NG_TALES_CH7,
 };

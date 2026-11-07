@@ -1,6 +1,6 @@
 /** Lời kể kết cục (desc) cho các kết chương 4 làm cho tới được. */
 export const NG_DESC_4: Record<string, string> = {
-  n_26: 'Bà cúi đầu nhận lời Thái hậu, và Cảnh được làm Đông cung. Cả đời bà không hỏi thêm một câu nào về đêm Tân Dậu. Mỗi lần thấy Hựu đi ngang, bà nhìn xuống trước.',
+  n_26: 'Bà cúi đầu nhận lời Thái hậu, đổi một câu hỏi lấy một đời yên cho con. Cảnh lớn lên, được phong vương, đất phong xa kinh thành, còn Hựu vẫn ngồi ở Đông cung. Cả đời bà không hỏi thêm một câu nào về đêm Tân Dậu, và mỗi lần thấy Hựu đi ngang, bà nhìn xuống trước.',
   n_27: 'Bà nhắc lại lời đồn năm ấy đúng một lần, và chiếc ghế Đông cung về tay Cảnh. Rồi bà khóa rương hồ sơ, không bao giờ mở lại. Bà sống lâu, mà không bao giờ biết hết chuyện đêm Tân Dậu.',
   n_28: 'Bà tâu lập Hựu, rồi xin lui về viện cũ của chị. Tiếng trống mừng Đông cung vọng tới từ rất xa. Rương hồ sơ khóa lại, chìa ném xuống hồ sen.',
   n_29: 'Thái sư đưa con Quý phi Hà lên ngôi Đông cung. Hựu bị đưa ra phủ riêng ngoài thành, còn Cảnh thì không ai nhắc tên. Bà lui về viện, nhìn hai đứa trẻ cùng thua một ván mà không đứa nào được ngồi vào bàn cờ.',

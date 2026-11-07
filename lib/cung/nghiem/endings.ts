@@ -34,7 +34,7 @@ const RAW: Ending[] = [
   {"id": "n_23", "name": "Thái y quỳ", "desc": "Bà che tên Thái y Thẩm, nhận cách bậc thay ông. Ông sống, vợ con ông sống. Bà sống ở một viện nhỏ hơn, lòng nhẹ hơn."},
   {"id": "n_24", "name": "Bán Thái y cho Thái sư", "desc": "Bà đem Thái y Thẩm đổi lấy ngôi Phi. Thái sư dùng lời khai của ông để đánh nhà Lương. Bà lên cao, và không bao giờ uống thuốc của ai nữa."},
   {"id": "n_25", "name": "Ép Thái y tới chết", "desc": "Bà ép quá tay. Thái y Thẩm tự tận trong phòng thuốc, mang theo mọi thứ ông biết. Đầu mối đứt, và bà sống với nó cả đời."},
-  {"id": "n_26", "name": "Đứa trẻ đổi lấy đứa trẻ", "desc": "Nhận lời im lặng để con mình được làm Đông cung."},
+  {"id": "n_26", "name": "Đứa trẻ đổi lấy đứa trẻ", "desc": "Nhận lời im lặng để Cảnh lớn lên yên ổn, được phong vương, có đất riêng."},
   {"id": "n_27", "name": "Đông cung của Cảnh", "desc": "Đạp Hựu xuống, con lên, không biết gì về Tân Dậu."},
   {"id": "n_28", "name": "Đông cung của Hựu", "desc": "Nhường, lui về."},
   {"id": "n_29", "name": "Hựu bị phế, Cảnh không lên", "desc": "Thái sư đưa con Uyển Như lên."},

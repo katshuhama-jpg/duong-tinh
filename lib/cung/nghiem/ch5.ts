@@ -25,7 +25,31 @@
  *   thaiy_khai (Thái y Thẩm đã khai về Thái hậu), chung_thaihau, thu_chieu (tiên đế cho phép mở lại án cũ), om_huu, giu_xac, an5_sot, bai_an5,
  *   hua_kiem (hứa trả nhà cho Kiệm), phu_nghiem_chay (kiêu binh đốt phủ Nghiêm mà nàng sống), tha_thaisu.
  */
-import type { Card, Cond } from '../types';
+import type { Card, Cond, Life } from '../types';
+type TaleS = NonNullable<NonNullable<Life['tales']>[number]['s']>;
+
+/** lời kể chuyển cảnh chương 5, giọng chị Thanh trong mơ (cần gộp vào NG_TALES ở prologue.ts) */
+const TALE_XU = {
+  t: 'Giấc mơ thứ bảy',
+  s: { bg: 'thaimieu', time: 'ngay' as const, cast: [] },
+  lines: [
+    'Sáng ngày phát tang, em mơ thấy chị đứng sau hàng đình thần, áo trắng như mọi người.',
+    'Chị bảo: trước linh cữu, ai cũng chờ một cái tên. Cái tên em gọi hôm nay sẽ theo em đến cuối đời, đúng hay sai cũng thế.',
+  ],
+};
+export const NG_TALES_CH5: Record<string, { t: string; lines: string[]; s?: TaleS }> = {
+  n5_ngay1: {
+    t: 'Giấc mơ thứ sáu',
+    s: { bg: 'tam', time: 'dem', cast: [] },
+    lines: [
+      'Sáu năm nữa trôi qua. Hựu đã mười sáu, Hoàng thượng bắt đầu ho từ mùa đông mà không cho ai biết.',
+      'Đêm ấy em mơ thấy chị bưng một chén thuốc đi dọc hành lang tẩm điện, đi mãi không tới cửa. Em gọi, chị không quay lại.',
+    ],
+  },
+  n5_xu_th: TALE_XU,
+  n5_xu_k_x: TALE_XU,
+  n5_xu_k_y: TALE_XU,
+};
 
 const P = 'nghiem' as const;
 const G = 'g_quan';
@@ -66,7 +90,7 @@ export const NG_CH5: Card[] = [
     title: 'Ngày thứ nhất',
     text: ['Chiều qua Hoàng thượng phê dở một tờ tấu thì bút rơi khỏi tay. Đêm ấy Ngự y dâng một chén thuốc.', 'Sáng ra ngài không nói được nữa. Bạn được gọi vào tẩm điện trước cả Thái hậu.'],
     choices: [
-      { t: 'Giữ lại chén thuốc và ống nhổ đêm qua', fx: { mo: 'an5', flag: ['mo_an5'], clue: ['a5_ba'], d: { hiem: 8, muu: 3 } }, note: 'Đáy ống nhổ còn một lớp bã sẫm. Chén ấy đêm qua đã qua tay {C:a5_ba}.' },
+      { t: 'Giữ lại chén thuốc và ống nhổ đêm qua', fx: { mo: 'an5', flag: ['mo_an5', 'co_ba5'], clue: ['a5_ba'], d: { hiem: 8, muu: 3 } }, note: 'Đáy ống nhổ còn một lớp bã sẫm. Chén ấy đêm qua đã qua tay {C:a5_ba}. {GIA:a5_ba}' },
       { t: 'Ngồi xuống bên giường, nắm tay ngài', fx: { mo: 'an5', flag: ['mo_an5', 'ben_vua'], d: { vua: 8, duc: 2 } }, note: 'Tay ngài lạnh, nhưng ngón tay khẽ siết lại. Ngài còn nhận ra bạn.' },
       { t: 'Sai người báo tin về phủ Nghiêm', fx: { mo: 'an5', flag: ['mo_an5', 'bao_cha'], d: { cha: 6, hiem: 4 } }, note: 'Chưa đến trưa, phủ Nghiêm đã đóng cổng. Cha không vào cung, chỉ gửi lại một chữ: "Biết."' },
     ],
@@ -88,13 +112,13 @@ export const NG_CH5: Card[] = [
     text: ['Sổ thuốc ngự ba ngày cuối nằm trong kho ngự dược phòng. Ai cũng biết, nhưng không ai được xem.', 'Đêm nay kho chỉ có một người canh, và người ấy rất hay ngủ gật.'],
     omen: 'Kho sổ nào cũng chỉ có một cửa.',
     choices: [
-      { t: 'Đưa người canh kho 20 quan', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, hiem: 6 }, clue: ['a5_so'], flag: ['co_so'] }, note: 'Một dòng ở đêm cuối viết bằng tay khác, mực còn mới. Người viết được dòng ấy chỉ có thể là {C:a5_so}.' },
+      { t: 'Đưa người canh kho 20 quan', need: { num: { tien: [20, 99999] } }, lockHint: 'Cần 20 quan', fx: { d: { tien: -20, hiem: 6 }, clue: ['a5_so'], flag: ['co_so'] }, note: 'Một dòng ở đêm cuối viết bằng tay khác, mực còn mới. Người viết được dòng ấy chỉ có thể là {C:a5_so}. {GIA:a5_so}' },
       {
         t: 'Tự vào kho lúc canh ba',
         need: { num: { hiem: [0, 49] } },
         lockHint: 'Cần Hiểm dưới 50: chưa ai canh chừng bạn',
         fx: { d: { hiem: 10, muu: 3 }, clue: ['a5_so'], flag: ['co_so'] },
-        note: 'Bạn chép vội dòng chữ lạ ở đêm cuối. Nét chữ ấy chỉ có thể là của {C:a5_so}.',
+        note: 'Bạn chép vội dòng chữ lạ ở đêm cuối. Nét chữ ấy chỉ có thể là của {C:a5_so}. {GIA:a5_so}',
         risk: { p: 0.2, fail: { d: { hiem: 8 } }, failNote: 'Cửa kho đã thay khóa mới. Bạn đứng ngoài đến canh tư rồi về tay không.' },
       },
       {
@@ -102,7 +126,7 @@ export const NG_CH5: Card[] = [
         need: { num: { hiem: [50, 100] } },
         lockHint: 'Chỉ khi Hiểm từ 50',
         fx: { d: { hiem: 12 }, clue: ['a5_so'], flag: ['co_so'] },
-        note: 'Bạn chép được dòng chữ lạ ở đêm cuối, nét của {C:a5_so}. Lúc ra, bạn ngửi thấy mùi dầu ở góc kho.',
+        note: 'Bạn chép được dòng chữ lạ ở đêm cuối, nét của {C:a5_so}. Lúc ra, bạn ngửi thấy mùi dầu ở góc kho. {GIA:a5_so}',
         risk: { p: 0.4, fail: { end: 'n_145' }, failNote: 'Cửa kho đóng sập sau lưng bạn. Rồi mùi dầu, rồi khói.' },
       },
       { t: 'Thôi, chưa phải lúc', fx: { d: { duc: 1 } }, note: 'Bạn đi ngang kho mà không dừng. Đèn trong kho tắt sớm hơn mọi đêm.' },
@@ -125,8 +149,8 @@ export const NG_CH5: Card[] = [
     title: 'Lối sau tẩm điện',
     text: ['Người lính canh cửa sau tẩm điện đổi phiên lúc canh hai. Đêm có chén thuốc, hắn đứng đúng chỗ ấy.', '"Nương nương hỏi gì thì hỏi nhanh. Mai thần bị đổi đi trấn biên rồi."'],
     choices: [
-      { t: 'Dúi 10 quan, hỏi riêng', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 4 }, clue: ['a5_canh'] }, note: 'Đêm ấy người bưng thuốc không đi cửa trước mà vòng lối sau. Mọi điều hắn kể trỏ về {C:a5_canh}.' },
-      { t: 'Hỏi thẳng trước mặt người đổi phiên', fx: { d: { hiem: 12 }, clue: ['a5_canh'] }, note: 'Hắn lắp bắp kể chuyện lối sau, trỏ về {C:a5_canh}. Người đổi phiên đi rất nhanh về phía cung trên.' },
+      { t: 'Dúi 10 quan, hỏi riêng', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 4 }, clue: ['a5_canh'] }, note: 'Đêm ấy người bưng thuốc không đi cửa trước mà vòng lối sau. Mọi điều hắn kể trỏ về {C:a5_canh}. {GIA:a5_canh}' },
+      { t: 'Hỏi thẳng trước mặt người đổi phiên', fx: { d: { hiem: 10 }, clue: ['a5_canh'] }, note: 'Hắn lắp bắp kể chuyện lối sau, trỏ về {C:a5_canh}. Người đổi phiên đi rất nhanh về phía cung trên. {GIA:a5_canh}' },
       { t: 'Để hắn đi', fx: { d: { duc: 1 } }, note: 'Sáng hôm sau, cửa sau tẩm điện có một người lính mới, không biết gì cả.' },
     ],
   },
@@ -147,8 +171,8 @@ export const NG_CH5: Card[] = [
     title: 'Chén thuốc đổi tay',
     text: ['Tiểu thái giám hầu thuốc mới mười bốn tuổi, ba ngày nay không dám ngủ.', '"Nương nương, chén thuốc đêm ấy... nô tài không phải người bưng vào."'],
     choices: [
-      { t: 'Hứa giữ nó ở viện mình, rồi nghe nó nói', fx: { d: { hiem: 6, duc: 2 }, clue: ['a5_khai'], flag: ['giu_ttg'] }, note: 'Chén thuốc rời bếp qua tay nó, rồi đổi tay hai lần trước khi tới giường. Lần đổi sau cùng là {C:a5_khai}.' },
-      { t: 'Dọa giao nó cho Tam pháp ty', fx: { d: { hiem: 10, duc: -3 }, clue: ['a5_khai'] }, note: 'Nó khóc, kể chén thuốc đổi tay hai lần, lần sau cùng là {C:a5_khai}. Đêm ấy nó bỏ trốn khỏi cung.' },
+      { t: 'Hứa giữ nó ở viện mình, rồi nghe nó nói', fx: { d: { hiem: 6, duc: 2 }, clue: ['a5_khai'], flag: ['giu_ttg'] }, note: 'Chén thuốc rời bếp qua tay nó, rồi đổi tay hai lần trước khi tới giường. Lần đổi sau cùng là {C:a5_khai}. {GIA:a5_khai}' },
+      { t: 'Dọa giao nó cho Tam pháp ty', fx: { d: { hiem: 10, duc: -3 }, clue: ['a5_khai'] }, note: 'Nó khóc, kể chén thuốc đổi tay hai lần, lần sau cùng là {C:a5_khai}. Đêm ấy nó bỏ trốn khỏi cung. {GIA:a5_khai}' },
       { t: 'Cho nó về ngủ', fx: { d: { duc: 2 } }, note: 'Nó vái bạn ba vái. Hôm sau người ta nói nó bị điều sang hầu lăng.' },
     ],
   },
@@ -211,6 +235,91 @@ export const NG_CH5: Card[] = [
     ],
   },
 
+  /* ---------------- ba ngày: thêm đường dò và quãng lặng (chương có 5 thẻ nhỏ) ---------------- */
+  {
+    id: 'n5_c_ba',
+    part: P,
+    chapter: [5],
+    weight: 4,
+    when: { ...OPEN, not: [...OPEN.not, 'co_ba5'] },
+    place: 'vien',
+    img: 'bep',
+    time: 'chieu',
+    cast: ['me', 'cungnu'],
+    mood: 'lo',
+    moods: { cungnu: 'so' },
+    who: 'cungnu',
+    whoName: 'Cung nữ đổ ống nhổ',
+    title: 'Ống nhổ chưa đổ',
+    text: ['Cung nữ đổ ống nhổ tẩm điện ôm một cái ống sứ, đứng nép sau bếp ngự dược: "Ống đêm ấy em chưa dám đổ."', '"Có người bảo em đổ đi cho sạch. Em sợ đổ rồi thì người ta bảo em đổ cái gì."'],
+    choices: [
+      { t: 'Nhận ống nhổ, giữ nó ở viện mình', fx: { d: { hiem: 6 }, clue: ['a5_ba'], flag: ['co_ba5'] }, note: 'Đáy ống còn một lớp bã sẫm, mùi đắng gắt. Người cuối cùng cầm chén ấy là {C:a5_ba}. {GIA:a5_ba}' },
+      { t: 'Bảo nó mang thẳng tới Tam pháp ty', fx: { d: { hiem: 3, quan: 2 }, clue: ['a5_ba'], flag: ['co_ba5'] }, note: 'Tam pháp ty niêm phong ống nhổ, chép cho bạn một bản lời nó khai. Lời khai trỏ về {C:a5_ba}. {GIA:a5_ba}', risk: { p: 0.35, fail: { d: { hiem: 6 }, flag: ['co_ba5'] }, failNote: 'Nó không tới được Tam pháp ty. Sáng ra người ta bảo nó trượt chân ở bậc giếng, ống sứ vỡ tan.' } },
+      { t: 'Bảo nó đổ đi, rồi quên chuyện này', fx: { d: { duc: -1, hiem: -3 } }, note: 'Nó đổ ống nhổ xuống rãnh, rửa ba nước. Bạn đứng nhìn, không biết mình vừa cứu nó hay vừa bỏ nó.' },
+    ],
+  },
+  {
+    id: 'n5_l_tuyet',
+    part: P,
+    chapter: [5],
+    weight: 2,
+    beat: 'lang',
+    when: { flags: [G, 'mo_an5'], not: ['xu_an5'] },
+    place: 'vuon',
+    img: 'vuon',
+    time: 'dem',
+    cast: ['me'],
+    mood: 'buon',
+    title: 'Sương đêm thứ hai',
+    text: ['Đêm thứ hai, sương xuống dày đến mức không thấy mái tẩm điện. Cả cung im như đang nín thở.', 'Ngồi trên bậc đá lạnh, bạn nhớ ngài từng bảo mùa xuân này sẽ đi săn.'],
+    choices: [
+      { t: 'Ngồi yên đến khi sương tan', fx: { d: { hiem: -6, duc: 2 } }, note: 'Không ai tìm bạn suốt một canh. Người đang canh chừng bạn tưởng bạn đã về ngủ.' },
+      { t: 'Đi một vòng quanh tẩm điện, đếm người gác', fx: { d: { muu: 3, hiem: 2 } }, note: 'Cửa trước bốn người, cửa sau chỉ một. Người ấy đứng ngủ gật, như đêm có chén thuốc.' },
+    ],
+  },
+  // điềm cho chương 6: nhũ mẫu nói dối để che cha
+  {
+    id: 'n5_s_nm',
+    part: P,
+    chapter: [5],
+    weight: 2,
+    when: { flags: [G, 'mo_an5'], not: ['xu_an5', 'chet_nhumau', 'di_nhumau'] },
+    place: 'phong',
+    img: 'vienchi',
+    time: 'chieu',
+    cast: ['me', 'nhumau'],
+    mood: 'lo',
+    moods: { nhumau: 'lo' },
+    who: 'nhumau',
+    title: 'Bát canh của nhũ mẫu',
+    text: ['Nhũ mẫu Tần vào cung, mang một bát canh gà phủ nhà nấu. Bà lau tay vào vạt áo mấy lần, dù tay không bẩn.', '"Ông nhà dặn tiểu thư giữ mình. Ông nhà cả đời chưa nói dối ai, tiểu thư nhớ cho vú."'],
+    choices: [
+      { t: 'Hỏi: "Sao vú lại nói thế?"', fx: { d: { muu: 2 }, flag: ['nm_lo'] }, note: '"Vú nói vậy thôi." Bà dọn bát rất nhanh, quên cả cái khăn trên bàn. Năm nào nhắc tới cha, bà cũng nói câu ấy trước.' },
+      { t: 'Ăn hết bát canh, để bà ngồi chơi', fx: { d: { hiem: -3, duc: 1 } }, note: 'Bà ngồi nhìn bạn ăn như hồi bạn còn nhỏ. Lúc về, bà dúi vào tay bạn một gói ô mai, như thể bạn vẫn mười tuổi.' },
+    ],
+  },
+  // điềm cho người thân cận: Uyển Như lo cho ma ma của mình
+  {
+    id: 'n5_s_un_ta',
+    part: P,
+    chapter: [5],
+    weight: 3,
+    when: { flags: [G, 'mo_an5', 'un_tay'], not: ['xu_an5', 'phe_un', 'un_han'] },
+    place: 'vien',
+    img: 'hanh',
+    time: 'dem',
+    cast: ['me', 'uyennhu'],
+    mood: 'lo',
+    moods: { uyennhu: 'so' },
+    who: 'uyennhu',
+    title: 'Câu hỏi thừa',
+    text: ['Uyển Như đứng chờ bạn ở hành lang, tay siết chặt khăn: "Người ta đã gọi ai ở ngự dược phòng lên hỏi chưa?"', '"Ma ma Tạ nuôi tôi từ lúc lọt lòng, giờ già rồi, hay quên. Bà ấy nói gì sai, cô đừng tin."'],
+    choices: [
+      { t: 'Hỏi: "Sao cô lo cho ma ma Tạ hơn lo cho Hoàng thượng?"', fx: { d: { thucphi: -6, muu: 3, hiem: 3 }, flag: ['nghi_un5'] }, note: 'Uyển Như đứng sững. "Tôi lo cho người của tôi. Ai chẳng thế." Nàng đi, quên cả chào.' },
+      { t: 'Trấn an nàng: chưa ai bị gọi', fx: { d: { thucphi: 4 } }, note: 'Uyển Như thở ra, rồi cười, nụ cười không tới mắt. Cả buổi tối nàng không nhắc tới Hoàng thượng một lần.' },
+    ],
+  },
+
   /* ---------------- sự thật 10: Kiệm bán bản gốc sổ ra vào cung ---------------- */
   ...alt(
     {
@@ -229,8 +338,8 @@ export const NG_CH5: Card[] = [
       title: 'Sổ ra vào cung',
       text: ['Kiệm đến lúc nửa đêm, không mang đèn: "Tiên đế sắp đi. Nô tài cũng phải tính đường cho mình."', '"Nương nương muốn biết năm Hưng Bình thứ tám ai vào cung lúc canh ba, nô tài có bản gốc."'],
       choices: [
-        { t: 'Trả ông 30 quan', need: { num: { tien: [30, 99999] } }, lockHint: 'Cần 30 quan', fx: { d: { tien: -30, hiem: 8 }, flag: ['su10', 'n5_kiem'] }, note: 'Một dòng mực cũ: "Thị lang Nghiêm, vào cung Thái hậu, canh ba, ra canh năm." Một tháng sau cha lên Thượng thư.' },
-        { t: 'Hứa trả lại nhà cho họ ông, nếu ông còn sống', fx: { d: { hiem: 8, phuc: 10 }, flag: ['su10', 'hua_kiem', 'n5_kiem'] }, note: 'Kiệm im rất lâu, rồi lật trang: cha bạn vào cung Thái hậu lúc canh ba, ra lúc canh năm. "Nhà nô tài ở phố Hàng Muối, nương nương nhớ."' },
+        { t: 'Trả ông 30 quan', need: { num: { tien: [30, 99999] } }, lockHint: 'Cần 30 quan', fx: { d: { tien: -30, hiem: 8 }, flag: ['su10', 'n5_kiem'] }, note: 'Một dòng mực cũ: "Thị lang Nghiêm, vào cung Thái hậu, canh ba, ra canh năm." Ngày ghi là mười hôm sau đám tang chị. Một tháng sau cha lên Thượng thư.' },
+        { t: 'Hứa trả lại nhà cho họ ông, nếu ông còn sống', fx: { d: { hiem: 8, phuc: 10 }, flag: ['su10', 'hua_kiem', 'n5_kiem'] }, note: 'Kiệm im rất lâu, rồi lật trang: mười hôm sau đám tang chị, cha bạn vào cung Thái hậu lúc canh ba, ra lúc canh năm. "Nhà nô tài ở phố Hàng Muối, nương nương nhớ."' },
         { t: 'Đuổi ông về', fx: { d: { phuc: -6, duc: 2 }, flag: ['n5_kiem'] }, note: 'Kiệm cúi chào, không giận: "Vậy nô tài bán cho người khác." Ông đi về phía cung trên.' },
       ],
     },
@@ -346,7 +455,7 @@ export const NG_CH5: Card[] = [
     title: 'Trống Đăng văn',
     text: ['Ngự sử Lý Mặc đứng dưới mái cửa Tây, nơi treo trống Đăng văn: "Ai đánh trống này, Tam pháp ty phải mở cửa xét."', '"Nhưng người đánh trống phải có chứng. Không có chứng thì trống ấy là trống gọi người đến bắt mình."'],
     choices: [
-      { t: 'Nhờ ông lấy bản chép sổ thuốc ngự', fx: { d: { quan: -4, hiem: 6 }, clue: ['a5_so'], flag: ['co_so'] }, note: 'Tối ấy ông gửi sang một tờ chép tay. Dòng ở đêm cuối viết bằng tay khác, trỏ về {C:a5_so}.' },
+      { t: 'Nhờ ông lấy bản chép sổ thuốc ngự', fx: { d: { quan: -4, hiem: 6 }, clue: ['a5_so'], flag: ['co_so'] }, note: 'Tối ấy ông gửi sang một tờ chép tay. Dòng ở đêm cuối viết bằng tay khác, trỏ về {C:a5_so}. {GIA:a5_so}' },
       { t: 'Hỏi ông về lệ đánh trống', fx: { d: { quan: 4, muu: 2 }, flag: ['biet_trong'] }, note: '"Đánh ba hồi. Quan Tam pháp ty ra nhận đơn. Từ lúc ấy, án không còn là của cung nữa."' },
     ],
   },
@@ -409,7 +518,7 @@ export const NG_CH5: Card[] = [
     choices: [
       { t: 'Kể ngài nghe những gì đã biết về năm Tân Dậu', need: { flags: ['su6'] }, lockHint: 'Cần đã đọc dòng nhòe trong sổ thuốc năm Tân Dậu', fx: { d: { vua: 10, hiem: 8 }, flag: ['chet_vua', 'thu_chieu', 'vua_biet'] }, note: 'Ngài nghe hết, rồi viết lên mép tờ tấu dở bốn chữ: "Cho phép xét lại." Gần sáng, Hoàng thượng băng hà.' },
       { t: 'Không nói. Ôm ngài đến sáng', need: { flags: ['su6', 'ben_vua'] }, lockHint: 'Cần đã biết điều gì đó để giữ, và đã ngồi bên ngài từ ngày đầu', fx: { end: 'n_104' }, note: 'Bạn biết đủ để nói, và bạn chọn không nói. Ngài đi trong tay bạn, nhẹ như ngủ.' },
-      { t: 'Hỏi: "Đêm ấy ai bưng thuốc vào?"', fx: { d: { muu: 3, hiem: 4 }, clue: ['a5_canh'], flag: ['chet_vua'] }, note: 'Ngài đưa mắt về phía cửa sau. Sáng ra lính canh cửa sau xác nhận đêm ấy có người đi lối ấy: {C:a5_canh}. Ngài đã đi trước khi trời sáng.' },
+      { t: 'Hỏi: "Đêm ấy ai bưng thuốc vào?"', fx: { d: { muu: 3, hiem: 12 }, clue: ['a5_canh', 'a5_so'], flag: ['chet_vua', 'co_so'] }, note: 'Ngài đưa mắt về phía cửa sau, rồi run tay rút dưới gối ra mấy tờ sổ thuốc ngự ngài tự giữ. Dòng đêm cuối viết bằng tay khác, trỏ về {C:a5_so}. Lính canh cửa sau xác nhận người đi lối ấy: {C:a5_canh}. Ngài đi trước khi trời sáng, và cả cung trên biết bạn là người cuối cùng ở bên ngài. {GIA:a5_so} {GIA:a5_canh}' },
       { t: 'Xin ngài một chữ cho phép mở lại án cũ', need: { flags: ['dm_vua'] }, lockHint: 'Cần Hoàng thượng tin bạn', fx: { d: { vua: 4, hiem: 6 }, flag: ['chet_vua', 'thu_chieu'] }, note: 'Ngài không hỏi án gì. Ngài chỉ viết, tay run: "Cho phép xét lại." Gần sáng, ngài băng hà.' },
       { t: 'Kể ngài nghe chuyện ao sen ở phủ Nghiêm', fx: { d: { duc: 3, sac: 2 }, flag: ['chet_vua', 'ben_vua'] }, note: 'Ngài cười được một lần, rất khẽ. Gần sáng, Hoàng thượng băng hà khi tay còn nắm tay bạn.' },
     ],
@@ -671,7 +780,7 @@ export const NG_CH5: Card[] = [
     part: P,
     big: true,
     chapter: [5],
-    when: { flags: [G, 'chet_vua', 'dc_un'], not: ['n5_ngai'] },
+    when: { flags: [G, 'chet_vua', 'dc_un'], not: ['n5_ngai', 'thaisu_nga'] },
     place: 'dien',
     img: 'thaimieu',
     time: 'ngay',
@@ -689,6 +798,27 @@ export const NG_CH5: Card[] = [
         risk: { p: 0.5, fail: { d: { hiem: 16, the: -6 }, flag: ['n5_ngai', 'un_lenngoi', 'thaisu_thang'] }, failNote: 'Cấm quân đứng về phía Thái sư. Tân quân lên ngôi, và tên bạn được ghi vào sổ của phủ Thái sư.' },
       },
       { t: 'Nhắn Uyển Như: bạn không đứng về phía nào', need: { flags: ['dm_un'] }, lockHint: 'Cần Uyển Như là bạn', fx: { d: { thucphi: 6 }, flag: ['n5_ngai', 'un_lenngoi', 'thaisu_thang'] }, note: 'Uyển Như gửi lại một câu: "Tôi nhớ." Thái sư không nhắc tên bạn trong buổi chầu đầu tiên.' },
+    ],
+  },
+  // Thái sư đã ngã, mẹ đẻ ở chùa: người bế tân quân lên ngai là mẹ nuôi
+  {
+    id: 'n5_ngai_un_nuoi',
+    part: P,
+    big: true,
+    chapter: [5],
+    when: { flags: [G, 'chet_vua', 'dc_un', 'thaisu_nga'], not: ['n5_ngai'] },
+    place: 'dien',
+    img: 'thaimieu',
+    time: 'ngay',
+    cast: ['me'],
+    mood: 'lo',
+    title: 'Di chiếu',
+    text: ['Di chiếu đọc trước linh cữu: Đông cung nối ngôi. Đứa bé bạn nuôi từ năm nhà Hà sụp đổ đứng nép sau vạt áo bạn, chưa hiểu vì sao ai cũng quỳ.', 'Phủ Thái sư đã niêm phong từ lâu. Sau ngai còn trống một tấm rèm, và cả điện đang nhìn bạn.'],
+    omen: 'Ai đứng sau ngai thì người ấy là vua.',
+    choices: [
+      { t: 'Bế con lên ngai, ngồi sau rèm', fx: { d: { the: 10, thaihau: -10, hiem: 8 }, flag: ['n5_ngai', 'un_lenngoi', 'n5_vi', 'thai_hau', 'nhiep'], unflag: ['giu_lang', 'thai_phi'] }, note: 'Bạn bế đứa bé lên ngai, rồi lui vào sau rèm. Đình thần quỳ xuống trước một bóng người, và cung trên lần đầu phải đứng ở hàng dưới.' },
+      { t: 'Bế con lên ngai, rồi trao rèm cho cung trên', fx: { d: { thaihau: 8, the: -4 }, flag: ['n5_ngai', 'un_lenngoi', 'n5_vi', 'thai_phi'] }, note: 'Bà Lương nhận tấm rèm, xoa đầu đứa bé rất hiền. Bạn được phong Thái phi, lui về cung Tây, và từ đó chỉ được gặp con vào ngày lễ.' },
+      { t: 'Xin cho mẹ đẻ của tân quân từ chùa về đứng cạnh con', need: { not: ['chet_uyennhu', 'di_uyennhu'] }, lockHint: 'Uyển Như không còn', fx: { d: { thucphi: 15, duc: 4, hiem: 10 }, flag: ['n5_ngai', 'un_lenngoi', 'un_ve', 'n5_vi', 'thai_phi'] }, note: 'Uyển Như về cung trong áo nâu, quỳ trước ngai của con mình. Nàng không buông rèm, chỉ xin được đứng sau ngai. Bạn lui về cung Tây, nhẹ người như vừa trả một món nợ.' },
     ],
   },
 
@@ -723,7 +853,7 @@ export const NG_CH5: Card[] = [
           note: 'Lý Mặc đọc từng trang trước buổi chầu. Mười ngày sau có chiếu: Thái hậu Lương lui về cung cũ, không được ra ngoài.',
           risk: { p: 0.25, fail: { d: { hiem: 10 }, flag: ['n5_trong', 'chet_lymac', 'n5_lm'] }, failNote: 'Lý Mặc nhận chứng. Sáng hôm sau người ta tìm thấy ông ở hào thành.' },
         },
-        { t: 'Vào cung Thái hậu, đặt chứng lên bàn', need: { not: ['di_thaihau'] }, lockHint: 'Thái hậu không còn ở đây', fx: { d: { hiem: -10, thaihau: -30, duc: -4 }, flag: ['n5_trong', 'chet_thaihau'] }, note: 'Thái hậu đọc hết, rồi gấp lại rất phẳng: "Ta già rồi." Đêm ấy bà tự chọn chén thuốc của mình.' },
+        { t: 'Vào cung bà Lương, đặt chứng lên bàn', need: { not: ['di_thaihau'] }, lockHint: 'Bà Lương không còn ở đây', fx: { d: { hiem: -10, thaihau: -30, duc: -4 }, flag: ['n5_trong', 'chet_thaihau', 'th_tu_chung'] }, note: 'Bà Lương đọc hết, rồi gấp lại rất phẳng: "Ta già rồi." Đêm ấy bà tự chọn chén thuốc của mình.' },
         { t: 'Dâng tân quân, xin phế Thái hậu, rồi lui về', fx: { end: 'n_64' }, note: 'Chiếu phế Thái hậu là chiếu đầu tiên như thế trong triều. Bạn đọc nó một lần, rồi khép rương hồ sơ.' },
       ],
     },
@@ -936,12 +1066,20 @@ export const NG_CH5: Card[] = [
       moods: { thaihau: 'vui' },
       who: 'thaihau',
       title: 'Thái hậu thắng ván cuối',
-      text: ['Thái hậu đến tận viện, mang theo một tờ chiếu: "Tiên đế đi rồi, lăng còn thiếu người hương khói."', '"Con là người ngài thương nhất. Ta nghĩ mãi, chỉ con là xứng."'],
+      text: ['Bà Lương đến tận viện, mang theo một tờ chiếu: "Tiên đế đi rồi, lăng còn thiếu người hương khói."', '"Con ở bên ngài ba ngày cuối. Ta nghĩ mãi, chỉ con là hợp."'],
       omen: 'Án gác lại thì người đứng sau không gác lại.',
       choices: [
         { t: 'Đi, mang theo rương hồ sơ', fx: { d: { the: -8, duc: 2 }, flag: ['n5_lang', 'giu_lang'], unflag: ['thai_phi'] }, note: 'Xe ra cổng Tây lúc trời chưa sáng. Rương hồ sơ nằm dưới chân bạn, nặng như một người.' },
-        { t: 'Đốt rương hồ sơ trước mặt bà, rồi đi', fx: { end: 'n_52' }, note: 'Thái hậu nhìn lửa cháy hết rồi mới về. Bà không nói gì, chỉ khẽ gật đầu.' },
-        { t: 'Cầu tân quân giữ mình lại', need: { flags: ['huu_lenngoi', 'om_huu'] }, lockHint: 'Cần tân quân là đứa trẻ từng ngủ trên vai bạn', fx: { d: { thaihau: -10, hiem: 8 }, flag: ['n5_lang'] }, note: 'Hựu xé tờ chiếu trước mặt bà nội, tay run: "Trẫm còn cần Thái phi." Thái hậu cười, nhặt từng mảnh lên.' },
+        { t: 'Đốt rương hồ sơ trước mặt bà, rồi đi', fx: { end: 'n_52' }, note: 'Bà Lương nhìn lửa cháy hết rồi mới về. Bà không nói gì, chỉ khẽ gật đầu.' },
+        { t: 'Cầu tân quân giữ mình lại', need: { flags: ['huu_lenngoi', 'om_huu'] }, lockHint: 'Cần tân quân là đứa trẻ từng ngủ trên vai bạn', fx: { d: { thaihau: -10, hiem: 8 }, flag: ['n5_lang'] }, note: 'Hựu xé tờ chiếu trước mặt bà nội, tay run: "Trẫm còn cần Thái phi." Bà Lương cười, nhặt từng mảnh lên.' },
+        {
+          t: 'Nhờ bà Lương Thục Nghi nói một lời',
+          need: { flags: ['dm_hoanghau'], not: ['chet_hoanghau', 'phe_hoanghau', 'hoang_hau'] },
+          lockHint: 'Cần bà Lương Thục Nghi là người của bạn, và bà còn ở trong cung',
+          fx: { d: { hoanghau: -8, hiem: 6 }, flag: ['n5_lang', 'che_hh5'] },
+          note: 'Bà Thục Nghi sang cung cô mình, ngồi đến tối. Tờ chiếu được cất đi. Lúc về, bà chỉ nói với bạn: "Cô ta không nợ gì nữa. Ta thì nợ cô một lần."',
+          risk: { p: 0.3, fail: { d: { the: -8, duc: 2 }, flag: ['n5_lang', 'giu_lang'], unflag: ['thai_phi'] }, failNote: 'Bà Thục Nghi về, lắc đầu: cô bà đã quyết. Xe ra cổng Tây lúc trời chưa sáng.' },
+        },
       ],
     },
     [

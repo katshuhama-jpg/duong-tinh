@@ -344,6 +344,7 @@ a:hover { color: #6d1a11; }
 .c-tale-prop.p-bong { left: 9%; bottom: 44%; width: 7%; filter: blur(.4px); opacity: .85; }
 /* sổ án (phần Nghiêm) */
 .c-soan-nghi { margin-left: 6px; padding: 2px 8px; border: 1px solid var(--line, #c9b48a); border-radius: 8px; background: transparent; font-size: 12px; color: inherit; cursor: pointer; }
+.c-soan-nghi:disabled { opacity: 0.45; cursor: default; }
 .c-soan-strip { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin: 6px 0 2px; padding: 8px 10px; border: 1px solid var(--line, #c9b48a); border-radius: 10px; background: rgba(255,250,240,.6); font-size: 13px; cursor: pointer; width: 100%; text-align: left; color: inherit; }
 .c-soan-strip b { font-weight: 700; }
 .c-soan-strip .hiem { color: #9a2a1a; }

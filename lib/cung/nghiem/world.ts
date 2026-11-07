@@ -10,7 +10,7 @@ export const NG_CHAPTERS: { n: number; t: string; smalls: number; epi: string; h
   { n: 2, t: 'Sổ đến thăm', smalls: 8, epi: 'Trong cung, một đêm được gọi là một dòng mực. Có những dòng mực biết biến mất.', hook: 'Hoàng thượng hỏi một câu không phải về chuyện chăn gối.' },
   { n: 3, t: 'Thai', smalls: 7, epi: 'Có con là có chỗ đứng. Cũng là có thêm một chén thuốc phải nhìn hai lần.', hook: 'Thái y bắt mạch xong, tay run đến mức làm rơi khăn.' },
   { n: 4, t: 'Hai đứa trẻ', smalls: 7, age0: 22, epi: 'Một chiếc ghế ở Đông cung, và hai đứa trẻ không có lỗi gì.', hook: 'Một lá thư không tên được nhét dưới cửa Đông cung, và cả hậu cung đọc nó trước Hoàng hậu.' },
-  { n: 5, t: 'Ba ngày', smalls: 3, age0: 28, epi: 'Mặt trời lặn thì bóng tối chia nhau.', hook: 'Hoàng thượng đặt bút phê dở một tờ tấu, rồi không cầm bút được nữa.' },
+  { n: 5, t: 'Ba ngày', smalls: 5, age0: 28, epi: 'Mặt trời lặn thì bóng tối chia nhau.', hook: 'Hoàng thượng đặt bút phê dở một tờ tấu, rồi không cầm bút được nữa.' },
   { n: 6, t: 'Cha', smalls: 6, age0: 34, epi: 'Người dạy em đọc án, giờ là người trong án.', hook: 'Tờ hặc của Ngự sử dâng lên có tên cha, và triều đình quay lại nhìn bạn.' },
   { n: 7, t: 'Sổ án cuối', smalls: 5, age0: 62, epi: 'Hồ sơ nào rồi cũng phải khép, bằng lửa hoặc bằng mực.', hook: 'Một gói chè được gửi tới, buộc bằng sợi lạt cũ, không đề tên người gửi.' },
 ];
@@ -51,7 +51,7 @@ export const TRUTHS: string[] = [
   'Có một mộ nhỏ không bia sau vườn cung Hoàng hậu',
   'Hoàng trưởng tử hát một câu ru không ai trong cung dạy',
   'Cha trả lời chị bằng một chữ: Im',
-  'Thái hậu gặp riêng cha một đêm, trước ngày cha lên Thượng thư',
+  'Thái hậu gặp riêng cha một đêm sau tang chị, trước ngày cha lên Thượng thư',
   'Thái hậu ra lệnh, Kiệm chuyển thuốc, Thái y kê đơn',
   'Đào còn sống. Chiếc khăn ở chùa biển',
 ];

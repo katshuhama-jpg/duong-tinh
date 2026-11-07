@@ -159,8 +159,8 @@ export const NG_CH1: Card[] = [
     title: 'Gầm chái',
     text: ['Vệt nước dưới gầm chái sau dẫn tới một đống lá khô. Lụa Vàng cầm đèn đứng ngoài, không chịu vào.', '"Nương nương, chỗ ấy người chết mới tối qua..."'],
     choices: [
-      { t: 'Tự bò vào gầm, bới đống lá', fx: { d: { sac: -2, hiem: 8 }, clue: ['a1_hai'] }, note: 'Dưới lá là một đôi hài cỏ còn ướt, đất giếng bám ở mũi. Cỡ hài ấy chỉ vừa chân {C:a1_hai}.' },
-      { t: 'Sai Lụa Vàng bò vào', fx: { d: { hanh: -6, hiem: 4 }, clue: ['a1_hai'] }, note: 'Lụa Vàng run tay lôi ra một đôi hài cỏ ướt. Bạn ướm thử: cỡ hài ấy chỉ vừa chân {C:a1_hai}.', risk: { p: 0.3, fail: { d: { hanh: -6, hiem: 4 } }, failNote: 'Lụa Vàng bới một lúc rồi bảo không có gì. Sáng hôm sau đống lá đã bị quét sạch.' } },
+      { t: 'Tự bò vào gầm, bới đống lá', fx: { d: { sac: -2, hiem: 8 }, clue: ['a1_hai'] }, note: 'Dưới lá là một đôi hài cỏ còn ướt, đất giếng bám ở mũi. Cỡ hài ấy chỉ vừa chân {C:a1_hai}. {GIA:a1_hai}' },
+      { t: 'Sai Lụa Vàng bò vào', fx: { d: { hanh: -6, hiem: 4 }, clue: ['a1_hai'] }, note: 'Lụa Vàng run tay lôi ra một đôi hài cỏ ướt. Bạn ướm thử: cỡ hài ấy chỉ vừa chân {C:a1_hai}. {GIA:a1_hai}', risk: { p: 0.3, fail: { d: { hanh: -6, hiem: 4 } }, failNote: 'Lụa Vàng bới một lúc rồi bảo không có gì. Sáng hôm sau đống lá đã bị quét sạch.' } },
       { t: 'Thôi, đêm khuya không nên', fx: { d: { duc: 1 } }, note: 'Sáng ra, đống lá đã bị quét sạch. Bạn không biết dưới đó từng có gì.' },
     ],
   },
@@ -181,8 +181,8 @@ export const NG_CH1: Card[] = [
     title: 'Người gánh nước',
     text: ['Cung nữ gánh nước dậy từ canh tư mỗi ngày. Nó tránh mắt bạn khi đi qua giếng.', 'Đêm có án, ai ra giếng, nó là người biết.'],
     choices: [
-      { t: 'Kín đáo dúi 10 quan, hỏi riêng', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 4 }, clue: ['a1_gieng'] }, note: 'Nó thì thầm: canh ba có hai bóng ra giếng, một bóng đi chân trần. Nó chỉ dám nói bóng ấy là {C:a1_gieng}.' },
-      { t: 'Hỏi thẳng giữa sân', fx: { d: { hiem: 12, duc: -2 }, clue: ['a1_gieng'] }, note: 'Nó lắp bắp: canh ba có bóng ra giếng, là {C:a1_gieng}. Cả sân nghe thấy, cả sân biết bạn đang hỏi.' },
+      { t: 'Kín đáo dúi 10 quan, hỏi riêng', need: { num: { tien: [10, 99999] } }, lockHint: 'Cần 10 quan', fx: { d: { tien: -10, hiem: 4 }, clue: ['a1_gieng'] }, note: 'Nó thì thầm: canh ba có hai bóng ra giếng, một bóng đi chân trần. Nó chỉ dám nói bóng ấy là {C:a1_gieng}. {GIA:a1_gieng}' },
+      { t: 'Hỏi thẳng giữa sân', fx: { d: { hiem: 12, duc: -2 }, clue: ['a1_gieng'] }, note: 'Nó lắp bắp: canh ba có bóng ra giếng, là {C:a1_gieng}. Cả sân nghe thấy, cả sân biết bạn đang hỏi. {GIA:a1_gieng}' },
       { t: 'Để nó yên', fx: { d: { duc: 2 } }, note: 'Bạn đi qua. Nó thở ra như vừa thoát nạn.' },
     ],
   },
@@ -203,8 +203,8 @@ export const NG_CH1: Card[] = [
     title: 'Người ngủ cùng phòng',
     text: ['Tú nữ ngủ cùng phòng với Hoa khóc đỏ mắt: "Hoa không nhớ nhà. Hoa vừa nhặt được một món đồ đẹp lắm."', '"Nó bảo đồ của người ở viện bên này, định trả lại cho chị."'],
     choices: [
-      { t: 'Hỏi món đồ ấy trông thế nào', fx: { d: { muu: 3, hiem: 5 }, clue: ['a1_cungphong'], flag: ['biet_luoc'] }, note: '"Một chiếc lược ngà khắc hoa mơ, Hoa giấu ở kẽ vách chái sau." Lược của chị. Nó còn kể đêm ấy {C:a1_cungphong} gọi Hoa ra.' },
-      { t: 'Hỏi tối qua ai đến tìm Hoa', fx: { d: { muu: 2, hiem: 5 }, clue: ['a1_cungphong'] }, note: '"Canh hai có người gọi Hoa ra. Em ngủ mê, chỉ nghe giọng: là {C:a1_cungphong}."' },
+      { t: 'Hỏi món đồ ấy trông thế nào', fx: { d: { muu: 3, hiem: 5 }, clue: ['a1_cungphong'], flag: ['biet_luoc'] }, note: '"Một chiếc lược ngà khắc hoa mơ, Hoa giấu ở kẽ vách chái sau." Lược của chị. Nó còn kể đêm ấy {C:a1_cungphong} gọi Hoa ra. {GIA:a1_cungphong}' },
+      { t: 'Hỏi tối qua ai đến tìm Hoa', fx: { d: { muu: 2, hiem: 5 }, clue: ['a1_cungphong'] }, note: '"Canh hai có người gọi Hoa ra. Em ngủ mê, chỉ nghe giọng: là {C:a1_cungphong}." {GIA:a1_cungphong}' },
     ],
   },
   {
@@ -222,8 +222,8 @@ export const NG_CH1: Card[] = [
     title: 'Sợi dây',
     text: ['Lụa Vàng nghe ngóng về được một tin: sợi dây trên xà không phải dây áo của Hoa.', '"Là dây buộc rèm, lấy từ kho chung, nương nương ạ."'],
     choices: [
-      { t: 'Sang kho chung đếm lại số dây', fx: { d: { hiem: 8, muu: 3 }, clue: ['a1_day'] }, note: 'Thiếu một sợi, dòng sổ ghi người lấy đã bị mực đè. Tuần ấy chỉ {C:a1_day} ký nhận dây.' },
-      { t: 'Cho Lụa Vàng 5 quan, bảo nó dò tiếp', need: { num: { tien: [5, 99999] } }, lockHint: 'Cần 5 quan', fx: { d: { tien: -5, hanh: 6, hiem: 3 }, clue: ['a1_day'] }, note: 'Lụa Vàng về: kho chung thiếu đúng một sợi dây. Bạn soát lại, tuần ấy chỉ {C:a1_day} vào lấy dây.' },
+      { t: 'Sang kho chung đếm lại số dây', fx: { d: { hiem: 8, muu: 3 }, clue: ['a1_day'] }, note: 'Thiếu một sợi, dòng sổ ghi người lấy đã bị mực đè. Tuần ấy chỉ {C:a1_day} ký nhận dây. {GIA:a1_day}' },
+      { t: 'Cho Lụa Vàng 5 quan, bảo nó dò tiếp', need: { num: { tien: [5, 99999] } }, lockHint: 'Cần 5 quan', fx: { d: { tien: -5, hanh: 6, hiem: 3 }, clue: ['a1_day'] }, note: 'Lụa Vàng về: kho chung thiếu đúng một sợi dây. Bạn soát lại, tuần ấy chỉ {C:a1_day} vào lấy dây. {GIA:a1_day}' },
     ],
   },
   {
