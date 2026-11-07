@@ -4,6 +4,7 @@
  * Và lời kể trước các sự kiện lớn của phần Nghiêm.
  */
 import type { Life } from '../types';
+import { NG_TALES_CH3 } from './ch3';
 import { NG_TALES_CH2 } from './ch2';
 type Tale = NonNullable<Life['tales']>[number];
 
@@ -85,4 +86,5 @@ export const NG_TALES: Record<string, { t: string; lines: string[]; s?: Tale['s'
       'Cha cũng dạy: trong cung, kẻ thủ ác không chờ công đường. Nếu bạn gọi tên mà không giữ được tên ấy, đêm nay họ sẽ đến tìm bạn.',
     ],
   },
+  ...NG_TALES_CH3,
 };

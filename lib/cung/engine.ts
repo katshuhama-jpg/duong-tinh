@@ -347,6 +347,8 @@ function moveTo(l: Life, ch: number) {
   if (ch <= 5 && l.n.an >= 50 && l.rank < 9) promote(l, 1);
   l.log.push({ age: Math.floor(l.age), t: `Chương mới: ${chap(ch, l).t}.`, k: 'year' });
   if (isNg(l)) {
+    // sang chương mới: thời gian trôi, kẻ thủ ác lơi tay một chút
+    l.n.hiem = Math.max(0, (l.n.hiem ?? 0) - 15);
     l.showCh = { to: ch, from, end, picks };
     l.chStart = snapOf(l);
     return;
@@ -496,7 +498,10 @@ export function choose(l0: Life, idx: number): Result {
       const j = judge(l, an, who);
       l.an[an].xu = { who, dung: j.dung, du: j.du };
       l.flags.push(`xu_${an}`, `${an}_${j.kind}`);
-      if (j.kind === 'thang') caseNext = `${an}_khai`;
+      if (j.kind === 'thang') {
+        caseNext = `${an}_khai`;
+        l.n.hiem = Math.max(0, (l.n.hiem ?? 0) - 15);
+      }
       else if (j.kind === 'phancong') {
         caseNext = `${an}_pc1`;
         l.n.hiem = clamp('hiem', l.n.hiem + 15);

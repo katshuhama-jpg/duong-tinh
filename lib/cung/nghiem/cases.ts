@@ -83,7 +83,7 @@ export const CASES: Case[] = [
     id: 'an3',
     ch: 3,
     title: 'Án thuốc an thai',
-    sum: 'Chén thuốc an thai của bạn có vị lạ. Thái y Thẩm run tay khi bắt mạch. Ai đã bỏ thêm vị thuốc vào lò?',
+    sum: 'Chén thuốc an thai thứ mười hai có vị lạ, nhũ mẫu nếm thử rồi nhổ ra. Thái y Thẩm run tay từ hôm báo hỷ mạch. Ai đã bỏ thêm vị thuốc vào lò?',
     suspects: [
       { k: 'ns', label: 'Người canh lò sắc thuốc', name: 'Người sắc thuốc Mùi' },
       { k: 'mb', label: 'Bàn tay có mùi hạt cau', name: 'Ma ma bếp thuốc họ Đinh' },
@@ -93,9 +93,9 @@ export const CASES: Case[] = [
     tay: ['ns', 'mb'],
     clues: [
       { id: 'a3_ba', an: 'an3', kind: 'vat', t: 'Bã thuốc trong lò có vị không nằm trong đơn', key: true },
-      { id: 'a3_cau', an: 'an3', kind: 'nhan', t: 'Người quét bếp ngửi thấy mùi hạt cau sống' },
-      { id: 'a3_don', an: 'an3', kind: 'khai', t: 'Thái y Thẩm thú nhận có người bắt ông kê thêm một vị' },
-      { id: 'a3_bac', an: 'an3', kind: 'vat', t: 'Nén bạc lạ trong túi áo ai đó' },
+      { id: 'a3_cau', an: 'an3', kind: 'nhan', t: 'Người quét bếp ngửi thấy mùi hạt cau sống ở cửa bếp đêm ấy' },
+      { id: 'a3_don', an: 'an3', kind: 'khai', t: 'Thái y Thẩm quỳ khai: có người bắt ông kê thêm một vị' },
+      { id: 'a3_bac', an: 'an3', kind: 'vat', t: 'Nén bạc mới có dấu kho khâu trong vạt áo người bếp thuốc' },
       { id: 'a3_tram', an: 'an3', kind: 'vat', t: 'Cây trâm lông công của Quý phi rơi ở cửa bếp', gai: 'un' },
     ],
   },
