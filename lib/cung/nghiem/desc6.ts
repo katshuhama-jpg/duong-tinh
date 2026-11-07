@@ -1,2 +1,26 @@
 /** Lời kể kết cục (desc) cho các kết chương 6 làm cho tới được. */
-export const NG_DESC_6: Record<string, string> = {};
+export const NG_DESC_6: Record<string, string> = {
+  n_56: 'Triều đình ban khay ba món, cha chọn chén thuốc, tự tận tại nhà như lệ dành cho đại thần có công. Bà xin về giữ mộ cha, sáng quét lá, tối chép kinh. Cổng cung không mở cho bà thêm lần nào nữa.',
+  n_57: 'Án treo, cha nằm trong ngục Bộ Hình, gian ngục chính cha cho xây lại năm nhận ấn. Ba tháng sau sổ ngục ghi một chữ "bệnh", như sổ cung năm nào ghi cho chị. Bà cất cây bút của cha cạnh chiếc lược của chị, và không mở hộp ấy ra nữa.',
+  n_58: 'Bà gọi tội cha là đồng mưu đại nghịch, đúng điều luật cha từng bắt bà chép thuộc. Cha bị chém bêu đầu ở cửa Nam, phủ Nghiêm tịch thu, gia nhân sung công. Bà tháo trâm, nộp ấn, sống nốt đời mình không đứng ở chỗ đông người.',
+  n_59: 'Ân chỉ tha chết cho cha, nhưng nhà Nghiêm phải đổi sang họ Ngô, về quê cày ruộng, ba đời không được đi thi. Bà xin ra cung, xách giúp cha rương sách về làng. Hai cha con sống dưới một mái nhà, đến cuối đời không ai nhắc lại cái họ cũ.',
+  n_60: 'Bà gọi đúng tên tội của cha là che án, và luật gọi đúng tên tội của bà là bất hiếu. Cha tự tận, bà bị gạch tên khỏi gia phả, đày đi châu xa. Xe tù ra cửa Bắc lúc trời chưa sáng, và phía sau không còn ai mang họ của bà.',
+  n_61: 'Cha khai bà biết chuyện năm Tân Dậu từ những năm đầu vào cung mà cũng im. Hai cha con cùng bị kết che án, ngồi hai gian ngục sát vách. Cha chết trong ngục, còn bà được ân xá nhiều năm sau, ra khỏi cổng khi tóc đã bạc hết.',
+  n_62: 'Án khép nhẹ, cha về hưu với tiếng thanh quan một đời. Ngày cha mất, bà không hỏi câu nào, và điếu văn của triều đình được đọc trọn không sót chữ. Bí mật năm Tân Dậu nằm yên dưới tấm bia đẹp nhất họ Nghiêm.',
+  n_63: 'Đô sát viện lật lại án chén thuốc cuối, và theo lệ phản tọa, bà phải chịu đúng cái tội bà từng buộc cho người khác. Chồng sổ của Kiệm được đọc ra giữa Tam pháp ty, có tên cả nhà Nghiêm: tội biết mà dung túng. Đàn ông họ Nghiêm bị chém, đàn bà sung làm nô, còn bà được ban một thanh gươm.',
+  n_65: 'Người ở cung trên trở bệnh lúc đã ngoài bảy mươi, và chỉ cho gọi bà. Bà ngồi bên giường đến khi tay người ấy lạnh, không hỏi, không tha. Hồ sơ chị khép lại cùng hơi thở cuối cùng của người duy nhất còn biết hết.',
+  n_68: 'Bà cuốn rèm, trao ấn cho Ngự sử Lý Mặc, người từng hặc chính cha bà. Việc nước về tay quan văn, còn bà lui về cung sau, không hỏi đến tờ tấu nào nữa. Người ta bảo đó là lần duy nhất trong triều một người buông rèm tự đứng dậy.',
+  n_96: 'Đêm cuối trước khay ba món, cha kể hết: đêm Tân Dậu, đêm vào cung trước ngày nhận ấn, và câu "Cho Thanh nghỉ". Bà nghe đến gà gáy, rồi nói: "Con tha cho cha." Sáng ra cha chọn chén thuốc, còn bà khép hồ sơ chị ở đúng chỗ ấy.',
+  n_97: 'Bà đứng dậy ra về trước khi cha kịp nói. Sáng ra người nhà báo tin, và câu trả lời đi theo cha xuống đất. Suốt đời còn lại bà không hỏi ai nữa, kể cả chính mình.',
+  n_98: 'Bà trả lại cho Kiệm ngôi nhà ở phường Đông, nơi nhà ông bị ông Nghiêm xử án năm xưa. Kiệm về sống nốt những năm cuối dưới mái nhà cũ, không bán ai thêm lần nào. Thù hai nhà khép lại, và hồ sơ của chị khép theo.',
+  n_99: 'Bà đưa Thái y Thẩm ra khỏi cung, mở một hiệu thuốc nhỏ ở bến sông, và không hỏi ông thêm câu nào. Mỗi tết có một gói thuốc bổ gửi vào cho bà, không kèm chữ. Những gì ông biết, ông mang theo ra bến sông.',
+  n_100: 'Ngự sử Lý Mặc đứng giữa điện đọc bản minh oan: Chiêu nghi Nghiêm Thanh không chết vì bệnh. Ông dừng ở đó, vì phần sau chưa ai đủ chứng. Với bà, chừng ấy đã đủ để thôi đào.',
+  n_101: 'Bà nhận lời Thái sư, gọi tội cha là đồng mưu để kéo cả nhà Lương xuống. Nhà Lương ngã trước, trong một mùa thu. Mùa thu sau, Thái sư cho người đến tìm những ai từng giúp mình, và bà là người đầu tiên.',
+  n_102: 'Bà giao chùm chìa khóa thứ hai cho Lụa Vàng, rồi lui về đọc kinh. Con bé ham tiền năm nào thành bà quản sự nghiêm nhất hậu cung, không để ai bước qua cửa viện khi chưa hỏi bà. Bà sống yên đến già, sau lưng một người từng bị mua.',
+  n_103: 'Nhũ mẫu Tần ra Tam pháp ty khai bà mới là người giấu thư năm ấy, tiểu thư không biết gì. Bà chết trong ngục trước khi án xong, sổ ghi tuổi già. Người nuôi cả hai chị em đi trước, để đứa còn lại được sống.',
+  n_127: 'Bị đày đi châu xa vì tội tố cha, bà mở một lớp dạy luật cho dân nghèo trong làng. Người làng không biết bà là ai, chỉ biết bà già ấy thuộc luật hơn cả quan huyện. Ai bị oan cũng tìm đến bà, và bà không lấy của ai đồng nào.',
+  n_129: 'Bà chép lại mọi điều đã biết thành một cuốn sử riêng, ba năm mới xong. Viên gạch thứ bảy dưới gầm giường được cạy lên, rồi đặt lại như cũ. Trên đời có hai bộ sử Hưng Bình, và chỉ một bộ có tên chị.',
+  n_133: 'Nhà Nghiêm đổi họ, bà xin ra cung, mở một hiệu sách nhỏ ở cuối phố Hàng. Ngăn trên cùng là sách luật, ít người mua, nhưng bà không bỏ. Khách quen gọi bà là bà Ngô, và bà để họ gọi vậy.',
+  n_143: 'Cha khai bà biết chuyện từ trước, và Tam pháp ty kết cả hai cha con tội che án. Hai gian ngục sát vách, bà gõ vào tường mỗi đêm mà cha không gõ lại lần nào. Cả hai chết trong ngục, sổ ghi cùng một chữ: bệnh.',
+  n_146: 'Ngự sử Lý Mặc dâng tờ nhận chính ông đã ép cha khai, để gỡ bà ra khỏi án. Ba hôm sau người ta vớt ông dưới sông Lịch. Bà sống, nhưng từ đó không ai trong triều còn dám đứng cạnh bà.',
+};

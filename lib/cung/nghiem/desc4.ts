@@ -1,2 +1,24 @@
 /** Lời kể kết cục (desc) cho các kết chương 4 làm cho tới được. */
-export const NG_DESC_4: Record<string, string> = {};
+export const NG_DESC_4: Record<string, string> = {
+  n_26: 'Bà cúi đầu nhận lời Thái hậu, và Cảnh được làm Đông cung. Cả đời bà không hỏi thêm một câu nào về đêm Tân Dậu. Mỗi lần thấy Hựu đi ngang, bà nhìn xuống trước.',
+  n_27: 'Bà nhắc lại lời đồn năm ấy đúng một lần, và chiếc ghế Đông cung về tay Cảnh. Rồi bà khóa rương hồ sơ, không bao giờ mở lại. Bà sống lâu, mà không bao giờ biết hết chuyện đêm Tân Dậu.',
+  n_28: 'Bà tâu lập Hựu, rồi xin lui về viện cũ của chị. Tiếng trống mừng Đông cung vọng tới từ rất xa. Rương hồ sơ khóa lại, chìa ném xuống hồ sen.',
+  n_29: 'Thái sư đưa con Quý phi Hà lên ngôi Đông cung. Hựu bị đưa ra phủ riêng ngoài thành, còn Cảnh thì không ai nhắc tên. Bà lui về viện, nhìn hai đứa trẻ cùng thua một ván mà không đứa nào được ngồi vào bàn cờ.',
+  n_30: 'Đêm rằm ấy bà hứa với Hoàng hậu không đào gì nữa. Từ đó, hai người đàn bà cùng thắp hương cho một nấm đất không bia sau hòn non bộ. Không ai trong hai người hỏi người kia đã biết tới đâu.',
+  n_31: 'Hoàng hậu thắt cổ trong tẩm cung, để lại tờ di biểu nhận hết tội lời đồn, để không ai xét Hựu nữa. Bà ôm Hựu bên linh cữu, rồi lui về, không bao giờ nhắc lại. Cái tên bà gọi trong tờ trình năm ấy là người của cung chính, và chính cung đã trả nợ thay.',
+  n_34: 'Bà kể với Hoàng thượng về câu ru của Hựu, quá sớm, khi trong tay chưa có gì ngoài một câu hát. Ngài không tin, và giận vì bà dám nghĩ tới điều ấy. Bà bị đưa ra viện ngoài, sống đến già mà không được gặp lại Hựu.',
+  n_35: 'Bà kể cho Thái sư điều mình biết về nhà Lương. Thái hậu ra tay trước: người bế đứa bé qua cửa đêm Tân Dậu là Chiêu nghi họ Nghiêm. Tội tráo con dòng vua đổ về nhà bà, bà bị chém bêu đầu ở cửa Nam, phủ Nghiêm bị tịch thu.',
+  n_36: 'Bà và Hoàng hậu cùng nuôi Hựu thành người. Không ai trong hai người nhắc tới đêm Tân Dậu. Hựu lớn lên có hai người mẹ, và không biết mình còn một người thứ ba.',
+  n_37: 'Bà khóa rương hồ sơ, cất chìa vào đáy hộp trang sức, và không đào nữa. Bà sinh thêm bốn đứa con, sống thọ, được khen là phi tần có phúc nhất triều Hưng Bình. Trong rương, chiếc lược của chị vẫn sứt một răng.',
+  n_38: 'Bà ra triều làm chứng, và Thái sư ngã ngay trong buổi chầu. Hoàng thượng thưởng bà rất hậu, rồi từ đó không bao giờ ngủ lại viện bà nữa. Ngài cần một con dao, nhưng không muốn để con dao ấy nằm cạnh gối.',
+  n_39: 'Đêm phủ Thái sư bị vây, tên bà nằm trong thư từ của phủ. Bà bị phế, giam ở một cung xa cùng những người họ Hà. Nhà Nghiêm dâng sớ xin cắt tên bà khỏi gia phả để giữ mình.',
+  n_40: 'Bà nhận hộp sâm của Kiệm, và mỗi tháng gửi lên cung trên một lời. Viện của bà không bao giờ thiếu thứ gì. Mỗi lần Hoàng hậu nắm tay bà, bà đều nhớ từng chữ để kể lại.',
+  n_41: 'Bà bỏ ngôi phi, mặc áo nữ quan, ngồi giữa những giá sổ thuốc của Thái y viện. Cả đời bà chép sổ, không bỏ sót dòng nào. Chỉ có một cuốn năm Tân Dậu là bà không bao giờ được phép mở.',
+  n_43: 'Bà đốt giấy tờ trong viện để xóa dấu vết, lửa bén sang kho lễ vật bên cạnh. Người ta bắt bà giữa sân, tay còn cầm mồi lửa. Tội đốt kho cung cấm nặng hơn mọi tội bà từng bị vu, và bà sống nốt đời trong ngục.',
+  n_44: 'Bà nhận nuôi con của Uyển Như khi nhà họ Hà sụp đổ. Trên giấy, đứa bé là con bà. Ngoài đời, bà kể cho nó nghe về một người mẹ áo xanh ở ngôi chùa ngoài thành, mỗi đêm một chuyện.',
+  n_125: 'Thái hậu nói một câu sau rèm, và bà thoát dải lụa trắng. Một tháng sau bà lên kiệu ra trấn biên, làm phu nhân một quan võ chưa từng biết mặt. Ở nơi ấy không ai biết đêm Tân Dậu là đêm gì.',
+  n_126: 'Bà xin ra cung, và Hoàng thượng cho. Ở một làng ven sông, bà mở lớp dạy chữ cho con nhà nghèo, cả con gái. Bài đầu tiên bà dạy là cách đọc một tờ án.',
+  n_130: 'Hoàng thượng cho bà ra cung, gả cho Ngự sử Lý Mặc. Hai vợ chồng cùng ngồi đọc án đến khuya, mỗi người một ngọn đèn. Ông không bao giờ hỏi bà về những năm trong cung, và bà cũng không kể.',
+  n_131: 'Sổ cung ghi phi tần họ Nghiêm bệnh nặng, cho ra ngoài dưỡng. Bà cùng vợ chồng Thái y Thẩm mở một hiệu thuốc ở bến sông. Bà chép đơn, và chén thuốc nào ra khỏi hiệu cũng được bà nhìn hai lần.',
+  n_142: 'Thái sư dâng một xấp giấy dó tìm thấy trong viện bà, tố bà chính là người viết lá thư không tên. Luật phản tọa không cần nghe ai cãi. Chiều ấy một dải lụa trắng được đưa tới viện của hai chị em, sổ ghi: tội làm loạn ngôi trữ quân.',
+};

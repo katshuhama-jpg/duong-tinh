@@ -1,2 +1,25 @@
 /** Lời kể kết cục (desc) cho các kết chương 5 làm cho tới được. */
-export const NG_DESC_5: Record<string, string> = {};
+export const NG_DESC_5: Record<string, string> = {
+  n_45: 'Ba ngày bà không cho phát tang, ngồi canh xác tiên đế trong điện khóa kín, đổi rương sổ Tân Dậu lấy cấm quân bốn cửa thành. Sáng thứ tư Cảnh lên ngôi, không ai dám hỏi một câu. Cái ngai giữ được, còn những trang sổ của chị thì từ đó không ai thấy lại.',
+  n_46: 'Bà đốt di chiếu trong lò hương trước linh cữu. Không có di chiếu, đình thần nghe người đứng gần ngai nhất, và Cảnh lên ngôi. Những năm sau bà sống yên, chỉ có một nỗi sợ: một ngày nào đó có người nhớ ra mùi tro hôm ấy.',
+  n_47: 'Bà gọi một cái tên trước linh cữu mà không giữ được, và người bị gọi tên gọi lại tên bà. Tội giết vua không được giảm: lăng trì ở cửa Nam, tru di tam tộc. Những đứa con trai nhỏ trong họ bị thiến rồi đưa vào cung làm nô, như Kiệm năm nào.',
+  n_48: 'Ba đêm canh linh cữu, tối nào cũng có một chén trà an thần được rót sẵn. Đến tối thứ ba bà uống. Sổ cung ghi: Nghiêm thị thương tiên đế quá, đi theo ngài.',
+  n_49: 'Bà buông rèm cho Cảnh, rồi đặt rương hồ sơ cạnh quan tài tiên đế. Cửa lăng đóng lại, và mọi cái tên trong rương ngủ theo ngài. Con bà ngồi vững trên ngai, còn chị Thanh thì mãi mãi là một chữ "bệnh".',
+  n_50: 'Hựu lên ngôi, cúi đầu chào bà như chào mẹ. Bà nhận ngôi Thái phi, dọn về cung Tây nhìn ra hồ sen, khóa rương hồ sơ rồi gửi chìa cho người khác giữ. Những năm sau, bà chỉ mở cửa sổ, không mở rương.',
+  n_51: 'Ngày Uyển Như ngồi sau rèm, bà đứng ở hàng cuối. Thái sư thắng ván cuối, và hai con tin năm nào giờ một người trên rèm, một người dưới thềm. Bà lui về cung Tây, sống lâu, ít ai nhắc tên.',
+  n_52: 'Thái hậu Lương thắng ván cuối bằng một tờ chiếu rất hiền: tiên đế cần người hương khói. Bà đi giữ lăng, và đốt rương hồ sơ trước cửa lăng. Từ kinh thành, Thái hậu nghe tin, chỉ nói: "Thế là xong."',
+  n_53: 'Bà tự tay đánh ba hồi trống Đăng văn ở cửa Tây, trước mặt cả kinh thành. Quan Tam pháp ty ra nhận đơn, và án Tân Dậu lần đầu ra công đường. Phần còn lại không phải việc của bà nữa: sổ đã mở, luật sẽ đọc.',
+  n_54: 'Ngự sử Lý Mặc nhận đơn thay bà, và bị vớt lên ở hào thành, tờ sớ không còn trong người. Án đứt ở đó. Bà khép hồ sơ, không để ai phải chết thay mình thêm lần nào.',
+  n_55: 'Chiếu đầu tiên ban ra từ sau rèm là chiếu cho phép Tam pháp ty xét lại án cũ. Bà buông rèm cho con, đồng thời mở cửa cho người ta xét chính nhà mình. Sử chép bà là người đàn bà duy nhất ngồi sau rèm mà vẫn nghe tiếng trống.',
+  n_64: 'Chiếu phế Thái hậu là chiếu đầu tiên như thế trong triều. Bà Lương lui về cung cũ, cửa khóa ngoài, ngày hai bữa có người đưa cơm. Bà đọc tờ chiếu một lần, rồi khép rương hồ sơ của chị.',
+  n_66: 'Thái sư Hà đứng sau ngai, bà ngồi sau rèm, Cảnh ngồi giữa. Thái sư tâu gì bà gật nấy, kể cả chuyện dời đô vì kinh thành cũ nhiều điềm xấu. Sử chép triều ấy có một Thái hậu buông rèm, nhưng không chép bà đã nói câu nào.',
+  n_67: 'Phe Hà nổi kiêu binh đòi người đã tố Thái sư. Họ phá cổng phủ Nghiêm, đốt thư phòng của cha, rồi kéo đến chỗ bà. Không có án, không có tội danh, chỉ có một đêm đuốc sáng.',
+  n_104: 'Đêm thứ ba Hoàng thượng tỉnh lại một khắc, hỏi bà có điều gì chưa nói. Bà biết đủ để nói, và bà chọn ôm ngài đến sáng. Từ hôm ấy bà khóa rương hồ sơ, giữ cho ngài một giấc ngủ không có đêm Tân Dậu.',
+  n_128: 'Thái sư bảo nước láng giềng xin một người biết chữ, biết luật, và đưa tên bà vào đoàn sứ. Bà lên xe với một hòm sách. Nơi đất lạ, bà mở trường dạy chữ cho con nhà quan, và không ai ở đó biết năm Tân Dậu là năm nào.',
+  n_134: 'Năm ấy hạn, triều cho phi tần không con theo đoàn cung nữ về quê cầu mưa. Bà xin đi, ra cổng Bắc lúc trời còn tối. Mưa đến vào tháng sau, còn bà thì không quay lại.',
+  n_137: 'Bà lên ngôi chính cung nhờ cái chết của Hoàng hậu Lương, rồi thành Hoàng thái hậu nhờ cái chết của tiên đế. Bà không bao giờ hỏi bà Lương chết vì ai. Câu hỏi ấy nằm lại dưới ghế, như một viên gạch lệch.',
+  n_138: 'Từ ghế chính cung, ghế của người từng bị tráo con, bà gọi Tam pháp ty vào mở lại án Tân Dậu. Không ai từ chối được đích mẫu của tân quân. Đêm đầu đọc án, bà ngồi đúng chỗ bà Lương từng ngồi khóc năm ấy.',
+  n_139: 'Bà nuôi cả Hựu lẫn Cảnh dưới một mái, hai anh em học chung một thầy, ăn chung một mâm. Bà không kể cho đứa nào chuyện năm Tân Dậu. Cả hai đều gọi bà là mẹ, và cả hai đều sống.',
+  n_140: 'Án Tân Dậu đổ ngược về nhà Nghiêm: người ta bảo con gái ông Nghiêm dựng chuyện tráo con để đưa con mình lên ngôi. Bà bị phế khỏi ngôi Hoàng hậu, ban lụa trắng ngay trong cung chính. Áo phượng được cởi ra trước, cho khỏi bẩn.',
+  n_145: 'Bà vào kho sổ thuốc ngự lúc canh ba, khi cả cung trên đang chờ bà vào. Cửa kho đóng sập từ bên ngoài, rồi lửa bén từ góc kho. Sáng ra không còn trang sổ nào, cũng không còn bà.',
+};
