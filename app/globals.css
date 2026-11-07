@@ -340,6 +340,8 @@ a:hover { color: #6d1a11; }
 .c-tale-title { font-family: 'Playball', var(--serif); font-weight: 400; font-size: 44px; color: var(--son); text-align: center; margin: 6px 0 14px; line-height: 1.15; }
 .c-tale-art { margin-bottom: 14px; filter: sepia(0.25) saturate(0.85); position: relative; }
 .c-tale-prop { position: absolute; left: 50%; bottom: 6%; width: 15%; transform: translateX(-50%); filter: drop-shadow(0 4px 6px rgba(0,0,0,.45)); pointer-events: none; }
+/* bóng người nhìn qua khe cửa sổ (khung 9 phần Nghiêm) */
+.c-tale-prop.p-bong { left: 9%; bottom: 44%; width: 7%; filter: blur(.4px); opacity: .85; }
 /* sổ án (phần Nghiêm) */
 .c-soan-strip { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin: 6px 0 2px; padding: 8px 10px; border: 1px solid var(--line, #c9b48a); border-radius: 10px; background: rgba(255,250,240,.6); font-size: 13px; cursor: pointer; width: 100%; text-align: left; color: inherit; }
 .c-soan-strip b { font-weight: 700; }

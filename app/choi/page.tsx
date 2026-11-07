@@ -707,7 +707,7 @@ export default function Play() {
           <h2 className="c-tale-title">{tl.t}</h2>
           <div className="c-tale-art">
             <Scene bgImg={`/bg/${scene.img}/${scene.rain ? 'mua' : scene.time}.webp`} place={scene.place} time={scene.time} cast={scene.cast} rain={scene.rain} mood={rv ? 'buon' : 'binh'} moods={tl.s?.moods} looks={looksOf(life)} imgs={timgs} label={tl.t} />
-            {tl.s?.prop && <img className="c-tale-prop" src={`/prop/${tl.s.prop}.webp`} alt="" />}
+            {tl.s?.prop && <img className={`c-tale-prop p-${tl.s.prop}`} src={`/prop/${tl.s.prop}.webp`} alt="" />}
           </div>
           {tl.lines.map((x, i) => (
             <p key={i} className={`c-tale-line ${i === 0 ? 'c-tale-drop' : ''}`} style={{ animationDelay: `${0.3 + i * 0.9}s` }}>

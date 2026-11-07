@@ -61,7 +61,7 @@ export const NG_PROLOGUE: Tale[] = [
   {
     kicker: `${K} năm thứ chín`,
     t: 'Viện của chị',
-    s: { bg: 'vienchi', time: 'chieu', cast: ['me', 'nhumau'], imgs: { me: 'hn1' }, moods: { me: 'lo', nhumau: 'so' } },
+    s: { bg: 'vienchi', time: 'chieu', cast: ['me', 'nhumau'], imgs: { me: 'hn1' }, moods: { me: 'lo', nhumau: 'so' }, prop: 'bong' },
     lines: ['Năm sau, cha dâng em vào cung, thay chỗ chị.', 'Người ta xếp em ở đúng viện cũ của chị. Như thể chưa từng có ai chết ở đây.'],
   },
 ];
