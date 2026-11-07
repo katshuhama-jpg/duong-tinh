@@ -4,6 +4,7 @@
  * Và lời kể trước các sự kiện lớn của phần Nghiêm.
  */
 import type { Life } from '../types';
+import { NG_TALES_CH2 } from './ch2';
 type Tale = NonNullable<Life['tales']>[number];
 
 const K = 'Hưng Bình';
@@ -66,6 +67,7 @@ export const NG_PROLOGUE: Tale[] = [
 
 /** lời kể trước các sự kiện lớn (theo id thẻ) */
 export const NG_TALES: Record<string, { t: string; lines: string[]; s?: Tale['s'] }> = {
+  ...NG_TALES_CH2,
   n1_an: {
     t: 'Lệ xét chuyện trong cung',
     s: { bg: 'chaisau', time: 'ngay', cast: [] },

@@ -63,7 +63,7 @@ export const CASES: Case[] = [
     id: 'an2',
     ch: 2,
     title: 'Án đêm bị xóa',
-    sum: 'Một trang sổ đến thăm bị cạo đi một dòng, để một phi tần thành có thai không rõ cha. Ai đã cầm dao cạo?',
+    sum: 'Tài nhân viện Đông có thai, mà sổ đến thăm không có dòng nào ghi Hoàng thượng gọi nàng. Ở tháng Tư, giấy mỏng như vừa bị cạo. Ai đã cầm dao?',
     suspects: [
       { k: 'tl', label: 'Ngón tay dính mực tàu', name: 'Thư lại nội vụ Bảo' },
       { k: 'mm', label: 'Người giữ chìa kho sổ', name: 'Ma ma giữ đèn họ Ông' },
@@ -73,7 +73,7 @@ export const CASES: Case[] = [
     tay: ['tl', 'kt'],
     clues: [
       { id: 'a2_muc', an: 'an2', kind: 'vat', t: 'Dòng chữ chép đè dùng mực khác màu', key: true },
-      { id: 'a2_den', an: 'an2', kind: 'nhan', t: 'Lính canh thấy đèn kho sổ sáng sau giờ khóa' },
+      { id: 'a2_den', an: 'an2', kind: 'nhan', t: 'Người trực đêm thấy đèn kho sổ sáng sau giờ khóa' },
       { id: 'a2_dao', an: 'an2', kind: 'vat', t: 'Con dao cạo giấy giấu trong ống bút' },
       { id: 'a2_no', an: 'an2', kind: 'khai', t: 'Lời đồn ai đó vừa trả hết nợ cờ bạc' },
       { id: 'a2_giay', an: 'an2', kind: 'vat', t: 'Vết giày vải mới in trên tro ở cửa kho', gai: 'lv' },

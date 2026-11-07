@@ -567,7 +567,7 @@ export function choose(l0: Life, idx: number): Result {
     l.chain = undefined;
     if (fx.chapter) moveTo(l, fx.chapter);
     else if (kind === 'big') l.bigAt += 1;
-    else if (kind === 'small') l.smalls += 1;
+    else if (kind === 'small' && !(isNg(l) && card.urgent)) l.smalls += 1;
     l.card = nextCard(l);
     zeroCheck(l);
   }
