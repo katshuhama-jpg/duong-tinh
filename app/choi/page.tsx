@@ -666,7 +666,7 @@ export default function Play() {
                   );
                 })}
               </div>
-              {sc.end.riv && (
+              {sc.end.riv && !ng && (
                 <>
                   <h3>Mối nguy</h3>
                   <div className="c-recap-riv">
