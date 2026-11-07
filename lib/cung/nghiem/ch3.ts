@@ -554,8 +554,8 @@ export const NG_CH3: Card[] = [
   {
     id: 'n3_s_huu',
     part: P,
-    // câu ru của Hựu là sự thật 8, để dành cho chương 4 (kinh thánh)
-    chapter: [4],
+    // nghe câu ru lần đầu khi đang mang thai (cờ nghe_ru); sự thật 8 lấy ở chương 4
+    chapter: [3],
     when: THAI,
     place: 'vuon',
     time: 'chieu',
