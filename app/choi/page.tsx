@@ -872,7 +872,15 @@ export default function Play() {
                 Đóng
               </button>
             </header>
-            <SoAn life={life} faceOf={(k) => faceDir(k, life)} />
+            <SoAn
+              life={life}
+              faceOf={(k) => faceDir(k, life)}
+              onDoubt={(id) => {
+                // nghi / thôi nghi một manh mối: không tính nó vào cán cân xử án
+                const f = `nghi_${id}`;
+                keep({ ...life, flags: life.flags.includes(f) ? life.flags.filter((x) => x !== f) : [...life.flags, f] });
+              }}
+            />
           </div>
         </div>
       )}

@@ -3,6 +3,7 @@
 import type { CastK, Life } from '@/lib/cung/types';
 import { CASES, KIND, clueOf, clueSet, knows, strength, suspectName } from '@/lib/cung/nghiem/cases';
 import { TRUTHS } from '@/lib/cung/nghiem/world';
+import { dauMoi, vayCanh, VC_KHEP, VC_NOI } from '@/lib/cung/nghiem/daumoi';
 
 const LAMP = { mo: 'Mờ', vua: 'Vừa', sang: 'Sáng' };
 
@@ -14,9 +15,11 @@ const truthsOf = (l: Life) => TRUTHS.map((t, i) => ({ t, ok: l.flags.includes(`s
 export function SoAnStrip({ life, onOpen }: { life: Life; onOpen: () => void }) {
   const c = openCase(life);
   const tr = truthsOf(life).filter((x) => x.ok).length;
+  const dm = dauMoi(life);
+  const left = c ? Math.max(0, dm.cap - (life.an![c.id].cd ?? 0)) : null;
   return (
     <button type="button" className="c-soan-strip" onClick={onOpen} aria-label="Mở sổ án">
-      <span>{c ? <>Đang xét: <b>{c.title}</b> · {life.an![c.id].clues.length} manh mối</> : <>Không có án đang mở</>}</span>
+      <span>{c ? <>Đang xét: <b>{c.title}</b> · {life.an![c.id].clues.length} manh mối · còn dò {left} lần</> : <>Không có án đang mở</>}</span>
       <span>
         <b className="hiem">Hiểm {life.n.hiem ?? 0}</b> · Lòng cha {life.n.cha ?? 0} · Hồ sơ chị {tr}/12
       </span>
@@ -24,14 +27,37 @@ export function SoAnStrip({ life, onOpen }: { life: Life; onOpen: () => void }) 
   );
 }
 
-export default function SoAn({ life, faceOf }: { life: Life; faceOf: (k: CastK) => string }) {
+export default function SoAn({ life, faceOf, onDoubt }: { life: Life; faceOf: (k: CastK) => string; onDoubt?: (clueId: string) => void }) {
   const cases = CASES.filter((c) => life.an?.[c.id]?.mo != null);
   const tr = truthsOf(life);
+  const dm = dauMoi(life);
+  const vc = vayCanh(life);
+  const VC = { con: 'còn', nho: 'đã nhổ', lat: 'đã lật, chịu khai', dut: 'đã chết trước khi kịp khai' };
   return (
     <>
       <p className="c-note">
         Hiểm {life.n.hiem ?? 0}/100: kẻ thủ ác biết bạn đang đào tới đâu. Đầy thì họ ra tay. Lòng cha {life.n.cha ?? 0}.
       </p>
+      <section>
+        <h3>Đầu mối · mỗi vụ dò được {dm.cap} lần</h3>
+        <p className="c-note">
+          {dm.ban.length ? <>Người giúp: {dm.ban.join(', ')}.</> : <>Không ai giúp. Bạn đang phá án một mình.</>}
+          {dm.thu.length > 0 && <> Dao hai lưỡi: {dm.thu.join(', ')}. Mỗi lần dò, bên kia cũng biết.</>}
+        </p>
+      </section>
+      <section>
+        <h3>Vây cánh kẻ đứng sau · {Math.max(0, vc.diem)}/8</h3>
+        <p className="c-note">
+          Nhổ được {VC_NOI} trụ thì nói ra sự thật mới còn đường sống, {VC_KHEP} trụ mới khép được án. Giết người trước khi họ kịp khai chỉ làm đứt đầu mối. Xử oan một người thì mất một trụ đã nhổ.
+        </p>
+        <ul>
+          {vc.list.map((x) => (
+            <li key={x.k} style={{ opacity: x.st === 'con' ? 0.6 : 1 }}>
+              {x.t}: {VC[x.st]}
+            </li>
+          ))}
+        </ul>
+      </section>
       {!cases.length && <p className="c-note">Chưa có vụ án nào.</p>}
       {cases
         .slice()
@@ -68,9 +94,18 @@ export default function SoAn({ life, faceOf }: { life: Life; faceOf: (k: CastK) 
                   {st.clues.map((id) => {
                     const cl = clueOf(id)!;
                     const who = clueSet(life, id).map((k) => suspectName(life, c.id, k));
+                    const tu = st.tu?.includes(id);
+                    const nghi = life.flags.includes(`nghi_${id}`);
                     return (
-                      <li key={id}>
+                      <li key={id} style={{ opacity: nghi ? 0.55 : 1 }}>
                         <b>{KIND[cl.kind]}:</b> {cl.t}. <i>Trỏ về: {who.join(' hoặc ')}.</i>
+                        {tu && <> <small>Có qua tay kẻ thù, có thể giả.</small></>}
+                        {nghi && <> <small>Bạn đang nghi, không tính.</small></>}
+                        {!st.xu && onDoubt && (
+                          <button type="button" className="c-soan-nghi" onClick={() => onDoubt(id)}>
+                            {nghi ? 'Thôi nghi' : 'Nghi manh mối này'}
+                          </button>
+                        )}
                       </li>
                     );
                   })}

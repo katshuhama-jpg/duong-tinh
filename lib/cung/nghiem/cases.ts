@@ -216,6 +216,12 @@ export function clueSet(l: Life, clueId: string): string[] {
     return [c.suspects[(real0.findIndex((x) => x.id === clueId) + off0) % c.suspects.length].k];
   }
   const tay = l.an?.[c.id]?.tay ?? c.tay[0];
+  // manh mối giả (có qua tay kẻ thù): trỏ về hai người, không có thủ phạm thật
+  if (l.an?.[c.id]?.gia?.includes(clueId)) {
+    const sus = c.suspects.map((s) => s.k).filter((k) => k !== tay);
+    const o = Math.floor(rnd(l.seed, `gia|${clueId}`) * sus.length);
+    return [sus[o % sus.length], sus[(o + 1) % sus.length]];
+  }
   const others = c.suspects.map((s) => s.k).filter((k) => k !== tay);
   const real = c.clues.filter((x) => !x.gai);
   const i = real.findIndex((x) => x.id === clueId);
@@ -244,7 +250,9 @@ export const suspectName = (l: Life, an: string, k: string) => {
 export function strength(l: Life, an: string, k: string) {
   const st = l.an?.[an] ?? { clues: [] as string[], tay: '' };
   // đã nghi chứng gài (cờ nghi_<id manh mối>) thì không tính chứng ấy
-  const found = st.clues.map((id) => clueOf(id)!).filter((x) => x && !(x.gai && l.flags.includes(`nghi_${x.id}`)));
+  // đã nghi (cờ nghi_<id>) thì không tính: chứng gài, hay manh mối có qua tay kẻ thù
+  const found = st.clues.map((id) => clueOf(id)!).filter((x) => x && !l.flags.includes(`nghi_${x.id}`));
+  // manh mối giả tính như thật: người chơi không biết nó giả, trừ khi tự nghi
   const real = found.filter((x) => !x.gai);
   const consistent = real.every((x) => clueSet(l, x.id).includes(k));
   const about = found.filter((x) => clueSet(l, x.id).includes(k));

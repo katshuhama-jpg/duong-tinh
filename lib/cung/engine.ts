@@ -13,6 +13,7 @@ import { NG_CARDS, ngBigsOf, NG_WRITTEN } from './nghiem/index';
 import { CASES, initCases, judge, suspectName, caseOf, clueSet } from './nghiem/cases';
 import { NG_CHAPTERS, NG_ERA, NG_HIEM_END, NG_YEAR0, NG_ZERO_END } from './nghiem/world';
 import { NG_PROLOGUE, NG_TALES } from './nghiem/prologue';
+import { dauMoi, vayCanh, VC_NOI } from './nghiem/daumoi';
 
 /** phần Con tin họ Nghiêm (đường con quan) dùng kho thẻ riêng */
 export const isNg = (l: Pick<Life, 'origin'>) => l.origin === 'quan';
@@ -258,6 +259,7 @@ export function ok(c: Cond | undefined, l: Life) {
   if (c.not && c.not.some((f) => l.flags.includes(f))) return false;
   if (c.sons != null && (c.sons === 0 ? sons(l) !== 0 : sons(l) < c.sons)) return false;
   if (c.kids != null && l.kids.length < c.kids) return false;
+  if (c.vc != null && vayCanh(l).diem < c.vc) return false;
   if (c.num) for (const [k, [a, b]] of Object.entries(c.num) as [NumK, [number, number]][]) if (l.n[k] < a || l.n[k] > b) return false;
   if (c.riv) {
     const rv = l.riv ?? rivInit(l.chapter);
@@ -283,6 +285,14 @@ export function rankOf(l: Life): Rank {
 }
 
 /* ---------- rút thẻ ---------- */
+/** phần Nghiêm: thẻ nhỏ này cho manh mối của vụ nào (null nếu không phải thẻ manh mối) */
+function clueCase(c: Card): string | null {
+  if (c.big || c.step || c.urgent) return null;
+  const id = c.choices.flatMap((o) => [...(o.fx.clue ?? []), ...(o.risk?.fail.clue ?? [])])[0];
+  return id ? `an${id[1]}` : null;
+}
+const isGaiCard = (c: Card) => c.choices.some((o) => (o.fx.clue ?? []).some((id) => CASES.some((k) => k.clues.some((x) => x.id === id && x.gai))));
+const isKeyCard = (c: Card) => c.choices.some((o) => (o.fx.clue ?? []).some((id) => CASES.some((k) => k.clues.some((x) => x.id === id && x.key))));
 const chap = (n: number, l?: Life) => ((l && isNg(l)) ? NG_CHAPTERS : CHAPTERS).find((c) => c.n === n)!;
 export const chapOf = (l: Life, n = l.chapter) => chap(n, l);
 export function nextCard(l: Life): string | null {
@@ -303,7 +313,13 @@ export function nextCard(l: Life): string | null {
   const turn = URGENT.find((c) => c.chapter.includes(ch) && !l.seen.includes(c.id) && ok(c.when, l) && fits(c, l));
   if (turn) return turn.id;
   if (l.smalls < chap(ch, l).smalls) {
-    const pool = ALL_SMALL.filter((c) => !c.step && !c.urgent && c.chapter.includes(ch) && ok(c.when, l) && fits(c, l) && (c.repeat || !l.seen.includes(c.id)));
+    // phần Nghiêm: mỗi vụ chỉ dò được số lần bằng số đầu mối
+    const dm = isNg(l) ? dauMoi(l) : null;
+    const pool = ALL_SMALL.filter((c) => !c.step && !c.urgent && c.chapter.includes(ch) && ok(c.when, l) && fits(c, l) && (c.repeat || !l.seen.includes(c.id))).filter((c) => {
+      if (!dm) return true;
+      const an = clueCase(c);
+      return !an || (l.an?.[an]?.cd ?? 0) < dm.cap;
+    });
     if (pool.length) {
       // thẻ hệ quả của lựa chọn vừa rồi (cần cờ mới đặt) được ưu tiên, để chuyện nối tiếp chuyện
       const fresh = (l.fresh ?? []).map((x) => x.slice(x.indexOf(':') + 1));
@@ -313,7 +329,9 @@ export function nextCard(l: Life): string | null {
       const beatW = (c: Card) => (c.beat === 'hook' ? (first ? 8 : 0.4) : c.beat === 'lang' ? (lastBefore ? 8 : 0.5) : 1);
       const focus = l.focus ?? [];
       const focusW = (c: Card) => (c.when?.riv && Object.keys(c.when.riv).some((k) => focus.includes(k as RivalK)) ? 6 : c.when?.riv ? 3 : 1);
-      const w = (c: Card) => (c.weight ?? 1) * beatW(c) * focusW(c) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
+      // kẻ thù làm bạn hay mớm chứng gài; một mình thì tự đào thẳng vào chứng then chốt
+      const dmW = (c: Card) => (!dm || !clueCase(c) ? 1 : (dm.thu.length && isGaiCard(c) ? 3 : 1) * (!dm.ban.length && isKeyCard(c) ? 2 : 1));
+      const w = (c: Card) => (c.weight ?? 1) * beatW(c) * focusW(c) * dmW(c) * (c.when?.flags?.some((f) => fresh.includes(f)) ? 8 : 1);
       const total = pool.reduce((a, c) => a + w(c), 0);
       let r = rand(l.seed, step(l)) * total;
       for (const c of pool) {
@@ -427,7 +445,13 @@ export function ngGrid(l: Life) {
   const pos = Math.max(0, POS.findIndex(f) >= 0 ? POS.findIndex(f) : 2);
   const su = l.flags.filter((x) => /^su\d+$/.test(x)).length;
   const biet = f('su11') || su >= 8;
-  const lv = !biet ? 0 : f('ch7_noi') ? 2 : 1;
+  let lv = !biet ? 0 : f('ch7_noi') ? 2 : 1;
+  // nói ra sự thật khi vây cánh còn đông: bị bịt miệng, hoặc bị diệt khẩu
+  if (lv === 2) {
+    const vc = vayCanh(l).diem;
+    if (vc < 3) return 'n_136';
+    if (vc < VC_NOI) lv = 1;
+  }
   return `n_${69 + pos * 3 + lv}`;
 }
 /** chỉ số chạm đáy: lần đầu hiện cảnh cảnh báo, lần sau thì khép đời */
@@ -520,7 +544,32 @@ export function choose(l0: Life, idx: number): Result {
   // vụ án (phần Nghiêm)
   let caseNext: string | undefined;
   if (isNg(l) && l.an) {
-    if (fx.mo && l.an[fx.mo] && l.an[fx.mo].mo == null) l.an[fx.mo].mo = l0.seen.length;
+    if (fx.mo && l.an[fx.mo] && l.an[fx.mo].mo == null) {
+      l.an[fx.mo].mo = l0.seen.length;
+      // người thân cận bị mua (Lụa Vàng nợ nần, bị bỏ mặc): có khi chính nàng là tay sai thật của vụ
+      const f = (x: string) => l.flags.includes(x);
+      const lvBought = ['lv_mua', 'lv_han', 'lv_ban'].some(f) || (l.n.hanh ?? 30) < 5;
+      if (['an2', 'an3'].includes(fx.mo) && lvBought && !f('lv_tay') && !f('chet_luavang') && !f('di_luavang') && rand(l.seed, `lvtay|${fx.mo}`) < 0.6) {
+        l.an[fx.mo].tay = 'lv';
+        l.flags.push('lv_tay');
+      }
+    }
+    // dò manh mối bằng thẻ nhỏ: tốn một lượt đầu mối; có kẻ thù trong số đầu mối thì họ cũng biết
+    const cc = clueCase(card);
+    if (cc && l.an[cc] && fx.clue?.length) {
+      l.an[cc].cd = (l.an[cc].cd ?? 0) + 1;
+      const thu = dauMoi(l).thu.length;
+      if (thu) {
+        l.n.hiem = clamp('hiem', (l.n.hiem ?? 0) + 2 + 2 * thu);
+        // qua tay kẻ thù: manh mối có thể là giả (trỏ sai người), người chơi không biết trừ khi tự nghi
+        const st = l.an[cc];
+        for (const id of fx.clue) {
+          if (st.clues.includes(id)) continue;
+          st.tu = [...(st.tu ?? []), id];
+          if (rand(l.seed, `gia|${id}`) < Math.min(0.6, 0.3 * thu)) st.gia = [...(st.gia ?? []), id];
+        }
+      }
+    }
     for (const id of fx.clue ?? []) {
       const an = CASES.find((c) => c.clues.some((x) => x.id === id));
       if (an && !l.an[an.id].clues.includes(id)) l.an[an.id].clues.push(id);
@@ -532,6 +581,7 @@ export function choose(l0: Life, idx: number): Result {
       l.flags.push(`xu_${an}`, `${an}_${j.kind}`);
       if (j.kind === 'thang') {
         caseNext = `${an}_khai`;
+        if (who === 'lv') l.flags.push(`lv_bi_bat_${an}`);
         l.n.hiem = Math.max(0, (l.n.hiem ?? 0) - 15);
       }
       else if (j.kind === 'phancong') {

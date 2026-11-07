@@ -94,6 +94,8 @@ export interface Cond {
   num?: Partial<Record<NumK, [number, number]>>;
   /** điều kiện về mối nguy: trạng thái thuộc danh sách, uy hiếp/chứng cứ trong khoảng */
   riv?: Partial<Record<RivalK, { st?: RivalSt[]; th?: [number, number]; ev?: [number, number] }>>;
+  /** phần Nghiêm: điểm vây cánh đã nhổ tối thiểu (xem nghiem/daumoi.ts) */
+  vc?: number;
 }
 
 /** hệ quả của một lựa chọn */
@@ -288,7 +290,7 @@ export interface Life {
   /** lời kể đang chờ hiện (trang kể chuyện giữa hai cảnh) */
   tales?: { t: string; lines: string[]; card?: string; riv?: RivalK; kicker?: string; skip?: boolean; s?: { bg: string; time: TimeK; cast: CastK[]; rain?: boolean; imgs?: Partial<Record<CastK, string>>; moods?: Partial<Record<CastK, MoodK>>; prop?: string } }[];
   /** phần Con tin họ Nghiêm: các vụ án (tay sai bốc lúc đầu đời, manh mối đã nhặt, đã xử chưa) */
-  an?: Record<string, { tay: string; mo?: number; clues: string[]; xu?: { who: string; dung: boolean; du: boolean } }>;
+  an?: Record<string, { tay: string; mo?: number; clues: string[]; xu?: { who: string; dung: boolean; du: boolean }; /** số lần đã dò manh mối (thẻ nhỏ) trong vụ */ cd?: number; /** manh mối có được qua tay kẻ thù */ tu?: string[]; /** trong số đó, manh mối giả */ gia?: string[] }>;
   /** bàn cờ mối nguy */
   riv?: Record<RivalK, RivalState>;
   /** kẻ thù chính của chương đang chơi (thẻ của họ ra dày hơn) */
