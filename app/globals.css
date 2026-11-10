@@ -361,8 +361,8 @@ a:hover { color: #6d1a11; }
 .c-soan .shadow { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #555 0 30%, #222 31%); display: inline-block; vertical-align: middle; margin-right: 6px; }
 .c-soan .face { width: 34px; height: 34px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
 
-.c-tale-line { opacity: 0; animation: c-rise 0.8s ease-out forwards; }
-p.c-tale-line { font-family: var(--serif); font-size: 18px; line-height: 1.65; margin: 0 0 12px; opacity: 0; animation: c-rise 0.8s ease-out forwards; }
+.c-tale-line { animation: c-rise 0.8s ease-out both; }
+p.c-tale-line { font-family: var(--serif); font-size: 18px; line-height: 1.65; margin: 0 0 12px; animation: c-rise 0.8s ease-out both; }
 .c-tale-drop::first-letter { font-size: 2.2em; float: left; line-height: 0.9; padding: 4px 6px 0 0; color: var(--son); }
 .c-log li.tale span { font-style: italic; color: var(--son2); }
 
