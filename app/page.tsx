@@ -7,7 +7,7 @@ import EndBook from '@/components/cung/EndBook';
 import Scene, { lookOf } from '@/components/cung/Scene';
 import { playTrack } from '@/lib/cung/music';
 import { signOut } from '@/lib/auth';
-import { loadMe, type CMeta } from '@/lib/cung/save';
+import { flushAll, loadMe, type CMeta } from '@/lib/cung/save';
 import type { Life } from '@/lib/cung/types';
 import { useAuth } from '@/lib/useAuth';
 
@@ -44,7 +44,7 @@ export default function Home() {
         </div>
         <div className="c-row">
           {user ? (
-            <button type="button" className="c-btn ghost" onClick={() => signOut().then(() => setMe(null))}>
+            <button type="button" className="c-btn ghost" onClick={() => flushAll().then(() => signOut()).then(() => setMe(null))}>
               {user.username} · Đăng xuất
             </button>
           ) : (

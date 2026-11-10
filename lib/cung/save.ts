@@ -36,10 +36,17 @@ function writeGuest(g: Guest) {
 }
 /** đếm lượt chơi khách: mã ngẫu nhiên trong máy, chương, số kết cục. Không có thông tin cá nhân */
 let lastPing = 0;
+let lastSig = '';
 function guestPing(g: Guest) {
   const sb = supabase();
-  if (!sb || Date.now() - lastPing < 60_000) return;
+  if (!sb) return;
+  const l0 = g.life;
+  const sig = `${l0?.origin ?? ''}|${l0?.chapter ?? ''}|${g.meta.cung?.length ?? 0}|${g.meta.cungLives ?? 0}`;
+  // tiến độ đổi thì báo sau tối thiểu 2 phút, không đổi thì chỉ báo "còn đó" mỗi 10 phút
+  const gap = sig !== lastSig ? 120_000 : 600_000;
+  if (Date.now() - lastPing < gap) return;
   lastPing = Date.now();
+  lastSig = sig;
   let id = '';
   try {
     id = localStorage.getItem('cung.gid') ?? '';
@@ -74,22 +81,150 @@ export async function loadMe(): Promise<{ username: string; meta: CMeta; life: L
     return null;
   }
   const d = data as { username: string; meta: CMeta | null; state: unknown };
-  return { username: d.username, meta: d.meta ?? {}, life: isLife(d.state) ? migrate(d.state) : null, guest: false };
+  let life: Life | null = isLife(d.state) ? migrate(d.state) : null;
+  let meta: CMeta = d.meta ?? {};
+  // bản lưu chưa kịp gửi lên máy chủ (đóng tab giữa chừng) vẫn là bản mới nhất
+  const pl = readPending(PEND_LIFE, p.token);
+  if (pl) {
+    life = pl.v && isLife(pl.v) ? migrate(pl.v) : null;
+    void saveLife(life);
+  }
+  const pm = readPending(PEND_META, p.token);
+  if (pm && pm.v && typeof pm.v === 'object') {
+    meta = pm.v as CMeta;
+    void saveMeta(meta);
+  }
+  return { username: d.username, meta, life, guest: false };
 }
 
-let inflight: Promise<boolean> | null = null;
-let queued: Life | null | undefined;
-async function send(life: Life | null) {
-  const p = currentPlayer();
-  const sb = supabase();
-  if (!p || !sb) return false;
+/**
+ * Lưu lên máy chủ theo kiểu "bấm liên tục chỉ lưu lần cuối": mỗi lần bấm chỉ ghi nháp trong máy,
+ * máy chủ nhận bản cuối sau khi người chơi dừng tay vài giây, khi qua chương, khi kết thúc đời,
+ * hoặc khi ẩn/đóng trang.
+ */
+const PEND_LIFE = 'cung.pend.life';
+const PEND_META = 'cung.pend.meta';
+type Pending = { u: string; v: unknown };
+function readPending(key: string, token: string): Pending | null {
   try {
-    const { error } = await sb.rpc('cs_save_game', { p_token: p.token, p_state: life });
-    return !error;
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const x = JSON.parse(raw) as Pending;
+    return x.u === token ? x : null;
   } catch {
-    return false;
+    return null;
   }
 }
+function writePending(key: string, token: string, v: unknown) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ u: token, v } satisfies Pending));
+  } catch {
+    /* bỏ qua */
+  }
+}
+function clearPending(key: string) {
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    /* bỏ qua */
+  }
+}
+
+const LIFE_WAIT = 8000;
+const META_WAIT = 2500;
+type Slot = { timer: ReturnType<typeof setTimeout> | null; has: boolean; val: unknown; sent: string; busy: Promise<void> | null; rpc: 'cs_save_game' | 'cs_save_meta'; arg: 'p_state' | 'p_meta'; key: string };
+const slots: Record<'life' | 'meta', Slot> = {
+  life: { timer: null, has: false, val: null, sent: '', busy: null, rpc: 'cs_save_game', arg: 'p_state', key: PEND_LIFE },
+  meta: { timer: null, has: false, val: null, sent: '', busy: null, rpc: 'cs_save_meta', arg: 'p_meta', key: PEND_META },
+};
+
+async function flushSlot(s: Slot): Promise<void> {
+  if (s.timer) {
+    clearTimeout(s.timer);
+    s.timer = null;
+  }
+  if (s.busy) await s.busy;
+  if (!s.has) return;
+  const p = currentPlayer();
+  const sb = supabase();
+  if (!p || !sb) return;
+  const v = s.val;
+  s.has = false;
+  const json = JSON.stringify(v ?? null);
+  if (json === s.sent) {
+    if (!s.has) clearPending(s.key);
+    return;
+  }
+  s.busy = (async () => {
+    let ok = false;
+    try {
+      const { error } = await sb.rpc(s.rpc, { p_token: p.token, [s.arg]: v } as never);
+      ok = !error;
+    } catch {
+      ok = false;
+    }
+    if (ok) {
+      s.sent = json;
+      if (!s.has) clearPending(s.key);
+    } else if (!s.has) {
+      // chưa gửi được: giữ nháp, thử lại sau
+      s.has = true;
+      s.val = v;
+      s.timer = setTimeout(() => void flushSlot(s), 20_000);
+    }
+  })().finally(() => {
+    s.busy = null;
+  });
+  await s.busy;
+}
+
+function queue(s: Slot, v: unknown, wait: number) {
+  const p = currentPlayer();
+  if (!p) return;
+  s.has = true;
+  s.val = v;
+  writePending(s.key, p.token, v);
+  if (wait === 0) {
+    void flushSlot(s);
+    return;
+  }
+  if (!s.timer) s.timer = setTimeout(() => void flushSlot(s), wait);
+}
+
+/** đóng/ẩn trang: gửi nốt bản cuối, dùng keepalive để trình duyệt không hủy giữa chừng */
+function flushBeacon() {
+  const p = currentPlayer();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!p || !url || !key) return;
+  for (const s of [slots.life, slots.meta]) {
+    if (!s.has) continue;
+    const body = JSON.stringify({ p_token: p.token, [s.arg]: s.val ?? null });
+    if (body.length > 60_000) continue; // quá giới hạn keepalive: nháp trong máy sẽ được gửi ở lần mở sau
+    try {
+      void fetch(`${url}/rest/v1/rpc/${s.rpc}`, { method: 'POST', keepalive: true, headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body });
+    } catch {
+      /* bỏ qua */
+    }
+  }
+}
+let wired = false;
+function wire() {
+  if (wired || typeof window === 'undefined') return;
+  wired = true;
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') flushBeacon();
+  });
+  window.addEventListener('pagehide', flushBeacon);
+}
+
+/** gửi ngay mọi thứ còn chờ (dùng trước khi đăng xuất) */
+export async function flushAll(): Promise<void> {
+  await flushSlot(slots.life);
+  await flushSlot(slots.meta);
+}
+
+let lastChapter: number | null | undefined;
 export async function saveLife(life: Life | null): Promise<boolean> {
   const p = currentPlayer();
   if (!p || !supabase()) {
@@ -98,24 +233,13 @@ export async function saveLife(life: Life | null): Promise<boolean> {
     guestPing(g);
     return true;
   }
-  if (inflight) {
-    queued = life;
-    return inflight.then(() => true);
-  }
-  inflight = (async () => {
-    let ok = await send(life);
-    while (queued !== undefined) {
-      const q = queued;
-      queued = undefined;
-      ok = await send(q);
-    }
-    return ok;
-  })();
-  try {
-    return await inflight;
-  } finally {
-    inflight = null;
-  }
+  wire();
+  // qua chương, kết thúc đời hoặc bỏ đời: lưu ngay; còn lại chờ người chơi dừng tay
+  const now = life ? (life.end ? -1 : life.chapter ?? 0) : null;
+  const urgent = life === null || !!life.end || (lastChapter !== undefined && now !== lastChapter);
+  lastChapter = now;
+  queue(slots.life, life, urgent ? 0 : LIFE_WAIT);
+  return true;
 }
 
 export async function saveMeta(meta: CMeta): Promise<boolean> {
@@ -127,8 +251,9 @@ export async function saveMeta(meta: CMeta): Promise<boolean> {
     guestPing(g);
     return true;
   }
-  const { error } = await sb.rpc('cs_save_meta', { p_token: p.token, p_meta: meta });
-  return !error;
+  wire();
+  queue(slots.meta, meta, META_WAIT);
+  return true;
 }
 
 /** sau khi đăng nhập: chuyển đời đang chơi thử vào tài khoản */
@@ -140,6 +265,7 @@ export async function migrateGuest() {
   if (g.life && !me.life) await saveLife(g.life);
   const cung = Array.from(new Set([...(me.meta.cung ?? []), ...(g.meta.cung ?? [])]));
   await saveMeta({ ...me.meta, cung, cungLives: (me.meta.cungLives ?? 0) + (g.meta.cungLives ?? 0) });
+  await flushAll();
   try {
     localStorage.removeItem(GUEST);
   } catch {
