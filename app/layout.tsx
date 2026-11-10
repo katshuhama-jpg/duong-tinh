@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   applicationName: NAME,
   keywords: ['game cung đấu', 'hậu cung', 'game lịch sử Việt', 'tranh Hàng Trống', NAME],
   alternates: { canonical: '/' },
-  openGraph: { type: 'website', url: '/', siteName: NAME, title: NAME, description: DESC, locale: 'vi_VN' },
-  twitter: { card: 'summary', title: NAME, description: DESC },
+  openGraph: { type: 'website', url: '/', siteName: NAME, title: NAME, description: DESC, locale: 'vi_VN', images: [{ url: '/og.png', width: 1200, height: 630, alt: NAME }] },
+  twitter: { card: 'summary_large_image', title: NAME, description: DESC, images: ['/og.png'] },
   robots: { index: true, follow: true },
 };
 
