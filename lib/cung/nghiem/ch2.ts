@@ -64,11 +64,11 @@ const taiPham = (id: string, co: string, hau: boolean): Card => ({
   mood: 'so',
   moods: { nhumau: 'so' },
   who: 'nhumau',
-  lead: hau ? 'Án chái sau năm ngoái khép bằng hai chữ "tự vẫn".' : 'Hồ sơ án chái sau vẫn nằm trong rương của bạn.',
+  lead: hau ? 'Án gian sau năm ngoái khép bằng hai chữ "tự vẫn".' : 'Hồ sơ án gian sau vẫn nằm trong rương của bạn.',
   title: hau ? 'Giếng sau viện' : 'Người gánh nước',
   text: hau
     ? ['Sáng ra, cung nữ quét sân viện bạn được vớt lên từ giếng sau. Lần này không còn thở.', 'Chiều hôm trước, ma ma hầu Thái hậu có ghé viện, hỏi thăm mọi người.']
-    : ['Sáng ra, cung nữ gánh nước được vớt lên từ giếng sau viện. Nó là người dậy sớm nhất dãy chái, ra giếng từ canh tư.', 'Chiều hôm trước, ma ma hầu Thái hậu có ghé qua dãy chái sau, hỏi thăm mọi người.'],
+    : ['Sáng ra, cung nữ gánh nước được vớt lên từ giếng sau viện. Nó là người dậy sớm nhất dãy nhà, ra giếng từ canh tư.', 'Chiều hôm trước, ma ma hầu Thái hậu có ghé qua dãy gian sau, hỏi thăm mọi người.'],
   omen: 'Án khép mà kẻ thủ ác còn đó, thì giếng sau viện không bao giờ cạn.',
   choices: hau
     ? [
@@ -190,7 +190,7 @@ export const NG_CH2: Card[] = [
     moods: { kiem: 'binh' },
     who: 'kiem',
     title: 'Chưởng sự cúi chào',
-    text: ['Từ hôm khép án chái sau, Kiệm chào bạn sâu hơn mọi người, lễ đến từng nếp áo.', 'Sổ sách của viện bạn được dời sang một rương khác, có khóa mới.'],
+    text: ['Từ hôm khép án gian sau, Kiệm chào bạn sâu hơn mọi người, lễ đến từng nếp áo.', 'Sổ sách của viện bạn được dời sang một rương khác, có khóa mới.'],
     choices: [
       { t: 'Đáp lễ như thường', fx: { d: { phuc: -10, duc: 2 }, flag: ['n2_hq', 'kiem_de'] }, note: 'Kiệm vẫn cười. Nhưng từ đó, mọi giấy tờ qua tay ông đều tới viện bạn chậm một ngày.' },
       { t: 'Nhìn thẳng ông, không chào lại', fx: { d: { phuc: -12, muu: 3, hiem: 3 }, flag: ['n2_hq', 'kiem_de'] }, note: 'Kiệm đứng thẳng lên, không cúi nữa: "Nương nương giống ông Nghiêm lắm." Câu ấy không phải lời khen.' },
@@ -928,7 +928,7 @@ export const NG_CH2: Card[] = [
       { t: 'Sai người cầu Hoàng thượng che chở', need: { flags: ['da_hau'], num: { vua: [15, 100] }, not: ['che_vua'] }, lockHint: 'Cần đã hầu Hoàng thượng, Hoàng thượng từ 15, chưa từng cầu', fx: { d: { vua: -10, an: -5 }, flag: ['che_vua', 'n2_khep'] }, note: 'Sáng ra, tờ sớ tố tội của Kiệm bị gạt sang một bên: "Phi tần trẫm cho xét sổ." Kiệm cúi đầu nhận lời, mặt không đổi.' },
       { t: 'Chạy sang viện Uyển Như cầu cứu', need: { num: { thucphi: [20, 100] }, not: ['che_un', 'un_han'] }, lockHint: 'Cần Quý phi Hà từ 20, chưa từng cầu, không mang hận', fx: { d: { thucphi: -5, hiem: 5 }, flag: ['che_un', 'no_thaisu', 'n2_khep'] }, note: 'Uyển Như viết một lá thư ra phủ Thái sư ngay trong đêm. Tờ sớ tố tội ấy không bao giờ được dâng. Bạn vừa nợ nhà họ Hà một lần.' },
       { t: 'Nhờ người nhắn Ngự sử Lý Mặc', need: { flags: ['quen_lymac'], not: ['che_lymac'] }, lockHint: 'Cần đã quen Ngự sử Lý Mặc, chưa từng cầu', fx: { d: { quan: -5, hiem: 6 }, flag: ['che_lymac', 'n2_khep'] }, note: 'Lý Mặc dâng sớ xin đưa việc sửa sổ ra Tam pháp ty, nơi xử các án lớn. Kiệm lặng lẽ rút tờ sớ về. Không ai muốn sổ cung cấm ra công đường.' },
-      { t: 'Nhắn Kiệm: lời khai đêm chái sau vẫn còn', need: { flags: ['bai_kiem'], not: ['dung_bai_kiem', 'an2_nang'] }, lockHint: 'Cần đang giữ lời khai làm con bài, và Kiệm còn sợ nó', fx: { d: { hiem: 8, phuc: -10 }, flag: ['dung_bai_kiem', 'n2_khep'] }, note: 'Gần sáng, có người đến trả lại tờ trình của bạn, kèm một câu: "Chưởng sự bảo việc này coi như chưa có." Con bài ấy đã dùng rồi.' },
+      { t: 'Nhắn Kiệm: lời khai đêm gian sau vẫn còn', need: { flags: ['bai_kiem'], not: ['dung_bai_kiem', 'an2_nang'] }, lockHint: 'Cần đang giữ lời khai làm con bài, và Kiệm còn sợ nó', fx: { d: { hiem: 8, phuc: -10 }, flag: ['dung_bai_kiem', 'n2_khep'] }, note: 'Gần sáng, có người đến trả lại tờ trình của bạn, kèm một câu: "Chưởng sự bảo việc này coi như chưa có." Con bài ấy đã dùng rồi.' },
       { t: 'Nhắn Kiệm: trang Tân Dậu cũng có vết cạo', need: { flags: ['su3'], not: ['dung_su3', 'an2_nang'] }, lockHint: 'Cần biết sổ năm Tân Dậu bị xóa, và Kiệm còn sợ điều ấy', fx: { d: { hiem: 15, muu: 3 }, flag: ['dung_su3', 'n2_khep', 'kiem_biet_su3'] }, note: 'Tờ sớ tố tội không được dâng. Nhưng từ đêm ấy, viện bạn có người canh mà bạn không thuê.' },
       { t: 'Viết tờ xin tự hạ bậc, dời ra viện ngoài', fx: { end: 'n_147' }, note: 'Bạn dời ra một viện ẩm ở góc thành. Không ai hại một phi tần đã tự ngã, và cũng không ai nhắc đến trang sổ tháng Tư nữa.' },
       { t: 'Cài then, ngồi chờ sáng', fx: { next: 'an2_pc2' }, note: 'Bạn thổi tắt đèn. Ngoài kia, trống canh năm điểm sớm hơn mọi ngày.' },

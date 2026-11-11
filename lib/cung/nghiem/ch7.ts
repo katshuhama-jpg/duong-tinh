@@ -503,10 +503,10 @@ export const NG_CH7: Card[] = [
     mood: 'lo',
     who: 'me',
     title: 'Tiếng hát qua vách',
-    text: ['Đêm nào cũng vậy, từ chái sau vọng sang một câu ru rất khẽ. Chính câu Hựu hát năm lên chín.', 'Người ta bảo chái ấy cho một bà già giặt áo ở.'],
+    text: ['Đêm nào cũng vậy, từ gian sau vọng sang một câu ru rất khẽ. Chính câu Hựu hát năm lên chín.', 'Người ta bảo gian ấy cho một bà già giặt áo ở.'],
     choices: [
-      { t: 'Ngồi nghe qua vách đến hết câu', fx: { flag: kcF(105) }, note: 'Bà ngồi nghe nhiều đêm liền. Chưa lần nào bà dám gõ cửa chái sau.' },
-      { t: 'Gõ vách, ba tiếng', fx: { d: { muu: 2, hiem: 2 } }, note: 'Tiếng hát tắt ngay. Sáng hôm sau chái sau khóa cửa, bà già giặt áo xin đổi đi viện khác.' },
+      { t: 'Ngồi nghe qua vách đến hết câu', fx: { flag: kcF(105) }, note: 'Bà ngồi nghe nhiều đêm liền. Chưa lần nào bà dám gõ cửa gian sau.' },
+      { t: 'Gõ vách, ba tiếng', fx: { d: { muu: 2, hiem: 2 } }, note: 'Tiếng hát tắt ngay. Sáng hôm sau gian sau khóa cửa, bà già giặt áo xin đổi đi viện khác.' },
     ],
   },
   {

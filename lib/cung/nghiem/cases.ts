@@ -47,7 +47,7 @@ export const CASES: Case[] = [
     id: 'an1',
     ch: 1,
     title: 'Án chiếc lược ngà',
-    sum: 'Đêm đầu ở viện cũ của chị, một tú nữ cùng đợt treo cổ trên xà chái sau. Sổ ghi tự vẫn, nhưng chân nó còn đi hài.',
+    sum: 'Đêm đầu ở viện cũ của chị, một tú nữ cùng đợt treo cổ trên xà gian sau. Sổ ghi tự vẫn, nhưng chân nó còn đi hài.',
     suspects: [
       { k: 'tg', label: 'Bóng người cao gầy', name: 'Thái giám quét sân Lộc' },
       { k: 'mm', label: 'Bóng đàn bà đứng tuổi', name: 'Ma ma giữ đèn họ Ông' },
@@ -56,7 +56,7 @@ export const CASES: Case[] = [
     ],
     tay: ['tg', 'mm'],
     clues: [
-      { id: 'a1_hai', an: 'an1', kind: 'vat', t: 'Đôi hài cỏ ướt nước giếng giấu dưới gầm chái', key: true },
+      { id: 'a1_hai', an: 'an1', kind: 'vat', t: 'Đôi hài cỏ ướt nước giếng giấu dưới gầm nhà', key: true },
       { id: 'a1_gieng', an: 'an1', kind: 'nhan', t: 'Người gánh nước thấy hai bóng người ra giếng lúc canh ba' },
       { id: 'a1_cungphong', an: 'an1', kind: 'khai', t: 'Lời tú nữ cùng phòng: có người gọi Hoa ra lúc canh hai' },
       { id: 'a1_day', an: 'an1', kind: 'vat', t: 'Sợi dây thắt cổ lấy từ kho chung, dòng sổ kho bị mực đè' },

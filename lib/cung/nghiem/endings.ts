@@ -113,7 +113,7 @@ const RAW: Ending[] = [
   {"id": "n_102", "name": "Lụa Vàng thành bà quản sự", "desc": "Lụa Vàng thành bà quản sự."},
   {"id": "n_103", "name": "Nhũ mẫu Tần đi trước", "desc": "Nhũ mẫu chết thay, nàng sống."},
   {"id": "n_104", "name": "Người chồng không biết", "desc": "Vua chết trong vòng tay nàng mà nàng không nói."},
-  {"id": "n_105", "name": "Người mẹ ở chái sau", "desc": "Người mẹ ở chái sau."},
+  {"id": "n_105", "name": "Người mẹ ở gian sau", "desc": "Người mẹ ở gian sau."},
   {"id": "n_106", "name": "Câu hát ru", "desc": "Câu hát ru."},
   {"id": "n_107", "name": "Tên bị gạch", "desc": "Tên bị gạch."},
   {"id": "n_108", "name": "Đào ở cổng Bắc", "desc": "Gặp một bà lão quét sân, không dám hỏi."},

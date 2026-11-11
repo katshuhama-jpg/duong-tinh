@@ -74,7 +74,7 @@ export const NG_CH1: Card[] = [
     choices: [
       { t: 'Rót một chén cho ấm người', fx: { end: 'n_4' }, note: 'Trà thơm, hơi đắng. Đến canh hai có tiếng gõ vách, nhưng bạn không còn nghe được nữa.' },
       { t: 'Hắt cả ấm ra gốc cây ngoài hiên', fx: { d: { muu: 3, hiem: 2 }, flag: ['do_tra'], next: 'n1_go' }, note: 'Nước trà thấm xuống đất, bốc lên một mùi hăng lạ. Bạn dặn nhũ mẫu từ nay chỉ dùng nước bà tự tay múc.' },
-      { t: 'Đổ một ít cho con mèo hoang ngoài hiên', fx: { d: { muu: 4, hiem: 3, duc: -2 }, flag: ['do_tra'], next: 'n1_go' }, note: 'Con mèo liếm vài cái rồi bỏ đi. Lúc nửa đêm, bạn nghe nó kêu một tiếng dài dưới gầm chái, rồi im.' },
+      { t: 'Đổ một ít cho con mèo hoang ngoài hiên', fx: { d: { muu: 4, hiem: 3, duc: -2 }, flag: ['do_tra'], next: 'n1_go' }, note: 'Con mèo liếm vài cái rồi bỏ đi. Lúc nửa đêm, bạn nghe nó kêu một tiếng dài dưới gầm nhà, rồi im.' },
       { t: 'Ngồi canh ấm trà, xem ai quay lại lấy', fx: { d: { muu: 2, hiem: 2 }, next: 'n1_go' }, note: 'Gần canh hai, có tiếng bước chân dừng ngoài hiên rất lâu, rồi đi. Ấm trà nằm đó, nguội dần.' },
       { t: 'Bảo nhũ mẫu cất ấm trà đi, mai hỏi', fx: { d: { duc: 1 }, next: 'n1_go' }, note: 'Nhũ mẫu bưng ấm trà ra sau. Đến khuya bà quay vào, mặt tái: ấm trà đã biến mất khỏi bếp.' },
     ],
@@ -90,7 +90,7 @@ export const NG_CH1: Card[] = [
     cast: ['me'],
     mood: 'so',
     title: 'Tiếng gõ vách',
-    text: ['Canh hai, có tiếng gõ khẽ vào vách, từ phía chái sau. Ba tiếng, ngừng, rồi ba tiếng nữa.', 'Bên kia vách là phòng của các tú nữ cùng đợt tuyển.'],
+    text: ['Canh hai, có tiếng gõ khẽ vào vách, từ phía gian sau. Ba tiếng, ngừng, rồi ba tiếng nữa.', 'Bên kia vách là phòng của các tú nữ cùng đợt tuyển.'],
     choices: [
       { t: 'Gõ lại ba tiếng', fx: { d: { muu: 3 }, flag: ['n1_vao', 'go_lai'], years: 0 }, note: 'Bên kia im lặng rất lâu. Rồi một giọng con gái thì thầm qua khe: "Chị có quen người ở đây trước không?"' },
       { t: 'Gọi nhũ mẫu thắp đèn', fx: { d: { duc: 2 }, flag: ['n1_vao'], years: 0 }, note: 'Đèn vừa sáng thì tiếng gõ tắt hẳn. Đến sáng bạn mới ngủ được.' },
@@ -112,11 +112,11 @@ export const NG_CH1: Card[] = [
     mood: 'so',
     moods: { kiem: 'binh' },
     who: 'kiem',
-    title: 'Xà chái sau',
-    text: ['Sáng ra, tú nữ Hoa ở chái sau được tìm thấy treo trên xà. Chưởng sự Kiệm đã ghi xong sổ: "Nhớ nhà, tự vẫn."', 'Bạn nhìn xuống. Chân con bé vẫn còn đi hài.'],
+    title: 'Xà gian sau',
+    text: ['Sáng ra, tú nữ Hoa ở gian sau được tìm thấy treo trên xà. Chưởng sự Kiệm đã ghi xong sổ: "Nhớ nhà, tự vẫn."', 'Bạn nhìn xuống. Chân con bé vẫn còn đi hài.'],
     choices: [
       { t: 'Xin chưởng sự cho mình trình xét lại', fx: { d: { hiem: 8, muu: 3, phuc: -8 }, flag: ['mo_an1'], mo: 'an1' }, note: 'Kiệm cười rất lễ: "Nương nương cứ trình. Nhưng nếu không có gì, sổ vẫn ghi tự vẫn."' },
-      { t: 'Im lặng, nhưng nhìn kỹ từng thứ quanh xà', fx: { d: { muu: 5, hiem: 3 }, flag: ['mo_an1'], mo: 'an1' }, note: 'Không ai để ý bạn. Bạn nhớ được chỗ ghế đổ, sợi dây, và một vệt nước dưới gầm chái.' },
+      { t: 'Im lặng, nhưng nhìn kỹ từng thứ quanh xà', fx: { d: { muu: 5, hiem: 3 }, flag: ['mo_an1'], mo: 'an1' }, note: 'Không ai để ý bạn. Bạn nhớ được chỗ ghế đổ, sợi dây, và một vệt nước dưới gầm nhà.' },
     ],
   },
 
@@ -156,8 +156,8 @@ export const NG_CH1: Card[] = [
     mood: 'lo',
     moods: { luavang: 'so' },
     who: 'luavang',
-    title: 'Gầm chái',
-    text: ['Vệt nước dưới gầm chái sau dẫn tới một đống lá khô. Lụa Vàng cầm đèn đứng ngoài, không chịu vào.', '"Nương nương, chỗ ấy người chết mới tối qua..."'],
+    title: 'Gầm nhà',
+    text: ['Vệt nước dưới gầm gian sau dẫn tới một đống lá khô. Lụa Vàng cầm đèn đứng ngoài, không chịu vào.', '"Nương nương, chỗ ấy người chết mới tối qua..."'],
     choices: [
       { t: 'Tự bò vào gầm, bới đống lá', fx: { d: { sac: -2, hiem: 8 }, clue: ['a1_hai'] }, note: 'Dưới lá là một đôi hài cỏ còn ướt, đất giếng bám ở mũi. Cỡ hài ấy chỉ vừa chân {C:a1_hai}. {GIA:a1_hai}' },
       { t: 'Sai Lụa Vàng bò vào', fx: { d: { hanh: -6, hiem: 4 }, clue: ['a1_hai'] }, note: 'Lụa Vàng run tay lôi ra một đôi hài cỏ ướt. Bạn ướm thử: cỡ hài ấy chỉ vừa chân {C:a1_hai}. {GIA:a1_hai}', risk: { p: 0.3, fail: { d: { hanh: -6, hiem: 4 } }, failNote: 'Lụa Vàng bới một lúc rồi bảo không có gì. Sáng hôm sau đống lá đã bị quét sạch.' } },
@@ -203,7 +203,7 @@ export const NG_CH1: Card[] = [
     title: 'Người ngủ cùng phòng',
     text: ['Tú nữ ngủ cùng phòng với Hoa khóc đỏ mắt: "Hoa không nhớ nhà. Hoa vừa nhặt được một món đồ đẹp lắm."', '"Nó bảo đồ của người ở viện bên này, định trả lại cho chị."'],
     choices: [
-      { t: 'Hỏi món đồ ấy trông thế nào', fx: { d: { muu: 3, hiem: 5 }, clue: ['a1_cungphong'], flag: ['biet_luoc'] }, note: '"Một chiếc lược ngà khắc hoa mơ, Hoa giấu ở kẽ vách chái sau." Lược của chị. Nó còn kể đêm ấy {C:a1_cungphong} gọi Hoa ra. {GIA:a1_cungphong}' },
+      { t: 'Hỏi món đồ ấy trông thế nào', fx: { d: { muu: 3, hiem: 5 }, clue: ['a1_cungphong'], flag: ['biet_luoc'] }, note: '"Một chiếc lược ngà khắc hoa mơ, Hoa giấu ở kẽ vách gian sau." Lược của chị. Nó còn kể đêm ấy {C:a1_cungphong} gọi Hoa ra. {GIA:a1_cungphong}' },
       { t: 'Hỏi tối qua ai đến tìm Hoa', fx: { d: { muu: 2, hiem: 5 }, clue: ['a1_cungphong'] }, note: '"Canh hai có người gọi Hoa ra. Em ngủ mê, chỉ nghe giọng: là {C:a1_cungphong}." {GIA:a1_cungphong}' },
     ],
   },
@@ -260,7 +260,7 @@ export const NG_CH1: Card[] = [
     moods: { nhumau: 'so' },
     who: 'nhumau',
     title: 'Chiếc lược trong gối',
-    text: ['Nhũ mẫu lần ra kẽ vách chái sau, mang về chiếc lược ngà. Gối của Hoa thì đã bị ai rạch nát từ đêm có án.', 'Sống lược bị khoét rỗng. Bên trong là nửa trang giấy cuộn nhỏ, nét chữ của chị.'],
+    text: ['Nhũ mẫu lần ra kẽ vách gian sau, mang về chiếc lược ngà. Gối của Hoa thì đã bị ai rạch nát từ đêm có án.', 'Sống lược bị khoét rỗng. Bên trong là nửa trang giấy cuộn nhỏ, nét chữ của chị.'],
     choices: [
       { t: 'Đọc ngay dưới đèn', fx: { d: { muu: 5, hiem: 6 }, flag: ['su1', 'co_luoc'] }, note: 'Chỉ đọc được nửa câu: "...không phải bệnh. Nếu em đọc được thì đừng uống gì người ta mang đến..." Phần còn lại bị xé.' },
       { t: 'Giấu lược lên tóc, chưa đọc vội', fx: { d: { duc: 2 }, flag: ['co_luoc'] }, note: 'Bạn cài chiếc lược của chị lên tóc. Từ hôm ấy, bạn không tháo nó ra nữa.' },
@@ -470,10 +470,10 @@ export const NG_CH1: Card[] = [
     cast: ['me'],
     mood: 'so',
     title: 'Tiếng gõ lại',
-    text: ['Đêm nào cũng vậy, canh hai lại có ba tiếng gõ từ phía chái sau, ngừng, rồi ba tiếng nữa.', 'Chái sau đã khóa từ hôm có án. Bên ấy không còn ai ngủ.'],
+    text: ['Đêm nào cũng vậy, canh hai lại có ba tiếng gõ từ phía gian sau, ngừng, rồi ba tiếng nữa.', 'Gian sau đã khóa từ hôm có án. Bên ấy không còn ai ngủ.'],
     choices: [
       { t: 'Thức đến sáng, đếm từng tiếng gõ', fx: { d: { muu: 2, sac: -3, hiem: 2 }, flag: ['go_dem'] }, note: 'Gần sáng tiếng gõ mới tắt. Bạn ngồi đến khi gà gáy, tai vẫn còn nghe.' },
-      { t: 'Rắc tro trước cửa chái sau', fx: { d: { muu: 3, hiem: 5 }, flag: ['go_nguoi'] }, note: 'Sáng ra, trên tro có dấu giày vải của người lớn, đi vào mà không thấy đi ra. Không phải ma. Có người muốn bạn tin là ma.' },
+      { t: 'Rắc tro trước cửa gian sau', fx: { d: { muu: 3, hiem: 5 }, flag: ['go_nguoi'] }, note: 'Sáng ra, trên tro có dấu giày vải của người lớn, đi vào mà không thấy đi ra. Không phải ma. Có người muốn bạn tin là ma.' },
       { t: 'Đốt hương cho Hoa, rồi ngủ', fx: { d: { duc: 3 } }, note: 'Khói hương bay qua khe vách. Đêm ấy tiếng gõ tắt sớm hơn mọi khi.' },
     ],
   },
@@ -491,11 +491,11 @@ export const NG_CH1: Card[] = [
     moods: { nhumau: 'buon' },
     who: 'nhumau',
     title: 'Bảy đêm không ngủ',
-    text: ['Bảy đêm liền bạn không ngủ. Ban ngày bạn cũng nghe tiếng gõ, trong tiếng chổi, trong tiếng mưa.', 'Nhũ mẫu khóc: "Tiểu thư, chái sau khóa rồi. Không ai ở đó cả."'],
+    text: ['Bảy đêm liền bạn không ngủ. Ban ngày bạn cũng nghe tiếng gõ, trong tiếng chổi, trong tiếng mưa.', 'Nhũ mẫu khóc: "Tiểu thư, gian sau khóa rồi. Không ai ở đó cả."'],
     choices: [
       { t: 'Cầm búa đập vách, phải thấy kẻ gõ', fx: { end: 'n_3' }, note: 'Bạn đập thủng vách khi trời còn tối, vừa đập vừa gọi tên chị. Sáng ra, Kiệm cho người đưa bạn ra khỏi cung "dưỡng bệnh".' },
       { t: 'Uống thang an thần, dời sang phòng trước', fx: { d: { sac: 3, duc: 1 }, unflag: ['go_dem'] }, note: 'Bạn ngủ một giấc dài. Tỉnh dậy, tiếng gõ chỉ còn là tiếng gõ.' },
-      { t: 'Rắc tro trước cửa chái sau', fx: { d: { muu: 3, hiem: 5 }, flag: ['go_nguoi'], unflag: ['go_dem'] }, note: 'Sáng ra, trên tro có dấu giày vải của người lớn. Không phải ma. Là người, và người ấy muốn bạn phát điên.' },
+      { t: 'Rắc tro trước cửa gian sau', fx: { d: { muu: 3, hiem: 5 }, flag: ['go_nguoi'], unflag: ['go_dem'] }, note: 'Sáng ra, trên tro có dấu giày vải của người lớn. Không phải ma. Là người, và người ấy muốn bạn phát điên.' },
     ],
   },
   {
@@ -623,7 +623,7 @@ export const NG_CH1: Card[] = [
     moods: { kiem: 'so' },
     who: 'me',
     title: 'Lời khai',
-    text: ['{TAY:an1} quỳ giữa sân, khai không sót: "Có người dặn dọn chái sau cho sạch. Con bé nhặt được đồ của người cũ."', '"Người dặn là ai?" Nó không trả lời, chỉ liếc về phía chưởng sự Kiệm.'],
+    text: ['{TAY:an1} quỳ giữa sân, khai không sót: "Có người dặn dọn gian sau cho sạch. Con bé nhặt được đồ của người cũ."', '"Người dặn là ai?" Nó không trả lời, chỉ liếc về phía chưởng sự Kiệm.'],
     choices: [
       { t: 'Ghi tên Kiệm vào tờ trình', fx: { d: { hiem: 12, phuc: -15, muu: 4 }, flag: ['biet_kiem', 'n1_khep'] }, note: 'Kiệm chịu phạt nửa năm lương, vẫn cười. Bạn vừa có một kẻ thù biết giữ sổ.' },
       { t: 'Không ghi, giữ lời khai làm con bài', fx: { d: { muu: 6, hiem: 4 }, flag: ['biet_kiem', 'bai_kiem', 'n1_khep'] }, note: 'Kẻ ra tay bị đánh đòn và đuổi khỏi cung. Kiệm nhìn bạn, lần đầu tiên không cười.' },
@@ -659,7 +659,7 @@ export const NG_CH1: Card[] = [
     text: ['Không có tờ trình nào, sổ nội vụ tự ghi: tú nữ Hoa, nhớ nhà, tự vẫn. Người ta khiêng một chiếc quan tài nhỏ ra cửa Tây.', 'Đôi hài vẫn còn trên chân nó.'],
     choices: [
       { t: 'Đứng nhìn đến khi khuất', fx: { d: { duc: 2 }, flag: ['n1_khep'] }, note: 'Bạn tự hứa sẽ nhớ cái tên Hoa. Trong cung, không ai khác nhớ.' },
-      { t: 'Về viện, mở rương hồ sơ ra đọc lại', fx: { d: { muu: 2, hiem: 3 }, flag: ['n1_khep'] }, note: 'Giấy vẫn còn đó, người thì không chờ. Ở dãy chái sau, có người bắt đầu tránh mặt bạn.' },
+      { t: 'Về viện, mở rương hồ sơ ra đọc lại', fx: { d: { muu: 2, hiem: 3 }, flag: ['n1_khep'] }, note: 'Giấy vẫn còn đó, người thì không chờ. Ở dãy gian sau, có người bắt đầu tránh mặt bạn.' },
     ],
   },
   {
@@ -700,7 +700,7 @@ export const NG_CH1: Card[] = [
     text: ['Canh ba, then cửa bật ra không một tiếng động. Ai đó có chìa.', 'Ngoài sân, nắp giếng đã mở sẵn.'],
     omen: 'Gọi một cái tên mà không giữ được nó, thì cái tên ấy sẽ quay lại tìm mình.',
     choices: [
-      { t: 'Chạy ra sân, gào lên', fx: { end: 'n_10' }, note: 'Bạn chạy được ba bước. Sáng ra, một chiếc hài thêu nổi trên mặt giếng sau viện.', risk: { p: 0.15, fail: { d: { hiem: 10, sac: -8 }, flag: ['n1_khep', 'song_sot'] }, failNote: 'Tiếng gào làm cả dãy chái thức dậy. Bóng người bỏ chạy. Bạn sống, với một vết bầm ở cổ.' } },
+      { t: 'Chạy ra sân, gào lên', fx: { end: 'n_10' }, note: 'Bạn chạy được ba bước. Sáng ra, một chiếc hài thêu nổi trên mặt giếng sau viện.', risk: { p: 0.15, fail: { d: { hiem: 10, sac: -8 }, flag: ['n1_khep', 'song_sot'] }, failNote: 'Tiếng gào làm cả dãy nhà thức dậy. Bóng người bỏ chạy. Bạn sống, với một vết bầm ở cổ.' } },
       {
         t: 'Giữ chặt cửa buồng trong, gọi tên kẻ đứng ngoài',
         need: { not: ['an1_nang'], num: { hiem: [0, 59] } },

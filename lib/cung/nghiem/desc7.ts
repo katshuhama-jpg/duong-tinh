@@ -32,7 +32,7 @@ export const NG_DESC_7: Record<string, string> = {
   n_95: 'Tội: đồng mưu che giấu chuyện tráo con. Hình: ban chết. Bà Lương nhận tội đêm Tân Dậu, và trước khi uống chén thuốc của mình, khai con gái út nhà Nghiêm cùng biết từ đầu. Cùng ngày, người ta bưng tới viện bà một khay lụa, thuốc, gươm, và bà chọn chén thuốc, như chị năm xưa.',
 
   /* kết còn mở */
-  n_105: 'Ở chái sau có một bà già giặt áo, đêm nào cũng hát khẽ một câu ru mà cả cung chỉ một người từng hát. Bà ngồi nghe qua vách nhiều đêm, chưa lần nào dám gõ cửa. Hồ sơ này còn tiếp ở phần Cung nữ.',
+  n_105: 'Ở gian sau có một bà già giặt áo, đêm nào cũng hát khẽ một câu ru mà cả cung chỉ một người từng hát. Bà ngồi nghe qua vách nhiều đêm, chưa lần nào dám gõ cửa. Hồ sơ này còn tiếp ở phần Cung nữ.',
   n_106: 'Bà hát câu ru của Hựu bên tường vườn ngự, và từ bên kia tường có người hát nối câu sau. Bà chạy vòng qua cổng thì chỉ còn tiếng chổi quét lá. Hồ sơ này còn tiếp ở phần Cung nữ.',
   n_107: 'Trong sổ cung nữ năm Tân Dậu có một cái tên bị gạch bằng mực đậm, bên cạnh hai chữ "xuất cung". Bà để nguyên vết gạch, chỉ chấm bên lề một dấu hỏi. Hồ sơ này còn tiếp ở phần Cung nữ.',
   n_108: 'Ở sân trong cổng Bắc, chỗ gánh chè năm xưa hay đỗ, có một bà lão khác quét sân, lưng còng, vừa quét vừa hát khẽ. Bà đứng nhìn bóng lưng ấy một buổi chiều, có điều muốn hỏi mà không hỏi. Hồ sơ này còn tiếp ở phần Cung nữ.',
@@ -49,6 +49,6 @@ export const NG_DESC_7: Record<string, string> = {
 
   /* rẽ ra ngoài cung, kết đặc biệt */
   n_132: 'Bà xin cải táng chị về một gò đất có bóng cây, dựng nhà tranh bên mộ. Sáng quét lá, tối kể cho chị nghe chuyện trong cung. Người làng gọi bà là bà giữ mộ, không ai biết bà từng là ai.',
-  n_135: 'Em ạ, đêm ấy mưa. Hoàng hậu sinh một bé gái, con bé chỉ thở được đến canh ba. Cùng đêm ấy, ở chái sau, một cung nữ hầu trà sinh cho Hoàng thượng một bé trai. Thái hậu bảo chị bế đứa bé qua cửa, quấn trong tấm khăn chàm còn hơi ấm của mẹ nó, và chị đã bế. Năm năm sau chị muốn nói, và người ta cho chị một chén thuốc. Em đã khép hồ sơ thay chị. Đứa bé sống. Người mẹ cũng sống. Bà ấy đang ở đâu đó, dưới một cái tên khác.',
+  n_135: 'Em ạ, đêm ấy mưa. Hoàng hậu sinh một bé gái, con bé chỉ thở được đến canh ba. Cùng đêm ấy, ở gian sau, một cung nữ hầu trà sinh cho Hoàng thượng một bé trai. Thái hậu bảo chị bế đứa bé qua cửa, quấn trong tấm khăn chàm còn hơi ấm của mẹ nó, và chị đã bế. Năm năm sau chị muốn nói, và người ta cho chị một chén thuốc. Em đã khép hồ sơ thay chị. Đứa bé sống. Người mẹ cũng sống. Bà ấy đang ở đâu đó, dưới một cái tên khác.',
   n_136: 'Tội: vu cáo. Hình: ban chết, đục tên khỏi bia. Bà nói ra một cái tên khi chưa đủ sức giữ lời mình: có khi cái tên ấy sai, có khi đúng mà tai mắt người kia còn đủ quanh bà. Triều đình gọi đó là vu, vì không ai dám gọi khác, và người ta đưa tới một chén thuốc. Tên bà bị đục khỏi bia nhà Nghiêm, gạch khỏi gia phả và sổ cung, những hồ sơ bà giữ cả đời bị đốt cùng một mồi lửa.',
 };

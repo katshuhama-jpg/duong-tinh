@@ -43,7 +43,7 @@ export const OPENING: Card[] = [
     choices: [
       { t: 'Đỡ Hạnh đứng dậy, hỏi quê ở đâu', fx: { d: { hanh: 10, duc: 2 }, flag: ['op_hanh_than'], next: 'op_ninh' }, note: 'Hạnh ngập ngừng nói quê ở bãi sông ngoài thành. Ma ma chép miệng: "Thương người hầu thì tốt, nhưng đừng để nó leo lên đầu."' },
       { t: 'Dặn Hạnh ba điều: không nói chuyện viện mình ra ngoài, không nhận quà ai, không rời mắt khỏi chén trà của mình', fx: { d: { hanh: 4, muu: 4 }, flag: ['op_hanh_ba_dieu'], next: 'op_ninh' }, note: 'Hạnh nhắc lại đủ ba điều, không sót chữ nào. Ma ma lần đầu gật đầu với bạn.' },
-      { t: 'Chia cho Hạnh nửa gói chè mang từ nhà', need: { flags: ['g_dan'] }, lockHint: 'Chỉ có khi vào cung từ làng chè', fx: { d: { hanh: 8 }, flag: ['op_hanh_che'], next: 'op_ninh' }, note: 'Hạnh ôm gói chè như ôm vàng. Đêm ấy bạn ngửi thấy mùi chè Mai Đông bay ra từ chái sau.' },
+      { t: 'Chia cho Hạnh nửa gói chè mang từ nhà', need: { flags: ['g_dan'] }, lockHint: 'Chỉ có khi vào cung từ làng chè', fx: { d: { hanh: 8 }, flag: ['op_hanh_che'], next: 'op_ninh' }, note: 'Hạnh ôm gói chè như ôm vàng. Đêm ấy bạn ngửi thấy mùi chè Mai Đông bay ra từ gian sau.' },
     ],
   },
   {

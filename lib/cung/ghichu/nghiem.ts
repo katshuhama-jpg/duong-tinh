@@ -22,14 +22,14 @@ const g = (chapter: number, id: string, when: Cond, w: number, title: string, te
 export const GHICHU_NGHIEM: GhiChu[] = [
   /* ---------------- Chương 1: Viện của chị ---------------- */
   g(1, 'govach', { flags: ['n1_vao'] }, 1, 'Bên kia vách', [
-    'Ba tiếng gõ đêm đầu là của Hoa, tú nữ ở chái sau. Nó mười tám tuổi, cùng đợt tuyển với bạn, và mấy hôm trước vừa nhặt được một món đồ đẹp. Nghe người ta bảo món ấy là của người ở viện bên này, nó định đem trả.',
+    'Ba tiếng gõ đêm đầu là của Hoa, tú nữ ở gian sau. Nó mười tám tuổi, cùng đợt tuyển với bạn, và mấy hôm trước vừa nhặt được một món đồ đẹp. Nghe người ta bảo món ấy là của người ở viện bên này, nó định đem trả.',
     'Đêm ấy nó gõ vách để hỏi xem người mới dọn vào có quen người cũ không. Nó không biết người cũ đã chết. Nó cũng không biết có người khác đang đi tìm đúng món đồ nó cầm.',
     'Canh hai có người gọi Hoa ra. Canh ba có hai bóng người đi về phía giếng. Sáng ra nó treo trên xà, chân còn đi hài. Bạn là người cuối cùng nghe tiếng nó, cách một bức vách.',
   ]),
   g(1, 'luoc', { flags: ['biet_luoc'], not: ['su1'] }, 3, 'Chiếc lược trong kẽ vách', [
     'Món đồ Hoa nhặt được là chiếc lược ngà khắc hoa mơ của chị. Từ ngày chị mất, đã có người lục viện này nhiều lần mà không thấy nó. Rồi chiếc lược lại rơi vào tay một tú nữ mới vào cung chưa được bao lâu.',
     'Hoa kể với bạn cùng phòng rằng nó định trả lược cho người ở viện bên này. Câu ấy đến tai người không nên nghe. Với họ, một con bé cầm đồ của người chết đi hỏi han khắp nơi còn nguy hơn chính chiếc lược.',
-    'Họ rạch nát gối của Hoa mà không thấy gì, vì nó đã nhét lược vào kẽ vách chái sau. Con bé chết mà vẫn giữ được thứ người ta cần. Nhờ vậy chiếc lược mới đến được tay bạn.',
+    'Họ rạch nát gối của Hoa mà không thấy gì, vì nó đã nhét lược vào kẽ vách gian sau. Con bé chết mà vẫn giữ được thứ người ta cần. Nhờ vậy chiếc lược mới đến được tay bạn.',
   ]),
   g(1, 'luoc_su1', { flags: ['su1'] }, 4, 'Nửa trang thư', [
     'Chị biết thư gửi ra khỏi cung đều đi qua tay người khác. Nên chị khoét rỗng sống chiếc lược ngà, cuộn nửa trang giấy vào trong, và viết cho một người nhận ra nét chữ của chị đến từng nét.',
@@ -39,21 +39,21 @@ export const GHICHU_NGHIEM: GhiChu[] = [
   g(1, 'tra', { flags: ['do_tra'] }, 3, 'Ấm trà không ai pha', [
     'Ấm trà sen đêm đầu có độc. Nước trà thấm xuống đất bốc lên mùi hăng, và con vật nào liếm phải thì không qua nổi đêm ấy.',
     'Viện này khóa từ năm ngoái, chìa nằm ở nội vụ. Pha một ấm trà còn ấm rồi úp sẵn hai chén trước khi chủ mới bước vào là việc chỉ người có chìa mới làm được.',
-    'Cũng đêm ấy, ở chái sau, Hoa bị gọi ra khỏi phòng. Hai việc xảy ra cách nhau một bức vách. Bạn hắt ấm trà đi, nên sáng ra bạn còn được đứng nhìn chân con bé trên xà.',
+    'Cũng đêm ấy, ở gian sau, Hoa bị gọi ra khỏi phòng. Hai việc xảy ra cách nhau một bức vách. Bạn hắt ấm trà đi, nên sáng ra bạn còn được đứng nhìn chân con bé trên xà.',
   ]),
-  g(1, 'thang', { flags: ['an1_thang'] }, 5, 'Người dọn chái sau', [
-    '{TAY:an1} là người gọi Hoa ra lúc canh hai và đưa nó ra giếng lúc canh ba. Người ấy được dặn một câu rất ngắn: dọn chái sau cho sạch. Con bé đã nhặt được đồ của người cũ, và hỏi han nhiều quá.',
-    'Ở bờ giếng, đôi hài cỏ của người ấy ướt sũng. Hoa được treo lên xà khi chân còn đi hài, vì lúc ấy nó đã không giãy được nữa. Đôi hài ướt bị nhét dưới đống lá gầm chái, và người ấy đi chân trần về qua sân.',
+  g(1, 'thang', { flags: ['an1_thang'] }, 5, 'Người dọn gian sau', [
+    '{TAY:an1} là người gọi Hoa ra lúc canh hai và đưa nó ra giếng lúc canh ba. Người ấy được dặn một câu rất ngắn: dọn gian sau cho sạch. Con bé đã nhặt được đồ của người cũ, và hỏi han nhiều quá.',
+    'Ở bờ giếng, đôi hài cỏ của người ấy ướt sũng. Hoa được treo lên xà khi chân còn đi hài, vì lúc ấy nó đã không giãy được nữa. Đôi hài ướt bị nhét dưới đống lá gầm nhà, và người ấy đi chân trần về qua sân.',
     'Người dặn câu ấy là chưởng sự Kiệm. Ông chịu phạt nửa năm lương mà vẫn cười, vì ông chưa bao giờ phải tự tay dọn chỗ nào. Còn ai dặn Kiệm, lời khai không với tới.',
   ]),
   g(1, 'gac', { flags: ['an1_gac'] }, 3, 'Chân còn đi hài', [
     'Người tự treo cổ thì giãy. Hài văng ra, ghế đổ xa. Hoa còn nguyên đôi hài trên chân, nghĩa là lúc lên xà nó đã không còn giãy được nữa.',
-    'Đêm ấy có người đưa nó ra giếng lúc canh ba rồi trở về một mình. Người ấy ướt cả đôi hài cỏ, giấu chúng dưới gầm chái, rồi đi chân trần qua sân.',
+    'Đêm ấy có người đưa nó ra giếng lúc canh ba rồi trở về một mình. Người ấy ướt cả đôi hài cỏ, giấu chúng dưới gầm nhà, rồi đi chân trần qua sân.',
     'Bạn gác án, giữ hồ sơ trong rương. Người ấy vẫn ở trong cung, vẫn đi qua sân mỗi sáng, và biết bạn đang giữ thứ gì.',
   ]),
   g(1, 'govach2', { flags: ['go_nguoi'] }, 3, 'Dấu giày trên tro', [
-    'Chái sau khóa từ hôm có án, vậy mà đêm nào cũng có ba tiếng gõ, ngừng, rồi ba tiếng nữa. Đó đúng là nhịp Hoa gõ đêm đầu. Có người đã nghe được nhịp ấy, và dùng lại nó.',
-    'Người gõ có chìa chái sau. Họ không cần bạn chết. Một phi tần mới vào mà thức trắng bảy đêm, đập vách gọi tên người chết, thì nội vụ chỉ cần ghi một dòng "dưỡng bệnh" là đưa ra khỏi cung, không ai hỏi thêm.',
+    'Gian sau khóa từ hôm có án, vậy mà đêm nào cũng có ba tiếng gõ, ngừng, rồi ba tiếng nữa. Đó đúng là nhịp Hoa gõ đêm đầu. Có người đã nghe được nhịp ấy, và dùng lại nó.',
+    'Người gõ có chìa gian sau. Họ không cần bạn chết. Một phi tần mới vào mà thức trắng bảy đêm, đập vách gọi tên người chết, thì nội vụ chỉ cần ghi một dòng "dưỡng bệnh" là đưa ra khỏi cung, không ai hỏi thêm.',
     'Lớp tro bạn rắc trước cửa làm hỏng việc ấy. Ma không để lại dấu giày vải của người lớn.',
   ]),
   g(1, 'khan', { flags: ['nghi_a1_khan'], not: ['oan_an1', 'an1_nang'] }, 3, 'Chiếc khăn mới tinh', [
@@ -133,13 +133,13 @@ export const GHICHU_NGHIEM: GhiChu[] = [
     'Ông cần một người đọc được sổ và đứng được gần cung chính. Con gái nhà Nghiêm, giỏi chép sổ, lại có một người chị chết không rõ vì sao, là người ông nhắm từ ngày bạn vào cung.',
     'Túi bạc đầu tiên là để mua chuyện vặt. Túi thứ hai, nếu có, là để mua cả người.',
   ]),
-  g(2, 'nhanchung', { flags: ['chet_nhanchung1'] }, 4, 'Người dậy sớm nhất dãy chái', [
+  g(2, 'nhanchung', { flags: ['chet_nhanchung1'] }, 4, 'Người dậy sớm nhất dãy nhà', [
     'Cung nữ gánh nước ra giếng từ canh tư mỗi ngày. Đêm có án, nếu có ai ra giếng lúc canh ba, nó là người có thể đã thấy.',
-    'Bạn gác án để giữ manh mối. Người kia cũng hiểu chữ "gác" theo cách của họ: án chưa khép thì người biết chuyện còn là mối lo. Chiều hôm trước có người ghé dãy chái sau, hỏi thăm từng người. Hỏi thăm cũng là một cách đếm xem ai còn nhớ.',
+    'Bạn gác án để giữ manh mối. Người kia cũng hiểu chữ "gác" theo cách của họ: án chưa khép thì người biết chuyện còn là mối lo. Chiều hôm trước có người ghé dãy gian sau, hỏi thăm từng người. Hỏi thăm cũng là một cách đếm xem ai còn nhớ.',
     'Sổ ghi: trượt chân. Hồ sơ trong rương bạn vẫn còn nguyên giấy, chỉ là bớt đi một người có thể đứng ra nói.',
   ]),
   g(2, 'quetsan', { flags: ['chet_quetsan'] }, 4, 'Nắm rêu bờ giếng', [
-    'Án chái sau khép bằng chữ "tự vẫn", và người làm việc ấy yên tâm. Nhưng yên tâm không có nghĩa là quên. Cô bé quét sân viện bạn mỗi sáng đều đi qua những chỗ người khác không nhìn.',
+    'Án gian sau khép bằng chữ "tự vẫn", và người làm việc ấy yên tâm. Nhưng yên tâm không có nghĩa là quên. Cô bé quét sân viện bạn mỗi sáng đều đi qua những chỗ người khác không nhìn.',
     'Nắm rêu trong tay nó là rêu bờ giếng. Nó đã bám vào thành giếng đến hơi thở cuối. Người trượt chân thì không nắm chặt như thế.',
     'Sổ nội vụ ghi một chữ quen: trượt chân. Ở viện này, sổ ghi gì thì người ta coi như thế.',
   ]),
@@ -388,8 +388,8 @@ export const GHICHU_NGHIEM: GhiChu[] = [
     'Câu ru ấy không phải giọng kinh thành. Cả cung chỉ có một đứa trẻ từng hát nó, và đứa trẻ ấy không biết mình học ở đâu.',
     'Người hát nối câu sau thì biết. Bà ấy không bước sang, cũng không gọi. Có những người đã quen sống ở phía bên kia một bức tường.',
   ]),
-  g(7, 'chai', { flags: ['kc_n_105'] }, 4, 'Bà già giặt áo ở chái sau', [
-    'Bà già giặt áo ở chái sau hát đúng câu Hựu hát năm lên chín. Bà hát rất khẽ, đủ cho một người ngồi sát vách nghe, không đủ cho ai khác.',
+  g(7, 'chai', { flags: ['kc_n_105'] }, 4, 'Bà già giặt áo ở gian sau', [
+    'Bà già giặt áo ở gian sau hát đúng câu Hựu hát năm lên chín. Bà hát rất khẽ, đủ cho một người ngồi sát vách nghe, không đủ cho ai khác.',
     'Mấy chục năm qua, bà giặt áo cho những người không bao giờ hỏi tên mình. Trong cung này, người sống lâu nhất thường là người không ai để ý.',
     'Bà chưa bao giờ gõ cửa. Có lẽ bà cũng đang chờ một người gõ trước.',
   ]),

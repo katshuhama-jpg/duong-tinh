@@ -34,7 +34,7 @@ const NUM_VI = ['', 'Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tá
 /** chỗ diễn ra cảnh, nói thành chữ */
 const NG_WHERE: Record<string, string> = {
   vienchi: 'trong viện cũ của chị',
-  chaisau: 'ở dãy chái sau',
+  chaisau: 'ở dãy gian sau',
   khoso: 'trong kho sổ nội vụ',
   thaiyvien: 'ở phòng thuốc Thái y viện',
   tamphap: 'ở công đường Tam pháp ty',
