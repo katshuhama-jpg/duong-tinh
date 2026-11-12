@@ -18,7 +18,7 @@ export type RelK =
   | 'quan' // phe quan văn
   | 'tuong'; // phe võ tướng
 /** hiem: kẻ thủ ác biết bạn đào tới đâu (phần Con tin họ Nghiêm); cha: lòng tin của cha */
-export type NumK = StatK | RelK | 'tien' | 'hiem' | 'cha';
+export type NumK = StatK | RelK | 'tien' | 'hiem' | 'cha' | 'tin' | 'no' | 'que' | 'ha' | 'keo';
 /** mối nguy trên đường lên ngôi: Thục phi, Hoàng hậu (chắn ngôi hậu), Lệ tần (tân sủng), Thái phó Tôn (quyền thần), Hoàng tử Nghĩa (tranh ngôi Đông cung) */
 export type RivalK = 'thucphi' | 'hoanghau' | 'ninh' | 'hienphi' | 'uyentan' | 'letan' | 'thaipho' | 'nghia' | 'tao' | 'xuanlan' | 'mac';
 /** an: chưa lộ mặt; manh: đang lộng hành; yeu: thất thế; giang: bị giáng, bị đày; chet: đã chết; phuc: đã quy phục */
@@ -73,7 +73,21 @@ export type CastK =
   | 'uyentan' // Uyển tần, vũ nữ được sủng
   | 'tao' // Tào công công, chưởng sự thái giám cung Hoàng hậu
   | 'xuanlan' // Xuân Lan, cung nữ thân tín của Thục phi
-  | 'mac'; // Mạc tướng quân, cha Hiền phi, giữ cấm quân
+  | 'mac' // Mạc tướng quân, cha Hiền phi, giữ cấm quân
+  // phần Cung nga giặt áo
+  | 'nhan' // Nhàn
+  | 'bao' // công công Bảo, giữ kho vải
+  | 'man' // chị Mận, bếp
+  | 'tuat' // Tuất, tiểu hoạn
+  | 'thu' // bà Thu, quản sổ giặt
+  | 'luc' // Lục
+  | 'sen' // Sen
+  | 'badiep' // bà Diệp
+  | 'thaiphi' // Thái phi Phạm
+  | 'hen' // Hến
+  | 'badovu' // bà đỡ Vũ
+  | 'bavu' // bà vú
+  | 'dang'; // Đăng, đứa dự phòng
 
 /** điều kiện để thẻ hoặc lựa chọn xuất hiện */
 export interface Cond {
@@ -179,7 +193,7 @@ export interface Card {
   /** thẻ là một hồi giữa sự kiện nhiều hồi: không rút ngẫu nhiên, chỉ tới bằng fx.next */
   step?: boolean;
   /** thẻ thuộc phần chơi riêng (vd 'nghiem'); không ghi = phần cô gái chè */
-  part?: 'nghiem';
+  part?: 'nghiem' | 'cungnga';
   /** cảnh nền ảnh (thư mục trong /bg), đè lên cảnh đoán từ place/bg */
   img?: string;
   /** được lặp lại trong một đời (mặc định không) */
@@ -206,7 +220,8 @@ export interface EndArt {
   moods?: Partial<Record<CastK, MoodK>>;
   motif?: MotifK;
   where?: string;
-  bg?: 'cong' | 'lanh' | 'bep' | 'tam' | 'thu' | 'hanh' | 'trieu';
+  /** thư mục nền trong /bg (phần cô gái chè dùng cong, lanh, bep...; phần Cung nga dùng sangiat, bensong, chuabien...) */
+  bg?: string;
   /** đoạn dẫn truyện 3-5 câu, kể đời người ấy khép lại ra sao */
   story: string;
 }

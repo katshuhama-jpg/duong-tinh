@@ -1,0 +1,208 @@
+/**
+ * Phần Cung nga giặt áo - Chương 2: Sổ giặt (chín ngày ở viện giặt, Hưng Bình năm 3, Đào 18 tuổi).
+ * Cả chương là một chuỗi (fx.next), thời gian không trôi. Ván cờ: ma ma Quế thử Đào chín ngày, và Nhàn là người bạn đầu tiên.
+ * Cú quặt: mảnh vải thử thứ ba là áo đêm sinh của chính Đào. Kết chương: "Chị đừng tin ai ở đây. Kể cả em."
+ * Cờ chương 1 được dùng ở đây: ba_mau, nhin_thay_thanh, thay_dat_do, hoi_ai_lo (mở lựa chọn riêng), doc_vet (cộng tin).
+ * Cờ đặt trong chương (chương sau gặt):
+ *   hoi_con_que (hỏi con trước mặt Quế), hoc_vet, diep_ba (bà Diệp xác nhận ba bộ chăn), mo_doi, keo_mo, hoi_thanh_mo,
+ *   keo_nhan | nhan_xa (Nhàn thân hay xa), nhan_me_benh (Quế trả tiền thuốc cho mẹ Nhàn),
+ *   nhan_lo (kể thật, Quế biết) | biet_nhan (thử bằng tin giả, biết Nhàn là tai mắt Quế) | nghi_nhan,
+ *   doc_dung (bac2) | giau_tai | doc_sai, nhan_ao | choi_ao | hoi_ao.
+ * Số: tin (T), que (Q), keo (K) cộng nhẹ theo nước đi.
+ */
+import type { Card } from '../types';
+
+const P = 'cungnga' as const;
+type Step = Omit<Card, 'part' | 'chapter'>;
+const c = (x: Step): Card => ({ part: P, chapter: [2], step: true, ...x });
+const go = (next: string) => ({ next });
+
+export const CN_CH2: Card[] = [
+  c({
+    id: 'c2_ten',
+    step: false,
+    urgent: true,
+    beat: 'hook',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'ngay',
+    cast: ['me', 'mama'],
+    who: 'mama',
+    title: 'Cái tên mới',
+    text: ['Sáng hôm sau, máu bạn chưa cầm hẳn. Ma ma Quế đứng ở cửa sân giặt, tay chắp sau lưng: "Từ nay cung nga Đào không còn nữa. Ở đây ngươi là Nhài."', '"Ta cho ngươi chín ngày. Ta không xem tay nghề. Ta xem ngươi thật hay giả."'],
+    choices: [
+      { t: 'Cúi đầu: "Dạ."', fx: go('c2_diep'), note: 'Quế gật. Bà không cần nghe tiếng "dạ", bà chỉ cần biết bạn nói nó nhanh hay chậm.' },
+      { t: 'Hỏi nhỏ: "Con của con đâu?"', fx: { d: { que: 4 }, flag: ['hoi_con_que'], next: 'c2_diep' }, note: '"Ở đây không ai có con," Quế nói, không đổi giọng. Bà nhớ người vừa hỏi.' },
+      { t: 'Nhìn bàn tay chắp sau lưng của bà', fx: { d: { tin: 1 }, flag: ['thay_muc_que'], next: 'c2_diep' }, note: 'Ngón cái bà có vệt nâu cũ, thứ mực người ta dùng để ghi những gì không được ghi.' },
+    ],
+  }),
+  c({
+    id: 'c2_diep',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'ngay',
+    cast: ['me', 'badiep'],
+    who: 'badiep',
+    title: 'Ba cách đọc vết',
+    text: ['Bà Diệp, người giặt áo lâu năm nhất, dạy bạn ba cách đọc vết. Máu mới còn hồng ở mép, máu cũ nâu như vỏ hạt, còn nước vôi che máu thì khô cứng và trắng đục.', '"Còn tro trầm là áo của Thái hậu," bà nói nhỏ. "Thấy thì đừng nói."'],
+    choices: [
+      { t: 'Học thuộc cả ba', fx: { d: { tin: 1 }, flag: ['hoc_vet'], next: 'c2_mo' }, note: 'Ngón tay bạn bắt đầu biết trước mắt. Một ngày, hai ngày, và vết trên vải bắt đầu có tiếng.' },
+      { t: 'Hỏi: "Đêm Tân Dậu, bà giặt mấy bộ chăn?"', need: { flags: ['ba_mau'] }, lockHint: 'Bạn chưa đếm được gì từ đêm ấy nên chưa biết hỏi gì.', fx: { d: { tin: 1 }, flag: ['diep_ba'], next: 'c2_mo' }, note: 'Bà Diệp ngừng tay. "Ba," bà nói. "Ta giặt ba, và ta không đếm lần hai."' },
+      { t: 'Im, chỉ làm theo', fx: go('c2_mo'), note: 'Bà Diệp nhìn bạn một lát rồi quay đi. Có người học bằng tai, có người học bằng việc nín.' },
+    ],
+  }),
+  c({
+    id: 'c2_mo',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'chieu',
+    cast: ['me', 'mo'],
+    who: 'mo',
+    title: 'Cái tên đi mượn',
+    text: ['Cô gái gầy tên Mơ ngồi cạnh bạn, vắt áo không ngừng tay. "Chị Đào, chị..." cô buột miệng, rồi tái mặt sửa: "Chị Nhài."', '"Nhài là tên một chị chết ở giếng sau tuần trước," Mơ nói rất khẽ. "Người ta cho chị mượn tên chị ấy."'],
+    choices: [
+      { t: 'Hỏi: "Sao em biết tên thật của chị?"', fx: { d: { tin: 1 }, flag: ['mo_doi'], next: 'c2_nhan' }, note: '"Có người dặn em ngồi cạnh chị," Mơ nói, mắt dán ra cổng. "Em không được nói là ai."' },
+      { t: 'Chia nửa chiếc bánh cho Mơ', fx: { d: { keo: 1 }, flag: ['keo_mo'], next: 'c2_nhan' }, note: 'Mơ nhận bằng cả hai tay, không nói cảm ơn, chỉ cúi đầu rất sâu.' },
+      { t: 'Hỏi nhỏ: "Cô áo xanh nhạt hôm trước, em có biết không?"', need: { flags: ['nhin_thay_thanh'] }, lockHint: 'Bạn không nhớ đã thấy ai áo xanh nhạt.', fx: { d: { tin: 1, que: 2 }, flag: ['hoi_thanh_mo'], next: 'c2_nhan' }, note: 'Mặt Mơ trắng bệch. "Chị đừng hỏi," cô nói. "Em chỉ nói được là em ở đây để chị còn sống."' },
+    ],
+  }),
+  c({
+    id: 'c2_nhan',
+    place: 'phong',
+    img: 'gianngu',
+    where: 'ở gian ngủ của cung nga giặt',
+    time: 'chieu',
+    cast: ['me', 'nhan'],
+    who: 'nhan',
+    mood: 'vui',
+    title: 'Người chung chăn',
+    text: ['Gian ngủ có một cái chiếu chung và một tấm chăn mỏng. Người ngủ cạnh bạn là Nhàn, một cô gái tròn trịa, cười hiền, đến trước bạn hai tháng.', '"Chị là Nhài hả? Em tên Nhàn," cô nói. "Chị lạnh thì cứ kéo chăn."'],
+    choices: [
+      { t: 'Chia cơm và chăn cho Nhàn', fx: { d: { keo: 2 }, flag: ['keo_nhan'], next: 'c2_tell' }, note: 'Nhàn cười, mắt cong lại. Người ta khó quên bữa cơm đầu tiên ở một nơi như thế này.' },
+      { t: 'Hỏi nhà Nhàn có ai', fx: { d: { tin: 1 }, flag: ['nhan_me_benh'], next: 'c2_tell' }, note: '"Mẹ em bệnh," Nhàn nói. "Ma ma Quế thương, tháng nào cũng trả tiền thuốc." Lời nghe như ơn. Bạn nghe thêm một tầng khác.' },
+      { t: 'Ngủ quay lưng, không nói gì', fx: { flag: ['nhan_xa'], next: 'c2_tell' }, note: 'Nhàn im một lúc rồi kéo chăn lên vai bạn. Không nói gì thêm.' },
+    ],
+  }),
+  c({
+    id: 'c2_tell',
+    beat: 'cang',
+    place: 'phong',
+    img: 'gianngu',
+    where: 'ở gian ngủ của cung nga giặt',
+    time: 'dem',
+    cast: ['me', 'nhan'],
+    who: 'nhan',
+    title: 'Chuyện thì thầm',
+    text: ['Đêm thứ năm, đèn đã tắt. Nhàn thì thầm: "Chị ngủ không được hả? Kể em nghe một chuyện gì đi."', 'Bạn nghe tiếng mưa nhỏ trên mái và hơi thở của cô, đều đặn quá.'],
+    choices: [
+      { t: 'Kể thật: bạn sợ tiếng mưa', fx: go('c2_que_a'), note: 'Bạn chưa từng kể điều này với ai. Bạn thấy nhẹ đi một chút.' },
+      { t: 'Kể một chuyện bịa: tối mai bạn ra giếng sau', need: { num: { tin: [2, 99] } }, lockHint: 'Bạn chưa đủ tinh để nghĩ ra cách thử.', fx: { d: { tin: 1 }, next: 'c2_que_b' }, note: 'Bạn nói rất khẽ, như một bí mật. Nếu lời này đi đâu, bạn sẽ biết nó đi bằng đường nào.' },
+      { t: 'Không kể gì, giả vờ ngủ', fx: go('c2_que_c'), note: 'Nhàn không hỏi thêm. Hơi thở của cô vẫn đều.' },
+    ],
+  }),
+  c({
+    id: 'c2_que_a',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'ngay',
+    cast: ['me', 'mama'],
+    who: 'mama',
+    mood: 'lo',
+    title: 'Lời đi trước người',
+    text: ['Sáng hôm sau, Quế đi ngang sân giặt, không nhìn bạn, nói như nói với cái chậu: "Mưa à. Mưa thì cũng chỉ là nước."', 'Bạn đứng yên. Chuyện đó bạn chỉ kể cho một người.'],
+    choices: [
+      { t: 'Nhìn sang Nhàn', fx: { d: { tin: 1 }, flag: ['nhan_lo', 'nghi_nhan'], next: 'c2_thu9' }, note: 'Nhàn đang vắt áo, mắt nhìn xuống. Tay cô run khẽ, rồi lại đều.' },
+      { t: 'Tự nhủ: chắc có người nghe lỏm', fx: { flag: ['nhan_lo'], next: 'c2_thu9' }, note: 'Bạn nghĩ vậy, vì nghĩ khác thì khó ngủ.' },
+    ],
+  }),
+  c({
+    id: 'c2_que_b',
+    place: 'vien',
+    img: 'gieng',
+    where: 'ở giếng sau viện giặt',
+    time: 'dem',
+    cast: ['me', 'mama'],
+    mood: 'so',
+    title: 'Người đứng ở giếng',
+    text: ['Tối sau, bạn không ra giếng. Từ cửa sổ gian giặt, bạn thấy ma ma Quế đứng một mình bên miệng giếng sau, chỗ cô Nhài cũ đã chết, như đợi ai.', 'Không ai biết chuyện này ngoài bạn và người nằm cạnh bạn.'],
+    choices: [
+      { t: 'Quay vào, im như chưa thấy gì', fx: { d: { tin: 2 }, flag: ['biet_nhan'], next: 'c2_thu9' }, note: 'Bạn nằm xuống. Nhàn ngủ rất yên, còn bạn thì đã biết lời mình đi đường nào.' },
+      { t: 'Nhìn Nhàn đang ngủ', fx: { d: { tin: 2 }, flag: ['biet_nhan'], next: 'c2_thu9' }, note: 'Mặt cô hiền. Bạn không biết nên thương hay nên sợ.' },
+    ],
+  }),
+  c({
+    id: 'c2_que_c',
+    place: 'phong',
+    img: 'gianngu',
+    where: 'ở gian ngủ của cung nga giặt',
+    time: 'dem',
+    cast: ['me', 'nhan'],
+    mood: 'lo',
+    title: 'Hơi thở đều quá',
+    text: ['Bạn nằm yên đến sáng. Hơi thở của Nhàn không đổi nhịp một lần nào.', 'Người ngủ thật thì hay trở mình. Bạn nhớ điều ấy vào lúc trời sáng.'],
+    choices: [
+      { t: 'Nhắm mắt lại, coi như không nghĩ', fx: go('c2_thu9'), note: 'Có những điều bạn thà chưa đếm ra.' },
+      { t: 'Ghi nhớ trong lòng', fx: { d: { tin: 1 }, flag: ['nghi_nhan'], next: 'c2_thu9' }, note: 'Bạn chưa kết tội ai. Bạn chỉ nhớ.' },
+    ],
+  }),
+  c({
+    id: 'c2_thu9',
+    big: true,
+    beat: 'cang',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'ngay',
+    cast: ['me', 'mama', 'badiep'],
+    who: 'mama',
+    title: 'Ngày thứ chín',
+    text: ['Quế đặt ba mảnh vải lên bàn đá. Một mảnh máu mới, một mảnh nước vôi phủ, mảnh thứ ba gấp kín. "Đọc đi," bà nói.', 'Bà Diệp đứng xa, không nhìn. Có người đang đếm từng nhịp thở của bạn.'],
+    omen: 'Ai đọc quá hay hoặc quá dở đều bị ghi nhớ.',
+    choices: [
+      { t: 'Đọc đúng cả ba, nói rõ từng vết', fx: { d: { tin: 2, que: 2 }, flag: ['doc_dung', 'bac2'], next: 'c2_ao' }, note: 'Quế nghe hết, không khen. Bà chỉ liếc sang bà Diệp, và bà Diệp khẽ gật.' },
+      { t: 'Đọc hai mảnh đầu, nói chậm như người mới học', fx: { flag: ['giau_tai'], next: 'c2_ao' }, note: 'Bạn đọc ngập ngừng, sai một chỗ nhỏ cho thật. Quế không chớp mắt.' },
+      { t: 'Cố ý đọc sai một mảnh', fx: { d: { que: 1 }, flag: ['doc_sai'], next: 'c2_ao' }, note: 'Quế nhìn bạn lâu hơn bình thường. Bà biết người sai cố ý khác người sai thật.' },
+    ],
+  }),
+  c({
+    id: 'c2_ao',
+    beat: 'cang',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'ngay',
+    cast: ['me', 'mama'],
+    who: 'mama',
+    mood: 'so',
+    title: 'Áo của mình',
+    text: ['Quế mở mảnh thứ ba ra. Gấu rách, máu nâu, một góc dính đất đỏ, không phải đất sông. Mùi vải là mùi chiếc áo bạn mặc đêm mưa ấy.', '"Ngươi có nhận ra áo của mình không?" Quế hỏi, rất nhẹ.'],
+    omen: 'Chín ngày không ai hỏi gì, rồi một câu hỏi xuống thẳng.',
+    choices: [
+      { t: 'Nhận: "Của con."', fx: { d: { que: 2 }, flag: ['nhan_ao'], next: 'c2_cuoi' }, note: '"Thế thì ngươi còn dùng được," Quế nói. Bà thu mảnh vải lại, gấp rất gọn.' },
+      { t: 'Chối: "Con chưa từng thấy."', fx: { flag: ['choi_ao'], next: 'c2_cuoi' }, note: 'Quế gật, rồi không hỏi nữa. Bạn thà bị hỏi còn hơn.' },
+      { t: 'Hỏi lại: "Ai mang nó từ gian sau ra đây?"', need: { flags: ['hoi_ai_lo'] }, lockHint: 'Bạn chưa từng hỏi ai đã lo cho chuyện đêm ấy.', fx: { d: { tin: 1, que: 3 }, flag: ['hoi_ao'], next: 'c2_cuoi' }, note: '"Người hỏi nhiều thì sống ngắn," Quế nói. Bà không giận. Bà đang ghi nhớ.' },
+    ],
+  }),
+  c({
+    id: 'c2_cuoi',
+    beat: 'cang',
+    place: 'phong',
+    img: 'gianngu',
+    where: 'ở gian ngủ của cung nga giặt',
+    time: 'dem',
+    cast: ['me', 'nhan'],
+    who: 'nhan',
+    mood: 'lo',
+    title: 'Một câu hai nghĩa',
+    text: ['Tắt đèn. Nhàn quay sang. Bạn không thấy mặt cô, chỉ biết cô đang nhìn.', '"Chị đừng tin ai ở đây," cô thì thào. "Kể cả em."'],
+    choices: [
+      { t: 'Hỏi: "Em nói thật hay đùa?"', fx: { d: { tin: 1 }, chapter: 3 }, note: 'Nhàn không đáp. Bạn ngủ không được, vì lần đầu có người nói thật với bạn, và bạn không biết nó là lời khuyên hay lời thú tội.' },
+      { t: 'Nắm tay Nhàn', fx: { d: { keo: 1 }, chapter: 3 }, note: 'Tay cô lạnh và hơi run. Cô không rút ra. Bạn ngủ không được, vì lần đầu có người nói thật với bạn, và bạn không biết nó là lời khuyên hay lời thú tội.' },
+      { t: 'Quay mặt vào tường', fx: { chapter: 3 }, note: 'Bạn nghe tiếng thở của cô một lúc lâu. Bạn ngủ không được, vì lần đầu có người nói thật với bạn, và bạn không biết nó là lời khuyên hay lời thú tội.' },
+    ],
+  }),
+];
