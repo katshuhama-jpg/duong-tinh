@@ -145,10 +145,11 @@ const ageOf = (l: Life) => Math.floor(l.age);
 const yearOf = (l: Life) => (isCn(l) ? CN_YEAR0 + ageOf(l) - 18 : isNg(l) ? NG_YEAR0 + ageOf(l) - 18 : ageOf(l) - 15);
 const eraOf = (l: Life) => (isCn(l) ? CN_ERA : isNg(l) ? NG_ERA : ERA);
 /** câu dẫn thời gian trước lựa chọn: chỉ hiện khi sang năm mới, sang chương mới, hoặc (phần 3) khi đời Đào sang một khúc khác */
-function whenLine(card: { id: string; chapter: number[] }, l: Life): string {
+function whenLine(card: { id: string; chapter: number[]; lead?: string }, l: Life): string {
   const p = l.prev;
   if (isCn(l)) {
     const cur = cnWhen(card.id, l.chapter, l.age, l.flags);
+    if (card.lead && card.lead.trim() === cur.trim()) return '';
     const pc = p ? cardOf(p.card) : null;
     const before = p && pc ? cnWhen(p.card, pc.chapter[0], p.age, l.flags) : '';
     return cur !== before ? `${cur} ` : '';

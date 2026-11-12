@@ -28,7 +28,7 @@ export const CN_CH1: Card[] = [
     cast: ['me'],
     lead: 'Gần mười tháng trước đêm mưa ấy.',
     title: 'Cung nga hầu trà',
-    text: ['Bạn tên Đào, mười tám tuổi, hầu trà ở cung Tây. Việc của bạn là giữ cho nước đừng sôi quá, chén đừng nguội quá, và miệng đừng nói quá.', 'Bạn không biết nhiều chữ. Nhưng nhìn một vết trà trên khăn, bạn biết ai đã uống, uống lúc nào, và uống xong thì buồn hay vui.'],
+    text: ['Bạn tên Đào, mười tám tuổi, hầu trà ở cung Tây. Việc của bạn là giữ cho nước đừng sôi quá, chén đừng nguội quá, và miệng đừng nói quá.', 'Bạn không biết nhiều chữ. Nhưng nhìn một vết trà trên khăn, bạn biết ai đã uống, uống lúc nào, và uống xong thì buồn hay vui.', 'Mười tháng nữa, bạn sẽ mất tên, mất con, và xuống viện giặt. Đôi mắt đọc vết ấy là thứ duy nhất bạn mang theo.'],
     choices: [
       { t: 'Lau chén cho sạch', fx: go('c1_hanhlang'), note: 'Chén sáng lên dưới nắng sớm. Hầu trà tử tế là hầu trà không ai nhớ tên.' },
       { t: 'Đọc vết trà trên chiếc khăn người trước để lại', fx: { d: { tin: 1 }, flag: ['doc_vet'], next: 'c1_hanhlang' }, note: 'Vệt nâu ở rìa là trà gừng, vệt xanh nhạt là trà sen. Người dùng chiếc khăn này hay đau bụng, và hay uống một mình.' },
