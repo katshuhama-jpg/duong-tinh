@@ -168,9 +168,9 @@ export const CN_CH3: Card[] = [
     text: ['"Nó chưa biết gọi ai là mẹ," Hoàng hậu nói. "Ta để nó gọi ta. Ngươi cho phép không?"', 'Xa xa có tiếng lính đổi gác. Lửa dưới nồi sắp tàn.'],
     omen: 'Người đàn bà nào đêm khuya xuống sân giặt cũng mang theo một điều chưa nói hết.',
     choices: [
-      { t: 'Cho phép, và tin bà', fx: { d: { tin: 1 }, flag: ['tin_hh'], next: 'c3_tin' } },
-      { t: 'Từ chối, bạn không tin lời nào', fx: { flag: ['nghi_hh'], next: 'c3_nghi' } },
-      { t: 'Xông vào đòi con', fx: { d: { que: 6 }, flag: ['lieu'], next: 'c3_lieu' } },
+      { t: 'Cho phép, và tin bà', fx: { d: { tin: 1 }, flag: ['tin_hh'], next: 'c3_tin' }, note: 'Bạn gật đầu. Hoàng hậu nhắm mắt lại một lúc lâu, rồi đứng dậy: "Đi theo ta."' },
+      { t: 'Từ chối, bạn không tin lời nào', fx: { flag: ['nghi_hh'], next: 'c3_nghi' }, note: '"Không," bạn nói. Tiếng ấy nhỏ, nhưng lửa dưới nồi như cũng lặng đi.' },
+      { t: 'Xông vào đòi con', fx: { d: { que: 6 }, flag: ['lieu'], next: 'c3_lieu' }, note: 'Bạn đứng bật dậy, nồi nước tro sóng sánh. Bạn không còn nghe thấy gì ngoài tiếng tim mình.' },
     ],
   }),
   c({

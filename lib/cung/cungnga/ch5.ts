@@ -144,8 +144,8 @@ export const CN_CH5: Card[] = [
     text: ['Quế bày lên bàn đá ba chiếc áo từng chạm áo Thái phi: của bà Diệp, của Sen em Lục, của Mơ. "Ngươi đọc," bà nói. "Rồi ngươi ghi."', 'Ngoài sân, Lục đứng chờ xe, không dám nhìn vào.'],
     omen: 'Mỗi cái tên ghi lên là một người bạn sống chung.',
     choices: [
-      { t: 'Cầm bút, ghi một cái tên', fx: go('c5_ghi') },
-      { t: 'Tìm cách không ghi ai', fx: go('c5_khong') },
+      { t: 'Cầm bút, ghi một cái tên', fx: go('c5_ghi'), note: 'Bạn cầm bút lên. Quế đẩy nghiên mực lại gần, như người đã đợi việc này từ lâu.' },
+      { t: 'Tìm cách không ghi ai', fx: go('c5_khong'), note: 'Bạn đặt bút xuống bàn đá. Quế nhướng mày, chờ xem bạn có gì để đổi.' },
     ],
   }),
   c({

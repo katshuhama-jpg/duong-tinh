@@ -18,7 +18,7 @@ import { DEFAULT_NAME, suggestNames } from '@/lib/cung/names';
 import { ORIGINS, fillText, originOf, type OriginK } from '@/lib/cung/origins';
 import { ALL_ENDINGS, CAST_NAME, CN_ENDINGS, ERA, NGHIEM_ENDINGS, NUM_LABEL, RIVALS, RIV_ST, endingOf, gone, guardsOf } from '@/lib/cung/world';
 import { NG_CAST_NAME, NG_ERA, NG_YEAR0 } from '@/lib/cung/nghiem/world';
-import { CN_BAC, CN_CAST_NAME, CN_ERA, CN_YEAR0 } from '@/lib/cung/cungnga/world';
+import { CN_BAC, CN_CANCHI, CN_CAST_NAME, CN_ERA, CN_YEAR0, cnWhen } from '@/lib/cung/cungnga/world';
 import SoAn, { SoAnStrip } from '@/components/cung/SoAn';
 
 const ROMAN = ['I', 'II', 'III', 'IV'];
@@ -144,6 +144,52 @@ function feelOf(k: NumK, v: number): string {
 const ageOf = (l: Life) => Math.floor(l.age);
 const yearOf = (l: Life) => (isCn(l) ? CN_YEAR0 + ageOf(l) - 18 : isNg(l) ? NG_YEAR0 + ageOf(l) - 18 : ageOf(l) - 15);
 const eraOf = (l: Life) => (isCn(l) ? CN_ERA : isNg(l) ? NG_ERA : ERA);
+/** câu dẫn thời gian trước lựa chọn: chỉ hiện khi sang năm mới, sang chương mới, hoặc (phần 3) khi đời Đào sang một khúc khác */
+function whenLine(card: { id: string; chapter: number[] }, l: Life): string {
+  const p = l.prev;
+  if (isCn(l)) {
+    const cur = cnWhen(card.id, l.chapter, l.age, l.flags);
+    const pc = p ? cardOf(p.card) : null;
+    const before = p && pc ? cnWhen(p.card, pc.chapter[0], p.age, l.flags) : '';
+    return cur !== before ? `${cur} ` : '';
+  }
+  const fresh = !p || Math.floor(p.age) !== Math.floor(l.age) || !(cardOf(p.card)?.chapter ?? []).includes(l.chapter);
+  return fresh ? `${askOf(card, l)} ` : '';
+}
+/** phần 1-2: câu dẫn trước lựa chọn, đo thời gian bằng đời nhân vật thay cho niên hiệu */
+const SO_VI = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín', 'mười', 'mười một', 'mười hai', 'mười ba', 'mười bốn', 'mười lăm', 'mười sáu', 'mười bảy', 'mười tám', 'mười chín', 'hai mươi'];
+const soVi = (n: number) => SO_VI[n] ?? String(n);
+function askOf(card: { id: string }, l: Life): string {
+  const yrs = Math.floor(l.age) - 18;
+  const kid = l.kids[0];
+  const ka = kid ? Math.floor(l.age) - kid.born : -1;
+  const con = kid ? (kid.sex === 'trai' ? 'Con trai bạn' : 'Con gái bạn') : '';
+  const trong = yrs <= 0 ? 'Năm đầu trong cung' : `${cap(soVi(yrs))} năm trong cung`;
+  const pick = (xs: string[]) => xs[hash(card.id) % xs.length];
+  const ch = l.chapter;
+  if (isNg(l)) {
+    if (ch === 1) return pick([`${trong}, bạn ở đúng căn viện chị từng ở.`, 'Chữ "bệnh" trong sổ của chị vẫn chưa ai xóa.', 'Vách bên kia vẫn có tiếng gõ, mỗi đêm một khác.']);
+    if (ch === 2) return pick(['Một đêm được gọi là một dòng mực, và bạn đang đọc từng dòng.', `${trong}. Sổ đến thăm có những dòng biết biến mất.`]);
+    if (ch === 3) return pick(['Có con là có chỗ đứng, và có thêm một chén thuốc phải nhìn hai lần.', `${trong}. Thái y bắt mạch xong vẫn chưa dám ngẩng lên.`]);
+    if (kid && ch <= 6 && ka >= 1) return pick([`${con} lên ${soVi(ka)}, và trong cung không có gì là vô tội.`, `${trong}. ${con} lên ${soVi(ka)}.`]);
+    if (ch === 4) return pick(['Hai đứa trẻ, một chiếc ghế ở Đông cung.', `${trong}. Hồ sơ của chị vẫn mở.`]);
+    if (ch === 5) return 'Còn ba ngày, và mỗi bước chân trong cung đều có người canh.';
+    if (ch === 6) return pick(['Cha bạn ở trong án. Người đọc án bây giờ là bạn.', `${trong}. Người dạy bạn đọc án, giờ là người trong án.`]);
+    return pick(['Tóc bạn đã bạc. Hồ sơ của chị vẫn chờ một dòng cuối.', 'Người cũ lần lượt đi, chỉ có sổ án là ở lại.']);
+  }
+  if (kid && ch >= 4 && ka >= 1) {
+    if (ch === 4) return pick([`${con} lên ${soVi(ka)}, và tên con đã được nhắc ở triều.`, `${trong}. ${con} lên ${soVi(ka)}.`]);
+    if (ch === 5) return `Hoàng thượng ốm nặng. ${con} mới ${soVi(ka)} tuổi.`;
+    if (ch === 6) return pick([`${con} ${soVi(ka)} tuổi, còn bạn ngồi sau rèm.`, 'Một câu nói sai sau rèm, cả họ nhà mình trả giá.']);
+    return pick([`Tóc bạn đã bạc. ${con} đã ${soVi(ka)} tuổi.`, 'Người cũ lần lượt đi, chỉ có những món nợ là ở lại.']);
+  }
+  if (ch === 1) return pick([`${trong}, người nhà giờ chỉ còn là một cái tên trong thư.`, 'Bạn vẫn còn nhớ mùi chè trong gói của mẹ.', `${trong}. Chưa một lần bạn được gọi tên trước mặt vua.`]);
+  if (ch === 2) return pick(['Đèn đỏ treo trước cửa ai, cả hậu cung đều biết.', `${trong}. Có người đang đếm từng đêm của bạn.`]);
+  if (ch === 3) return pick(['Có con là có chỗ đứng, và thêm một cái cổ để người ta nhắm vào.', `${trong}. Tin vui này không phải ai cũng vui.`]);
+  if (ch === 5) return 'Hoàng thượng ho ra máu, và mỗi bước chân trong cung đều có người canh.';
+  if (ch === 7) return pick(['Tóc bạn đã bạc. Người cũ lần lượt đi.', 'Chỉ có những món nợ là ở lại.']);
+  return `${trong}.`;
+}
 const hash = (s: string) => {
   let h = 0;
   for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0;
@@ -899,7 +945,7 @@ export default function Play() {
         <div className="c-when">
           <strong>{ageOf(life)} tuổi</strong>
           <small>
-            {eraOf(life)} năm {yearOf(life)}
+            {isCn(life) ? `Năm ${CN_CANCHI[yearOf(life) - CN_YEAR0] ?? ''}` : `${eraOf(life)} năm ${yearOf(life)}`}
           </small>
           <small>{chapter.t}</small>
         </div>
@@ -933,7 +979,7 @@ export default function Play() {
                 <div className="c-roll" />
               </div>
               <p className="c-ask c-in">
-                Năm {eraOf(life)} thứ {yearOf(life)}. Bạn sẽ làm gì?
+                {whenLine(card, life)}Bạn sẽ làm gì?
               </p>
               <div className="c-choices c-in" key={`c${card.id}${life.seen.length}`}>
                 {opts

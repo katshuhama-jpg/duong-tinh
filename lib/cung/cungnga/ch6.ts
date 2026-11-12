@@ -69,8 +69,8 @@ export const CN_CH6: Card[] = [
     title: 'Cổng không có Tuất',
     text: ['Ở cổng phòng Hựu không thấy Tuất. Một tiểu hoạn lạ mặt đứng đó, mắt nhìn đi chỗ khác như đã được dặn.', 'Năm năm nay, sáng nào Tuất cũng đứng đúng chỗ ấy.'],
     choices: [
-      { t: 'Hỏi: "Tuất đâu?"', need: { flags: ['keo_tuat'], not: ['vang_que'] }, lockHint: 'Bạn chưa từng thân với Tuất.', fx: go('c6_tuat2') },
-      { t: 'Hỏi: "Tuất đâu?"', need: { flags: ['keo_tuat', 'vang_que'] }, lockHint: 'Bạn chưa từng thân với Tuất.', fx: go('c6_tuat3') },
+      { t: 'Hỏi: "Tuất đâu?"', need: { flags: ['keo_tuat'], not: ['vang_que'] }, lockHint: 'Bạn chưa từng thân với Tuất.', fx: go('c6_tuat2'), note: 'Tiểu hoạn lạ mặt cúi gằm, không trả lời. Ở đầu hành lang có người đang chờ câu hỏi ấy.' },
+      { t: 'Hỏi: "Tuất đâu?"', need: { flags: ['keo_tuat', 'vang_que'] }, lockHint: 'Bạn chưa từng thân với Tuất.', fx: go('c6_tuat3'), note: 'Tiểu hoạn lạ mặt cúi gằm, không trả lời. Ở đầu hành lang có người đang chờ câu hỏi ấy.' },
       { t: 'Đi thẳng vào phòng', need: { not: ['keo_tuat'] }, lockHint: 'Tuất là người của bạn. Bạn không bước qua được khi chưa biết nó ở đâu.', fx: go('c6_phong'), note: 'Bạn chưa từng chia cho Tuất bữa cơm nào. Hôm nay không ai dùng nó để giữ chân bạn.' },
     ],
   }),
@@ -124,7 +124,7 @@ export const CN_CH6: Card[] = [
     text: ['Trong phòng có hai chiếc giường nhỏ. Hai bé trai năm tuổi ngủ cạnh nhau, áo giống nhau, tóc buộc giống nhau.', 'Một là con bạn. Đứa kia bạn chưa từng thấy. Bạn có ba dấu, và một canh giờ đang cạn.'],
     omen: 'Thái hậu chưa bao giờ chỉ giữ một con bài.',
     choices: [
-      { t: 'Thử đủ ba dấu', fx: { d: { que: 2 }, next: 'c6_thu' } },
+      { t: 'Thử đủ ba dấu', fx: { d: { que: 2 }, next: 'c6_thu' }, note: 'Bạn quỳ xuống giữa hai chiếc giường. Mỗi dấu là một khắc, và canh giờ đang cạn.' },
       { t: 'Tin vào cảm giác, bế đứa nằm phía trong', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, risk: { p: 0.35, fail: { flag: ['nhan_nham'], next: 'c6_gio_nham' }, failNote: 'Tay bạn chọn trước khi mắt kịp nhìn.' }, note: 'Tay bạn chọn trước khi mắt kịp nhìn.' },
       { t: 'Nhìn đuôi mắt hai đứa thật kỹ', need: { flags: ['chac_not_ruoi'] }, lockHint: 'Đêm ấy bạn không nhìn kỹ chấm nhỏ ở đuôi mắt con.', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Bạn đã thuộc chấm nhỏ ấy từ hơi thở đầu tiên. Chấm của đứa bên trái tròn quá, đen quá, như ai chấm bằng bút. Bạn bế đứa bên phải.' },
       { t: 'Bế đứa gần cửa, chạy', fx: { flag: ['nhan_nham'], next: 'c6_gio_nham' }, note: 'Không còn thời gian để nhìn. Bạn ôm lấy đứa gần nhất.' },
@@ -195,8 +195,8 @@ export const CN_CH6: Card[] = [
     title: 'Bến sông',
     text: ['Sương dày trên bến. Thái hậu đứng giữa ván bến, một mình, áo thường, không lính, không đèn.', '"Ta không đến bắt ngươi," bà nói. "Ta đến để nghe ngươi chọn."'],
     choices: [
-      { t: 'Ôm chặt giỏ, bước tới', need: { flags: ['nhan_nham'] }, lockHint: 'Đứa bé trong giỏ đang hát khẽ.', fx: go('c6_ben_nham') },
-      { t: 'Ôm chặt giỏ, đứng yên', need: { flags: ['nhan_dung'] }, lockHint: 'Đứa bé trong giỏ vẫn còn khóc.', fx: go('c6_ben2') },
+      { t: 'Ôm chặt giỏ, bước tới', need: { flags: ['nhan_nham'] }, lockHint: 'Đứa bé trong giỏ đang hát khẽ.', fx: go('c6_ben_nham'), note: 'Bạn bước tới. Đứa bé trong giỏ vẫn khóc thút thít.' },
+      { t: 'Ôm chặt giỏ, đứng yên', need: { flags: ['nhan_dung'] }, lockHint: 'Đứa bé trong giỏ vẫn còn khóc.', fx: go('c6_ben2'), note: 'Bạn đứng yên. Trong giỏ, đứa bé đã ngủ lại, hơi thở đều.' },
     ],
   }),
   c({
@@ -289,9 +289,9 @@ export const CN_CH6: Card[] = [
     omen: 'Mọi con thuyền rời bến này đều đã có người đếm trước.',
     choices: [
       { t: 'Mang con xuống thuyền', fx: { end: 'cn_thuyen' } },
-      { t: 'Trả con', fx: { flag: ['tra_con'], next: 'c6_tra' } },
+      { t: 'Trả con', fx: { flag: ['tra_con'], next: 'c6_tra' }, note: 'Bạn cúi xuống giỏ lần cuối. Mùi tóc con thơm như mùi chăn vừa phơi nắng.' },
       { t: 'Hét lên cho cả bến nghe', fx: { end: 'cn_het' } },
-      { t: 'Thương lượng: xin gặp con mỗi năm một lần', fx: go('c6_thuong') },
+      { t: 'Thương lượng: xin gặp con mỗi năm một lần', fx: go('c6_thuong'), note: '"Mỗi năm một lần thôi," bạn nói. Thái hậu nhìn bạn, như nhìn một đứa trẻ đòi trăng.' },
     ],
   }),
   c({
@@ -306,7 +306,7 @@ export const CN_CH6: Card[] = [
     text: ['"Ta chỉ cho ngươi sống," Thái hậu nói. "Gặp hay không là việc của trời."', 'Bà không mặc cả. Bà chỉ nhắc lại hai lối, và chờ.'],
     choices: [
       { t: 'Mang con xuống thuyền', fx: { end: 'cn_thuyen' } },
-      { t: 'Trả con', fx: { flag: ['tra_con'], next: 'c6_tra' } },
+      { t: 'Trả con', fx: { flag: ['tra_con'], next: 'c6_tra' }, note: 'Bạn cúi xuống giỏ lần cuối. Mùi tóc con thơm như mùi chăn vừa phơi nắng.' },
     ],
   }),
   c({

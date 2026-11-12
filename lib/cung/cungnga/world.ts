@@ -54,3 +54,28 @@ export const CN_CAST_NAME: Partial<Record<CastK, string>> = {
   mo: 'Mơ',
   cungnu: 'Cung nữ',
 };
+
+/** năm can chi theo năm Hưng Bình (Tân Dậu là năm thứ 3) */
+export const CN_CANCHI = ['Tân Dậu', 'Nhâm Tuất', 'Quý Hợi', 'Giáp Tý', 'Ất Sửu', 'Bính Dần', 'Đinh Mão', 'Mậu Thìn', 'Kỷ Tỵ', 'Canh Ngọ', 'Tân Mùi', 'Nhâm Thân', 'Quý Dậu', 'Giáp Tuất', 'Ất Hợi', 'Bính Tý'];
+const SO = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín', 'mười', 'mười một', 'mười hai', 'mười ba', 'mười bốn', 'mười lăm', 'mười sáu'];
+const TRUOC_SINH = ['c1_tra_dao', 'c1_hanhlang', 'c1_vua', 'c1_kiem'];
+const SAP_SINH = ['c1_giacmo', 'c1_gaysau', 'c1_badebla', 'c1_sinh'];
+const BA_HOI = ['c1_khoc', 'c1_hoi1', 'c1_hoi2', 'c1_hoi3'];
+/** câu dẫn thời gian trước mỗi lựa chọn: đo năm tháng bằng đứa con, không bằng niên hiệu */
+export function cnWhen(cardId: string, chapter: number, age: number, flags: string[]): string {
+  const son = Math.floor(age) - 18;
+  if (chapter === 1) {
+    if (TRUOC_SINH.includes(cardId)) return 'Gần mười tháng trước đêm mưa ấy.';
+    if (SAP_SINH.includes(cardId)) return 'Đêm mưa năm Tân Dậu. Con bạn sắp ra đời.';
+    if (BA_HOI.includes(cardId)) return 'Con bạn vừa chào đời. Bạn chỉ có ba hơi thở.';
+    return 'Đêm mưa năm Tân Dậu. Con bạn đã bị bế đi.';
+  }
+  if (chapter === 2) return 'Con bạn ra đời được mấy hôm, ở đâu đó sau những bức tường.';
+  if (chapter === 3) return 'Con bạn hơn một tháng tuổi, đang bú sữa người khác.';
+  if (chapter === 4) return cardId === 'c4_hai_nam' ? 'Hai năm nữa trôi qua. Con bạn lên năm.' : 'Con bạn lên ba, đã biết hát.';
+  if (chapter === 5) return 'Con bạn lên năm, đang gọi một người khác là mẹ.';
+  if (chapter === 6) return 'Còn một canh giờ. Con bạn đang ở rất gần.';
+  if (flags.includes('nhan_nham')) return 'Hai đứa trẻ lớn lên ở hai nơi, và chỉ một đứa là con bạn.';
+  if (son >= 15) return 'Con bạn mười lăm tuổi, sắp đội mũ.';
+  return `Bạn ra cung đã ${SO[Math.max(1, Math.floor(age) - 23)] ?? Math.floor(age) - 23} năm. Con bạn ${SO[son] ?? son} tuổi.`;
+}

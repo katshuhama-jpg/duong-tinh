@@ -102,9 +102,9 @@ export const CN_CH4: Card[] = [
     text: ['Có tiếng chiêng nhẹ báo ngự giá. Cả sân quỳ xuống. Vua đi ngang, dừng lại trước gánh kẹo gừng, ngửi, rồi hỏi to, giọng mệt: "Ai ở đây biết pha trà gừng?"', 'Kiệm đứng sau vua, mặt không đổi. Bên cạnh bạn là Cúc, cung nga hầu trà cung Tây giờ đây, đang quỳ run run.'],
     omen: 'Một câu hỏi bâng quơ của vua chưa bao giờ bâng quơ.',
     choices: [
-      { t: 'Nhận: "Nô tỳ pha ạ."', fx: go('c4_nhan') },
-      { t: 'Chỉ sang Cúc: "Là chị Cúc ạ."', fx: { d: { ha: 2 }, flag: ['chi_cuc'], next: 'c4_cuc' } },
-      { t: 'Cúi đầu thấp hơn, im lặng', fx: { flag: ['im_vua'], next: 'c4_im' } },
+      { t: 'Nhận: "Nô tỳ pha ạ."', fx: go('c4_nhan'), note: 'Cả sân lặng đi. Bạn nghe tiếng mình nói, như tiếng của một người khác.' },
+      { t: 'Chỉ sang Cúc: "Là chị Cúc ạ."', fx: { d: { ha: 2 }, flag: ['chi_cuc'], next: 'c4_cuc' }, note: 'Cúc ngẩng phắt lên nhìn bạn. Ánh mắt ấy bạn sẽ còn gặp lại.' },
+      { t: 'Cúi đầu thấp hơn, im lặng', fx: { flag: ['im_vua'], next: 'c4_im' }, note: 'Trán bạn chạm nền đá lạnh. Bạn đếm từng nhịp thở, chờ đoàn người đi qua.' },
     ],
   }),
   c({

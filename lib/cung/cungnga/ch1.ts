@@ -244,8 +244,8 @@ export const CN_CH1: Card[] = [
     text: ['Tay bạn trống. Hơi ấm trên ngực nguội dần.', 'Bóng áo xanh nhạt đã ra tới cửa.'],
     omen: 'Ai gọi lên giữa đêm ấy đều bị nghe thấy.',
     choices: [
-      { t: 'Gọi lên: "Con tôi!"', fx: go('c1_bit') },
-      { t: 'Im, nhìn theo bóng người', fx: go('c1_bong') },
+      { t: 'Gọi lên: "Con tôi!"', fx: go('c1_bit'), note: 'Tiếng bạn xé ngang tiếng mưa. Bóng áo xanh khựng lại một nhịp, rồi đi nhanh hơn.' },
+      { t: 'Im, nhìn theo bóng người', fx: go('c1_bong'), note: 'Bạn cắn chặt môi. Có những thứ phải nhìn cho kỹ, vì sẽ không được thấy lần hai.' },
     ],
   }),
   c({
@@ -305,8 +305,8 @@ export const CN_CH1: Card[] = [
     text: ['Bạn nghĩ: con tôi là con trai.', 'Con tôi chưa bao giờ có gấm.'],
     omen: 'Một tấm tã gấm vàng trong gian sau của một cung nga.',
     choices: [
-      { t: 'Tin lời bà đỡ', fx: go('c1_end_tin') },
-      { t: 'Không tin, giữ im', fx: { flag: ['khong_tin'], next: 'c1_dem' } },
+      { t: 'Tin lời bà đỡ', fx: go('c1_end_tin'), note: 'Bạn gật đầu. Bà đỡ thở ra, như người vừa trút được một gánh nặng.' },
+      { t: 'Không tin, giữ im', fx: { flag: ['khong_tin'], next: 'c1_dem' }, note: 'Bạn không nói gì. Nhưng bạn đã đếm: một đứa con trai, một đứa con gái, và chỉ một người mẹ trong gian này.' },
     ],
   }),
   c({

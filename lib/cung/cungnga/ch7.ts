@@ -86,8 +86,8 @@ export const CN_CH7: Card[] = [
     omen: 'Người đi tìm con thì bị người khác tìm thấy trước.',
     choices: [
       { t: 'Đứng ở cổng cung mỗi dịp lễ, nhìn từ xa', fx: { end: 'cn_cong' } },
-      { t: 'Im lặng, chờ thêm vài năm', fx: { years: 3, next: 'c7_muoi' } },
-      { t: 'Sống yên, không nhìn về phía cung nữa', fx: go('c7_yen') },
+      { t: 'Im lặng, chờ thêm vài năm', fx: { years: 3, next: 'c7_muoi' }, note: 'Bạn cất mẩu giấy ba chữ năm ấy vào hộp, và đợi.' },
+      { t: 'Sống yên, không nhìn về phía cung nữa', fx: go('c7_yen'), note: 'Bạn quay lưng về phía bức tường thành. Lần này bạn không ngoái lại.' },
       { t: 'Mở chiếc hộp gỗ giữ tờ giấy của Quế', need: { flags: ['ban_thanh'] }, lockHint: 'Bạn không có tờ giấy nào phải giữ.', fx: { end: 'cn_ban_thanh' } },
     ],
   }),
@@ -121,8 +121,8 @@ export const CN_CH7: Card[] = [
     text: ['Cung làm lễ đội mũ cho Hoàng trưởng tử mười lăm tuổi, và tuyển thêm người giặt áo lễ. Bạn đứng trước bàn tuyển, dưới một cái tên mới.', 'Người xem sổ nhìn dòng cuối, giật mình: có một nét chữ không phải của thư lại.'],
     omen: 'Lời của Thái hậu không bao giờ sai một chữ, nhưng chữ ấy chỉ dành cho một người.',
     choices: [
-      { t: 'Nhận chiếc áo lễ về giặt', need: AO_ME, lockHint: 'Lệnh tuyển ấy không dành cho người đã ghi tên ai, bán ai, để ai chết thay, hay đã lỡ lời trước ngự giá.', fx: go('c7_ao') },
-      { t: 'Không vào. Đứng ngoài phố, tay cầm cuốn sổ', need: { flags: ['mo_so_que', 'nhan_dung', 'tra_con'] }, lockHint: 'Bạn không có cuốn sổ nào để cầm.', fx: go('c7_so') },
+      { t: 'Nhận chiếc áo lễ về giặt', need: AO_ME, lockHint: 'Lệnh tuyển ấy không dành cho người đã ghi tên ai, bán ai, để ai chết thay, hay đã lỡ lời trước ngự giá.', fx: go('c7_ao'), note: 'Người xem sổ đứng dậy, cúi chào bạn, và tự tay đưa chiếc áo lễ.' },
+      { t: 'Không vào. Đứng ngoài phố, tay cầm cuốn sổ', need: { flags: ['mo_so_que', 'nhan_dung', 'tra_con'] }, lockHint: 'Bạn không có cuốn sổ nào để cầm.', fx: go('c7_so'), note: 'Bạn rút tên khỏi bàn tuyển. Cuốn sổ trong ngực áo nặng như một viên gạch.' },
       { t: 'Rút tên, đứng ngoài cổng nhìn đoàn rước', fx: { end: 'cn_cong' } },
     ],
   }),
