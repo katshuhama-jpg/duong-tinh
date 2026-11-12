@@ -48,9 +48,25 @@ export const CN_CH2: Card[] = [
     title: 'Ba cách đọc vết',
     text: ['Bà Diệp, người giặt áo lâu năm nhất, dạy bạn ba cách đọc vết. Máu mới còn hồng ở mép, máu cũ nâu như vỏ hạt, còn nước vôi che máu thì khô cứng và trắng đục.', '"Còn tro trầm là áo của Thái hậu," bà nói nhỏ. "Thấy thì đừng nói."'],
     choices: [
-      { t: 'Học thuộc cả ba', fx: { d: { tin: 1 }, flag: ['hoc_vet'], next: 'c2_mo' }, note: 'Ngón tay bạn bắt đầu biết trước mắt. Một ngày, hai ngày, và vết trên vải bắt đầu có tiếng.' },
-      { t: 'Hỏi: "Đêm Tân Dậu, bà giặt mấy bộ chăn?"', need: { flags: ['ba_mau'] }, lockHint: 'Bạn chưa đếm được gì từ đêm ấy nên chưa biết hỏi gì.', fx: { d: { tin: 1 }, flag: ['diep_ba'], next: 'c2_mo' }, note: 'Bà Diệp ngừng tay. "Ba," bà nói. "Ta giặt ba, và ta không đếm lần hai."' },
-      { t: 'Im, chỉ làm theo', fx: go('c2_mo'), note: 'Bà Diệp nhìn bạn một lát rồi quay đi. Có người học bằng tai, có người học bằng việc nín.' },
+      { t: 'Học thuộc cả ba', fx: { d: { tin: 1 }, flag: ['hoc_vet'], next: 'c2_haibo' }, note: 'Ngón tay bạn bắt đầu biết trước mắt. Một ngày, hai ngày, và vết trên vải bắt đầu có tiếng.' },
+      { t: 'Hỏi: "Đêm Tân Dậu, bà giặt mấy bộ chăn?"', need: { flags: ['ba_mau'] }, lockHint: 'Bạn chưa đếm được gì từ đêm ấy nên chưa biết hỏi gì.', fx: { d: { tin: 1 }, flag: ['diep_ba'], next: 'c2_haibo' }, note: 'Bà Diệp ngừng tay. "Ba," bà nói. "Ta giặt ba, và ta không đếm lần hai."' },
+      { t: 'Im, chỉ làm theo', fx: go('c2_haibo'), note: 'Bà Diệp nhìn bạn một lát rồi quay đi. Có người học bằng tai, có người học bằng việc nín.' },
+    ],
+  }),
+  c({
+    id: 'c2_haibo',
+    place: 'vien',
+    img: 'sangiat',
+    where: 'ở sân giặt',
+    time: 'ngay',
+    cast: ['me', 'badiep'],
+    mood: 'lo',
+    title: 'Hai bộ tã',
+    text: ['Mỗi sáng, cung Hoàng hậu gửi xuống hai bộ đồ trẻ sơ sinh. Một bộ gấm vàng thêu rồng nhỏ, một bộ vải trắng thường, cùng một cỡ.', '"Hoàng trưởng tử và cậu bạn chơi," bà Diệp nói, không ngẩng lên. "Thái hậu thương, cho Hoàng trưởng tử có bạn từ trong nôi."'],
+    choices: [
+      { t: 'Giặt bộ gấm vàng trước', fx: { flag: ['hai_bo'], next: 'c2_mo' }, note: 'Bạn vò chiếc tã gấm thật lâu. Con bạn là Hoàng trưởng tử. Bạn tin như thế, vì không tin thì không đứng nổi.' },
+      { t: 'Đặt hai bộ cạnh nhau, so từng vết', fx: { d: { tin: 1 }, flag: ['hai_bo', 'so_hai_bo'], next: 'c2_mo' }, note: 'Hai bộ tã, hai đứa trẻ cùng một cỡ, cùng một mùi sữa. Ai đó đã cố cho chúng giống nhau từng chút.' },
+      { t: 'Hỏi: "Cậu bạn chơi ấy là con ai?"', fx: { d: { tin: 1, que: 1 }, flag: ['hai_bo', 'hoi_ban_choi'], next: 'c2_mo' }, note: '"Con ai thì không phải việc của con giặt," bà Diệp nói. Bà vắt chiếc tã trắng thật mạnh, như vắt một câu hỏi.' },
     ],
   }),
   c({

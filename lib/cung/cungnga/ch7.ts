@@ -1,6 +1,6 @@
 /**
  * Phần Cung nga giặt áo - Chương 7: Bờ bên kia (một năm sau khi ra cung, Hưng Bình năm 9, Đào 24 tuổi; kết đỉnh ở HB18, Đào 33, Hựu 15).
- * Hai lối vào (thẻ mở màn theo cờ): nhan_nham (bế nhầm Đăng) hoặc tra_con (trả con ở bến).
+ * Hai lối vào (thẻ mở màn theo cờ): nhan_nham (bế nhầm đứa mang tên Hựu, con Hến) hoặc tra_con (trả con ở bến).
  * Kết đỉnh "Chiếc áo mẹ giặt" (đường Nợ) cần: trả con, nhận đúng, tin Hoàng hậu, tha Mơ; không bán Thanh, không ghi tên ai,
  *   không nói với vua hay đổ cho Cúc ở chương 4, Tuất còn sống, không mở sổ Quế; chọn im lặng chờ mười năm.
  * Kết đỉnh "Người cầm sổ" (đường Hạ) cần: trả con, nhận đúng, đã mở sổ Quế ở bến (tức là đã hạ Quế và đứng bậc 4 trở lên); chọn chờ mười năm.
@@ -34,7 +34,7 @@ export const CN_CH7: Card[] = [
     mood: 'buon',
     lead: 'Một năm sau.',
     title: 'Hai đứa trẻ',
-    text: ['Bạn ra khỏi cung dưới một cái tên khác. Người ta nói Hoàng trưởng tử vẫn khỏe, tối nào cũng hát nửa câu ru.', 'Còn đứa bé bạn đã bế ra bến, người ta đem về một trang ngoài thành, chỗ đất đỏ như gấu áo bà đỡ năm nào.'],
+    text: ['Bạn ra khỏi cung dưới một cái tên khác. Người ta nói Hoàng trưởng tử vẫn khỏe, và từ mùa ấy, tối nào cũng hát nửa câu ru.', 'Còn đứa bé bạn đã bế ra bến, người ta đem về một trang ngoài thành, chỗ đất đỏ như gấu áo bà đỡ năm nào.'],
     choices: [
       { t: 'Sống với điều mình đã làm', fx: { end: 'cn_be_nham' } },
       { t: 'Đi tìm trang đất đỏ, tìm người tên Hến', fx: { end: 'cn_con_hen' } },
@@ -54,7 +54,7 @@ export const CN_CH7: Card[] = [
     lead: 'Một năm sau.',
     title: 'Ba chữ mỗi năm',
     text: ['Bạn sống ngoài cung dưới một cái tên tự đặt. Mỗi năm, vào một ngày không định trước, có người dúi vào tay bạn mẩu giấy ba chữ: "Còn sống, khỏe."', 'Có năm bạn theo người ấy về tận nhà. Đó là Thái y Thẩm. "Tôi đã ghi một dòng giả," ông nói. "Mỗi năm tôi trả một dòng thật."'],
-    choices: [{ t: 'Gật đầu, không hỏi thêm', fx: go('c7_song'), note: 'Ông có vợ con ở ngoài thành. Ông cũng đang trả một món nợ, như bạn.' }],
+    choices: [{ t: 'Gật đầu, không hỏi thêm', fx: go('c7_song'), note: 'Ông có vợ con ở ngoài thành. Ông cũng đang trả một món nợ, như bạn. Có lần ông kể thêm, không ai hỏi: ở một trang đất đỏ ngoài thành có một thằng bé học chữ chậm, hay cười, không biết mình từng đeo khóa ngọc.' }],
   }),
   c({
     id: 'c7_song',

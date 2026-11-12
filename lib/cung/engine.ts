@@ -286,6 +286,7 @@ export function ok(c: Cond | undefined, l: Life) {
   if (c.rankMax != null && l.rank > c.rankMax) return false;
   if (c.flags && !c.flags.every((f) => l.flags.includes(f))) return false;
   if (c.not && c.not.some((f) => l.flags.includes(f))) return false;
+  if (c.some && c.some[1].filter((f) => l.flags.includes(f)).length < c.some[0]) return false;
   if (c.sons != null && (c.sons === 0 ? sons(l) !== 0 : sons(l) < c.sons)) return false;
   if (c.kids != null && l.kids.length < c.kids) return false;
   if (c.vc != null && vayCanh(l).diem < c.vc) return false;

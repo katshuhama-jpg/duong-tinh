@@ -47,7 +47,7 @@ export const CN_CH3: Card[] = [
     mood: 'lo',
     lead: 'Canh một.',
     title: 'Chiếc yếm',
-    text: ['Một gói đồ trẻ con từ cung Hoàng hậu được đưa sang giặt gấp: tã, áo nhỏ, yếm. Ngày nào cũng gửi sang, ngày nào cũng sạch.', 'Bạn cầm chiếc yếm lên. Ở cổ có một vệt sữa còn ẩm, vẫn thơm.'],
+    text: ['Hai gói đồ trẻ con từ cung Hoàng hậu được đưa sang giặt gấp, một gói gấm, một gói vải thường.', 'Bạn cầm chiếc yếm gấm lên. Ở cổ có một vệt sữa còn ẩm, vẫn thơm.'],
     choices: [
       { t: 'Ngửi vệt sữa, xem nó mới hay cũ', fx: { d: { tin: 1 }, flag: ['biet_con_song'], next: 'c3_nhan' }, note: 'Sữa mới, mới bú trong buổi. Đứa trẻ này còn sống, và đang ở ngay bên kia bức tường.' },
       { t: 'Giấu chiếc yếm vào ngực', fx: { d: { que: 2 }, flag: ['giau_yem'], next: 'c3_nhan' }, note: 'Vải còn ấm. Bạn biết thiếu một chiếc thì sáng mai sẽ có người đếm.' },
@@ -183,10 +183,10 @@ export const CN_CH3: Card[] = [
     who: 'hoanghau',
     mood: 'vui',
     title: 'Sau cánh cửa',
-    text: ['Hoàng hậu dẫn bạn đi sau kho than, qua một cánh cửa chỉ bà mở được, và cho bạn đứng một lúc sau cửa phòng. Trong nôi, đứa bé ngủ, nắm tay thành một nắm nhỏ.', 'Bạn hát khẽ câu ru của mẹ bạn. Nó trở mình, và nắm tay mở ra.'],
+    text: ['Hoàng hậu dẫn bạn qua một cánh cửa chỉ bà mở được. Cạnh giường bà là chiếc nôi gấm của Hoàng trưởng tử, khóa ngọc treo ở đầu nôi. Sát cửa có một chiếc nôi tre nhỏ.', 'Bạn đến bên nôi gấm, hát khẽ câu ru của mẹ bạn. Phía sau lưng, có tiếng trở mình.'],
     choices: [
-      { t: 'Hát tiếp, thật khẽ', fx: { d: { tin: 1 }, flag: ['hat_ru_som'], next: 'c3_hh4' }, note: 'Cái miệng nhỏ chép chép trong giấc ngủ. Bạn thôi hát để khỏi bật khóc.' },
-      { t: 'Nhìn kỹ đuôi mắt nó', fx: { d: { tin: 1 }, flag: ['thay_not_ruoi_hh'], next: 'c3_hh4' }, note: 'Đuôi mắt phải có một nốt nhỏ như hạt vừng.' },
+      { t: 'Hát tiếp, thật khẽ', fx: { d: { tin: 1 }, flag: ['hat_ru_som'], next: 'c3_hh4' }, note: 'Đứa bé trong nôi gấm ngủ say, không động đậy. Tiếng chép miệng đến từ chiếc nôi tre sát cửa. Bạn tưởng mình nghe nhầm.' },
+      { t: 'Nhìn kỹ đuôi mắt nó', fx: { d: { tin: 1 }, flag: ['thay_not_ruoi_hh'], next: 'c3_hh4' }, note: 'Đuôi mắt phải có một nốt đen. Hơi to hơn bạn nhớ, hơi tròn hơn bạn nhớ. Bạn tự nhủ trẻ con lớn thì nốt ruồi cũng lớn.' },
       { t: 'Không dám nhìn lâu', fx: go('c3_hh4'), note: 'Bạn quay mặt đi. Có những thứ nhìn lâu sẽ không đi nổi nữa.' },
     ],
   }),
@@ -201,7 +201,7 @@ export const CN_CH3: Card[] = [
     who: 'hoanghau',
     mood: 'lo',
     title: 'Bà vú lạ',
-    text: ['Ra tới cửa, Hoàng hậu nói rất nhỏ: "Đêm ấy ta còn thấy một bà vú lạ bế một đứa bé trai vào cung, rồi bế ra. Không ghi sổ."', '"Ta không dám hỏi ai. Ngươi đừng chỉ nhìn một đứa."'],
+    text: ['Ra tới cửa, Hoàng hậu nói rất nhỏ: "Đêm ấy có hai đứa được bế vào, một đứa do một bà vú lạ ôm tới. Thái hậu giao cả hai cho ta, và không cho ta biết đứa nào là con ngươi."', '"Ta thương cả hai. Ngươi đừng chỉ nhìn một chiếc nôi."'],
     choices: [
       { t: 'Hỏi: "Bà vú ấy trông thế nào?"', fx: { d: { tin: 2 }, flag: ['biet_dua_kia', 'thay_bavu'], next: 'c3_cuoi' }, note: 'Bà chỉ nhớ một cái khăn trùm đầu màu đất, và bước chân rất nhanh.' },
       { t: 'Nhớ lại ba bộ chăn máu', need: { flags: ['ba_mau'] }, lockHint: 'Bạn chưa từng đếm ra ba loại máu.', fx: { d: { tin: 2 }, flag: ['biet_dua_kia', 'dua_thu_ba'], next: 'c3_cuoi' }, note: 'Một đêm ba người sinh. Hai người bạn đã biết. Người thứ ba có thể chính là đứa bé trai kia.' },

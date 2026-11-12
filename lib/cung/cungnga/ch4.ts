@@ -171,7 +171,7 @@ export const CN_CH4: Card[] = [
     text: ['Bạn bị sai quét lá vườn ngự một buổi. Bên hồ, một cậu bé ba tuổi quay lưng về phía bạn, vỗ tay hát lệch nhịp. Bạn biết câu hát ấy: câu ru của mẹ bạn.', 'Cậu hát đúng nửa câu, rồi dừng ở chỗ ngân. Đúng chỗ bạn dừng, trong hơi thở thứ ba.'],
     choices: [
       { t: 'Đứng yên nhìn, không dám thở mạnh', fx: { d: { tin: 1 }, flag: ['huu_bong_lung'], next: 'c4_tuat' }, note: 'Bạn chỉ thấy bóng lưng. Ai đã dạy nó nửa câu này, khi người duy nhất hát nó là bạn?' },
-      { t: 'Hát nốt nửa câu còn lại, thật khẽ', fx: { d: { que: 3, tin: 1 }, flag: ['huu_bong_lung', 'hat_not'], next: 'c4_tuat' }, note: 'Cậu bé khựng lại, nghiêng đầu như nghe gió. Rồi có tiếng gọi "Hựu ơi", và cậu chạy đi, không quay lại.' },
+      { t: 'Hát nốt nửa câu còn lại, thật khẽ', fx: { d: { que: 3, tin: 1 }, flag: ['huu_bong_lung', 'hat_not'], next: 'c4_tuat' }, note: 'Cậu bé khựng lại, nghiêng đầu như nghe gió. Rồi có tiếng gọi "Đăng ơi", và cậu chạy đi, không quay lại.' },
       { t: 'Quay đi, cúi xuống quét', fx: { flag: ['huu_bong_lung'], next: 'c4_tuat' }, note: 'Chổi quét xuống nền gạch thành tiếng đều đều. Bạn đếm từng nhát để không nghe giọng hát.' },
     ],
   }),
@@ -185,10 +185,10 @@ export const CN_CH4: Card[] = [
     who: 'tuat',
     mood: 'lo',
     title: 'Cậu tiểu hoạn',
-    text: ['Một cậu tiểu hoạn gầy nhom bước ra từ sau cột, tay ôm chiếc ghế nhỏ. "Cô nương," cậu nói, hơi khàn, "chỗ này không được đứng."', 'Cậu tên Tuất, mười bốn tuổi, mồ côi, canh cổng phòng Hoàng trưởng tử. Mắt cậu không rời hồ, như sợ cậu bé biến mất nếu cậu chớp mắt.'],
+    text: ['Một cậu tiểu hoạn gầy nhom bước ra từ sau cột, tay ôm chiếc ghế nhỏ. "Cô nương," cậu nói, hơi khàn, "chỗ này không được đứng."', 'Cậu tên Tuất, mười bốn tuổi, mồ côi, canh cổng phòng Hoàng trưởng tử. "Cậu bé hát kia là cậu Đăng, bạn chơi của Hoàng trưởng tử," cậu nói, mắt không rời hồ.'],
     choices: [
       { t: 'Chia nửa chiếc bánh nếp mang theo', fx: { d: { keo: 2 }, flag: ['keo_tuat'], next: 'c4_thanh' }, note: 'Tuất nhìn chiếc bánh như nhìn một thứ chưa ai từng đưa cho mình. Cậu nhận, và không nói được gì.' },
-      { t: 'Hỏi: "Ai dạy cậu bé câu hát ấy?"', fx: { d: { tin: 1 }, flag: ['biet_thanh_ru'], next: 'c4_thanh' }, note: '"Chị Thanh ru cậu câu ấy mỗi tối," Tuất nói. "Chỉ nửa câu. Chị bảo chị chỉ nghe được có thế."' },
+      { t: 'Hỏi: "Ai dạy cậu bé câu hát ấy?"', fx: { d: { tin: 1 }, flag: ['biet_thanh_ru'], next: 'c4_thanh' }, note: '"Chị Thanh ru cậu Đăng câu ấy mỗi tối," Tuất nói. "Hoàng trưởng tử thì không thuộc. Chị bảo chị chỉ nghe được nửa câu."' },
       { t: 'Nói: "Tôi đi ngay."', fx: { flag: ['tuat_xa'], next: 'c4_thanh' }, note: 'Tuất cúi đầu cảm ơn. Cậu lại nhìn hồ, như nhớ ra việc quan trọng hơn.' },
     ],
   }),
@@ -255,7 +255,7 @@ export const CN_CH4: Card[] = [
     mood: 'lo',
     lead: 'Hai năm sau.',
     title: 'Hai năm sau',
-    text: ['Hựu năm tuổi, vẫn hát nửa câu ru mỗi tối. Chị Thanh gầy đi thấy rõ, và nghe nói chị thức khuya viết một thứ gì đó, viết xong lại đốt.', 'Tuất mười sáu tuổi, vẫn đứng ở cổng phòng Hựu mỗi sáng, như giữ chỗ cho một người chưa tới.'],
+    text: ['Hoàng trưởng tử và cậu Đăng lên năm, mặc giống nhau, ngủ cùng phòng. Chị Thanh gầy đi thấy rõ, nghe nói chị thức khuya viết một thứ gì đó, viết xong lại đốt.', 'Tuất mười sáu tuổi, vẫn đứng ở cổng phòng hai cậu bé mỗi sáng, như giữ chỗ cho một người chưa tới.'],
     choices: [
       { t: 'Nhìn Tuất từ xa', fx: { flag: ['nhin_tuat'], chapter: 5 }, note: 'Có người cho bạn một nhánh hoa. Có người nhìn bạn mà không thấy gì. Và có người đang chờ bạn tin.' },
       { t: 'Cúi xuống chậu giặt', fx: { chapter: 5 }, note: 'Có người cho bạn một nhánh hoa. Có người nhìn bạn mà không thấy gì. Và có người đang chờ bạn tin.' },

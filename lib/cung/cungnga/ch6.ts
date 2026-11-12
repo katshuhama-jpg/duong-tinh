@@ -1,8 +1,8 @@
 /**
  * Phần Cung nga giặt áo - Chương 6: Cửa sông (cao trào, một canh giờ sau tiếng chuông; Hưng Bình năm 8, Hựu 5 tuổi).
- * Cánh cửa phòng Hựu bỏ ngỏ là bẫy của chính Thái hậu (Hoàng hậu không biết). Trong phòng có hai bé trai: Hựu và Đăng (con của Hến,
- * đứa dự phòng). Ba dấu: nốt ruồi đuôi mắt phải (Đăng có chấm mực giả), khóa ngọc (của Đăng nhẹ hơn), câu ru (Đăng không biết).
- * Khóa Phần 2: mọi nhánh mang con đi đều thất bại; Đào sống ở mọi nhánh trừ "Tiếng hét giữa sương" (kết chết, nhánh rẽ).
+ * Cánh cửa phòng Hựu bỏ ngỏ là bẫy của chính Thái hậu (Hoàng hậu không biết). Trong phòng có hai bé trai:
+ * đứa mang tên Hựu ở giường gấm (thật ra con Hến, nốt ruồi chấm mực, khóa ngọc giả) và cậu Đăng ở giường tre
+ * (con thật của Đào, nốt ruồi thật, khóa ngọc thật giấu dưới áo, thuộc nửa câu ru). Bế đúng thì con Đào mang tên Hựu từ đây.
  * Cờ chương trước dùng ở đây: tin_hh, keo_tuat, ha_que, bac2..bac5, hat_not (ch4), gan_luc, biet_dua_kia, so_que, cuu_tuat, trao_minh.
  * Cờ đặt: hh_mo_cua, biet_bay, cuu_tuat | tuat_chet | trao_minh, nhan_dung | nhan_nham, luc_chon, mo_so_que, goi_nguoi,
  *   hh_quy, hat_ru | nguoi_giat_ao | om, tra_con.
@@ -121,13 +121,13 @@ export const CN_CH6: Card[] = [
     time: 'ngay',
     cast: ['me', 'huu', 'dang'],
     title: 'Hai chiếc giường nhỏ',
-    text: ['Trong phòng có hai chiếc giường nhỏ. Hai bé trai năm tuổi ngủ cạnh nhau, áo giống nhau, tóc buộc giống nhau.', 'Một là con bạn. Đứa kia bạn chưa từng thấy. Bạn có ba dấu, và một canh giờ đang cạn.'],
+    text: ['Trong phòng có hai chiếc giường nhỏ. Giường gấm của Hoàng trưởng tử Hựu, giường tre của cậu Đăng. Hai bé trai năm tuổi, áo giống nhau, tóc buộc giống nhau.', 'Cả hai đứa đều có một chấm đen ở đuôi mắt phải. Bạn có ba dấu, và một canh giờ đang cạn.'],
     omen: 'Thái hậu chưa bao giờ chỉ giữ một con bài.',
     choices: [
       { t: 'Thử đủ ba dấu', fx: { d: { que: 2 }, next: 'c6_thu' }, note: 'Bạn quỳ xuống giữa hai chiếc giường. Mỗi dấu là một khắc, và canh giờ đang cạn.' },
-      { t: 'Tin vào cảm giác, bế đứa nằm phía trong', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, risk: { p: 0.35, fail: { flag: ['nhan_nham'], next: 'c6_gio_nham' }, failNote: 'Tay bạn chọn trước khi mắt kịp nhìn.' }, note: 'Tay bạn chọn trước khi mắt kịp nhìn.' },
-      { t: 'Nhìn đuôi mắt hai đứa thật kỹ', need: { flags: ['chac_not_ruoi'] }, lockHint: 'Đêm ấy bạn không nhìn kỹ chấm nhỏ ở đuôi mắt con.', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Bạn đã thuộc chấm nhỏ ấy từ hơi thở đầu tiên. Chấm của đứa bên trái tròn quá, đen quá, như ai chấm bằng bút. Bạn bế đứa bên phải.' },
-      { t: 'Bế đứa gần cửa, chạy', fx: { flag: ['nhan_nham'], next: 'c6_gio_nham' }, note: 'Không còn thời gian để nhìn. Bạn ôm lấy đứa gần nhất.' },
+      { t: 'Tin chị Thanh, bế đứa ở giường tre', need: { flags: ['biet_dang'] }, lockHint: 'Chị Thanh chưa kịp nói với bạn đứa nào.', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, risk: { p: 0.35, fail: { flag: ['nhan_nham'], next: 'c6_gio_nham' }, failNote: 'Quế biết bạn biết. Đêm nay bà đã đổi giường hai đứa, và bạn không kịp nhìn đuôi mắt đứa mình bế.' }, note: 'Bạn bế đứa ở giường tre. Nó trở mình, nắm tay mở ra.' },
+      { t: 'Bế Hoàng trưởng tử ở giường gấm', need: { not: ['biet_dang'] }, lockHint: 'Bạn đã biết con mình không nằm giường gấm.', fx: { flag: ['nhan_nham'], next: 'c6_gio_nham' }, note: 'Nốt ruồi, khóa ngọc, cái tên Hựu. Mọi dấu đều chỉ về giường gấm, và bạn tin.' },
+      { t: 'Nhìn đuôi mắt hai đứa thật kỹ', need: { flags: ['chac_not_ruoi'] }, lockHint: 'Đêm ấy bạn không nhìn kỹ chấm nhỏ ở đuôi mắt con.', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Bạn đã thuộc chấm nhỏ ấy từ hơi thở đầu tiên. Chấm của một đứa tròn quá, đen quá, như ai chấm bằng bút. Đứa kia có một chấm nhỏ hơn, nhạt hơn, đúng như bạn nhớ. Bạn bế đứa ấy.' },
     ],
   }),
   c({
@@ -138,9 +138,9 @@ export const CN_CH6: Card[] = [
     time: 'ngay',
     cast: ['me', 'huu', 'dang'],
     title: 'Ba dấu',
-    text: ['Bạn nhúng ngón tay vào bát nước, lau đuôi mắt đứa bên trái: chấm đen phai đi, chỉ là mực. Đứa bên phải, nốt ruồi vẫn nguyên.', 'Bạn cân hai chiếc khóa ngọc trong lòng bàn tay, một chiếc nhẹ hều. Rồi bạn hát khẽ nửa câu ru.'],
+    text: ['Bạn nhúng ngón tay vào bát nước, lau đuôi mắt Hoàng trưởng tử: chấm đen phai đi, chỉ là mực. Đuôi mắt cậu Đăng có một chấm nhỏ, lau không đi.', 'Khóa ngọc trên cổ Hoàng trưởng tử nhẹ hều. Khóa của cậu Đăng giấu dưới áo, ba vòng chỉ đỏ đã bạc màu. Bạn hát khẽ nửa câu ru.'],
     choices: [
-      { t: 'Nghe đứa bên phải hát nốt trong mơ', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Nó hát nửa câu Thanh dạy, dừng ở chỗ ngân, đúng như năm ấy. Bạn bế nó lên.' },
+      { t: 'Nghe cậu Đăng hát nốt trong mơ', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Cậu Đăng hát nửa câu Thanh dạy, dừng ở chỗ ngân, đúng như năm ấy. Đứa mang tên Hựu ngủ yên, không thuộc chữ nào. Bạn bế cậu Đăng lên.' },
       { t: 'Nghe nó hát trọn cả câu', need: { flags: ['hat_not'] }, lockHint: 'Nửa câu còn lại chưa ai hát cho nó nghe.', fx: { d: { tin: 1 }, flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Nó hát hết cả câu, cả nửa câu bạn hát ở vườn ngự năm nó lên ba. Bạn bế nó lên mà không dám thở.' },
     ],
   }),
@@ -153,7 +153,7 @@ export const CN_CH6: Card[] = [
     cast: ['me', 'huu'],
     who: 'huu',
     title: 'Giỏ áo',
-    text: ['Hựu còn ngái ngủ. Bạn đặt cậu vào giỏ giặt, phủ áo lên. Cậu hỏi rất khẽ: "Cô là ai?"', 'Bạn không trả lời. Bạn hát. Cậu hát theo nửa câu, rồi ngủ lại.'],
+    text: ['Đứa bé người ta gọi là Đăng còn ngái ngủ. Bạn đặt nó vào giỏ giặt, phủ áo lên. Nó hỏi rất khẽ: "Cô là ai?"', 'Bạn không trả lời. Bạn hát. Cậu hát theo nửa câu, rồi ngủ lại.'],
     choices: [{ t: 'Bê giỏ ra xe', fx: go('c6_xe'), note: 'Giỏ nặng hơn mọi giỏ áo bạn từng bê, và nhẹ hơn mọi thứ bạn từng mang.' }],
   }),
   c({
@@ -165,7 +165,7 @@ export const CN_CH6: Card[] = [
     cast: ['me', 'dang'],
     who: 'dang',
     title: 'Giỏ áo',
-    text: ['Bạn đặt đứa bé vào giỏ, phủ áo lên. Nó mở mắt: "Cô là ai?" rồi khóc.', 'Bạn hát. Nó không hát theo. Bạn tự nhủ trẻ con mới tỉnh thì hay khóc.'],
+    text: ['Bạn đặt Hoàng trưởng tử vào giỏ, phủ áo lên. Cậu mở mắt: "Cô là ai?" rồi khóc.', 'Bạn hát. Nó không hát theo. Bạn tự nhủ trẻ con mới tỉnh thì hay khóc.'],
     choices: [{ t: 'Bê giỏ ra xe', fx: go('c6_xe'), note: 'Sau lưng bạn, đứa còn lại trở mình trong chăn.' }],
   }),
   c({
@@ -209,7 +209,7 @@ export const CN_CH6: Card[] = [
     who: 'thaihau',
     mood: 'buon',
     title: 'Con của Hến',
-    text: ['Thái hậu nhìn vào giỏ, nói rất nhẹ: "Ngươi bế con của một người đàn bà tên Hến. Con ngươi còn nằm trong phòng, ta chưa động đến."', 'Một bà vú trùm khăn màu đất bước ra từ sương, bế đứa bé khỏi giỏ. Mặt trời lên. Một canh giờ đã hết.'],
+    text: ['Thái hậu nhìn vào giỏ, nói rất nhẹ: "Ngươi bế đứa mang tên Hựu. Nó là con của một người đàn bà tên Hến. Con ngươi vẫn nằm ở giường tre, như năm năm nay."', 'Một bà vú trùm khăn màu đất bước ra từ sương, bế đứa bé khỏi giỏ. Mặt trời lên. Một canh giờ đã hết.'],
     choices: [{ t: 'Đứng nhìn', fx: { chapter: 7 }, note: 'Bạn nhận ra chiếc khăn trùm đầu ấy. Đêm Tân Dậu, nó đã bế một đứa trẻ vào cung, rồi bế ra. Hết chương sáu.' }],
   }),
   c({
@@ -221,10 +221,10 @@ export const CN_CH6: Card[] = [
     cast: ['me', 'thaihau'],
     who: 'thaihau',
     title: 'Ta cho mở',
-    text: ['"Cánh cửa ngươi đi qua sáng nay, không ai bỏ quên. Ta cho mở," Thái hậu nói. "Hoàng hậu không biết. Đừng giận nó."', '"Ngươi mang nó đi, nó làm con của kẻ bỏ trốn. Ngươi để nó lại, nó làm vua."'],
+    text: ['"Cánh cửa ngươi đi qua sáng nay, không ai bỏ quên. Ta cho mở," Thái hậu nói. "Hoàng hậu không biết. Đừng giận nó."', '"Ngươi bế đứa người ta gọi là Đăng. Ngươi mang nó đi, nó làm con của kẻ bỏ trốn. Ngươi trả nó cho ta, từ hôm nay nó mang tên Hựu, và nó làm vua."'],
     choices: [
       { t: 'Nói: "Con biết là bà mở."', need: { flags: ['biet_bay'] }, lockHint: 'Bạn đã không biết đây là bẫy.', fx: go('c6_ben3'), note: 'Thái hậu nhìn bạn lâu hơn bà từng nhìn ai. "Vậy mà ngươi vẫn đến," bà nói. Lần đầu bà phải tính lại.' },
-      { t: 'Hỏi: "Còn đứa kia?"', need: { flags: ['biet_dua_kia'] }, lockHint: 'Bạn chưa từng nghe có đứa kia.', fx: { d: { tin: 1 }, next: 'c6_ben3' }, note: '"Ta giữ nó từ trước đêm ấy," bà nói. "Ngươi mang đứa này đi, ta còn đứa kia."' },
+      { t: 'Hỏi: "Còn đứa kia?"', need: { flags: ['biet_dua_kia'] }, lockHint: 'Bạn chưa từng nghe có đứa kia.', fx: { d: { tin: 1 }, next: 'c6_ben3' }, note: '"Đứa kia đeo tên Hựu năm năm," bà nói. "Từ hôm nay nó lại là con Hến. Người của ta đưa nó về một trang ngoài thành, chỗ đất đỏ. Nó sẽ lớn lên làm một đứa trẻ quê, không ai nhớ nó từng đeo khóa ngọc."' },
       { t: 'Nói: "Đêm ấy con nghe hai tiếng khóc."', need: { flags: ['nghe_khoc_2'], not: ['biet_dua_kia'] }, lockHint: 'Đêm ấy bạn không để ý tiếng khóc nào khác.', fx: { d: { tin: 1 }, next: 'c6_ben3' }, note: '"Ngươi nghe đúng," Thái hậu nói. "Một tiếng là con ngươi. Tiếng kia ta mua từ trước đêm ấy. Ta chưa bao giờ chỉ giữ một con bài."' },
       { t: 'Hỏi: "Ai báo cho bà giờ con ra bến?"', need: { flags: ['man_nhan_tien'] }, lockHint: 'Bạn chưa từng mua tin của ai.', fx: { d: { tin: 1 }, next: 'c6_ben3' }, note: '"Một chiếc khăn lụa," Thái hậu nói. "Chị bếp bán tin cho ngươi, thì cũng bán tin về ngươi. Ngươi trả một, người khác trả gấp đôi."' },
       { t: 'Im lặng', fx: go('c6_ben3'), note: '"Ta biết người ta sẽ chép ta ra sao," bà nói, nhìn sương. "Gà mái gáy mai. Ta không cần họ chép đúng."' },
@@ -268,7 +268,7 @@ export const CN_CH6: Card[] = [
     cast: ['me', 'huu', 'thaihau'],
     who: 'huu',
     title: 'Cô là ai',
-    text: ['Hựu tỉnh dậy trong giỏ, nhìn hai người đàn bà đứng giữa sương. "Cô là ai?" cậu hỏi lần nữa.', 'Thái hậu không ngăn. Bà để bạn trả lời.'],
+    text: ['Đứa bé tỉnh dậy trong giỏ, nhìn hai người đàn bà đứng giữa sương. "Cô là ai?" cậu hỏi lần nữa.', 'Thái hậu không ngăn. Bà để bạn trả lời.'],
     choices: [
       { t: 'Hát tiếp câu ru', fx: { flag: ['hat_ru'], next: 'c6_chon' }, note: 'Cậu nhắm mắt, môi mấp máy theo. "Nó sẽ quên trước khi mặt trời lặn," Thái hậu nói. "Còn ngươi thì không."' },
       { t: 'Nói: "Cô là người giặt áo cho con."', fx: { flag: ['nguoi_giat_ao'], next: 'c6_chon' }, note: 'Cậu gật, như đó là một câu trả lời đủ. "Nó sẽ nhớ nghề, không nhớ mặt," Thái hậu nói.' },
@@ -320,7 +320,7 @@ export const CN_CH6: Card[] = [
     who: 'thaihau',
     mood: 'buon',
     title: 'Trả con',
-    text: ['Bạn đặt Hựu vào tay người Thái hậu chỉ. Bà nói: "Kiệm giữ tên ngươi ở bản gốc. Ngày ta chết, nó trả về cho ngươi."', 'Đứa trẻ quay đầu lại một lần. Bạn không biết nó quay vì nhớ hay vì sợ.'],
+    text: ['Bạn đặt con vào tay người Thái hậu chỉ. Từ sáng nay, nó mang tên Hựu. Bà nói: "Kiệm giữ tên ngươi ở bản gốc. Ngày ta chết, nó trả về cho ngươi."', 'Đứa trẻ quay đầu lại một lần. Bạn không biết nó quay vì nhớ hay vì sợ.'],
     choices: [{ t: 'Đi về phía cổng', fx: { chapter: 7 }, note: 'Lời của Thái hậu chưa bao giờ sai một chữ. Hết chương sáu.' }],
   }),
 ];

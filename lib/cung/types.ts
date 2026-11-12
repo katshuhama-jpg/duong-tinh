@@ -98,6 +98,8 @@ export interface Cond {
   rankMax?: number;
   /** phải có đủ các cờ này */
   flags?: string[];
+  /** phải có ít nhất n cờ trong danh sách */
+  some?: [number, string[]];
   /** không được có cờ nào trong này */
   not?: string[];
   /** số con trai tối thiểu */

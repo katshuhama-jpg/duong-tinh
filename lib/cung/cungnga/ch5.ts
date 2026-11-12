@@ -12,6 +12,9 @@
  */
 import type { Card } from '../types';
 
+/** Manh mối cho thấy con Đào là cậu Đăng, không phải đứa mang tên Hựu (cần 2 để hỏi thẳng Thanh). */
+const DANG_CLUES = ['so_hai_bo', 'hoi_ban_choi', 'hat_ru_som', 'thay_not_ruoi_hh', 'hat_not', 'biet_thanh_ru'];
+
 const P = 'cungnga' as const;
 type Step = Omit<Card, 'part' | 'chapter'>;
 const c = (x: Step): Card => ({ part: P, chapter: [5], step: true, ...x });
@@ -222,8 +225,11 @@ export const CN_CH5: Card[] = [
     who: 'thanh',
     mood: 'buon',
     title: 'Người áo xanh nhạt',
-    text: ['Nửa đêm, Thanh đến viện giặt, tóc cài chiếc lược ngà. "Năm xưa chị mất một đứa con," chị nói. "Đêm ấy nghe tiếng khóc ở gian sau, chị không quay đi được. Chị không cứu em. Chị cứu chính mình."', '"Sáng mai chị đi gặp vua. Con em có nốt ruồi nhỏ ở đuôi mắt phải. Cái khóa ngọc em buộc, chị không cho ai tháo. Câu ru em hát, nó thuộc nửa câu."'],
-    choices: [{ t: 'Nhìn chị, lần đầu nhìn thẳng', fx: { d: { tin: 1 }, flag: ['biet_ba_dau'], next: 'c5_thanh_chon' }, note: 'Năm năm, chị im theo lệnh Thái hậu. Đêm nay chị không im nữa.' }],
+    text: ['Nửa đêm, Thanh đến viện giặt, tóc cài chiếc lược ngà. "Năm xưa chị mất một đứa con. Đêm ấy nghe tiếng khóc ở gian sau, chị không quay đi được. Chị không cứu em, chị cứu chính mình."', '"Sáng mai chị đi gặp vua." Chị nhìn bạn rất lâu, như chờ bạn hỏi đúng một câu.'],
+    choices: [
+      { t: 'Hỏi: "Con em là đứa ở nôi tre, phải không chị?"', need: { some: [2, DANG_CLUES] }, lockHint: 'Bạn chưa để ý đủ những điều lạ quanh hai đứa trẻ.', fx: { d: { tin: 2 }, flag: ['biet_ba_dau', 'biet_dang'], next: 'c5_thanh_chon' }, note: 'Thanh nhắm mắt. "Đứa người ta gọi là Đăng mới là con em. Đứa mang tên Hựu là con một người đàn bà tên Hến. Quế chấm mực lên đuôi mắt nó, đeo cho nó khóa ngọc giả." Năm năm, bạn hát cho chiếc nôi gấm, và con bạn nằm ở chiếc nôi tre sát cửa.' },
+      { t: 'Hỏi: "Con em có khỏe không chị?"', fx: { d: { tin: 1 }, flag: ['biet_ba_dau'], next: 'c5_thanh_chon' }, note: '"Khỏe," Thanh nói, rồi im. Ngoài sân có tiếng guốc. Chị chỉ kịp dặn ba dấu: nốt ruồi đuôi mắt phải, khóa ngọc ba vòng chỉ đỏ, nửa câu ru. "Đừng tin dấu nào một mình," chị nói, rồi đi.' },
+    ],
   }),
   c({
     id: 'c5_thanh_chon',
