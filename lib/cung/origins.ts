@@ -24,6 +24,8 @@ export interface Origin {
   open?: boolean;
   /** đoạn mở đầu trên màn đặt tên */
   intro: string[];
+  /** nói rõ người chơi cần làm gì trong phần này */
+  goal?: string[];
   /** cảnh màn đặt tên */
   place: 'lang' | 'phong' | 'vien' | 'chua';
   names: 'dan' | 'quy' | 'tuc';
@@ -83,6 +85,13 @@ export const ORIGINS: Origin[] = [
     intro: [
       'Bạn là Đào, mười tám tuổi, cung nga hầu trà ở cung Tây. Gần mười tháng trước, vua uống của bạn một chén trà gừng, và tối hôm ấy Kiệm đến gọi tên bạn. Đêm nay mưa, và bụng bạn đã đến ngày.',
       'Bà Diệp, người giặt áo lâu năm nhất, từng dặn bạn về viện giặt, chỗ thấp nhất trong cung: "Ở đây, đứa nào ngẩng đầu lên là đứa đó chết trước."',
+    ],
+    goal: [
+      'Đêm nay bạn sinh con, và con bạn sẽ bị bế đi. Việc của bạn là tìm lại nó.',
+      'Sống sót ở viện giặt: giữ miệng, kết người tin được, tránh để Quế để ý.',
+      'Đọc vết trên những chiếc áo gửi xuống giặt để lần ra ai đã bế con đi, và con đang ở đâu.',
+      'Đừng tin dấu nào một mình. Một cái tên, một nốt ruồi, một chiếc khóa đều có thể bị làm giả.',
+      'Đến cuối, bạn phải chọn: mang con đi, hay để con lớn lên trong cung.',
     ],
     place: 'vien',
     names: 'tuc',

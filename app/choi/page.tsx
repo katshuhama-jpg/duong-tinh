@@ -597,6 +597,16 @@ export default function Play() {
           <p className="c-prose" style={{ fontSize: 14.5, color: 'var(--mute)' }}>
             {o.intro[1]}
           </p>
+          {o.goal && (
+            <section className="c-goal" aria-label="Việc của bạn">
+              <h2>Việc của bạn</h2>
+              <ul>
+                {o.goal.map((g) => (
+                  <li key={g}>{g}</li>
+                ))}
+              </ul>
+            </section>
+          )}
           {o.k !== 'cung' && (
           <>
           <label className="c-field">

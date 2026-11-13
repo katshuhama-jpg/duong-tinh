@@ -140,7 +140,7 @@ export const CN_CH6: Card[] = [
     title: 'Ba dấu',
     text: ['Bạn nhúng ngón tay vào bát nước, lau đuôi mắt Hoàng trưởng tử: chấm đen phai đi, chỉ là mực. Đuôi mắt cậu Đăng có một chấm nhỏ, lau không đi.', 'Khóa ngọc trên cổ Hoàng trưởng tử nhẹ hều. Khóa của cậu Đăng giấu dưới áo, ba vòng chỉ đỏ đã bạc màu. Bạn hát khẽ nửa câu ru.'],
     choices: [
-      { t: 'Nghe cậu Đăng hát nốt trong mơ', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Cậu Đăng hát nửa câu Thanh dạy, dừng ở chỗ ngân, đúng như năm ấy. Đứa mang tên Hựu ngủ yên, không thuộc chữ nào. Bạn bế cậu Đăng lên.' },
+      { t: 'Nghe cậu Đăng hát nốt trong mơ', fx: { flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Cậu Đăng hát nửa câu chị Thanh dạy, dừng ở chỗ ngân, đúng như năm ấy. Đứa mang tên Hựu ngủ yên, không thuộc chữ nào. Bạn bế cậu Đăng lên.' },
       { t: 'Nghe nó hát trọn cả câu', need: { flags: ['hat_not'] }, lockHint: 'Nửa câu còn lại chưa ai hát cho nó nghe.', fx: { d: { tin: 1 }, flag: ['nhan_dung'], next: 'c6_gio' }, note: 'Nó hát hết cả câu, cả nửa câu bạn hát ở vườn ngự năm nó lên ba. Bạn bế nó lên mà không dám thở.' },
     ],
   }),

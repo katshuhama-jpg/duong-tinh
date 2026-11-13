@@ -396,3 +396,8 @@ p.c-tale-line { font-family: var(--serif); font-size: 18px; line-height: 1.65; m
 .c-ghichu article + article { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
 .c-ghichu h4 { margin: 0 0 4px; font-family: var(--serif); font-size: 15px; }
 .c-ghichu p { margin: 0 0 6px; font-family: var(--serif); font-size: 15px; line-height: 1.6; }
+
+.c-goal { margin: 14px 0 4px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); }
+.c-goal h2 { margin: 0 0 6px; font-family: var(--serif); font-size: 15px; letter-spacing: 0.04em; color: var(--son); }
+.c-goal ul { margin: 0; padding-left: 18px; }
+.c-goal li { font-family: var(--serif); font-size: 15px; line-height: 1.5; margin: 3px 0; }

@@ -12,7 +12,7 @@
  */
 import type { Card } from '../types';
 
-/** Manh mối cho thấy con Đào là cậu Đăng, không phải đứa mang tên Hựu (cần 2 để hỏi thẳng Thanh). */
+/** Manh mối cho thấy con Đào là cậu Đăng, không phải đứa mang tên Hựu (cần 2 để hỏi thẳng chị Thanh). */
 const DANG_CLUES = ['so_hai_bo', 'hoi_ban_choi', 'hat_ru_som', 'thay_not_ruoi_hh', 'hat_not', 'biet_thanh_ru'];
 
 const P = 'cungnga' as const;
@@ -225,10 +225,10 @@ export const CN_CH5: Card[] = [
     who: 'thanh',
     mood: 'buon',
     title: 'Người áo xanh nhạt',
-    text: ['Nửa đêm, Thanh đến viện giặt, tóc cài chiếc lược ngà. "Năm xưa chị mất một đứa con. Đêm ấy nghe tiếng khóc ở gian sau, chị không quay đi được. Chị không cứu em, chị cứu chính mình."', '"Sáng mai chị đi gặp vua." Chị nhìn bạn rất lâu, như chờ bạn hỏi đúng một câu.'],
+    text: ['Nửa đêm, chị Thanh đến viện giặt, tóc cài chiếc lược ngà. "Năm xưa chị mất một đứa con. Đêm ấy nghe tiếng khóc ở gian sau, chị không quay đi được. Chị không cứu em, chị cứu chính mình."', '"Sáng mai chị đi gặp vua." Chị nhìn bạn rất lâu, như chờ bạn hỏi đúng một câu.'],
     choices: [
-      { t: 'Hỏi: "Con em là đứa ở nôi tre, phải không chị?"', need: { some: [2, DANG_CLUES] }, lockHint: 'Bạn chưa để ý đủ những điều lạ quanh hai đứa trẻ.', fx: { d: { tin: 2 }, flag: ['biet_ba_dau', 'biet_dang'], next: 'c5_thanh_chon' }, note: 'Thanh nhắm mắt. "Đứa người ta gọi là Đăng mới là con em. Đứa mang tên Hựu là con một người đàn bà tên Hến. Quế chấm mực lên đuôi mắt nó, đeo cho nó khóa ngọc giả." Năm năm, bạn hát cho chiếc nôi gấm, và con bạn nằm ở chiếc nôi tre sát cửa.' },
-      { t: 'Hỏi: "Con em có khỏe không chị?"', fx: { d: { tin: 1 }, flag: ['biet_ba_dau'], next: 'c5_thanh_chon' }, note: '"Khỏe," Thanh nói, rồi im. Ngoài sân có tiếng guốc. Chị chỉ kịp dặn ba dấu: nốt ruồi đuôi mắt phải, khóa ngọc ba vòng chỉ đỏ, nửa câu ru. "Đừng tin dấu nào một mình," chị nói, rồi đi.' },
+      { t: 'Hỏi: "Con em là đứa ở nôi tre, phải không chị?"', need: { some: [2, DANG_CLUES] }, lockHint: 'Bạn chưa để ý đủ những điều lạ quanh hai đứa trẻ.', fx: { d: { tin: 2 }, flag: ['biet_ba_dau', 'biet_dang'], next: 'c5_thanh_chon' }, note: 'Chị Thanh nhắm mắt. "Đứa người ta gọi là Đăng mới là con em. Đứa mang tên Hựu là con một người đàn bà tên Hến. Quế chấm mực lên đuôi mắt nó, đeo cho nó khóa ngọc giả." Năm năm, bạn hát cho chiếc nôi gấm, và con bạn nằm ở chiếc nôi tre sát cửa.' },
+      { t: 'Hỏi: "Con em có khỏe không chị?"', fx: { d: { tin: 1 }, flag: ['biet_ba_dau'], next: 'c5_thanh_chon' }, note: '"Khỏe," chị Thanh nói, rồi im. Ngoài sân có tiếng guốc. Chị chỉ kịp dặn ba dấu: nốt ruồi đuôi mắt phải, khóa ngọc ba vòng chỉ đỏ, nửa câu ru. "Đừng tin dấu nào một mình," chị nói, rồi đi.' },
     ],
   }),
   c({
@@ -242,11 +242,11 @@ export const CN_CH5: Card[] = [
     cast: ['me', 'thanh'],
     who: 'thanh',
     title: 'Sáng mai',
-    text: ['Thanh đứng dậy, phủi tà áo. Bạn biết sáng mai sẽ có chuông.', 'Bạn còn một câu để nói với chị, và chỉ một câu.'],
+    text: ['Chị Thanh đứng dậy, phủi tà áo. Bạn biết sáng mai sẽ có chuông.', 'Bạn còn một câu để nói với chị, và chỉ một câu.'],
     omen: 'Người đi gặp vua mà không qua Thái hậu, chưa ai về.',
     choices: [
-      { t: 'Báo chị: "Quế đã biết."', fx: { d: { no: 1 }, flag: ['bao_thanh'], next: 'c5_khan' }, note: '"Chị biết," Thanh cười. "Chị vẫn đi."' },
-      { t: 'Xin chị dừng lại', fx: { d: { no: 1 }, flag: ['xin_thanh'], next: 'c5_khan' }, note: '"Em xin chị vì em, hay vì con?" Thanh hỏi, rồi tự trả lời bằng cách quay đi.' },
+      { t: 'Báo chị: "Quế đã biết."', fx: { d: { no: 1 }, flag: ['bao_thanh'], next: 'c5_khan' }, note: '"Chị biết," chị Thanh cười. "Chị vẫn đi."' },
+      { t: 'Xin chị dừng lại', fx: { d: { no: 1 }, flag: ['xin_thanh'], next: 'c5_khan' }, note: '"Em xin chị vì em, hay vì con?" chị Thanh hỏi, rồi tự trả lời bằng cách quay đi.' },
       { t: 'Im lặng', fx: { flag: ['im_thanh'], next: 'c5_khan' }, note: 'Chị chờ bạn nói. Bạn không nói. Chị gật đầu, như người đã quen.' },
       { t: 'Báo Quế, đổi lấy tên mình ra khỏi mọi danh sách', fx: { d: { no: -3, que: 2 }, flag: ['ban_thanh'], next: 'c5_khan' }, note: 'Quế nghe, gật, và hứa. Lời hứa của Quế có giấy, có dấu. Sáng mai bạn sẽ có một tờ giấy, còn chị Thanh thì không có sáng mai.' },
     ],
@@ -262,7 +262,7 @@ export const CN_CH5: Card[] = [
     who: 'thanh',
     mood: 'buon',
     title: 'Chiếc khăn',
-    text: ['Trước khi đi, Thanh rút từ ngực áo một chiếc khăn quấn trẻ, thêu tên bạn bằng chỉ đỏ đã mờ. Chiếc khăn Quế lục cả viện mà không thấy.', 'Chị đưa nó cho Mơ, nói đủ to để bạn nghe: "Nếu ta không thấy ngày mai, đưa nó cho người mẹ."'],
+    text: ['Trước khi đi, chị Thanh rút từ ngực áo một chiếc khăn quấn trẻ, thêu tên bạn bằng chỉ đỏ đã mờ. Chiếc khăn Quế lục cả viện mà không thấy.', 'Chị đưa nó cho Mơ, nói đủ to để bạn nghe: "Nếu ta không thấy ngày mai, đưa nó cho người mẹ."'],
     choices: [{ t: 'Nhìn theo chị', fx: { chapter: 6 }, note: 'Sáng hôm sau, tiếng chuông đưa người vang lên. Không ai nói ai chết. Bạn đã biết. Hết chương năm.' }],
   }),
 ];

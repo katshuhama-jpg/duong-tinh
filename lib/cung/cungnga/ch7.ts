@@ -1,7 +1,7 @@
 /**
  * Phần Cung nga giặt áo - Chương 7: Bờ bên kia (một năm sau khi ra cung, Hưng Bình năm 9, Đào 24 tuổi; kết đỉnh ở HB18, Đào 33, Hựu 15).
  * Hai lối vào (thẻ mở màn theo cờ): nhan_nham (bế nhầm đứa mang tên Hựu, con Hến) hoặc tra_con (trả con ở bến).
- * Kết đỉnh "Chiếc áo mẹ giặt" (đường Nợ) cần: trả con, nhận đúng, tin Hoàng hậu, tha Mơ; không bán Thanh, không ghi tên ai,
+ * Kết đỉnh "Chiếc áo mẹ giặt" (đường Nợ) cần: trả con, nhận đúng, tin Hoàng hậu, tha Mơ; không bán chị Thanh, không ghi tên ai,
  *   không nói với vua hay đổ cho Cúc ở chương 4, Tuất còn sống, không mở sổ Quế; chọn im lặng chờ mười năm.
  * Kết đỉnh "Người cầm sổ" (đường Hạ) cần: trả con, nhận đúng, đã mở sổ Quế ở bến (tức là đã hạ Quế và đứng bậc 4 trở lên); chọn chờ mười năm.
  * Mồi sang Phần 4: "Tiếng giáo ngoài cổng", và (đường Hạ) tên một vị công chúa triều trước trong sổ.
