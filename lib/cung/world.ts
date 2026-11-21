@@ -95,6 +95,11 @@ export const NUM_LABEL: Record<NumK, string> = {
   que: 'Dây Quế',
   ha: 'Hạ',
   keo: 'Kéo',
+  tm: 'Tin triều mới',
+  nc: 'Tin người cũ',
+  ngh: 'Nghi kỵ',
+  mau: 'Máu',
+  chen: 'Chén trà',
 };
 
 /** tên người trong cảnh (hiện trên thẻ người nói) */
@@ -150,8 +155,9 @@ export const ALL_ENDINGS: Ending[] = [...ENDINGS_FACTION_TP, ...ENDINGS_FACTION_
 import { NGHIEM_ENDINGS } from './nghiem/endings';
 export { NGHIEM_ENDINGS };
 import { CN_ENDINGS } from './cungnga/endings';
-export { CN_ENDINGS };
-export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id) ?? NGHIEM_ENDINGS.find((e) => e.id === id) ?? CN_ENDINGS.find((e) => e.id === id);
+import { CC_ENDINGS } from './congchua/endings';
+export { CN_ENDINGS, CC_ENDINGS };
+export const endingOf = (id: string) => ALL_ENDINGS.find((e) => e.id === id) ?? NGHIEM_ENDINGS.find((e) => e.id === id) ?? CN_ENDINGS.find((e) => e.id === id) ?? CC_ENDINGS.find((e) => e.id === id);
 
 /** tên con */
 export const SON_NAMES = ['Khải', 'Hạo', 'Thuyên', 'Diễn', 'Tuấn', 'Lâm'];

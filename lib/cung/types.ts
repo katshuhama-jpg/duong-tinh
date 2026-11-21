@@ -18,7 +18,7 @@ export type RelK =
   | 'quan' // phe quan văn
   | 'tuong'; // phe võ tướng
 /** hiem: kẻ thủ ác biết bạn đào tới đâu (phần Con tin họ Nghiêm); cha: lòng tin của cha */
-export type NumK = StatK | RelK | 'tien' | 'hiem' | 'cha' | 'tin' | 'no' | 'que' | 'ha' | 'keo';
+export type NumK = StatK | RelK | 'tien' | 'hiem' | 'cha' | 'tin' | 'no' | 'que' | 'ha' | 'keo' | 'tm' | 'nc' | 'ngh' | 'mau' | 'chen';
 /** mối nguy trên đường lên ngôi: Thục phi, Hoàng hậu (chắn ngôi hậu), Lệ tần (tân sủng), Thái phó Tôn (quyền thần), Hoàng tử Nghĩa (tranh ngôi Đông cung) */
 export type RivalK = 'thucphi' | 'hoanghau' | 'ninh' | 'hienphi' | 'uyentan' | 'letan' | 'thaipho' | 'nghia' | 'tao' | 'xuanlan' | 'mac';
 /** an: chưa lộ mặt; manh: đang lộng hành; yeu: thất thế; giang: bị giáng, bị đày; chet: đã chết; phuc: đã quy phục */
@@ -87,7 +87,26 @@ export type CastK =
   | 'hen' // Hến
   | 'badovu' // bà đỡ Vũ
   | 'bavu' // bà vú
-  | 'dang'; // Đăng, đứa dự phòng
+  | 'dang' // Đăng, đứa dự phòng
+  // phần Công chúa triều trước
+  | 'tam' // Tằm, thị nữ thân tín
+  | 'anvuong' // An vương, em vua
+  | 'doquyphi' // Đỗ Quý phi
+  | 'ontung' // lão tướng Ôn Tùng
+  | 'onkha' // Ôn Kha
+  | 'laocan' // lão Cẩn, thái giám triều Hưng
+  | 'binh' // Bình, thái giám giữ cửa
+  | 'duyen' // nữ sử Duyên
+  | 'trac' // cai đội Trác
+  | 'sao' // Sáo, cung nữ của Quý phi
+  | 'maluu' // ma ma Lựu
+  | 'baynua' // Bảy Nứa, lái chiếu
+  | 'khuong' // Thái y Khương
+  | 'thuande' // Thuận đế, cha nữ chính
+  | 'vuhoe' // vú Hòe, nhũ mẫu
+  | 'sutinh' // sư Tịnh
+  | 'ongcu' // ông Cù
+  | 'babep'; // bà bếp trên núi
 
 /** điều kiện để thẻ hoặc lựa chọn xuất hiện */
 export interface Cond {
@@ -195,7 +214,7 @@ export interface Card {
   /** thẻ là một hồi giữa sự kiện nhiều hồi: không rút ngẫu nhiên, chỉ tới bằng fx.next */
   step?: boolean;
   /** thẻ thuộc phần chơi riêng (vd 'nghiem'); không ghi = phần cô gái chè */
-  part?: 'nghiem' | 'cungnga';
+  part?: 'nghiem' | 'cungnga' | 'congchua';
   /** cảnh nền ảnh (thư mục trong /bg), đè lên cảnh đoán từ place/bg */
   img?: string;
   /** được lặp lại trong một đời (mặc định không) */

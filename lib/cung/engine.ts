@@ -18,19 +18,26 @@ import { dauMoi, vayCanh } from './nghiem/daumoi';
 import { CN_CARDS, CN_WRITTEN, cnBigsOf } from './cungnga/index';
 import { CN_AGE0, CN_BAC, CN_CHAPTERS, CN_ERA, CN_YEAR0 } from './cungnga/world';
 import { CN_PROLOGUE, CN_TALES } from './cungnga/prologue';
+import { CC_CARDS, CC_WRITTEN, ccBigsOf } from './congchua/index';
+import { CC_AGE0, CC_CHAPTERS, CC_ERA, CC_YEAR0, ccRank } from './congchua/world';
+import { CC_PROLOGUE, CC_TALES } from './congchua/prologue';
 
 /** phần Con tin họ Nghiêm (đường con quan) dùng kho thẻ riêng */
 export const isNg = (l: Pick<Life, 'origin'>) => l.origin === 'quan';
 /** phần Cung nga giặt áo (đường cung nga) */
 export const isCn = (l: Pick<Life, 'origin'>) => l.origin === 'cung';
+/** phần Công chúa triều trước (đường công chúa) */
+export const isCc = (l: Pick<Life, 'origin'>) => l.origin === 'chua';
+/** phần kể theo chuỗi thẻ (phần 3, 4): không chỉ số hiện, không bàn cờ */
+export const isStory = (l: Pick<Life, 'origin'>) => isCn(l) || isCc(l);
 /** phần chơi có dòng thời gian theo tháng, thẻ riêng, không dùng bàn cờ mối nguy của phần cô gái chè */
-export const isMonthly = (l: Pick<Life, 'origin'>) => isNg(l) || isCn(l);
-const partKey = (l: Pick<Life, 'origin'>): Card['part'] => (isNg(l) ? 'nghiem' : isCn(l) ? 'cungnga' : undefined);
+export const isMonthly = (l: Pick<Life, 'origin'>) => isNg(l) || isCn(l) || isCc(l);
+const partKey = (l: Pick<Life, 'origin'>): Card['part'] => (isNg(l) ? 'nghiem' : isCn(l) ? 'cungnga' : isCc(l) ? 'congchua' : undefined);
 const inPart = (c: Card, l: Life) => c.part === partKey(l);
 
-const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL, ...BRANCH_CARDS, ...NG_CARDS, ...CN_CARDS];
-const URGENT = [...SMALL, ...NG_CARDS, ...CN_CARDS].filter((c) => c.urgent && !c.big);
-const ALL_SMALL = [...SMALL, ...NG_CARDS.filter((c) => !c.big), ...CN_CARDS.filter((c) => !c.big)];
+const ALL: Card[] = [...ALL_BIG, ...CRISIS, ...SMALL, ...BRANCH_CARDS, ...NG_CARDS, ...CN_CARDS, ...CC_CARDS];
+const URGENT = [...SMALL, ...NG_CARDS, ...CN_CARDS, ...CC_CARDS].filter((c) => c.urgent && (!c.big || c.part === 'congchua'));
+const ALL_SMALL = [...SMALL, ...NG_CARDS.filter((c) => !c.big), ...CN_CARDS.filter((c) => !c.big), ...CC_CARDS.filter((c) => !c.big)];
 export const cardOf = (id: string) => ALL.find((c) => c.id === id) ?? null;
 
 const SUMMONED = new Set(['b2_den', 'b2_sung', 'tt_goi']);
@@ -59,7 +66,7 @@ export function fits(c: Card, l: Life): boolean {
 }
 /** ngã rẽ lớn không bỏ được: Hạnh đã đi thì một cung nữ khác đứng thay */
 export function viewCard(c0: Card, l: Life): Card {
-  if (isCn(l)) return c0;
+  if (isStory(l)) return c0;
   if (isNg(l)) {
     const f = (x: string) => fillNg(x, l);
     return { ...c0, title: f(c0.title), lead: c0.lead && f(c0.lead), text: c0.text.map(f), choices: c0.choices.map((o) => ({ ...o, t: f(o.t), note: o.note ? f(o.note) : o.note })) };
@@ -127,21 +134,22 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
   const o = originOf(origin);
   const ng = o.k === 'quan';
   const cn = o.k === 'cung';
+  const cc = o.k === 'chua';
   const l: Life = {
     v: 'cung1',
     seed,
     origin: o.k,
     name: cn ? 'Đào' : name.trim() || 'Nụ',
-    age: 18,
+    age: cc ? CC_AGE0 : 18,
     rank: o.rank,
-    n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 0, thaihau: 0, hoanghau: 0, thucphi: -10, hanh: 30, phuc: 0, quan: 0, tuong: 0, tien: 30, hiem: 0, cha: 0, tin: 0, no: 0, que: 0, ha: 0, keo: 0, ...o.n },
+    n: { duc: 50, sac: 55, the: 12, an: 16, muu: 30, vua: 0, thaihau: 0, hoanghau: 0, thucphi: -10, hanh: 30, phuc: 0, quan: 0, tuong: 0, tien: 30, hiem: 0, cha: 0, tin: 0, no: 0, que: 0, ha: 0, keo: 0, tm: 0, nc: 0, ngh: 0, mau: 0, chen: 0, ...o.n },
     flags: [...o.flags],
     kids: [],
     chapter: 1,
     smalls: 0,
     bigAt: 0,
     seen: [],
-    log: [{ age: 18, t: cn ? `Năm ${CN_ERA} thứ ${CN_YEAR0}. ${o.t}: ${o.intro[0]}` : ng ? `Năm ${NG_ERA} thứ ${NG_YEAR0}. ${o.t}: ${o.intro[0]}` : `Năm Khánh Vân thứ ba. ${o.t}: ${o.intro[0]}`, k: 'year' }],
+    log: [{ age: cc ? CC_AGE0 : 18, t: cc ? `Năm ${CC_ERA} thứ ${CC_YEAR0}. ${o.t}: ${o.intro[0]}` : cn ? `Năm ${CN_ERA} thứ ${CN_YEAR0}. ${o.t}: ${o.intro[0]}` : ng ? `Năm ${NG_ERA} thứ ${NG_YEAR0}. ${o.t}: ${o.intro[0]}` : `Năm Khánh Vân thứ ba. ${o.t}: ${o.intro[0]}`, k: 'year' }],
     card: null,
     end: null,
     back: null,
@@ -161,6 +169,10 @@ export function newLife(name: string, origin = 'dan', seed = Math.floor(Math.ran
   if (cn) {
     for (const r of Object.values(l.riv!)) (r.st = 'an'), (r.th = 0);
     l.tales = CN_PROLOGUE.map((x) => ({ ...x, skip: true }));
+  }
+  if (cc) {
+    for (const r of Object.values(l.riv!)) (r.st = 'an'), (r.th = 0);
+    l.tales = CC_PROLOGUE.map((x) => ({ ...x, skip: true }));
   }
   l.chStart = snapOf(l);
   if (!ng) pickFocus(l);
@@ -213,7 +225,7 @@ export function applyRiv(l: Life, d: Fx['riv']) {
 function queueTale(l: Life) {
   const id = l.card;
   if (!id || l.end || l.seen.includes(id) || (l.tales ?? []).some((x) => x.card === id)) return;
-  const tl = TALES[id] ?? NG_TALES[id] ?? CN_TALES[id];
+  const tl = TALES[id] ?? NG_TALES[id] ?? CN_TALES[id] ?? CC_TALES[id];
   if (!tl) return;
   l.tales = [...(l.tales ?? []), { t: tl.t, lines: tl.lines.map((x) => fillText(x, l.origin)), card: id, s: tl.s }];
   l.log.push({ age: Math.floor(l.age), t: `${tl.t}. ${fillText(tl.lines[0], l.origin)}`, k: 'tale' });
@@ -323,6 +335,7 @@ export const bacOf = (l: Life): number => {
 export function rankOf(l: Life): Rank {
   if (l.flags.includes('thai_hau')) return THAI_HAU;
   if (l.flags.includes('hoang_hau') && !(l.flags.includes('con_dongcung') && l.chapter >= 6)) return HOANG_HAU_RANK;
+  if (isCc(l)) return ccRank(l);
   if (isCn(l)) {
     const b = CN_BAC[Math.max(0, Math.min(4, bacOf(l) - 1))];
     return { ...CUNG_NGA, t: b.t, o: b.o, giai: 'Cung nga' };
@@ -341,7 +354,7 @@ function clueCase(c: Card): string | null {
 }
 const isGaiCard = (c: Card) => c.choices.some((o) => (o.fx.clue ?? []).some((id) => CASES.some((k) => k.clues.some((x) => x.id === id && x.gai))));
 const isKeyCard = (c: Card) => c.choices.some((o) => (o.fx.clue ?? []).some((id) => CASES.some((k) => k.clues.some((x) => x.id === id && x.key))));
-const chap = (n: number, l?: Life) => ((l && isNg(l)) ? NG_CHAPTERS : (l && isCn(l)) ? CN_CHAPTERS : CHAPTERS).find((c) => c.n === n)!;
+const chap = (n: number, l?: Life) => ((l && isNg(l)) ? NG_CHAPTERS : (l && isCn(l)) ? CN_CHAPTERS : (l && isCc(l)) ? CC_CHAPTERS : CHAPTERS).find((c) => c.n === n)!;
 export const chapOf = (l: Life, n = l.chapter) => chap(n, l);
 export function nextCard(l: Life): string | null {
   if (l.end) return null;
@@ -351,10 +364,10 @@ export function nextCard(l: Life): string | null {
     if (c.chapter.includes(l.chapter) && ok(c.when, l) && l.log[l.log.length - 1]?.t !== `#${c.id}`) return c.id;
   }
   // về già thì vào chặng cuối
-  if (l.age >= 68 && l.chapter < 7 && !isCn(l)) moveTo(l, 7);
+  if (l.age >= 68 && l.chapter < 7 && !isStory(l)) moveTo(l, 7);
   const ch = l.chapter;
   // bước ngoặt: đủ điều kiện là hiện ngay
-  if ((isNg(l) && ch > NG_WRITTEN) || (isCn(l) && ch > CN_WRITTEN)) {
+  if ((isNg(l) && ch > NG_WRITTEN) || (isCn(l) && ch > CN_WRITTEN) || (isCc(l) && ch > CC_WRITTEN)) {
     finish(l, 'auto');
     return null;
   }
@@ -389,7 +402,7 @@ export function nextCard(l: Life): string | null {
       return pool[pool.length - 1].id;
     }
   }
-  const bigs = isNg(l) ? ngBigsOf(ch) : isCn(l) ? cnBigsOf(ch) : bigsOf(ch);
+  const bigs = isNg(l) ? ngBigsOf(ch) : isCn(l) ? cnBigsOf(ch) : isCc(l) ? ccBigsOf(ch) : bigsOf(ch);
   for (let i = l.bigAt; i < bigs.length; i++) {
     if (ok(bigs[i].when, l) && !l.seen.includes(bigs[i].id) && fits(bigs[i], l)) {
       l.bigAt = i;
@@ -397,7 +410,7 @@ export function nextCard(l: Life): string | null {
     }
   }
   // hết chặng: sang chặng sau (chặng Buông rèm chỉ khi mình nhiếp chính)
-  if (ch >= 7) {
+  if (ch >= (isCc(l) ? 10 : 7)) {
     finish(l, 'auto');
     return null;
   }
@@ -409,7 +422,7 @@ export function nextCard(l: Life): string | null {
 
 /** hết chương: mở các ghi chú của chương vừa qua mà đời này đã gặp chi tiết */
 function openNotes(l: Life) {
-  const part = isNg(l) ? 'nghiem' : isCn(l) ? 'cungnga' : 'che';
+  const part = isNg(l) ? 'nghiem' : isCn(l) ? 'cungnga' : isCc(l) ? 'congchua' : 'che';
   const had = new Set((l.notes ?? []).map((x) => x.id));
   const fresh = GHICHU.filter((g) => g.part === part && g.chapter === l.chapter && !had.has(g.id) && ok(g.when, l))
     .sort((a, b) => (b.w ?? 1) - (a.w ?? 1))
@@ -428,6 +441,16 @@ function moveTo(l: Life, ch: number) {
   // sang chặng mới mà đang được sủng thì được thăng một bậc
   if (ch <= 5 && l.n.an >= 50 && l.rank < 9) promote(l, 1);
   l.log.push({ age: Math.floor(l.age), t: `Chương mới: ${chap(ch, l).t}.`, k: 'year' });
+  if (isCc(l)) {
+    const a0 = chap(ch, l) as { age0?: number };
+    if (a0.age0 && l.age < a0.age0) {
+      l.age = a0.age0;
+      l.log.push({ age: Math.floor(l.age), t: 'Năm tháng trôi qua.', k: 'year' });
+    }
+    l.showCh = { to: ch, from, end, picks };
+    l.chStart = snapOf(l);
+    return;
+  }
   if (isCn(l)) {
     // phần Cung nga: bậc ngầm tính lại ở đầu chương 5, 6, 7 (bậc cao hơn giữa đường Nợ và đường Hạ)
     if (ch >= 5) {
@@ -497,6 +520,10 @@ export function autoEnding(l: Life) {
     const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
     return kc && endingOf(kc.slice(3)) ? kc.slice(3) : 'cn_cong';
   }
+  if (isCc(l)) {
+    const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
+    return kc && endingOf(kc.slice(3)) ? kc.slice(3) : 'cc_contin';
+  }
   if (isNg(l)) {
     const kc = [...l.flags].reverse().find((g) => g.startsWith('kc_'));
     if (kc && endingOf(kc.slice(3))) return kc.slice(3);
@@ -528,7 +555,7 @@ export function ngGrid(l: Life) {
 }
 /** chỉ số chạm đáy: lần đầu hiện cảnh cảnh báo, lần sau thì khép đời */
 function zeroCheck(l: Life) {
-  if (l.end || !l.card || cardOf(l.card)?.step || isCn(l)) return;
+  if (l.end || !l.card || cardOf(l.card)?.step || isStory(l)) return;
   if (isNg(l)) {
     const hit = (Object.keys(NG_ZERO_END) as NumK[]).find((k) => l.n[k] <= 0 && !(k === 'an' && l.chapter >= 5) && !(k === 'sac' && l.age >= 45));
     // Hiểm: cảnh báo từ 85, chưa đợi đầy; đầy (100) sau khi đã được cảnh báo thì khép đời
@@ -740,7 +767,7 @@ export function choose(l0: Life, idx: number): Result {
   const nextStep = nextId && !fx.end ? cardOf(nextId) : null;
   // phần Nghiêm: đang có án mở thì chỉ trôi vài ngày; ngoài án thì một tháng mỗi thẻ
   const caseOpen = isNg(l) && Object.values(l.an ?? {}).some((x) => x.mo != null && !x.xu);
-  const years = fx.years ?? (nextStep ? 0 : isCn(l) ? CN_CHAPTERS.find((x) => x.n === l.chapter)!.mo / 12 : isNg(l) ? (caseOpen ? 0 : kind === 'big' ? 2 / 12 : 1 / 12) : kind === 'big' ? 1 : 0.5);
+  const years = fx.years ?? (nextStep ? 0 : isCn(l) ? CN_CHAPTERS.find((x) => x.n === l.chapter)!.mo / 12 : isCc(l) ? CC_CHAPTERS.find((x) => x.n === l.chapter)!.mo / 12 : isNg(l) ? (caseOpen ? 0 : kind === 'big' ? 2 / 12 : 1 / 12) : kind === 'big' ? 1 : 0.5);
   const a0 = l.age;
   l.age = isMonthly(l) ? Math.round((l.age + years) * 12) / 12 : Math.round((l.age + years) * 2) / 2;
   for (let y = Math.floor(a0) + 1; y <= Math.floor(l.age); y++) {
@@ -790,7 +817,7 @@ export function choose(l0: Life, idx: number): Result {
   // hệ quả nhìn thấy được
   const parts: string[] = [];
   const LBL0: Partial<Record<NumK, string>> = { duc: 'Đức', sac: 'Sắc', the: 'Thế', an: 'Ân sủng', muu: 'Mưu', tien: 'Tiền', hiem: 'Hiểm', cha: 'Lòng cha', vua: 'Hoàng thượng', thaihau: 'Thái hậu', hoanghau: 'Hoàng hậu', thucphi: 'Thục phi', hanh: 'Hạnh', phuc: 'Phúc', quan: 'Quan văn', tuong: 'Võ tướng' };
-  const LBL: Partial<Record<NumK, string>> = isCn(l) ? {} : isNg(l) ? { ...LBL0, thucphi: 'Quý phi Hà', hanh: 'Lụa Vàng', phuc: 'Chưởng sự Kiệm', quan: 'Ngự sử Lý Mặc' } : LBL0;
+  const LBL: Partial<Record<NumK, string>> = isStory(l) ? {} : isNg(l) ? { ...LBL0, thucphi: 'Quý phi Hà', hanh: 'Lụa Vàng', phuc: 'Chưởng sự Kiệm', quan: 'Ngự sử Lý Mặc' } : LBL0;
   for (const k of Object.keys(LBL) as NumK[]) {
     const d = Math.round(l.n[k] - before[k]);
     if (k === 'tien' ? Math.abs(d) >= 10 && fx.d?.tien : Math.abs(d) >= 3 && fx.d?.[k] != null) parts.push(`${LBL[k]} ${d > 0 ? '+' : ''}${d}${k === 'tien' ? ' quan' : ''}`);
