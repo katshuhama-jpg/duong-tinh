@@ -25,7 +25,10 @@ try {
   on = true;
 }
 
-const src = (t: Track) => `/nhac/${t}.mp3`;
+// 28/11: nhạc lấy thẳng từ kho công khai trên Supabase (bản sao của public/nhac). Hai bài nền từng chiếm phần lớn băng thông Vercel.
+// Muốn quay về Vercel: đổi KHO_NHAC thành '' (file trong public/nhac vẫn còn nguyên).
+const KHO_NHAC = 'https://qncopjgvtjubfqnklbxj.supabase.co/storage/v1/object/public/tinh/ll';
+const src = (t: Track) => `${KHO_NHAC}/nhac/${t}.mp3`;
 
 function ensure() {
   if (!els.length && typeof Audio !== 'undefined') {

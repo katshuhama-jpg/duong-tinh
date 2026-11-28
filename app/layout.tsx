@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import SwBoot from '@/components/SwBoot';
 
 const NAME = 'Chín Bậc Phượng';
 const DESC = 'Game cung đấu đọc và bấm: một cô gái làng chè vào cung, leo chín bậc hậu cung, sinh con, tranh ngôi, buông rèm. Triều đại hư cấu, khung hậu cung theo sử Việt, tranh kiểu Hàng Trống.';
@@ -32,7 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link href="https://fonts.googleapis.com/css2?family=Playball&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SwBoot />
+      </body>
     </html>
   );
 }
